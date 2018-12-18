@@ -17,7 +17,7 @@ public class Game {
 		
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer");
 		mainGameRenderer.start();
-
+		GameWindow test = new GameWindow();
 		
 
 		
