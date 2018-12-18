@@ -18,9 +18,10 @@ public class GameWindow {
 	public static final int width = 1600;
 	public static final int height = 900;
 	public static Graphics graphics;
+	public static JFrame window;
 	
 	public GameWindow(){ 
-		JFrame window = new JFrame("Title goes here.");
+		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -36,9 +37,16 @@ public class GameWindow {
 		
 		graphics = window.getGraphics();
 		try {
-			graphics.drawImage(new ImageIcon("/assets/testImage.png").getImage(), 0, 0, null);
+			graphics.drawImage(new ImageIcon("testImage.png").getImage(), 0, 0, null);
 		} catch (Exception e) {
 			System.out.println("Unable to find file");
 		}
+//		window.repaint();
+		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
+	}
+	
+	public void renderFrame() {
+		window.repaint();
+		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
 	}
 }

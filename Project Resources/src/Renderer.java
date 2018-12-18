@@ -2,16 +2,24 @@
 public class Renderer implements Runnable{
 	private Thread t;
 	private String threadName;
+	private GameWindow mainGameWindow;
 	
-	public Renderer(String name){
+	public Renderer(String name, GameWindow mainGameWindow){
 		threadName = name;
+		this.mainGameWindow = mainGameWindow;
 		
 	}
 	
    public void run() {
-	      for(int i = 0; i < 10; i++) {
-	    	  System.out.println(i);
-	      }
+	   while(true) {
+		   mainGameWindow.renderFrame();
+//		   try {
+//			  sleep(16);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+	   }
+
    }
    
    
