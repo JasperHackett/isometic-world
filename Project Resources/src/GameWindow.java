@@ -35,7 +35,10 @@ public class GameWindow {
 		window.setVisible(true);
 		
 		graphics = window.getGraphics();
-		
-		graphics.drawImage(new ImageIcon("assets/testImage.png").getImage(), 0, 0, null);
+		try {
+			graphics.drawImage(new ImageIcon("/assets/testImage.png").getImage(), 0, 0, null);
+		} catch (Exception e) {
+			System.out.println("Unable to find file");
+		}
 	}
 }
