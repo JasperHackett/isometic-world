@@ -45,8 +45,14 @@ public class GameWindow {
 		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
 	}
 	
+	
+
 	public void renderFrame() {
-		window.repaint();
 		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
+		window.repaint();
+//		graphics.clear
+
 	}
+	
+
 }

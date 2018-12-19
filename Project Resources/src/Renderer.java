@@ -22,8 +22,21 @@ public class Renderer implements Runnable{
 
    }
    
-   
+	/**
+	 * Test
+	 */
    public void start() {
+	      if(t == null) {
+	    	  t = new Thread(this, threadName);
+	    	  t.start();
+	      }
+   }
+   
+   
+   /**
+ * Testasdasd
+ */
+public void testFunction() {
 	      if(t == null) {
 	    	  t = new Thread(this, threadName);
 	    	  t.start();
