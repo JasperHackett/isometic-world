@@ -49,7 +49,7 @@ public class GameWindow {
 
 	public void renderFrame() {
 		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
-		window.repaint();
+		graphics.clearRect(0, 0, 800, 600);
 //		graphics.clear
 
 	}
