@@ -18,6 +18,7 @@ public class GameWindow {
 	public static final int width = 1600;
 	public static final int height = 900;
 	public static Graphics graphics;
+	private JFrame window;
 	
 	public GameWindow(){ 
 		JFrame window = new JFrame("Title goes here.");
@@ -37,5 +38,9 @@ public class GameWindow {
 		graphics = window.getGraphics();
 		
 		graphics.drawImage(new ImageIcon("assets/testImage.png").getImage(), 0, 0, null);
+	}
+	
+	public void renderFrame() {
+		window.repaint();
 	}
 }
