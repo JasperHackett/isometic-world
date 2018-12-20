@@ -16,15 +16,23 @@ import javafx.util.Pair;
 public class ObjectMap extends HashMap<String, GameObject> {
 	
 	private HashMap<String, GameObject> mainDisplayObjects;
+	private HashMap<String, WorldObject> worldObjects;
 	
 	public ObjectMap(){
 		super();
 		mainDisplayObjects = new HashMap<String, GameObject>();
+		worldObjects = new HashMap<String, WorldObject>();
 	}
 	
 	public void addObject(String s, GameObject obj) {
 		this.put(s, obj);
-		
+	}
+	
+	public void addWorldObject(String s, WorldObject obj) {
+		this.put(s, obj);
+		if (obj.type == ObjectType.WORLD) {
+			worldObjects.put(s, obj);
+		}
 	}
 	
 	// returns true after a successful remove operation
@@ -34,19 +42,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			return false;
 		}
 		this.remove(s);
+		worldObjects.remove(s);
+		mainDisplayObjects.remove(s);
 		return true;
 	}
 	
 	public GameObject getObject(String s) {
 		return (GameObject)this.get(s);
-	}
-
-	/**
-	 * 
-	 */
-	public void updateMainDisplayObjects() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	public Map<String, GameObject> getMainDisplayObjects() {
