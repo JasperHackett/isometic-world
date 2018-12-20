@@ -47,34 +47,14 @@ public class Game {
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer",window);
 		
+		
+		//Test code
 		GameObject testObject = new GameObject();
 		mainGameRenderer.addObject("thing", testObject);
 		mainGameRenderer.getObject("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
-		
-//		testObject.setProperties();
-		
 
-		try {
-			graphics.drawImage(new ImageIcon("testImage.png").getImage(), 0, 0, null);
-		} catch (Exception e) {
-			System.out.println("Unable to find file");
-		};
-
-//		mainGameRenderer.addGraphic("test", icon);
-		
-//		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
-//		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
-		
-		
-//		try {
-//			graphics.drawImage(new ImageIcon("testImage.png").getImage(), 0, 0, null);
-//		} catch (Exception e) {
-//			System.out.println("Unable to find file");
-//		}
 		mainGameRenderer.start();
 
-		// TODO Auto-generated method stub
-		System.out.println("Test");
 		int i = 0;
 		while(true) {
 			try {

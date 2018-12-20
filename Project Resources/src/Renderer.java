@@ -37,13 +37,6 @@ public class Renderer implements Runnable{
 		threadName = name;
 		this.mainWindow = windowIn;
 		objectMap = new HashMap<String,GameObject>();
-//		graphics = windowIn.getGraphics();
-//		mainWindowGraphics.addGraphic("test", icon);
-		try {
-			testImage = ImageIO.read(new File("assets/testImage.png"));
-		} catch (Exception e) {
-			System.out.println("Unable to find file");
-		}
 	}
 	
 	public Graphics getGraphic(){
