@@ -22,12 +22,15 @@ public class World {
 	World() {
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
-		worldPoint = new Point(0,0);
-		worldDims = new Dimension(0,0);
+		worldPoint = new Point(100,100);
+		worldDims = new Dimension(1400,700);
 	}
 	
 	public void updateDisplay() {
-		Game.worldObjects.updateMainDisplayObjects();
+		Game.worldObjects.updateMainDisplayObjects(worldDims, worldPoint);
+//		offsetDisplay
+//		Game.worldObjects.getMainDisplayObjects();
+		
 	}
 	public Pair<Dimension,Point> getMainDisplayCoords() {
 		return new Pair<Dimension,Point>(this.panelDims,this.panelPoint);

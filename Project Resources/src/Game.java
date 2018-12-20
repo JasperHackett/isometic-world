@@ -3,9 +3,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -39,12 +43,21 @@ public class Game {
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		Image borderImage = new ImageIcon("assets/border.png").getImage();
-
+		Image icon = new ImageIcon("assets/testImage.png").getImage();
+		
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension dim = new Dimension (width, height);
+//
+//		 try {
+//	            URL resource = window.getClass().getResource(icon);
+//	            BufferedImage image = ImageIO.read(resource);
+//	            window.setIconImage(image);
+//	        } catch (IOException e) {
+//	            e.printStackTrace();
+//	        }
 
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
@@ -68,8 +81,9 @@ public class Game {
 //
 		GameObject clickable = new GameObject();
 
-		otherObjects.put("clickable", clickable);
-		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
+		worldObjects.put("clickable", clickable);
+		worldObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
+		gameWorld.updateDisplay();
 
 
 

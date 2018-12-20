@@ -37,7 +37,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 //			mousePressPos = e.getPoint();
 		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
-			if(dragEnabled = true) {
+			if(dragEnabled == true) {
 				Game.gameWorld.offsetDisplay(mousePressPos,e.getPoint());
 			}
 

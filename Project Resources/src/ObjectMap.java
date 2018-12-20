@@ -16,10 +16,12 @@ import javafx.util.Pair;
 public class ObjectMap extends HashMap<String, GameObject> {
 	
 	private HashMap<String, GameObject> mainDisplayObjects;
+	private HashMap<String, WorldObject> worldObjects;
 	
 	public ObjectMap(){
 		super();
 		mainDisplayObjects = new HashMap<String, GameObject>();
+		worldObjects = new HashMap<String,WorldObject>();
 	}
 	
 	public void addObject(String s, GameObject obj) {
@@ -55,13 +57,12 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 	
 	public void updateMainDisplayObjects(Dimension displayDimension, Point displayPoint){ 
-		
 		mainDisplayObjects = new HashMap<String, GameObject>();
-		
-		
-		for (Map.Entry<String, GameObject> mapEntry : this.entrySet()) {
+		mainDisplayObjects.put("clickable",this.get("clickable"));
+		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
 			if (isWithinDisplay(mapEntry.getValue().getPosition(), new Pair(displayDimension, displayPoint))) {
-				mainDisplayObjects.put(String.valueOf(mapEntry.getValue()) , mapEntry.getValue());
+				mainDisplayObjects.put(mapEntry.getKey() , mapEntry.getValue());
+				System.out.println(mapEntry.getKey());
 			}
 		}
 		
