@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 
 /**
@@ -7,12 +7,8 @@
  *
  */
 public class WorldObject extends GameObject {
-	
-	WorldObject(){
-		
+
+	public WorldObject() {
+		super(ObjectType.WORLD);
 	}
-
-	
 }
-
-

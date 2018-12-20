@@ -44,7 +44,7 @@ public class Game {
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		Image borderImage = new ImageIcon("assets/border.png").getImage();
 		Image icon = new ImageIcon("assets/testImage.png").getImage();
-		
+
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,9 +68,9 @@ public class Game {
 		window.setVisible(true);
 
 		graphics = window.getGraphics();
-		Renderer mainGameRenderer = new Renderer("mainGameRenderer",window);
+		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
-		GameObject border = new GameObject();
+		GameObject border = new GameObject(ObjectType.DEFAULT);
 		otherObjects.put("border", border);
 		otherObjects.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 
@@ -79,13 +79,14 @@ public class Game {
 //		objectMap.put("thing", testObject);
 //		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
 //
-		GameObject clickable = new GameObject();
+//		GameObject clickable = new GameObject();
+//
+//		otherObjects.put("clickable", clickable);
+//		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
 
-		worldObjects.put("clickable", clickable);
-		worldObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
-		gameWorld.updateDisplay();
-
-
+		WorldObject test1 = new WorldObject();
+		test1.setProperties(new Dimension(100, 100), new Point(100, 100), new ImageIcon("assets/blueSquare.png").getImage());
+		worldObjects.addWorldObject("test1", test1);
 
 
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
