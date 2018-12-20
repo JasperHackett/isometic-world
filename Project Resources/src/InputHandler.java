@@ -20,9 +20,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	
 	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
-			if(pairIn.getValue().getX() < mousePosition.getX() & pairIn.getValue().getY() < mousePosition.getY() 
-					& pairIn.getValue().getX()+pairIn.getKey().getWidth() > mousePosition.getX()
-					& pairIn.getValue().getY()+pairIn.getKey().getHeight() > mousePosition.getY() ){
+			if(pairIn.getValue().getX() < mousePosition.getX() && pairIn.getValue().getY() < mousePosition.getY() 
+					&& pairIn.getValue().getX()+pairIn.getKey().getWidth() > mousePosition.getX()
+					&& pairIn.getValue().getY()+pairIn.getKey().getHeight() > mousePosition.getY() ){
 						
 				
 				return true;

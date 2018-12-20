@@ -15,10 +15,10 @@ import javafx.util.Pair;
  */
 public class GameObject {
 	
-	private static Dimension dim; //Dimensions of object
-	private static Point coords; //Top left corner of object
-	private static Image objectImage; //test for a single image object
-	private static boolean clickable;
+	private Dimension dim; //Dimensions of object
+	private Point coords; //Top left corner of object
+	private Image objectImage; //test for a single image object
+	private boolean clickable;
 	
 	public void setProperties(Dimension dimIn, Point posIn, Image imageIn) {
 		this.dim = dimIn;
@@ -31,7 +31,7 @@ public class GameObject {
 	}
 	
 	public void render(Graphics g) {
-		g.drawImage(objectImage, coords.x, coords.y, null);
+		g.drawImage(this.objectImage, coords.x, coords.y, null);
 		
 	}
 	

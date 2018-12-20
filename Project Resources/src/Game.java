@@ -78,16 +78,15 @@ public class Game {
 //		while(true) {
 //			
 //			
-////			try {
-////				Thread.sleep(100);
-////				mainGameRenderer.getObject("thing").setProperties(new Dimension(0,0),new Point(i,i),icon);
-////				i++;
-////				
-////			} catch (InterruptedException e) {
-////				// TODO Auto-generated catch block
-////				e.printStackTrace();
-////			}
-//		}
+			try {
+				Thread.sleep(100);
+				System.out.println("Pos of thing: " + objectMap.get("thing").getPosition().getValue().getX());
+				i++;
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 
 
