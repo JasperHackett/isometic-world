@@ -20,6 +20,11 @@ public class GameObject {
 	private Image objectImage; //test for a single image object
 	private boolean clickable;
 	private boolean isVisible;
+	public ObjectType type;
+	
+	public GameObject(ObjectType type) {
+		this.type = type;
+	}
 	
 	public void setProperties(Dimension dimIn, Point posIn, Image imageIn) {
 		this.dim = dimIn;
