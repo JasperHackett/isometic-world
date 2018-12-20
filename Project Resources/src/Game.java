@@ -24,16 +24,16 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static ObjectMap<String, GameObject> worldObjects;
-	public static ObjectMap<String, GameObject> otherObjects;
+	public static ObjectMap worldObjects;
+	public static ObjectMap otherObjects;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
 
-		worldObjects = new ObjectMap<String, GameObject>();
-		otherObjects = new ObjectMap<String, GameObject>();
+		worldObjects = new ObjectMap();
+		otherObjects = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
