@@ -24,14 +24,14 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static Map<String,GameObject> objectMap;
+	public static ObjectMap<String, GameObject> objectMap;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
 
-		objectMap = new HashMap<String,GameObject>();
+		objectMap = new ObjectMap<String, GameObject>();
 		GameWindow mainGameWindow = new GameWindow();
 		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
@@ -57,12 +57,12 @@ public class Game {
 		//Test code
 		GameObject testObject = new GameObject();
 		objectMap.put("thing", testObject);
-		objectMap.get("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
+		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
 		
 		GameObject clickable = new GameObject();
 		
 		objectMap.put("clickable", clickable);
-		objectMap.get("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
+		objectMap.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
 		
 		
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
@@ -80,7 +80,7 @@ public class Game {
 //			
 			try {
 				Thread.sleep(100);
-				System.out.println("Pos of thing: " + objectMap.get("thing").getPosition().getValue().getX());
+				System.out.println("Pos of thing: " + objectMap.getObject("thing").getPosition().getValue().getX());
 				i++;
 				
 			} catch (InterruptedException e) {

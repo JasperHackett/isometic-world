@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @author Orly
  *
  */
-public class ObjectMap<String, GameObject> extends HashMap {
+public class ObjectMap<String, GameObject> extends HashMap<String, GameObject> {
 	
 	public ObjectMap(){
 		super();
@@ -27,4 +27,10 @@ public class ObjectMap<String, GameObject> extends HashMap {
 		this.remove(s);
 		return true;
 	}
+	
+	public GameObject getObject(String s) {
+		return (GameObject)this.get(s);
+	}
+	
+	
 }
