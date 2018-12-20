@@ -21,36 +21,42 @@ public class GameWindow {
 	public static JFrame window;
 	
 	public GameWindow(){ 
-		window = new JFrame("Draggable");
-		window.setLayout(null);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		Container contentPane = window.getContentPane();
-		Dimension dim = new Dimension (width, height);
-		
-		window.setPreferredSize(dim);
-		window.setMaximumSize(dim);
-		window.setMinimumSize(dim);
-		window.setResizable(false);
-		window.setLocationRelativeTo(null);
-		window.setVisible(true);
-		
-		graphics = window.getGraphics();
-		try {
-			graphics.drawImage(new ImageIcon("testImage.png").getImage(), 0, 0, null);
-		} catch (Exception e) {
-			System.out.println("Unable to find file");
-		}
-//		window.repaint();
-		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
-	}
-	
-	
-
-	public void renderFrame() {
-		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
-		graphics.clearRect(0, 0, 800, 600);
-//		graphics.clear
+//		window = new JFrame("Draggable");
+//		window.setLayout(null);
+//		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+////		window.set
+//		
+//		Container contentPane = window.getContentPane();
+//		Dimension dim = new Dimension (width, height);
+//		
+//		window.setPreferredSize(dim);
+//		window.setMaximumSize(dim);
+//		window.setMinimumSize(dim);
+//		window.setResizable(false);
+//		window.setLocationRelativeTo(null);
+//		window.setVisible(true);
+////		window.get
+//		
+//		graphics = window.getGraphics();
+//		try {
+//			graphics.drawImage(new ImageIcon("testImage.png").getImage(), 0, 0, null);
+//		} catch (Exception e) {
+//			System.out.println("Unable to find file");
+//		}
+////		window.repaint();
+////		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
+////		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
+//	}
+//	
+//	
+//		
+//	public void renderFrame() {
+//		if(window != null) {
+//			window.repaint();
+//		}
+//
+////		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
+////		graphics.clearRect(0, 0, 800, 600);
 
 	}
 	
