@@ -28,8 +28,7 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static ObjectMap worldObjects;
-	public static ObjectMap otherObjects;
+	public static ObjectMap objectMap;
 	public static World gameWorld;
 	/**
 	 * @param args
@@ -37,8 +36,7 @@ public class Game {
 	public static void main(String[] args) {
 
 		gameWorld = new World();
-		worldObjects = new ObjectMap();
-		otherObjects = new ObjectMap();
+		objectMap = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
@@ -71,8 +69,8 @@ public class Game {
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
 		GameObject border = new GameObject(ObjectType.DEFAULT);
-		otherObjects.put("border", border);
-		otherObjects.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
+		objectMap.put("border", border);
+		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 
 		//Test code
 //		GameObject testObject = new GameObject();
@@ -86,7 +84,7 @@ public class Game {
 
 		WorldObject test1 = new WorldObject();
 		test1.setProperties(new Dimension(100, 100), new Point(100, 100), new ImageIcon("assets/blueSquare.png").getImage());
-		worldObjects.addWorldObject("test1", test1);
+		objectMap.addWorldObject("test1", test1);
 
 
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);

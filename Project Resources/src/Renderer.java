@@ -93,10 +93,10 @@ public class Renderer implements Runnable{
         Graphics graphics = bs.getDrawGraphics();
 		graphics.clearRect(0, 0, Game.width, Game.height);
 		graphics.setColor(Color.black);
-		for(Map.Entry<String, GameObject> obj : Game.worldObjects.getMainDisplayObjects().entrySet()) {
+		for(Map.Entry<String, GameObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
 			obj.getValue().render(graphics);
 		}
-		for(Map.Entry<String, GameObject> obj : Game.otherObjects.entrySet()) {
+		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			obj.getValue().render(graphics);
 		}
 

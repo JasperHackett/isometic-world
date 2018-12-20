@@ -27,7 +27,7 @@ public class World {
 	}
 	
 	public void updateDisplay() {
-		Game.worldObjects.updateMainDisplayObjects(worldDims, worldPoint);
+		Game.objectMap.updateMainDisplayObjects(worldDims, worldPoint);
 //		offsetDisplay
 //		Game.worldObjects.getMainDisplayObjects();
 		

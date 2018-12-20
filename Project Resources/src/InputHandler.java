@@ -56,7 +56,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Mouse clicked at: "+ e.getX() + ", " + e.getY());
-		for(Map.Entry<String, GameObject> obj : Game.worldObjects.entrySet()) {
+		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
 					System.out.println("Clickable object clicked.");
