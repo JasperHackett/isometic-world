@@ -25,6 +25,14 @@ public class GameObject {
 		this.coords = posIn;
 		this.objectImage = imageIn;
 	}
+	
+	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable) {
+		this.dim = dimIn;
+		this.coords = posIn;
+		this.objectImage = imageIn;
+		this.clickable = clickable;
+	}
+	
 	public Pair<Dimension,Point> getPosition(){
 		Pair<Dimension,Point> newPos = new Pair<Dimension,Point>(dim,coords);
 		return newPos;

@@ -57,20 +57,20 @@ public class Game {
 		//Test code
 		GameObject testObject = new GameObject();
 		objectMap.put("thing", testObject);
-		objectMap.get("thing").setProperties(new Dimension(800,690),new Point(0,0),icon);
+		objectMap.get("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
 		
 		GameObject clickable = new GameObject();
 		
 		objectMap.put("clickable", clickable);
-		objectMap.get("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage);
+		objectMap.get("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
 		
 		
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
 		
 	
 		InputHandler inputControl = new InputHandler();
-		window.addMouseListener(inputControl);
-		window.addMouseMotionListener(inputControl);
+		window.getContentPane().addMouseListener(inputControl);
+		window.getContentPane().addMouseMotionListener(inputControl);
 
 		mainGameRenderer.start();
 
