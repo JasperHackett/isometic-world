@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,13 +24,17 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
+	public static Map<String,GameObject> objectMap;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
+
+		objectMap = new HashMap<String,GameObject>();
 		GameWindow mainGameWindow = new GameWindow();
-		Image icon = new ImageIcon("testImage.png").getImage();
+		Image icon = new ImageIcon("assets/testImage.png").getImage();
+		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 	
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -50,9 +56,15 @@ public class Game {
 		
 		//Test code
 		GameObject testObject = new GameObject();
-		mainGameRenderer.addObject("thing", testObject);
-		mainGameRenderer.getObject("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
+		objectMap.put("thing", testObject);
+		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
 		
+		GameObject clickable = new GameObject();
+		
+		objectMap.put("clickable", clickable);
+		objectMap.get("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage);
+		
+	
 		InputHandler inputControl = new InputHandler();
 		window.addMouseListener(inputControl);
 		window.addMouseMotionListener(inputControl);

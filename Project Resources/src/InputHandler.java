@@ -1,7 +1,11 @@
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.Map;
+
+import javafx.util.Pair;
 
 /**
  * 
@@ -12,12 +16,24 @@ import java.util.Map;
  *
  */
 public class InputHandler implements MouseListener, MouseMotionListener {
-
+	
+	
+	
+	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
+			if(pairIn.getValue().getX() < mousePosition.getX() & pairIn.getValue().getY() < mousePosition.getY() 
+					& pairIn.getValue().getX()+pairIn.getKey().getWidth() > mousePosition.getX()
+					& pairIn.getValue().getY()+pairIn.getKey().getHeight() > mousePosition.getY() ){
+						
+				
+				return true;
+			}
+			return false;
+	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		
-		System.out.println("Mouse drag: "+ e.getX() + ", " + e.getY());
+//		System.out.println("Mouse drag: "+ e.getX() + ", " + e.getY());
 		
 	}
 
@@ -32,10 +48,13 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Mouse clicked at: "+ e.getX() + ", " + e.getY());
-//		for(Map.Entry<String, GameObject> obj : objectMap.entrySet()) {
-//			obj
-//		}
-		
+		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
+			if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
+				
+				System.out.println("Clickable object clicked.");
+				
+			}
+		}
 	}
 
 	@Override
