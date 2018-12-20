@@ -15,7 +15,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
+		System.out.println("Mouse drag");
 		
 	}
 
