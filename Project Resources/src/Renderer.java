@@ -101,7 +101,9 @@ public class Renderer implements Runnable{
            mainWindow.createBufferStrategy(3);
            return;
         }
+
         Graphics graphics = bs.getDrawGraphics();
+		graphics.clearRect(0, 0, Game.width, Game.height);
 		graphics.setColor(Color.black);
 		for(Map.Entry<String, GameObject> obj : objectMap.entrySet()) {
 			obj.getValue().render(graphics);
@@ -109,5 +111,6 @@ public class Renderer implements Runnable{
 
         graphics.dispose();
         bs.show();
+
 	}
 };
