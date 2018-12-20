@@ -33,7 +33,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		
-//		System.out.println("Mouse drag: "+ e.getX() + ", " + e.getY());
+//		if(checkContains(Pair<Dimension,Point>()))
 		
 	}
 
@@ -48,7 +48,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Mouse clicked at: "+ e.getX() + ", " + e.getY());
-		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
+		for(Map.Entry<String, GameObject> obj : Game.worldObjects.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
 					System.out.println("Clickable object clicked.");

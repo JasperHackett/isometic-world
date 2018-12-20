@@ -31,6 +31,14 @@ public class ObjectMap<String, GameObject> extends HashMap<String, GameObject> {
 	public GameObject getObject(String s) {
 		return (GameObject)this.get(s);
 	}
+
+	/**
+	 * 
+	 */
+	public void updateMainDisplayObjects() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

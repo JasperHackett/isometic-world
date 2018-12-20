@@ -24,17 +24,20 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static ObjectMap<String, GameObject> objectMap;
+	public static ObjectMap<String, GameObject> worldObjects;
+	public static ObjectMap<String, GameObject> otherObjects;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
 
-		objectMap = new ObjectMap<String, GameObject>();
+		worldObjects = new ObjectMap<String, GameObject>();
+		otherObjects = new ObjectMap<String, GameObject>();
 		GameWindow mainGameWindow = new GameWindow();
-		Image icon = new ImageIcon("assets/testImage.png").getImage();
+//		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
+		Image borderImage = new ImageIcon("assets/border.png").getImage();
 	
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -53,16 +56,21 @@ public class Game {
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer",window);
 		
+		GameObject border = new GameObject();
+		otherObjects.put("border", border);
+		otherObjects.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 		
 		//Test code
-		GameObject testObject = new GameObject();
-		objectMap.put("thing", testObject);
-		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
-		
+//		GameObject testObject = new GameObject();
+//		objectMap.put("thing", testObject);
+//		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
+//		
 		GameObject clickable = new GameObject();
 		
-		objectMap.put("clickable", clickable);
-		objectMap.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
+		otherObjects.put("clickable", clickable);
+		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
+		
+		
 		
 		
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
@@ -74,19 +82,7 @@ public class Game {
 
 		mainGameRenderer.start();
 
-		int i = 0;
-//		while(true) {
-//			
-//			
-			try {
-				Thread.sleep(100);
-				System.out.println("Pos of thing: " + objectMap.getObject("thing").getPosition().getValue().getX());
-				i++;
-				
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 
 
 
