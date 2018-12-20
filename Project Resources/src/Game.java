@@ -24,14 +24,14 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static ObjectMap<String, GameObject> objectMap;
+	public static ObjectMap objectMap;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		
 
-		objectMap = new ObjectMap<String, GameObject>();
+		objectMap = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
 		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
@@ -56,12 +56,12 @@ public class Game {
 		
 		//Test code
 		GameObject testObject = new GameObject();
-		objectMap.put("thing", testObject);
+		objectMap.addObject("thing", testObject);
 		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
 		
 		GameObject clickable = new GameObject();
 		
-		objectMap.put("clickable", clickable);
+		objectMap.addObject("clickable", clickable);
 		objectMap.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
 		
 		

@@ -13,7 +13,7 @@ import javafx.util.Pair;
  * @author Orly
  *
  */
-public class ObjectMap<String, GameObject> extends HashMap<String, GameObject> {
+public class ObjectMap extends HashMap<String, GameObject> {
 	
 	private HashMap<String, GameObject> mainDisplayObjects;
 	
@@ -52,8 +52,9 @@ public class ObjectMap<String, GameObject> extends HashMap<String, GameObject> {
 		
 		
 		for (Map.Entry<String, GameObject> mapEntry : this.entrySet()) {
-			GameObject testObject = mapEntry.getValue();
-			if (isWithinDisplay(testObject.getPosition(), new Pair(displayDimension, displayPoint)))
+			if (isWithinDisplay(mapEntry.getValue().getPosition(), new Pair(displayDimension, displayPoint))) {
+				mainDisplayObjects.put(String.valueOf(mapEntry.getValue()) , mapEntry.getValue());
+			}
 		}
 		
 	}
