@@ -56,13 +56,16 @@ public class Game {
 		
 		//Test code
 		GameObject testObject = new GameObject();
-		objectMap.put("thing", testObject);
-		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
+		mainGameRenderer.addObject("thing", testObject);
+		mainGameRenderer.getObject("thing").setProperties(new Dimension(800,6),new Point(0,0),icon);
 		
 		GameObject clickable = new GameObject();
 		
-		objectMap.put("clickable", clickable);
-		objectMap.get("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage);
+		mainGameRenderer.addObject("clickable", clickable);
+		mainGameRenderer.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage);
+		
+		
+		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
 		
 	
 		InputHandler inputControl = new InputHandler();
@@ -72,19 +75,19 @@ public class Game {
 		mainGameRenderer.start();
 
 		int i = 0;
-		while(true) {
-			
-			
-//			try {
-//				Thread.sleep(100);
-//				mainGameRenderer.getObject("thing").setProperties(new Dimension(0,0),new Point(i,i),icon);
-//				i++;
-//				
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-		}
+//		while(true) {
+//			
+//			
+////			try {
+////				Thread.sleep(100);
+////				mainGameRenderer.getObject("thing").setProperties(new Dimension(0,0),new Point(i,i),icon);
+////				i++;
+////				
+////			} catch (InterruptedException e) {
+////				// TODO Auto-generated catch block
+////				e.printStackTrace();
+////			}
+//		}
 
 
 

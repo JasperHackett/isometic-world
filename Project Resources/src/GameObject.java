@@ -32,6 +32,7 @@ public class GameObject {
 	
 	public void render(Graphics g) {
 		g.drawImage(objectImage, coords.x, coords.y, null);
+		
 	}
 	
 	public boolean isClickable(){
