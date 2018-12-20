@@ -24,7 +24,6 @@ public class Renderer implements Runnable{
 	private long startTime; 
 	private int delay;
 	private JFrame mainWindow;
-//	private Map<String,GameObject> objectMap;
 	private BufferedImage testImage;
 	private GameObject testGameObject;
 	
@@ -43,13 +42,6 @@ public class Renderer implements Runnable{
 	public Graphics getGraphic(){
 		return this.graphics;
 	}
-	
-//	public void addObject(String objectName, GameObject objectIn) {
-//		objectMap.put(objectName, objectIn);
-//	}
-//	public GameObject getObject(String objectName) {
-//		return objectMap.get(objectName);
-//	}
 	
 	
    public void start() {
@@ -102,7 +94,7 @@ public class Renderer implements Runnable{
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			obj.getValue().render(graphics);
 		}
-
+			
         graphics.dispose();
         bs.show();
 

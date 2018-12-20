@@ -65,6 +65,7 @@ public class Game {
 		objectMap.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
 		
 		
+		
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
 		
 	
