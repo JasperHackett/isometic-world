@@ -52,6 +52,10 @@ public class Game {
 		GameObject testObject = new GameObject();
 		mainGameRenderer.addObject("thing", testObject);
 		mainGameRenderer.getObject("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
+		
+		InputHandler inputControl = new InputHandler();
+		window.addMouseListener(inputControl);
+		window.addMouseMotionListener(inputControl);
 
 		mainGameRenderer.start();
 
