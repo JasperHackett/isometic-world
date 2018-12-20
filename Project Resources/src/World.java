@@ -37,8 +37,8 @@ public class World {
 			this.worldPoint = new Point(0,0);
 		}
 		this.worldPoint.x = this.worldPoint.x + ( mousePressPos.x - mousePos.x);
-		System.out.println(mousePos.x);
-		System.out.println(mousePressPos.x);
+//		System.out.println(mousePos.x);
+//		System.out.println(mousePressPos.x);
 		this.worldPoint.y = this.worldPoint.y + ( mousePressPos.y - mousePos.y);
 		System.out.println(this.worldPoint.x);
 		System.out.println(this.worldPoint.x + ( mousePressPos.x - mousePos.x));
