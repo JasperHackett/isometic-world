@@ -26,12 +26,13 @@ public class Game {
 	public static Renderer mainGameRenderer;
 	public static ObjectMap worldObjects;
 	public static ObjectMap otherObjects;
+	public static World gameWorld;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-
+		gameWorld = new World();
 		worldObjects = new ObjectMap();
 		otherObjects = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
@@ -68,8 +69,7 @@ public class Game {
 		GameObject clickable = new GameObject();
 
 		otherObjects.put("clickable", clickable);
-		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
-
+		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
 
 
 

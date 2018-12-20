@@ -17,6 +17,9 @@ import javafx.util.Pair;
  */
 public class InputHandler implements MouseListener, MouseMotionListener {
 	
+	private Point mousePressPos;
+	private boolean dragEnabled;
+	
 	
 	
 	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
@@ -32,8 +35,13 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		
-//		if(checkContains(Pair<Dimension,Point>()))
+//			mousePressPos = e.getPoint();
+		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
+			if(dragEnabled = true) {
+				Game.gameWorld.offsetDisplay(mousePressPos,e.getPoint());
+			}
+
+		}
 		
 	}
 
@@ -59,14 +67,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+
+		this.mousePressPos = e.getPoint();
+		
+		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
+			dragEnabled = true;
+		}
 		
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		dragEnabled = false;
 		
 	}
 
