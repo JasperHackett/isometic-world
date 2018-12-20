@@ -21,50 +21,42 @@ public class Renderer implements Runnable{
 	private String threadName;
 	private Graphics graphics;
 	private JFrame mainWindow;
-//	private Map<String,GameObject> objectMap;
 	private BufferedImage testImage;
 	private GameObject testGameObject;
-	
-	
-	
+
+
+
 	/**
 	 * @param name : name of thread
-	 * @param windowIn : 
+	 * @param windowIn :
 	 */
 	public Renderer(String name, JFrame windowIn){
 		threadName = name;
 		this.mainWindow = windowIn;
 
 	}
-	
+
 	public Graphics getGraphic(){
 		return this.graphics;
 	}
-	
-//	public void addObject(String objectName, GameObject objectIn) {
-//		objectMap.put(objectName, objectIn);
-//	}
-//	public GameObject getObject(String objectName) {
-//		return objectMap.get(objectName);
-//	}
-	
-	
+
+
    public void start() {
 	      if(t == null) {
 	    	  t = new Thread(this, threadName);
 	    	  t.start();
 	      }
    }
-	
+
    public void run() {
-	   
+
 	   long lastTime = System.nanoTime();
 	   double tickCount = 60;
-	   double ns = 1000000000 / tickCount;       
+	   double ns = 1000000000 / tickCount;
 	   double delta = 0;
        long timer = System.currentTimeMillis();
        int frames = 0;
-	   
+
 	   while(true) {
 		   long now = System.nanoTime();
 		   delta += (now - lastTime) / ns;
@@ -82,7 +74,7 @@ public class Renderer implements Runnable{
 	   }
 
    }
-   
+
 
 
 	public void renderFrame() {
@@ -101,8 +93,8 @@ public class Renderer implements Runnable{
 		for(Map.Entry<String, GameObject> obj : Game.otherObjects.entrySet()) {
 			obj.getValue().render(graphics);
 		}
-		
-		
+
+
 
         graphics.dispose();
         bs.show();

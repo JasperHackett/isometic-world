@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
- * 
+ *
  */
 
 /**
@@ -30,7 +30,7 @@ public class Game {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 
 		worldObjects = new ObjectMap<String, GameObject>();
 		otherObjects = new ObjectMap<String, GameObject>();
@@ -38,13 +38,13 @@ public class Game {
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		Image borderImage = new ImageIcon("assets/border.png").getImage();
-	
+
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension dim = new Dimension (width, height);
-		
+
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
 		window.setMinimumSize(dim);
@@ -52,30 +52,31 @@ public class Game {
 		window.setLocationRelativeTo(null);
 
 		window.setVisible(true);
-		
+
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer",window);
-		
+
 		GameObject border = new GameObject();
 		otherObjects.put("border", border);
 		otherObjects.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
-		
+
 		//Test code
 //		GameObject testObject = new GameObject();
 //		objectMap.put("thing", testObject);
 //		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
-//		
+//
 		GameObject clickable = new GameObject();
-		
+
 		otherObjects.put("clickable", clickable);
 		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(1500,0),clickableImage,true);
-		
-		
-		
-		
+
+
+
+
+
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
-		
-	
+
+
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
@@ -86,11 +87,11 @@ public class Game {
 
 
 
-		
 
-	}		
-	
-	
-	
+
+	}
+
+
+
 
 }

@@ -19,6 +19,7 @@ public class GameObject {
 	private Point coords; //Top left corner of object
 	private Image objectImage; //test for a single image object
 	private boolean clickable;
+	private boolean isVisible;
 	
 	public void setProperties(Dimension dimIn, Point posIn, Image imageIn) {
 		this.dim = dimIn;
@@ -45,5 +46,13 @@ public class GameObject {
 	
 	public boolean isClickable(){
 		return clickable;
+	}
+	
+	public boolean isVisible(){
+		return isVisible;
+	}
+	
+	public void setVisible(boolean isVisible){
+		this.isVisible = isVisible;
 	}
 }
