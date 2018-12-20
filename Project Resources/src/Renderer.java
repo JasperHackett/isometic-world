@@ -20,9 +20,6 @@ public class Renderer implements Runnable{
 	private Thread t;
 	private String threadName;
 	private Graphics graphics;
-	private Canvas canvas;
-	private long startTime; 
-	private int delay;
 	private JFrame mainWindow;
 //	private Map<String,GameObject> objectMap;
 	private BufferedImage testImage;
@@ -55,7 +52,6 @@ public class Renderer implements Runnable{
    public void start() {
 	      if(t == null) {
 	    	  t = new Thread(this, threadName);
-	    	  startTime = System.currentTimeMillis();
 	    	  t.start();
 	      }
    }
