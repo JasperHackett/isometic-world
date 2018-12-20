@@ -80,6 +80,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		dragEnabled = false;
+		mousePressPos = null;
 		
 	}
 

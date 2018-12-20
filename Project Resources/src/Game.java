@@ -82,9 +82,9 @@ public class Game {
 //		otherObjects.put("clickable", clickable);
 //		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
 
-		WorldObject test1 = new WorldObject();
+		WorldObject test1 = new WorldObject(ObjectType.WORLD);
 		test1.setProperties(new Dimension(100, 100), new Point(100, 100), new ImageIcon("assets/blueSquare.png").getImage());
-		objectMap.addWorldObject("test1", test1);
+		objectMap.addObject(ObjectType.WORLD,"test1", test1);
 
 
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
