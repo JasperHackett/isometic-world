@@ -35,7 +35,7 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 
-		gameWorld = new World();
+		gameWorld = new World(new Dimension(width * 4, height * 4));
 		objectMap = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
@@ -65,7 +65,7 @@ public class Game {
 
 		window.setVisible(true);
 
-		graphics = window.getGraphics();
+		graphics = window.getContentPane().getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -83,7 +83,7 @@ public class Game {
 //		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
 
 		WorldObject test1 = new WorldObject();
-		test1.setProperties(new Dimension(100, 100), new Point(100, 100), new ImageIcon("assets/blueSquare.png").getImage());
+		test1.setProperties(new Dimension(100, 100), new Point(101, 101), new ImageIcon("assets/blueSquare.png").getImage());
 		objectMap.addWorldObject("test1", test1);
 
 

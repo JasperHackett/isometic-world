@@ -13,17 +13,20 @@ import javafx.util.Pair;
  */
 public class World {
 	
+	// panelDims = dimensions of the main display (the portion of the world currently being rendered)
+	// panelPoint = true location of the top left corner of the main display - (100, 100) relative to the ContentPane
+	// worldDims = dimensions of the entire world, including parts not currently being rendered
+	// worldPoint = the point within the world which is currently corresponding to panelPoint
 	public Dimension panelDims;
 	public Point panelPoint;
-	
 	public Dimension worldDims;
 	public Point worldPoint;
 	
-	World() {
+	World(Dimension worldDims) {
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
 		worldPoint = new Point(100,100);
-		worldDims = new Dimension(1400,700);
+		this.worldDims = worldDims;
 	}
 	
 	public void updateDisplay() {
