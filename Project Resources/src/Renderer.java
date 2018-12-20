@@ -27,8 +27,8 @@ public class Renderer implements Runnable{
 
 
 	/**
-	 * @param name : name of thread
-	 * @param windowIn :
+	 *  
+	 * 
 	 */
 	public Renderer(String name, JFrame windowIn){
 		threadName = name;
@@ -48,6 +48,10 @@ public class Renderer implements Runnable{
 	      }
    }
 
+	/**
+	 *  FPS counter
+	 * 
+	 */
    public void run() {
 
 	   long lastTime = System.nanoTime();
@@ -75,8 +79,10 @@ public class Renderer implements Runnable{
 
    }
 
-
-
+	/**
+	 *  Iterates through the set of worldObjects then the set of otherObjects and renders them
+	 * 
+	 */
 	public void renderFrame() {
 		BufferStrategy bs = mainWindow.getBufferStrategy();
         if (bs == null) {
