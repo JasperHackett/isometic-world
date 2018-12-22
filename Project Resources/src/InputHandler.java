@@ -26,8 +26,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			if(pairIn.getValue().getX() < mousePosition.getX() && pairIn.getValue().getY() < mousePosition.getY() 
 					&& pairIn.getValue().getX()+pairIn.getKey().getWidth() > mousePosition.getX()
 					&& pairIn.getValue().getY()+pairIn.getKey().getHeight() > mousePosition.getY() ){
-						
-				
+		
 				return true;
 			}
 			return false;

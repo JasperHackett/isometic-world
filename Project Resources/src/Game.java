@@ -23,19 +23,24 @@ import javax.swing.JFrame;
  */
 public class Game {
 
-	public static final int width = 1600;
-	public static final int height = 900;
+	public static int width;
+	public static int height;;
+	public static int worldWidth;
+	public static int worldHeight;
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
 	public static ObjectMap objectMap;
 	public static World gameWorld;
+	public static SettingsHandler settingsControl;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-		gameWorld = new World(new Dimension(2500,2500));
+		settingsControl = new SettingsHandler();
+		settingsControl.loadSettings();
+		gameWorld = new World(new Dimension(worldWidth,worldHeight));
 		objectMap = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
