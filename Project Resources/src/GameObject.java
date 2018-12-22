@@ -49,11 +49,11 @@ public class GameObject {
 		this.dim = dimIn;
 	}
 	
+	/**
+	 * called on each object every frame, draws the objects image(s) to the main window
+	 */
 	public void render(Graphics g) {
 		g.drawImage(this.objectImage, coords.x, coords.y, null);
-
-//		System.out.println(coords.x);
-		
 	}
 	
 	public boolean isClickable(){

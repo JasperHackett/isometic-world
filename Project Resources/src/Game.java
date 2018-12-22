@@ -48,14 +48,7 @@ public class Game {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Dimension dim = new Dimension (width, height);
-//
-//		 try {
-//	            URL resource = window.getClass().getResource(icon);
-//	            BufferedImage image = ImageIO.read(resource);
-//	            window.setIconImage(image);
-//	        } catch (IOException e) {
-//	            e.printStackTrace();
-//	        }
+
 
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
