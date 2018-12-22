@@ -78,7 +78,6 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
 			if (true /*isWithinDisplay(mapEntry.getValue().getPosition(), new Pair<Dimension,Point>(displayDimension, displayPoint)) && mapEntry.getValue().type == ObjectType.WORLD*/ ) {
-				System.out.println(mapEntry.getValue().getPosition());
 				mainDisplayObjects.put(mapEntry.getKey() , mapEntry.getValue());
 
 			}

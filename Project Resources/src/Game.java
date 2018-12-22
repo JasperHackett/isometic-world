@@ -35,13 +35,14 @@ public class Game {
 	 */
 	public static void main(String[] args) {
 
-		gameWorld = new World();
+		gameWorld = new World(new Dimension(2500,2500));
 		objectMap = new ObjectMap();
 		GameWindow mainGameWindow = new GameWindow();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		Image borderImage = new ImageIcon("assets/border.png").getImage();
 		Image icon = new ImageIcon("assets/testImage.png").getImage();
+		Image background = new ImageIcon("assets/background_draggable.png").getImage();
 
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -63,6 +64,7 @@ public class Game {
 
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
+
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 		
 		//Test code
@@ -81,6 +83,9 @@ public class Game {
 		objectMap.addWorldObject("bluesquare", test1);
 		objectMap.updateMainDisplayObjects();
 //		test1.setPosition(gameWorld.getMainDisplayCoords(), displayPanelPoint);;
+		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
+		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
+		objectMap.addWorldObject("background", backgroundObj);
 
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
 

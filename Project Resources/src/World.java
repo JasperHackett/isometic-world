@@ -14,18 +14,20 @@ import javafx.util.Pair;
  */
 public class World {
 	
-	public Dimension panelDims;
-	public Point panelPoint;
+	
+	public Dimension panelDims;	// dimensions of the main display (the portion of the world currently being rendered)
+	public Point panelPoint; // true location of the top left corner of the main display - (100, 100) relative to the ContentPane
 	
 	public Dimension worldDims;
 	public Point worldPoint;
 	public Point staticWorldPoint;
 	
-	World() {
+
+	World(Dimension worldDims)  {
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
 		worldPoint = new Point(50,50);
-		worldDims = new Dimension(1400,700);
+		this.worldDims = worldDims;
 	}
 	
 	/**
@@ -55,12 +57,34 @@ public class World {
 			this.staticWorldPoint = this.worldPoint.getLocation();
 		}
 
-		System.out.println(("STATIC WORLD POINT:" +  staticWorldPoint.y));
 		this.worldPoint.y = staticWorldPoint.y + ((( mousePressPos.y - mousePos.y)) );
 		this.worldPoint.x = staticWorldPoint.x + ((( mousePressPos.x - mousePos.x)) );
+		if(!withinBounds(this.worldPoint)) {
+			if(worldPoint.y < 0) {
+				worldPoint.y = 0;
+			}
+			if(worldPoint.x < 0) {
+				worldPoint.x = 0;
+			}
+			if(worldPoint.x + panelDims.width > worldDims.width) {
+				worldPoint.x = worldDims.width-panelDims.width;
+			}
+			if(worldPoint.y + panelDims.height > worldDims.height) {
+				worldPoint.y = worldDims.height-panelDims.height;
+			}
+					
+				
+		}
 
 		updateDisplay();
 		
+	}
+	
+	public boolean withinBounds(Point worldPointIn) {
+		if(worldPointIn.y > 0 && worldPointIn.x > 0 && worldPointIn.x+panelDims.width < worldDims.width && worldPointIn.y+panelDims.height < worldDims.height) {
+			return true;
+		}
+		return false;
 	}
 
 }
