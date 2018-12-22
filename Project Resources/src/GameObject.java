@@ -21,6 +21,7 @@ public class GameObject {
 	private boolean clickable;
 	private boolean isVisible;
 	public ObjectType type;
+	public String clickTag;
 	
 	public GameObject(ObjectType type) {
 		this.type = type;
@@ -30,6 +31,13 @@ public class GameObject {
 		this.dim = dimIn;
 		this.coords = posIn;
 		this.objectImage = imageIn;
+	}
+	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable, String clickTag) {
+		this.dim = dimIn;
+		this.coords = posIn;
+		this.objectImage = imageIn;
+		this.clickTag = clickTag;
+		this.clickable = clickable;
 	}
 	
 	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable) {

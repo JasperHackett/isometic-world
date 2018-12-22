@@ -34,11 +34,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-//			mousePressPos = e.getPoint();
+
 //		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
-			if(dragEnabled == true) {
-				Game.gameWorld.offsetDisplay(mousePressPos,e.getPoint());
-				
+			if(dragEnabled == true && Game.currentState == Game.STATE.Game) {
+				Game.gameWorld.offsetDisplay(mousePressPos,e.getPoint());	
 //			}
 
 		}
@@ -59,7 +58,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
-					System.out.println("Clickable object clicked.");
+					if(obj.getValue().clickTag == "mainmenustart") {
+						Game.currentState = Game.STATE.Game;
+					}
 				}
 			}
 		}

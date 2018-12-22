@@ -17,6 +17,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	private HashMap<String, WorldObject> mainDisplayObjects;
 	private HashMap<String, WorldObject> worldObjects;
+	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
 
 	public ObjectMap(){
@@ -24,11 +25,15 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		mainDisplayObjects = new HashMap<String, WorldObject>();
 		worldObjects = new HashMap<String, WorldObject>();
 		otherObjects = new HashMap<String, GameObject>();
+		menuObjects = new HashMap<String,GameObject>();
 	}
 
 	public void addObject(ObjectType type, String s, GameObject obj) {
 		this.put(s, obj);
 		switch(type) {
+			case MAINMENU:
+				menuObjects.put(s, obj);
+				break;
 			case DEFAULT:
 				otherObjects.put(s,obj);
 				break;
@@ -68,6 +73,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 	public Map<String, GameObject> getOtherObjects() {
 		return otherObjects;
+	}
+	public Map<String, GameObject> getMenuObjects() {
+		return menuObjects;
 	}
 	public Map<String, WorldObject> WorldObjects() {
 		return worldObjects;

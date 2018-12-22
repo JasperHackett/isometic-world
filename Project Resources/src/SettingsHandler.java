@@ -32,6 +32,7 @@ public class SettingsHandler {
 						settingsList.add(lineIterator);
 						lineIterator = bufferedReader.readLine();
 					}
+					bufferedReader.close();
 				} catch (IOException e) {
 					System.out.println("Unable to read settings.txt properly");
 				}
@@ -40,6 +41,7 @@ public class SettingsHandler {
 				System.out.println("Unable to find settings.txt file");
 			}
 			
+//			bufferedReader.close();
 			int settingsDelimiterPos; //Stores position of ':' in a setting String
 			
 			//Iterate through settings.txt checking for entries that match: [valid setting name]:[setting value] and applying them
@@ -68,6 +70,9 @@ public class SettingsHandler {
 					}
 				}
 			}
+			System.out.println("Loaded settings.txt");
 		}
+		
+		
 
 }

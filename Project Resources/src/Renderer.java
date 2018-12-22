@@ -1,16 +1,10 @@
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
 
 /**
  * @author Jasper
@@ -21,8 +15,6 @@ public class Renderer implements Runnable{
 	private String threadName;
 	private Graphics graphics;
 	private JFrame mainWindow;
-	private BufferedImage testImage;
-	private GameObject testGameObject;
 	public int frames;
 
 
@@ -94,8 +86,14 @@ public class Renderer implements Runnable{
         Graphics graphics = bs.getDrawGraphics();
 		graphics.clearRect(0, 0, Game.width, Game.height);
 		graphics.setColor(Color.black);
-		for(Map.Entry<String, WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
-			obj.getValue().render(graphics);
+		if(Game.currentState == Game.STATE.Game) {
+			for(Map.Entry<String, WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
+				obj.getValue().render(graphics);
+			}
+		}else if(Game.currentState == Game.STATE.Menu) {
+			for(Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {
+				obj.getValue().render(graphics);
+			}
 		}
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
 			obj.getValue().render(graphics);

@@ -33,6 +33,12 @@ public class Game {
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static SettingsHandler settingsControl;
+	public enum STATE{
+		Menu,
+		Exiting,
+		Game
+	}
+	public static STATE currentState;
 	/**
 	 * @param args
 	 */
@@ -40,9 +46,9 @@ public class Game {
 
 		settingsControl = new SettingsHandler();
 		settingsControl.loadSettings();
+		currentState = STATE.Menu;
 		gameWorld = new World(new Dimension(worldWidth,worldHeight));
 		objectMap = new ObjectMap();
-		GameWindow mainGameWindow = new GameWindow();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		Image borderImage = new ImageIcon("assets/border.png").getImage();
@@ -67,8 +73,11 @@ public class Game {
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
+		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
+		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
+		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), clickableImage,true,"mainmenustart");
 
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 		
