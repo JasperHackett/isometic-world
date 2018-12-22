@@ -97,7 +97,7 @@ public class Renderer implements Runnable{
 		for(Map.Entry<String, WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
 			obj.getValue().render(graphics);
 		}
-		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
+		for(Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
 			obj.getValue().render(graphics);
 		}
 

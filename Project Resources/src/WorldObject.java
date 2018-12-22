@@ -20,9 +20,9 @@ public class WorldObject extends GameObject {
 		this.worldPoint = worldPointIn;
 	}
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
-		this.coords.setLocation((displayPanelPoint.getX() + (this.coords.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.coords.getY() - worldPointIn.getY()))));
+		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
 //		this.coords.x =;
-//		this.coords.y = ;
+//		this.coords.y = ;00
 	}
 
 	/**

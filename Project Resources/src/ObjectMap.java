@@ -28,19 +28,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public void addObject(ObjectType type, String s, GameObject obj) {
 		this.put(s, obj);
-//		switch(type) {
-//		
-//		case WORLD:
-//			System.out.println("Added world object");
-//			worldObjects.put(s, obj);
-//			
-//			break;
-//		case DEFAULT:
-//			
-//			break;
-//		default:
-//		break;
-//		}
+		switch(type) {
+			case DEFAULT:
+				otherObjects.put(s,obj);
+				break;
+			default:
+				break;
+		}
+
 	}
 
 
@@ -78,7 +73,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return worldObjects;
 	}
 
-	public void updateMainDisplayObjects(Dimension displayDimension, Point displayPoint){
+	public void updateMainDisplayObjects(/*Dimension displayDimension, Point displayPoint*/){
 		mainDisplayObjects = new HashMap<String, WorldObject>();
 
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {

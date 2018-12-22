@@ -69,9 +69,9 @@ public class Game {
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
 		GameObject border = new GameObject(ObjectType.DEFAULT);
-		objectMap.put("border", border);
+		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
-
+		
 		//Test code
 //		GameObject testObject = new GameObject();
 //		objectMap.put("thing", testObject);
@@ -86,7 +86,8 @@ public class Game {
 		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
 		objectMap.addObject(ObjectType.WORLD,"test1", test1);
 		objectMap.addWorldObject("bluesquare", test1);
-
+		objectMap.updateMainDisplayObjects();
+//		test1.setPosition(gameWorld.getMainDisplayCoords(), displayPanelPoint);;
 
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
 
