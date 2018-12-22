@@ -46,21 +46,21 @@ public class World {
 		if(this.staticWorldPoint == null) {
 			this.staticWorldPoint = this.worldPoint;
 		}
-		if(mousePos.x > mousePressPos.x) {
-			this.worldPoint.x++;;
-		}else {
-			this.worldPoint.x--;
-		}
-		if(mousePos.y > mousePressPos.y) {
-			this.worldPoint.y++;;
-		}else {
-			this.worldPoint.y--;
-		}
+//		if(mousePos.x > mousePressPos.x) {
+//			this.worldPoint.x++;;
+//		}else {
+//			this.worldPoint.x--;
+//		}
+//		if(mousePos.y > mousePressPos.y) {
+//			this.worldPoint.y++;;
+//		}else {
+//			this.worldPoint.y--;
+//		}
 
 //		System.out.println(mousePos.x);
 //		System.out.println(mousePressPos.x);
-//		this.worldPoint.y = this.staticWorldPoint.y + ((( mousePressPos.y - mousePos.y)));
-//		this.worldPoint.x = this.staticWorldPoint.x + ((( mousePressPos.x - mousePos.x)));
+		this.worldPoint.y = this.staticWorldPoint.y + ((( mousePressPos.y - mousePos.y)) );
+		this.worldPoint.x = this.staticWorldPoint.x + ((( mousePressPos.x - mousePos.x)) );
 //		System.out.println(this.worldPoint.x);
 //		System.out.println(this.worldPoint.x + ( mousePressPos.x - mousePos.x));
 		updateDisplay();
