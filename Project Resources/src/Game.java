@@ -82,9 +82,10 @@ public class Game {
 //		otherObjects.put("clickable", clickable);
 //		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
 
-		WorldObject test1 = new WorldObject(ObjectType.WORLD);
-		test1.setProperties(new Dimension(100, 100), new Point(100, 100), new ImageIcon("assets/blueSquare.png").getImage());
+		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
+		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
 		objectMap.addObject(ObjectType.WORLD,"test1", test1);
+		objectMap.addWorldObject("bluesquare", test1);
 
 
 //		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
@@ -95,6 +96,9 @@ public class Game {
 		window.getContentPane().addMouseMotionListener(inputControl);
 
 		mainGameRenderer.start();
+//		while(true) {
+//			gameWorld.updateDisplay();
+//		}
 
 
 

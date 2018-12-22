@@ -23,6 +23,7 @@ public class Renderer implements Runnable{
 	private JFrame mainWindow;
 	private BufferedImage testImage;
 	private GameObject testGameObject;
+	public int frames;
 
 
 
@@ -59,7 +60,7 @@ public class Renderer implements Runnable{
 	   double ns = 1000000000 / tickCount;
 	   double delta = 0;
        long timer = System.currentTimeMillis();
-       int frames = 0;
+       frames = 0;
 
 	   while(true) {
 		   long now = System.nanoTime();

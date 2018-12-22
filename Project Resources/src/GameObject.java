@@ -15,8 +15,8 @@ import javafx.util.Pair;
  */
 public class GameObject {
 	
-	private Dimension dim; //Dimensions of object
-	private Point coords; //Top left corner of object
+	protected Dimension dim; //Dimensions of object
+	protected Point coords; //Top left corner of object
 	private Image objectImage; //test for a single image object
 	private boolean clickable;
 	private boolean isVisible;
@@ -44,8 +44,15 @@ public class GameObject {
 		return newPos;
 	}
 	
+	public void setPosition(Dimension dimIn, Point posIn) {
+		this.coords = posIn;
+		this.dim = dimIn;
+	}
+	
 	public void render(Graphics g) {
 		g.drawImage(this.objectImage, coords.x, coords.y, null);
+
+//		System.out.println(coords.x);
 		
 	}
 	

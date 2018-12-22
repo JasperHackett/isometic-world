@@ -80,10 +80,12 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public void updateMainDisplayObjects(Dimension displayDimension, Point displayPoint){
 		mainDisplayObjects = new HashMap<String, WorldObject>();
+
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
-			if (isWithinDisplay(mapEntry.getValue().getPosition(), new Pair(displayDimension, displayPoint)) && mapEntry.getValue().type == ObjectType.WORLD ) {
+			if (true /*isWithinDisplay(mapEntry.getValue().getPosition(), new Pair<Dimension,Point>(displayDimension, displayPoint)) && mapEntry.getValue().type == ObjectType.WORLD*/ ) {
+				System.out.println(mapEntry.getValue().getPosition());
 				mainDisplayObjects.put(mapEntry.getKey() , mapEntry.getValue());
-				System.out.println("update main display");
+
 			}
 		}
 
@@ -129,3 +131,4 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return false;
 	}
 }
+

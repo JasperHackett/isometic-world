@@ -1,3 +1,6 @@
+import java.awt.Dimension;
+import java.awt.Point;
+
 /**
  *
  */
@@ -7,9 +10,19 @@
  *
  */
 public class WorldObject extends GameObject {
+	
+	Dimension worldDims;
+	Point worldPoint;
 
-	public WorldObject(ObjectType type) {
+	public WorldObject(ObjectType type, Dimension worldDimsIn, Point worldPointIn) {
 		super(ObjectType.WORLD);
+		this.worldDims = worldDimsIn;
+		this.worldPoint = worldPointIn;
+	}
+	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
+		this.coords.setLocation((displayPanelPoint.getX() + (this.coords.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.coords.getY() - worldPointIn.getY()))));
+//		this.coords.x =;
+//		this.coords.y = ;
 	}
 
 	/**
