@@ -67,33 +67,23 @@ public class Game {
 
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 		
-		//Test code
-//		GameObject testObject = new GameObject();
-//		objectMap.put("thing", testObject);
-//		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
-//
-//		GameObject clickable = new GameObject();
-//
-//		otherObjects.put("clickable", clickable);
-//		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
-
+		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
+		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
+		objectMap.addWorldObject("background", backgroundObj);
+		
 		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
 		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
 		objectMap.addObject(ObjectType.WORLD,"test1", test1);
 		objectMap.addWorldObject("bluesquare", test1);
-		objectMap.updateMainDisplayObjects();
-//		test1.setPosition(gameWorld.getMainDisplayCoords(), displayPanelPoint);;
-		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
-		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
-		objectMap.addWorldObject("background", backgroundObj);
 
-//		objectMap.get("thing").setProperties(new Dimension(0,0),new Point(0,0),icon);
+
 
 
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
 
+		objectMap.updateMainDisplayObjects();
 		mainGameRenderer.start();
 //		while(true) {
 //			gameWorld.updateDisplay();
