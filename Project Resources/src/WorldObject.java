@@ -21,8 +21,7 @@ public class WorldObject extends GameObject {
 	}
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
 		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
-//		this.coords.x =;
-//		this.coords.y = ;00
+
 	}
 
 	/**

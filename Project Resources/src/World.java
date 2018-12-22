@@ -44,7 +44,8 @@ public class World {
 	}
 	public void offsetDisplay(Point mousePressPos, Point mousePos) {
 		if(this.staticWorldPoint == null) {
-			this.staticWorldPoint = this.worldPoint;
+			System.out.println(("STATIC WORLD POINULL"));
+			this.staticWorldPoint = this.worldPoint.getLocation();
 		}
 //		if(mousePos.x > mousePressPos.x) {
 //			this.worldPoint.x++;;
@@ -57,10 +58,10 @@ public class World {
 //			this.worldPoint.y--;
 //		}
 
-//		System.out.println(mousePos.x);
-//		System.out.println(mousePressPos.x);
-		this.worldPoint.y = this.staticWorldPoint.y + ((( mousePressPos.y - mousePos.y)) );
-		this.worldPoint.x = this.staticWorldPoint.x + ((( mousePressPos.x - mousePos.x)) );
+		System.out.println(( mousePressPos.y - mousePos.y));
+		System.out.println(("STATIC WORLD POINT:" +  staticWorldPoint.y));
+		this.worldPoint.y = staticWorldPoint.y + ((( mousePressPos.y - mousePos.y)) );
+		this.worldPoint.x = staticWorldPoint.x + ((( mousePressPos.x - mousePos.x)) );
 //		System.out.println(this.worldPoint.x);
 //		System.out.println(this.worldPoint.x + ( mousePressPos.x - mousePos.x));
 		updateDisplay();
