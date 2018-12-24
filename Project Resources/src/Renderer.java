@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 import javax.swing.JFrame;
 
@@ -16,6 +17,7 @@ public class Renderer implements Runnable{
 	private Graphics graphics;
 	private JFrame mainWindow;
 	public int frames;
+	public static Semaphore semaphore = new Semaphore(1);
 
 
 
@@ -85,7 +87,15 @@ public class Renderer implements Runnable{
 
         Graphics graphics = bs.getDrawGraphics();
 		graphics.clearRect(0, 0, Game.width, Game.height);
-		graphics.setColor(Color.black);
+		
+		try {
+			semaphore.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		if(Game.currentState == Game.STATE.Game) {
 			for(Map.Entry<String, WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
 				obj.getValue().render(graphics);
@@ -103,6 +113,8 @@ public class Renderer implements Runnable{
 
         graphics.dispose();
         bs.show();
+        
+        semaphore.release();
 
 	}
 };

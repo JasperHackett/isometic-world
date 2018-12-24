@@ -82,6 +82,15 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public void updateMainDisplayObjects(/*Dimension displayDimension, Point displayPoint*/){
+		
+		try {
+			Game.mainGameRenderer.semaphore.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		mainDisplayObjects = new HashMap<String, WorldObject>();
 
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
@@ -90,6 +99,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 			}
 		}
+		
+		Game.mainGameRenderer.semaphore.release();
 
 	}
 
