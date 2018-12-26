@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -49,25 +50,58 @@ public class World {
 	public boolean newTileObject() {
 		return false;
 	}
+	
 
 	public void initialiseTileMap() {
+		
+		Point nextTileWorldCoords = new Point(-2500,-1000);
+		System.out.println(nextTileWorldCoords.x);
 		BufferedReader br = null;
 		String line = "";
 		String delim = ",";
 		
+//		int tileX = 600;
+//		int tileY = 600;
+//		int tileCount = 0;
 			try {
 				br = new BufferedReader(new FileReader("tilemap.csv"));
+				int j = 0;
 				while((line = br.readLine()) != null){
 					String[] tileLine = line.split(delim);
 					
-					
+					IsometricTile.TILESET tileType = null;
 					for(int i = 0; i < tileLine.length; i++) {
-//						if(tileLine[i] == 'g') {
+
+						if(tileLine[i].compareTo("g") == 0) {
+							tileType = IsometricTile.TILESET.grass;
+						}else if(tileLine[i].compareTo("w") == 0){
+							tileType = IsometricTile.TILESET.water;
+						}
+						if(tileType != null) {
+							Game.objectMap.addWorldTile(nextTileWorldCoords,tileType);
+							System.out.println(nextTileWorldCoords);
+							nextTileWorldCoords = new Point(nextTileWorldCoords.x + 32, nextTileWorldCoords.y);
+						}
+
+
+//								Random randomNum = new Random();
+//								int rn = randomNum.nextInt(3);
+//								IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
+//								
+//								String tileName = "grasstile"+Integer.toString(rn);
+//								testTile.setProperties(new Dimension(64,32),new Point(900,900),tileName,false);
+//								objectMap.addWorldObject(tileID, testTile);
+//								tileCount++;
+//							}
+//							tileY = tileY + 32;
+//							tileX = 600;
+//						}
 //							
 //						}
 					}
 //					System.out.println();
-
+					nextTileWorldCoords = new Point(0, nextTileWorldCoords.y+32);
+					j++;
 				}
 				br.close();
 			

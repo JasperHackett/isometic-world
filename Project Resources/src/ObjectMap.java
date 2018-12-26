@@ -1,10 +1,15 @@
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import javafx.util.Pair;
@@ -23,7 +28,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	private HashMap<String, WorldObject> worldObjects;
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
-	private HashMap<String, IsometricTile> worldTiles;
+	private HashMap<Point,IsometricTile> worldTiles;
 	private HashMap<String, Image> imageMap;
 
 	public ObjectMap(){
@@ -33,6 +38,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		otherObjects = new HashMap<String, GameObject>();
 		menuObjects = new HashMap<String,GameObject>();
 		imageMap = new HashMap<String,Image>();
+		worldTiles = new HashMap<Point,IsometricTile>();
 	}
 
 	public void addObject(ObjectType type, String s, GameObject obj) {
@@ -59,12 +65,34 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			worldObjects.put(s, obj);
 		}
 	}
+	public Point toIsometric(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+		tempPoint.x =  pointIn.x - pointIn.y;
+		tempPoint.y = (pointIn.x + pointIn.y) /2;
+		
+		
+		return(tempPoint);
+	}
 	
-	public void addWorldTile(String s,  IsometricTile.TILESET tileset) {
-		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(100, 100), new Point(300, 300),IsometricTile.TILESET.grass);
-		this.put(s, newTile);
-		worldObjects.put(s, newTile);
-		worldTiles.put(s, newTile);
+	public void addWorldTile(Point pointIn, IsometricTile.TILESET tileset) {
+		
+		
+		
+		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), toIsometric(new Point(pointIn.x, pointIn.y)),IsometricTile.TILESET.grass);
+		Random randomNum = new Random();
+		int rn = randomNum.nextInt(3);
+		String tileName = "";
+		if(tileset == IsometricTile.TILESET.grass) {
+			tileName = "grasstile" + Integer.toString(rn);
+		}else if(tileset == IsometricTile.TILESET.water) {
+			tileName = "watertile" + Integer.toString(rn);
+		}
+
+		newTile.setProperties(new Dimension(64,32),new Point(600,600),tileName,false);
+		tileName= Integer.toString(pointIn.x) + ":" + Integer.toString(pointIn.y);
+		this.put(tileName, newTile);
+		worldObjects.put(tileName, newTile);
+		worldTiles.put(pointIn, newTile);
 		
 		
 //		Random randomNum = new Random();
@@ -79,12 +107,22 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		Image newImage = new ImageIcon(FilePath).getImage();
 		imageMap.put(imgID, newImage);
 	}
-	public void addTileImage(String imgID, String FilePath,int tileCount) {
+	public void addTileImage(String imgID, String FilePath,Dimension tileDims,int tileCount) {
+		String imgName;
+		BufferedImage tilesheet = null;
+				try {
+					tilesheet = ImageIO.read(new File(FilePath));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Image newImage = null;	
 		for(int i = 0; i < tileCount; i++) {
-			
+			newImage = tilesheet.getSubimage(tileDims.width*i,0,tileDims.width,tileDims.height);
+			imgName = imgID + Integer.toString(i);
+			imageMap.put(imgName,newImage);
 		}
-		Image newImage = new ImageIcon(FilePath).getImage();
-		imageMap.put(imgID, newImage);
+
+//		imageMap.put(imgID,newImage);
 	}
 	public Image getImage(String imgID) {
 		return this.imageMap.get(imgID);

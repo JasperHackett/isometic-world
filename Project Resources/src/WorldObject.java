@@ -15,6 +15,8 @@ public class WorldObject extends GameObject {
 	
 	private Dimension worldDims;
 	private Point worldPoint;
+	
+	private Point isoPoint;
 
 	public WorldObject(ObjectType type, Dimension worldDimsIn, Point worldPointIn) {
 		super(ObjectType.WORLD);
