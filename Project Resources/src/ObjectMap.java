@@ -1,10 +1,14 @@
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import javafx.util.Pair;
@@ -79,12 +83,23 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		Image newImage = new ImageIcon(FilePath).getImage();
 		imageMap.put(imgID, newImage);
 	}
-	public void addTileImage(String imgID, String FilePath,int tileCount) {
+	public void addTileImage(String imgID, String FilePath,Dimension tileDims,int tileCount) {
+		String imgName;
+		BufferedImage tilesheet = null;
+				try {
+					tilesheet = ImageIO.read(new File(FilePath));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Image newImage = null;	
 		for(int i = 0; i < tileCount; i++) {
-			
+			newImage = tilesheet.getSubimage(tileDims.width*i,0,tileDims.width,tileDims.height);
+			imgName = imgID + Integer.toString(i);
+			System.out.println(imgName);
+			imageMap.put(imgName,newImage);
 		}
-		Image newImage = new ImageIcon(FilePath).getImage();
-		imageMap.put(imgID, newImage);
+
+//		imageMap.put(imgID,newImage);
 	}
 	public Image getImage(String imgID) {
 		return this.imageMap.get(imgID);

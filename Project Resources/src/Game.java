@@ -56,8 +56,9 @@ public class Game {
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		
 		objectMap.addImage("border", "assets/border.png");
-		objectMap.addImage("tile", "assets/grasstiles.png");
+//		objectMap.addImage("tile", "assets/grasstiles.png");
 		objectMap.addImage("click", "assets/click.png");
+		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 3);
 		
 //		Image borderImage = new ImageIcon("assets/border.png").getImage();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
@@ -116,29 +117,27 @@ public class Game {
 
 		objectMap.updateMainDisplayObjects();
 
-//		while(true) {
-//			gameWorld.updateDisplay();
-//		}
-//		int tileX = 600;
-//		int tileY = 600;
-//		int tileCount = 0;
-//		for(int j = 0; j < 500; j++) {
-//			for(int i = 0; i < 500; i++) {
-//				String tileID = "tile" + Integer.toString(tileCount);
-//				tileX = tileX +32;
-//
-//				Random randomNum = new Random();
-//				int rn = randomNum.nextInt(3);
-//				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
-//				
-////				tile = grasstiles.getSubimage(0+64*rn,0,64,32);
-//				testTile.setProperties(new Dimension(64,32),new Point(900,900),tile,false);
-//				objectMap.addWorldObject(tileID, testTile);
-//				tileCount++;
-//			}
-//			tileY = tileY + 32;
-//			tileX = 600;
-//		}
+
+		int tileX = 600;
+		int tileY = 600;
+		int tileCount = 0;
+		for(int j = 0; j < 5000; j++) {
+			for(int i = 0; i < 5000; i++) {
+				String tileID = "tile" + Integer.toString(tileCount);
+				tileX = tileX +32;
+
+				Random randomNum = new Random();
+				int rn = randomNum.nextInt(3);
+				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
+				
+//				tile = grasstiles.getSubimage(0+64*rn,0,64,32);
+				testTile.setProperties(new Dimension(64,32),new Point(900,900),"grasstile0",false);
+				objectMap.addWorldObject(tileID, testTile);
+				tileCount++;
+			}
+			tileY = tileY + 32;
+			tileX = 600;
+		}
 		mainGameRenderer.start();
 //		gameWorld.initialiseTileMap();
 		
