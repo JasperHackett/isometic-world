@@ -94,9 +94,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		mainDisplayObjects = new HashMap<String, WorldObject>();
 
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
-			if (true /*isWithinDisplay(mapEntry.getValue().getPosition(), new Pair<Dimension,Point>(displayDimension, displayPoint)) && mapEntry.getValue().type == ObjectType.WORLD*/ ) {
-				mainDisplayObjects.put(mapEntry.getKey() , mapEntry.getValue());
-
+			WorldObject obj = mapEntry.getValue();
+			if (isWithinDisplay(obj.getWorldPosition(), new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
+				mainDisplayObjects.put(mapEntry.getKey(), mapEntry.getValue());
 			}
 		}
 		
@@ -105,7 +105,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	// returns true if at least one corner of a given object is within the Display's current bounds
-	private boolean isWithinDisplay(Pair<Dimension, Point> objectBounds, Pair<Dimension, Point> displayBounds) {
+	public boolean isWithinDisplay(Pair<Dimension, Point> objectBounds, Pair<Dimension, Point> displayBounds) {
 
 		//checking each corner of the object to see if it is within the display's bounds
 
