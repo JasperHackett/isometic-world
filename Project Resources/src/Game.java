@@ -116,7 +116,7 @@ public class Game {
 		int tileX = 600;
 		int tileY = 600;
 		int tileCount = 0;
-		for(int j = 0; j < 20; j++) {
+		for(int j = 0; j < 50; j++) {
 			for(int i = 0; i < 50; i++) {
 				String tileID = "tile" + Integer.toString(tileCount);
 				tileX = tileX +35;
