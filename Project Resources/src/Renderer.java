@@ -130,6 +130,14 @@ public class Renderer implements Runnable{
 		
 		return(tempPoint);
 	}
+	public Point toGrid(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+		
+		tempPoint.x = (2*pointIn.y + pointIn.x) / 2;
+		tempPoint.y = (2*pointIn.y - pointIn.x) / 2;
+		
+		return(tempPoint);
+	}
 };
 
 

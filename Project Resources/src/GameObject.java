@@ -17,7 +17,7 @@ public class GameObject {
 	
 	protected Dimension dim; //Dimensions of object
 	protected Point coords; //Top left corner of object
-	private Image objectImage; //test for a single image object
+	private String objectImage; //test for a single image object
 	private boolean clickable;
 	private boolean isVisible;
 	public ObjectType type;
@@ -27,12 +27,12 @@ public class GameObject {
 		this.type = type;
 	}
 	
-	public void setProperties(Dimension dimIn, Point posIn, Image imageIn) {
+	public void setProperties(Dimension dimIn, Point posIn, String imageIn) {
 		this.dim = dimIn;
 		this.coords = posIn;
 		this.objectImage = imageIn;
 	}
-	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable, String clickTag) {
+	public void setProperties(Dimension dimIn, Point posIn, String imageIn, boolean clickable, String clickTag) {
 		this.dim = dimIn;
 		this.coords = posIn;
 		this.objectImage = imageIn;
@@ -40,13 +40,13 @@ public class GameObject {
 		this.clickable = clickable;
 	}
 	
-	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable) {
+	public void setProperties(Dimension dimIn, Point posIn, String imageIn, boolean clickable) {
 		this.dim = dimIn;
 		this.coords = posIn;
 		this.objectImage = imageIn;
 		this.clickable = clickable;
 	}
-	public void setProperties(Image imageIn, boolean clickable) {
+	public void setProperties(String imageIn, boolean clickable) {
 		this.objectImage = imageIn;
 		this.clickable = clickable;
 	}
@@ -65,7 +65,7 @@ public class GameObject {
 	 * called on each object every frame, draws the objects image(s) to the main window
 	 */
 	public void render(Graphics g) {
-		g.drawImage(this.objectImage, coords.x, coords.y, null);
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x, coords.y, null);
 	}
 	
 	public boolean isClickable(){

@@ -1,7 +1,11 @@
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+
+import javax.swing.ImageIcon;
 
 import javafx.util.Pair;
 
@@ -20,6 +24,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
 	private HashMap<String, IsometricTile> worldTiles;
+	private HashMap<String, Image> imageMap;
 
 	public ObjectMap(){
 		super();
@@ -27,6 +32,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		worldObjects = new HashMap<String, WorldObject>();
 		otherObjects = new HashMap<String, GameObject>();
 		menuObjects = new HashMap<String,GameObject>();
+		imageMap = new HashMap<String,Image>();
 	}
 
 	public void addObject(ObjectType type, String s, GameObject obj) {
@@ -59,8 +65,30 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		this.put(s, newTile);
 		worldObjects.put(s, newTile);
 		worldTiles.put(s, newTile);
+		
+		
+//		Random randomNum = new Random();
+//		int rn = randomNum.nextInt(3);
+////		IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
+//		
+//		tile = grasstiles.getSubimage(0+64*rn,0,64,32);
+//		testTile.setProperties(new Dimension(64,32),new Point(900,900),tile,false);
+//		objectMap.addWorldObject(tileID, testTile);
 	}
-	
+	public void addImage(String imgID, String FilePath) {
+		Image newImage = new ImageIcon(FilePath).getImage();
+		imageMap.put(imgID, newImage);
+	}
+	public void addTileImage(String imgID, String FilePath,int tileCount) {
+		for(int i = 0; i < tileCount; i++) {
+			
+		}
+		Image newImage = new ImageIcon(FilePath).getImage();
+		imageMap.put(imgID, newImage);
+	}
+	public Image getImage(String imgID) {
+		return this.imageMap.get(imgID);
+	}
 
 	// returns true after a successful remove operation
 	// returns false if there is no object with that key in the map

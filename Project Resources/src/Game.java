@@ -53,19 +53,24 @@ public class Game {
 		gameWorld = new World(new Dimension(worldWidth,worldHeight));
 		objectMap = new ObjectMap();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
-		Image clickableImage = new ImageIcon("assets/click.png").getImage();
-		Image borderImage = new ImageIcon("assets/border.png").getImage();
-		Image icon = new ImageIcon("assets/testImage.png").getImage();
-		Image background = new ImageIcon("assets/background_draggable.png").getImage();
-		Image tile = new ImageIcon("assets/grasstiles.png").getImage();
+//		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 		
-		BufferedImage grasstiles = null;
-		try {
-			grasstiles = ImageIO.read(new File("assets/watertiles.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		objectMap.addImage("border", "assets/border.png");
+		objectMap.addImage("tile", "assets/grasstiles.png");
+		objectMap.addImage("click", "assets/click.png");
+		
+//		Image borderImage = new ImageIcon("assets/border.png").getImage();
+//		Image icon = new ImageIcon("assets/testImage.png").getImage();
+//		Image background = new ImageIcon("assets/background_draggable.png").getImage();
+//		Image tile = new ImageIcon("assets/grasstiles.png").getImage();
+//		
+//		BufferedImage grasstiles = null;
+//		try {
+//			grasstiles = ImageIO.read(new File("assets/watertiles.png"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -89,18 +94,18 @@ public class Game {
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
-		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), clickableImage,true,"mainmenustart");
+		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), "click",true,"mainmenustart");
 
-		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
+		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
 		
 //		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
 //		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
 //		objectMap.addWorldObject("background", backgroundObj);
 		
-		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
-		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
-		objectMap.addObject(ObjectType.WORLD,"test1", test1);
-		objectMap.addWorldObject("bluesquare", test1);
+//		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
+//		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
+//		objectMap.addObject(ObjectType.WORLD,"test1", test1);
+//		objectMap.addWorldObject("bluesquare", test1);
 
 
 
@@ -114,28 +119,28 @@ public class Game {
 //		while(true) {
 //			gameWorld.updateDisplay();
 //		}
-		int tileX = 600;
-		int tileY = 600;
-		int tileCount = 0;
-		for(int j = 0; j < 500; j++) {
-			for(int i = 0; i < 500; i++) {
-				String tileID = "tile" + Integer.toString(tileCount);
-				tileX = tileX +32;
-
-				Random randomNum = new Random();
-				int rn = randomNum.nextInt(3);
-				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
-				
-				tile = grasstiles.getSubimage(0+64*rn,0,64,32);
-				testTile.setProperties(new Dimension(64,32),new Point(900,900),tile,false);
-				objectMap.addWorldObject(tileID, testTile);
-				tileCount++;
-			}
-			tileY = tileY + 32;
-			tileX = 600;
-		}
+//		int tileX = 600;
+//		int tileY = 600;
+//		int tileCount = 0;
+//		for(int j = 0; j < 500; j++) {
+//			for(int i = 0; i < 500; i++) {
+//				String tileID = "tile" + Integer.toString(tileCount);
+//				tileX = tileX +32;
+//
+//				Random randomNum = new Random();
+//				int rn = randomNum.nextInt(3);
+//				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
+//				
+////				tile = grasstiles.getSubimage(0+64*rn,0,64,32);
+//				testTile.setProperties(new Dimension(64,32),new Point(900,900),tile,false);
+//				objectMap.addWorldObject(tileID, testTile);
+//				tileCount++;
+//			}
+//			tileY = tileY + 32;
+//			tileX = 600;
+//		}
 		mainGameRenderer.start();
-		gameWorld.initialiseTileMap();
+//		gameWorld.initialiseTileMap();
 		
 
 
