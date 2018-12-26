@@ -125,7 +125,7 @@ public class Game {
 				int rn = randomNum.nextInt(3);
 				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(70,35),mainGameRenderer.toIsometric(new Point(tileX,tileY)));
 				
-				testIso = testIsoB.getSubimage(70+70*rn,0,70,35);
+				testIso = testIsoB.getSubimage(0,0,70,35);
 				testTile.setProperties(new Dimension(70,35),new Point(900,900),testIso,false);
 				objectMap.addWorldObject(tileID, testTile);
 				tileCount++;
