@@ -34,7 +34,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-
+		
+		
 //		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
 			if(dragEnabled == true && Game.currentState == Game.STATE.Game) {
 				Game.gameWorld.offsetDisplay(mousePressPos,e.getPoint());	
@@ -54,7 +55,17 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("Mouse clicked at: "+ e.getX() + ", " + e.getY());
+		
+		String mouseButton = "not";
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			mouseButton = "left";
+		} else if (e.getButton() == MouseEvent.BUTTON2) {
+			mouseButton = "middle";
+		} else if (e.getButton() == MouseEvent.BUTTON3) {
+			mouseButton = "right";
+		}
+		
+		System.out.println("Mouse " + mouseButton +" clicked at: "+ e.getX() + ", " + e.getY());
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
@@ -65,10 +76,14 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			}
 		}
 	}
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-
+		
+		if (!(e.getButton() == MouseEvent.BUTTON3)) {
+			return;
+		}
+		
 		this.mousePressPos = e.getPoint();
 		
 		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
