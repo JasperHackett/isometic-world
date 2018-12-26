@@ -1,6 +1,8 @@
 import java.awt.Dimension;
 import java.awt.Point;
 
+import javafx.util.Pair;
+
 /**
  *
  */
@@ -11,8 +13,8 @@ import java.awt.Point;
  */
 public class WorldObject extends GameObject {
 	
-	Dimension worldDims;
-	Point worldPoint;
+	private Dimension worldDims;
+	private Point worldPoint;
 
 	public WorldObject(ObjectType type, Dimension worldDimsIn, Point worldPointIn) {
 		super(ObjectType.WORLD);
@@ -22,6 +24,10 @@ public class WorldObject extends GameObject {
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
 		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
 
+	}
+	
+	public Pair<Dimension, Point> getWorldPosition() {
+		return new Pair<Dimension, Point>(this.dim, worldPoint);
 	}
 
 	/**

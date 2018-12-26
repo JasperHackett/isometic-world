@@ -133,7 +133,7 @@ public class Game {
 			tileY = tileY + 34;
 			tileX = 600;
 		}
-
+		
 
 
 
