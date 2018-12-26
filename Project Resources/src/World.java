@@ -1,6 +1,10 @@
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.ImageIcon;
 
 import javafx.util.Pair;
 
@@ -21,14 +25,25 @@ public class World {
 	public Dimension worldDims;
 	public Point worldPoint;
 	public Point staticWorldPoint;
+//	public Map<String,Image> imageAssetMap;
 	
 
 	World(Dimension worldDims)  {
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
-		worldPoint = new Point(50,50);
+		worldPoint = new Point(100,100);
 		this.worldDims = worldDims;
+
 	}
+	
+	/**
+	 * creates a worldobject, laods its image from the map and adds it to the object map. Returns true if succesful
+	 * @return
+	 */
+	public boolean newWorldObject() {
+		return false;
+	}
+	
 	
 	/**
 	 *  Repositions every object in the main display. Called after the display is offset
@@ -78,6 +93,29 @@ public class World {
 
 		updateDisplay();
 		
+	}
+	
+	
+	public void generateWorld() {
+		
+		
+//		try {
+//			Game.mainGameRenderer.semaphore.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		Image testIso = new ImageIcon("assets/iso1.png").getImage();
+//		for(int i = 0; i < 5; i++) {
+//			for(int j = 0; j < 5; i++) {
+//				WorldObject testIsoObj = new WorldObject(ObjectType.WORLD, new Dimension(0,0), new Point(700,700));
+//				testIsoObj.setProperties(new Dimension(70,40), new Point(700,700), testIso);
+//				Game.objectMap.addWorldObject(Integer.toString(i+j),testIsoObj);
+//			}
+//		}
+//		
+//		
+//		Game.mainGameRenderer.semaphore.release();
 	}
 	
 	public boolean withinBounds(Point worldPointIn) {

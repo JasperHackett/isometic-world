@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferStrategy;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -98,7 +99,10 @@ public class Renderer implements Runnable{
 		
 		if(Game.currentState == Game.STATE.Game) {
 			for(Map.Entry<String, WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
-				obj.getValue().render(graphics);
+				if(obj != null) {
+					obj.getValue().render(graphics);
+				}
+
 			}
 		}else if(Game.currentState == Game.STATE.Menu) {
 			for(Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {
@@ -117,4 +121,21 @@ public class Renderer implements Runnable{
         semaphore.release();
 
 	}
+	
+	public Point toIsometric(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+		tempPoint.x =  pointIn.x - pointIn.y;
+		tempPoint.y = (pointIn.x + pointIn.y) /2;
+		
+		
+		return(tempPoint);
+	}
 };
+
+
+
+
+
+
+
+

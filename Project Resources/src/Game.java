@@ -4,10 +4,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -54,6 +56,15 @@ public class Game {
 		Image borderImage = new ImageIcon("assets/border.png").getImage();
 		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image background = new ImageIcon("assets/background_draggable.png").getImage();
+		Image testIso = new ImageIcon("assets/iso1.png").getImage();
+		
+		BufferedImage testIsoB = null;
+		try {
+			testIsoB = ImageIO.read(new File("assets/isosheet.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -81,9 +92,9 @@ public class Game {
 
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 		
-		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
-		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
-		objectMap.addWorldObject("background", backgroundObj);
+//		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
+//		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
+//		objectMap.addWorldObject("background", backgroundObj);
 		
 		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
 		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
@@ -102,7 +113,26 @@ public class Game {
 //		while(true) {
 //			gameWorld.updateDisplay();
 //		}
+		int tileX = 600;
+		int tileY = 600;
+		int tileCount = 0;
+		for(int j = 0; j < 20; j++) {
+			for(int i = 0; i < 50; i++) {
+				String tileID = "tile" + Integer.toString(tileCount);
+				tileX = tileX +35;
 
+				Random randomNum = new Random();
+				int rn = randomNum.nextInt(3);
+				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(70,35),mainGameRenderer.toIsometric(new Point(tileX,tileY)));
+				
+				testIso = testIsoB.getSubimage(70+70*rn,0,70,35);
+				testTile.setProperties(new Dimension(70,35),new Point(900,900),testIso,false);
+				objectMap.addWorldObject(tileID, testTile);
+				tileCount++;
+			}
+			tileY = tileY + 35;
+			tileX = 600;
+		}
 
 
 
