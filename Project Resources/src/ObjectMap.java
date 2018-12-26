@@ -15,18 +15,34 @@ import javafx.util.Pair;
  */
 public class ObjectMap extends HashMap<String, GameObject> {
 
-	private HashMap<String, GameObject> mainDisplayObjects;
+	private HashMap<String, WorldObject> mainDisplayObjects;
 	private HashMap<String, WorldObject> worldObjects;
+	private HashMap<String, GameObject> menuObjects;
+	private HashMap<String, GameObject> otherObjects;
 
 	public ObjectMap(){
 		super();
-		mainDisplayObjects = new HashMap<String, GameObject>();
+		mainDisplayObjects = new HashMap<String, WorldObject>();
 		worldObjects = new HashMap<String, WorldObject>();
+		otherObjects = new HashMap<String, GameObject>();
+		menuObjects = new HashMap<String,GameObject>();
 	}
 
-	public void addObject(String s, GameObject obj) {
+	public void addObject(ObjectType type, String s, GameObject obj) {
 		this.put(s, obj);
+		switch(type) {
+			case MAINMENU:
+				menuObjects.put(s, obj);
+				break;
+			case DEFAULT:
+				otherObjects.put(s,obj);
+				break;
+			default:
+				break;
+		}
+
 	}
+
 
 	public void addWorldObject(String s, WorldObject obj) {
 		this.put(s, obj);
@@ -51,20 +67,40 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return (GameObject)this.get(s);
 	}
 
-	public Map<String, GameObject> getMainDisplayObjects() {
+	public Map<String, WorldObject> getMainDisplayObjects() {
 		return mainDisplayObjects;
 
 	}
+	public Map<String, GameObject> getOtherObjects() {
+		return otherObjects;
+	}
+	public Map<String, GameObject> getMenuObjects() {
+		return menuObjects;
+	}
+	public Map<String, WorldObject> WorldObjects() {
+		return worldObjects;
+	}
 
-	public void updateMainDisplayObjects(Dimension displayDimension, Point displayPoint){
-		mainDisplayObjects = new HashMap<String, GameObject>();
-		mainDisplayObjects.put("clickable",this.get("clickable"));
+	public void updateMainDisplayObjects(/*Dimension displayDimension, Point displayPoint*/){
+		
+		try {
+			Game.mainGameRenderer.semaphore.acquire();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		mainDisplayObjects = new HashMap<String, WorldObject>();
+
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
-			if (isWithinDisplay(mapEntry.getValue().getPosition(), new Pair(displayDimension, displayPoint))) {
+			if (true /*isWithinDisplay(mapEntry.getValue().getPosition(), new Pair<Dimension,Point>(displayDimension, displayPoint)) && mapEntry.getValue().type == ObjectType.WORLD*/ ) {
 				mainDisplayObjects.put(mapEntry.getKey() , mapEntry.getValue());
-				System.out.println(mapEntry.getKey());
+
 			}
 		}
+		
+		Game.mainGameRenderer.semaphore.release();
 
 	}
 
@@ -108,3 +144,4 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return false;
 	}
 }
+

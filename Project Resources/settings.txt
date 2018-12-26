@@ -1,0 +1,4 @@
+windowheight:900
+windowwidth:1600
+worldwidth:2500
+worldheight:2500

@@ -15,12 +15,13 @@ import javafx.util.Pair;
  */
 public class GameObject {
 	
-	private Dimension dim; //Dimensions of object
-	private Point coords; //Top left corner of object
+	protected Dimension dim; //Dimensions of object
+	protected Point coords; //Top left corner of object
 	private Image objectImage; //test for a single image object
 	private boolean clickable;
 	private boolean isVisible;
 	public ObjectType type;
+	public String clickTag;
 	
 	public GameObject(ObjectType type) {
 		this.type = type;
@@ -31,10 +32,21 @@ public class GameObject {
 		this.coords = posIn;
 		this.objectImage = imageIn;
 	}
+	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable, String clickTag) {
+		this.dim = dimIn;
+		this.coords = posIn;
+		this.objectImage = imageIn;
+		this.clickTag = clickTag;
+		this.clickable = clickable;
+	}
 	
 	public void setProperties(Dimension dimIn, Point posIn, Image imageIn, boolean clickable) {
 		this.dim = dimIn;
 		this.coords = posIn;
+		this.objectImage = imageIn;
+		this.clickable = clickable;
+	}
+	public void setProperties(Image imageIn, boolean clickable) {
 		this.objectImage = imageIn;
 		this.clickable = clickable;
 	}
@@ -44,9 +56,16 @@ public class GameObject {
 		return newPos;
 	}
 	
+	public void setPosition(Dimension dimIn, Point posIn) {
+		this.coords = posIn;
+		this.dim = dimIn;
+	}
+	
+	/**
+	 * called on each object every frame, draws the objects image(s) to the main window
+	 */
 	public void render(Graphics g) {
 		g.drawImage(this.objectImage, coords.x, coords.y, null);
-		
 	}
 	
 	public boolean isClickable(){
