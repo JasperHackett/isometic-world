@@ -57,7 +57,7 @@ public class Game {
 		Image icon = new ImageIcon("assets/testImage.png").getImage();
 		Image background = new ImageIcon("assets/background_draggable.png").getImage();
 		Image testIso = new ImageIcon("assets/iso1.png").getImage();
-
+		
 		BufferedImage testIsoB = null;
 		try {
 			testIsoB = ImageIO.read(new File("assets/isosheet.png"));
@@ -81,7 +81,7 @@ public class Game {
 
 		window.setVisible(true);
 
-		graphics = window.getContentPane().getGraphics();
+		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
@@ -90,19 +90,16 @@ public class Game {
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), clickableImage,true,"mainmenustart");
 
-		//Test code
-//		GameObject testObject = new GameObject();
-//		objectMap.put("thing", testObject);
-//		objectMap.getObject("thing").setProperties(new Dimension(800,690),new Point(0,0),icon,true);
-//
-//		GameObject clickable = new GameObject();
-//
-//		otherObjects.put("clickable", clickable);
-//		otherObjects.getObject("clickable").setProperties(new Dimension(159,100),new Point(900,400),clickableImage,true);
-
-		WorldObject test1 = new WorldObject();
-		test1.setProperties(new Dimension(100, 100), new Point(101, 101), new ImageIcon("assets/blueSquare.png").getImage());
-		objectMap.addWorldObject("test1", test1);
+		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
+		
+//		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
+//		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
+//		objectMap.addWorldObject("background", backgroundObj);
+		
+		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
+		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
+		objectMap.addObject(ObjectType.WORLD,"test1", test1);
+		objectMap.addWorldObject("bluesquare", test1);
 
 
 
@@ -127,7 +124,7 @@ public class Game {
 				Random randomNum = new Random();
 				int rn = randomNum.nextInt(3);
 				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(70,35),mainGameRenderer.toIsometric(new Point(tileX,tileY)));
-
+				
 				testIso = testIsoB.getSubimage(70+70*rn,0,70,35);
 				testTile.setProperties(new Dimension(70,35),new Point(900,900),testIso,false);
 				objectMap.addWorldObject(tileID, testTile);
