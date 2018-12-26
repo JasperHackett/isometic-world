@@ -19,6 +19,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	private HashMap<String, WorldObject> worldObjects;
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
+	private HashMap<String, IsometricTile> worldTiles;
 
 	public ObjectMap(){
 		super();
@@ -29,6 +30,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public void addObject(ObjectType type, String s, GameObject obj) {
+		
+		
 		this.put(s, obj);
 		switch(type) {
 			case MAINMENU:
@@ -50,6 +53,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			worldObjects.put(s, obj);
 		}
 	}
+	
+	public void addWorldTile(String s,  IsometricTile.TILESET tileset) {
+		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(100, 100), new Point(300, 300),IsometricTile.TILESET.grass);
+		this.put(s, newTile);
+		worldObjects.put(s, newTile);
+		worldTiles.put(s, newTile);
+	}
+	
 
 	// returns true after a successful remove operation
 	// returns false if there is no object with that key in the map

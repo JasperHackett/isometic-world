@@ -1,7 +1,11 @@
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -42,10 +46,41 @@ public class World {
 	 * creates a worldobject, laods its image from the map and adds it to the object map. Returns true if succesful
 	 * @return
 	 */
-	public boolean newWorldObject() {
+	public boolean newTileObject() {
 		return false;
 	}
 
+	public void initialiseTileMap() {
+		BufferedReader br = null;
+		String line = "";
+		String delim = ",";
+		
+			try {
+				br = new BufferedReader(new FileReader("tilemap.csv"));
+				while((line = br.readLine()) != null){
+					String[] tileLine = line.split(delim);
+					
+					
+					for(int i = 0; i < tileLine.length; i++) {
+//						if(tileLine[i] == 'g') {
+//							
+//						}
+					}
+//					System.out.println();
+
+				}
+				br.close();
+			
+			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+			
+		
+	}
 
 	/**
 	 *  Repositions every object in the main display. Called after the display is offset

@@ -11,14 +11,22 @@ import java.awt.Point;
  */
 public class IsometricTile extends WorldObject{
 
+	public boolean walkable;
+	public enum TILESET{
+		grass,
+		water,
+		trees,
+		
+	}
+	public TILESET tileset;
 	/**
 	 * @param type
 	 * @param worldDimsIn
 	 * @param worldPointIn
 	 */
-	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn) {
+	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn, TILESET tileset) {
 		super(type, worldDimsIn, worldPointIn);
-		// TODO Auto-generated constructor stub
+		this.tileset = tileset;
 	}
 
 }
