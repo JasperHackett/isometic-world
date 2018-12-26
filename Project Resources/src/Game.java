@@ -85,12 +85,12 @@ public class Game {
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
-		GameObject border = new GameObject(ObjectType.DEFAULT);
-		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
+//		GameObject border = new GameObject(ObjectType.DEFAULT);
+//		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), clickableImage,true,"mainmenustart");
 
-		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
+//		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0), borderImage,false);
 		
 //		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
 //		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
@@ -119,7 +119,7 @@ public class Game {
 		for(int j = 0; j < 50; j++) {
 			for(int i = 0; i < 50; i++) {
 				String tileID = "tile" + Integer.toString(tileCount);
-				tileX = tileX +35;
+				tileX = tileX +34;
 
 				Random randomNum = new Random();
 				int rn = randomNum.nextInt(3);
@@ -130,7 +130,7 @@ public class Game {
 				objectMap.addWorldObject(tileID, testTile);
 				tileCount++;
 			}
-			tileY = tileY + 35;
+			tileY = tileY + 34;
 			tileX = 600;
 		}
 
