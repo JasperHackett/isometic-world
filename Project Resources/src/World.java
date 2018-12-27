@@ -176,7 +176,7 @@ public class World {
 	}
 
 	public Point getWorldPosition(Point mousePointIn) {
-		return new Point((this.panelPoint.x + this.worldPoint.x - mousePointIn.x),(this.panelPoint.y + this.worldPoint.y - mousePointIn.y));
+		return new Point((this.worldPoint.x +  (mousePointIn.x - panelPoint.x)),((this.worldPoint.y +  (mousePointIn.y - panelPoint.y))));
 		
 //		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
 //		return null;
