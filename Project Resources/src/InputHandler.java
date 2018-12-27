@@ -60,6 +60,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
 					if(obj.getValue().clickTag == "mainmenustart") {
 						Game.currentState = Game.STATE.Game;
+						Game.gameWorld.updateDisplay();
 					}
 				}
 			}
