@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,6 +15,10 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+//import javafx.scene.paint.Color;
+
+//import javafx.scene.paint.Color;
 
 
 /**
@@ -87,6 +92,7 @@ public class Game {
 		window.setResizable(false);
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
+		window.setBackground(Color.DARK_GRAY);
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
