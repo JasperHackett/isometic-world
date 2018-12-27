@@ -82,8 +82,9 @@ public class World {
 					}
 					if(tileType != null) {
 						nextTileWorldCoords = new Point(tileX, tileY);
-						Game.objectMap.addWorldTile(nextTileWorldCoords,tileType);
-						System.out.println(nextTileWorldCoords);
+						Game.objectMap.addWorldTile(nextTileWorldCoords,tileType,new Point(i,j));
+						
+//						System.out.println(nextTileWorldCoords);
 						tileCount ++;
 
 					}

@@ -74,11 +74,11 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return(tempPoint);
 	}
 	
-	public void addWorldTile(Point pointIn, IsometricTile.TILESET tileset) {
+	public void addWorldTile(Point pointIn, IsometricTile.TILESET tileset, Point tilePos) {
 		
 		
 		
-		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), toIsometric(new Point(pointIn.x, pointIn.y)),IsometricTile.TILESET.grass);
+		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), toIsometric(new Point(pointIn.x, pointIn.y)),IsometricTile.TILESET.grass,tilePos);
 		Random randomNum = new Random();
 		int rn = randomNum.nextInt(3);
 		String tileName = "";
@@ -88,7 +88,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "watertile" + Integer.toString(rn);
 		}
 
-		newTile.setProperties(new Dimension(64,32),new Point(300,300),tileName,false);
+		newTile.setProperties(new Dimension(64,32),new Point(pointIn.x,pointIn.y),tileName,false);
 		tileName= Integer.toString(pointIn.x) + ":" + Integer.toString(pointIn.y);
 		this.put(tileName, newTile);
 		worldObjects.put(tileName, newTile);

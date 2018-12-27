@@ -18,7 +18,7 @@ public class GameObject {
 	protected Dimension dim; //Dimensions of object
 	protected Point coords; //Top left corner of object
 	private String objectImage; //test for a single image object
-	private boolean clickable;
+	protected boolean clickable;
 	private boolean isVisible;
 	public ObjectType type;
 	public String clickTag;

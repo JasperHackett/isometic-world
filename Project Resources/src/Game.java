@@ -120,7 +120,7 @@ public class Game {
 		window.getContentPane().addMouseMotionListener(inputControl);
 
 		objectMap.updateMainDisplayObjects();
-
+		System.out.print(objectMap.entrySet());
 
 //
 //		for(int j = 0; j < 800; j++) {
