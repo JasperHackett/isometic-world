@@ -122,8 +122,8 @@ public class World {
 	public void updateDisplay() {
 		Game.objectMap.updateMainDisplayObjects();
 
-		for(Map.Entry<String,WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
-			obj.getValue().setPosition(worldPoint,panelPoint);
+		for(WorldObject obj : Game.objectMap.getMainDisplayObjects()) {
+			obj.setPosition(worldPoint,panelPoint);
 		}
 
 	}
