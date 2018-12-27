@@ -88,7 +88,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "watertile" + Integer.toString(rn);
 		}
 
-		newTile.setProperties(new Dimension(64,32),new Point(600,600),tileName,false);
+		newTile.setProperties(new Dimension(64,32),new Point(300,300),tileName,false);
 		tileName= Integer.toString(pointIn.x) + ":" + Integer.toString(pointIn.y);
 		this.put(tileName, newTile);
 		worldObjects.put(tileName, newTile);
