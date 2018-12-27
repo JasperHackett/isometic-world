@@ -29,6 +29,7 @@ public class IsometricTile extends WorldObject{
 		super(type, worldDimsIn, worldPointIn);
 		this.tileset = tileset;
 		this.isoPos = tilePos;
+		this.clickable = true;
 		this.clickTag = "tile";
 	}
 	
