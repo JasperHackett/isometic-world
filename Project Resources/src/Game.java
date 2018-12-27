@@ -99,7 +99,7 @@ public class Game {
 		//Menu button
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
-		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), "click",true,"mainmenustart");
+		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 
 		

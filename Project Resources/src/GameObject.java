@@ -65,7 +65,7 @@ public class GameObject {
 	 * called on each object every frame, draws the objects image(s) to the main window
 	 */
 	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x, coords.y, null);
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x, coords.y+26, null);
 	}
 	
 	public boolean isClickable(){
