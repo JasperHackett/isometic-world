@@ -61,9 +61,9 @@ public class World {
 		BufferedReader br = null;
 		String line = "";
 		String delim = ",";
-		int renderConstant = 1200;
+		int renderConstant = 1030;
 		int tileX = renderConstant;
-		int tileY = -1000;
+		int tileY = -1030;
 		
 		int j = 0; //Used for calculating isoDims
 		

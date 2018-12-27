@@ -118,6 +118,8 @@ public class Game {
 	
 
 		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
+		System.out.println(mainGameRenderer.toGrid(new Point(1930,0)));
+		
 
 
 
