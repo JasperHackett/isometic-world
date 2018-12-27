@@ -101,49 +101,23 @@ public class Game {
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
+		
+		gameWorld.initialiseTileMap();
+		objectMap.updateMainDisplayObjects();
 
 		
-//		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
-//		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
-//		objectMap.addWorldObject("background", backgroundObj);
-		
-//		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
-//		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
-//		objectMap.addObject(ObjectType.WORLD,"test1", test1);
-//		objectMap.addWorldObject("bluesquare", test1);
-
-
-
-
+		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
 
-		objectMap.updateMainDisplayObjects();
-		System.out.print(objectMap.entrySet());
-
-//
-//		for(int j = 0; j < 800; j++) {
-//			for(int i = 0; i < 800; i++) {
-//				String tileID = "tile" + Integer.toString(tileCount);
-//				tileX = tileX +32;
-//
-//				Random randomNum = new Random();
-//				int rn = randomNum.nextInt(3);
-//				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
-//				
-//				String tileName = "grasstile"+Integer.toString(rn);
-//				testTile.setProperties(new Dimension(64,32),new Point(900,900),tileName,false);
-//				objectMap.addWorldTile(new Point(500,500),IsometricTile.TILESET.grass);
-//				tileCount++;
-//			}
-//			tileY = tileY + 32;
-//			tileX = 600;
-//		}
-		gameWorld.initialiseTileMap();
+		
+//		gameWorld.setTile(new Point(1,1), IsometricTile.TILESET.grass);
 		mainGameRenderer.start();
 
-		
+	
+
+		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
 
 
 

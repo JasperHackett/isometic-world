@@ -45,7 +45,7 @@ public class Renderer implements Runnable{
    }
 
 	/**
-	 *  FPS counter
+	 *  
 	 * 
 	 */
    public void run() {
@@ -128,6 +128,14 @@ public class Renderer implements Runnable{
 		
 		tempPoint.x = (2*pointIn.y + pointIn.x) / 2;
 		tempPoint.y = (2*pointIn.y - pointIn.x) / 2;
+		
+		return(tempPoint);
+	}
+	public Point toIsometric(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+		tempPoint.x =  pointIn.x - pointIn.y;
+		tempPoint.y = (pointIn.x + pointIn.y) /2;
+		
 		
 		return(tempPoint);
 	}

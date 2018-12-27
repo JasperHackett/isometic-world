@@ -10,7 +10,7 @@ import java.awt.Point;
  *
  */
 public class IsometricTile extends WorldObject{
-	public Point tilePos;
+	public Point isoPos;
 
 	public boolean walkable;
 	public enum TILESET{
@@ -28,7 +28,22 @@ public class IsometricTile extends WorldObject{
 	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn, TILESET tileset, Point tilePos) {
 		super(type, worldDimsIn, worldPointIn);
 		this.tileset = tileset;
-		this.tilePos = tilePos;
+		this.isoPos = tilePos;
 		this.clickTag = "tile";
+	}
+	
+	public Point getIsoPoint() {
+		return this.isoPos;
+	}
+	
+	public void changeTileset(TILESET tilesetIn) {
+		this.tileset = tilesetIn;
+		if(tilesetIn == TILESET.water) {
+			this.objectImage = "watertile0";
+		}
+		if(tilesetIn == TILESET.grass) {
+			this.objectImage = "grasstile0";
+		}
+
 	}
 }

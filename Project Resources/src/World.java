@@ -64,6 +64,7 @@ public class World {
 		int renderConstant = 1200;
 		int tileX = renderConstant;
 		int tileY = -1000;
+		
 		int j = 0; //Used for calculating isoDims
 		
 		// Iterates through a .csv file and checks each field for a string that matches a known tile type.
@@ -74,6 +75,7 @@ public class World {
 				
 				IsometricTile.TILESET tileType = null;
 				for(int i = 0; i < tileLine.length; i++) {
+
 
 					if(tileLine[i].compareTo("g") == 0) {
 						tileType = IsometricTile.TILESET.grass;
@@ -108,6 +110,10 @@ public class World {
 		
 			
 		
+	}
+	
+	public void setTile(Point isoPos,IsometricTile.TILESET type) {
+		Game.objectMap.getTile(isoPos).changeTileset(type);
 	}
 
 	/**
@@ -161,27 +167,6 @@ public class World {
 	}
 
 
-	public void generateWorld() {
-
-
-//		try {
-//			Game.mainGameRenderer.semaphore.acquire();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		Image testIso = new ImageIcon("assets/iso1.png").getImage();
-//		for(int i = 0; i < 5; i++) {
-//			for(int j = 0; j < 5; i++) {
-//				WorldObject testIsoObj = new WorldObject(ObjectType.WORLD, new Dimension(0,0), new Point(700,700));
-//				testIsoObj.setProperties(new Dimension(70,40), new Point(700,700), testIso);
-//				Game.objectMap.addWorldObject(Integer.toString(i+j),testIsoObj);
-//			}
-//		}
-//
-//
-//		Game.mainGameRenderer.semaphore.release();
-	}
 
 	public boolean withinBounds(Point worldPointIn) {
 		if(worldPointIn.y > 0 && worldPointIn.x > 0 && worldPointIn.x+panelDims.width < worldDims.width && worldPointIn.y+panelDims.height < worldDims.height) {
@@ -190,4 +175,10 @@ public class World {
 		return false;
 	}
 
+	public Point getWorldPosition(Point mousePointIn) {
+		return new Point((this.panelPoint.x + this.worldPoint.x - mousePointIn.x),(this.panelPoint.y + this.worldPoint.y - mousePointIn.y));
+		
+//		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
+//		return null;
+	}
 }
