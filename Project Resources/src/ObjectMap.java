@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -24,7 +25,22 @@ import javafx.util.Pair;
  */
 public class ObjectMap extends HashMap<String, GameObject> {
 
-	private HashMap<String, WorldObject> mainDisplayObjects;
+	private class YAxisComparator implements Comparator<IsometricTile> {
+		
+		public int compare(IsometricTile o1, IsometricTile o2) {
+			int y1 = (int)o1.getPosition().getValue().getY();
+			int y2 = (int)o2.getPosition().getValue().getY();
+			if (y1 == y2) {
+				return 0;
+			} else if (y1 > y2) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+	}
+	
+	private ArrayList<WorldObject> mainDisplayObjects;
 	private HashMap<String, WorldObject> worldObjects;
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
@@ -33,7 +49,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public ObjectMap(){
 		super();
-		mainDisplayObjects = new HashMap<String, WorldObject>();
+		mainDisplayObjects = new ArrayList<WorldObject>();
 		worldObjects = new HashMap<String, WorldObject>();
 		otherObjects = new HashMap<String, GameObject>();
 		menuObjects = new HashMap<String,GameObject>();
@@ -144,7 +160,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return (GameObject)this.get(s);
 	}
 
-	public Map<String, WorldObject> getMainDisplayObjects() {
+	public ArrayList<WorldObject> getMainDisplayObjects() {
 		return mainDisplayObjects;
 
 	}
@@ -168,15 +184,17 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		}
 
 
-		mainDisplayObjects = new HashMap<String, WorldObject>();
+		mainDisplayObjects = new ArrayList<WorldObject>();
 
 		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
 			WorldObject obj = mapEntry.getValue();
 			if (isWithinDisplay(obj.getWorldPosition(), new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
-				mainDisplayObjects.put(mapEntry.getKey(), mapEntry.getValue());
+				mainDisplayObjects.add(mapEntry.getValue());
 			}
 		}
-
+		YAxisComparator comp = new YAxisComparator();
+		mainDisplayObjects.sort((Comparator)comp);
+		
 		Game.mainGameRenderer.semaphore.release();
 
 	}

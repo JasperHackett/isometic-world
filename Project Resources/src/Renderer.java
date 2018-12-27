@@ -98,9 +98,9 @@ public class Renderer implements Runnable{
 		
 		
 		if(Game.currentState == Game.STATE.Game) {
-			for(Map.Entry<String, WorldObject> obj : Game.objectMap.getMainDisplayObjects().entrySet()) {
+			for(WorldObject obj : Game.objectMap.getMainDisplayObjects()) {
 				if(obj != null) {
-					obj.getValue().render(graphics);
+					obj.render(graphics);
 				}
 
 			}
