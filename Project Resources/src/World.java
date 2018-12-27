@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -31,13 +32,15 @@ public class World {
 	public Dimension worldDims;
 	public Point worldPoint;
 	public Point staticWorldPoint;
+	public Dimension isoDims;
+	public int tileCount = 0;
 //	public Map<String,Image> imageAssetMap;
 
 
 	World(Dimension worldDims)  {
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
-		worldPoint = new Point(100,100);
+		worldPoint = new Point(600,600);
 		this.worldDims = worldDims;
 
 	}
@@ -49,34 +52,59 @@ public class World {
 	public boolean newTileObject() {
 		return false;
 	}
+	
 
 	public void initialiseTileMap() {
+		
+		Point nextTileWorldCoords = new Point(400,400);
+//		System.out.println(nextTileWorldCoords.x);
 		BufferedReader br = null;
 		String line = "";
 		String delim = ",";
+		int renderConstant = 1200;
+		int tileX = renderConstant;
+		int tileY = -1000;
+		int j = 0; //Used for calculating isoDims
 		
-			try {
-				br = new BufferedReader(new FileReader("tilemap.csv"));
-				while((line = br.readLine()) != null){
-					String[] tileLine = line.split(delim);
-					
-					
-					for(int i = 0; i < tileLine.length; i++) {
-//						if(tileLine[i] == 'g') {
-//							
-//						}
-					}
-//					System.out.println();
+		// Iterates through a .csv file and checks each field for a string that matches a known tile type.
+		try {
+			br = new BufferedReader(new FileReader("tilemap.csv"));
+			while((line = br.readLine()) != null){
+				String[] tileLine = line.split(delim);
+				
+				IsometricTile.TILESET tileType = null;
+				for(int i = 0; i < tileLine.length; i++) {
 
+					if(tileLine[i].compareTo("g") == 0) {
+						tileType = IsometricTile.TILESET.grass;
+					}else if(tileLine[i].compareTo("w") == 0){
+						tileType = IsometricTile.TILESET.water;
+					}
+					if(tileType != null) {
+						nextTileWorldCoords = new Point(tileX, tileY);
+						Game.objectMap.addWorldTile(nextTileWorldCoords,tileType,new Point(i,j));
+						
+//						System.out.println(nextTileWorldCoords);
+						tileCount ++;
+
+					}
+					tileX += 32;
+
+					tileType = null;
 				}
-				br.close();
-			
-			
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				tileY +=32;
+				tileX = renderConstant;
+
+				j++;
 			}
 			
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		isoDims = new Dimension(tileCount/j,j);
+		System.out.println(isoDims);
 		
 			
 		
