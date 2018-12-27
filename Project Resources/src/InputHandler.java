@@ -83,9 +83,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 
-		if (!(e.getButton() == MouseEvent.BUTTON3)) {
-			return;
-		}
+//		if (!(e.getButton() == MouseEvent.BUTTON3)) {
+//			return;
+//		}
 
 		this.mousePressPos = e.getPoint();
 

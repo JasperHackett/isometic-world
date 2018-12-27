@@ -111,7 +111,7 @@ public class Game {
 
 
 		gameWorld.initialiseTileMap();
-		objectMap.updateMainDisplayObjects();
+
 
 
 		//Initialise input handler
@@ -120,14 +120,15 @@ public class Game {
 		window.getContentPane().addMouseMotionListener(inputControl);
 
 
-//		gameWorld.setTile(new Point(1,1), IsometricTile.TILESET.grass);
+		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
+		objectMap.updateMainDisplayObjects();
 		mainGameRenderer.start();
 
 
 
 		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
 		System.out.println(mainGameRenderer.toGrid(new Point(1930,0)));
-
+		System.out.println(gameWorld.isoDims);
 
 
 

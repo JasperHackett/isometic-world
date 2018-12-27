@@ -1,6 +1,6 @@
 windowheight:900
 windowwidth:1600
-worldwidth:4000
-worldheight:1850
+worldwidth:3720
+worldheight:1920
 
 

@@ -110,8 +110,8 @@ public class World {
 			e.printStackTrace();
 		}
 		isoDims = new Dimension(tileCount/j,j);
-		System.out.println(isoDims);
-		
+//		System.out.println(isoDims);
+		this.updateDisplay();
 			
 		
 	}
