@@ -93,21 +93,27 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public void addWorldTile(Point pointIn, IsometricTile.TILESET tileset, Point tilePos) {
-
-
-
-		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), toIsometric(new Point(pointIn.x, pointIn.y)),IsometricTile.TILESET.grass,tilePos);
+		
+		
 		Random randomNum = new Random();
 		int rn = randomNum.nextInt(3);
 		String tileName = "";
-
+		Dimension dim = new Dimension(64,32); // default dimensions is 64x32, the else if statement below changes this for tiles with bigger sprites e.g. trees. 
+		Point offsetPoint = toIsometric(new Point(pointIn.x, pointIn.y)); // default offsetPoint is the same as pointIn, the else if statement can change this however
+		
 		if(tileset == IsometricTile.TILESET.grass) {
 			tileName = "grasstile" + Integer.toString(rn);
 		}else if(tileset == IsometricTile.TILESET.water) {
 			tileName = "watertile" + Integer.toString(rn);
-		}
-
-		newTile.setProperties(new Dimension(64,32),tilePos ,tileName,false);
+		} else if(tileset == IsometricTile.TILESET.trees) {
+			tileName = "treetile" + Integer.toString(rn);
+			dim = new Dimension(64,40);
+			offsetPoint.y = offsetPoint.y - 8;
+		} 
+		
+		
+		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,IsometricTile.TILESET.grass,tilePos);
+		newTile.setProperties(dim,tilePos ,tileName,false);
 		tileName= Integer.toString(tilePos.x) + ":" + Integer.toString(tilePos.y);
 		this.put(tileName, newTile);
 		worldObjects.put(tileName, newTile);
@@ -123,6 +129,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tilesPerTileset.put(IsometricTile.TILESET.grass, tileCount);
 		}else if (imgID == "watertile") {
 			tilesPerTileset.put(IsometricTile.TILESET.water, tileCount);
+		}else if (imgID == "treetile") {
+			tilesPerTileset.put(IsometricTile.TILESET.trees, tileCount);
 		}
 		String imgName;
 		BufferedImage tilesheet = null;
@@ -137,7 +145,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			imgName = imgID + Integer.toString(i);
 			imageMap.put(imgName,newImage);
 		}
-
+		
 //		imageMap.put(imgID,newImage);
 	}
 	public Image getImage(String imgID) {

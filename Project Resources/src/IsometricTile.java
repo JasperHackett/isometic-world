@@ -45,6 +45,8 @@ public class IsometricTile extends WorldObject{
 		if(tilesetIn == TILESET.grass) {
 			this.objectImage = "grasstile0";
 		}
-
+		if(tilesetIn == TILESET.trees) {
+			this.objectImage = "treestile0";
+		}
 	}
 }

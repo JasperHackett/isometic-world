@@ -81,7 +81,11 @@ public class World {
 						tileType = IsometricTile.TILESET.grass;
 					}else if(tileLine[i].compareTo("w") == 0){
 						tileType = IsometricTile.TILESET.water;
+					} else if (tileLine[i].compareTo("f") == 0) {
+						tileType = IsometricTile.TILESET.trees;
 					}
+					
+					
 					if(tileType != null) {
 						nextTileWorldCoords = new Point(tileX, tileY);
 						Game.objectMap.addWorldTile(nextTileWorldCoords,tileType,new Point(i,j));

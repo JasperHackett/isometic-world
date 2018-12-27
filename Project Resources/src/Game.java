@@ -65,7 +65,9 @@ public class Game {
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
-
+		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
+		
+		
 //		Image borderImage = new ImageIcon("assets/border.png").getImage();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image background = new ImageIcon("assets/background_draggable.png").getImage();
