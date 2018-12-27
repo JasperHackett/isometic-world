@@ -86,16 +86,18 @@ public class Game {
 		window.setMinimumSize(dim);
 		window.setResizable(false);
 		window.setLocationRelativeTo(null);
-
 		window.setVisible(true);
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
-
-		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
+		
+		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
+		
+		//Menu button
+		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,700), "click",true,"mainmenustart");
 
