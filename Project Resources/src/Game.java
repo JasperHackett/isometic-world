@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,6 +15,10 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
+//import javafx.scene.paint.Color;
+
+//import javafx.scene.paint.Color;
 
 
 /**
@@ -87,6 +92,7 @@ public class Game {
 		window.setResizable(false);
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
+		window.setBackground(Color.DARK_GRAY);
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
@@ -102,47 +108,23 @@ public class Game {
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 
-
-//		WorldObject backgroundObj = new WorldObject(ObjectType.WORLD, new Dimension(2500,2500), new Point(0,0));
-//		backgroundObj.setProperties(new Dimension(2500,2500), new Point(0,0), background);
-//		objectMap.addWorldObject("background", backgroundObj);
-
-//		WorldObject test1 = new WorldObject(ObjectType.WORLD,new Dimension(200,100), new Point(300,300));
-//		test1.setProperties(new Dimension(100, 100), new Point(300, 300), new ImageIcon("assets/blueSquare.png").getImage());
-//		objectMap.addObject(ObjectType.WORLD,"test1", test1);
-//		objectMap.addWorldObject("bluesquare", test1);
+		gameWorld.initialiseTileMap();
+		objectMap.updateMainDisplayObjects();
 
 
-
-
+		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
 
-		objectMap.updateMainDisplayObjects();
-		System.out.print(objectMap.entrySet());
 
-//
-//		for(int j = 0; j < 800; j++) {
-//			for(int i = 0; i < 800; i++) {
-//				String tileID = "tile" + Integer.toString(tileCount);
-//				tileX = tileX +32;
-//
-//				Random randomNum = new Random();
-//				int rn = randomNum.nextInt(3);
-//				IsometricTile testTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32),mainGameRenderer.toIsometric(new Point(tileX,tileY)),IsometricTile.TILESET.grass);
-//
-//				String tileName = "grasstile"+Integer.toString(rn);
-//				testTile.setProperties(new Dimension(64,32),new Point(900,900),tileName,false);
-//				objectMap.addWorldTile(new Point(500,500),IsometricTile.TILESET.grass);
-//				tileCount++;
-//			}
-//			tileY = tileY + 32;
-//			tileX = 600;
-//		}
-		gameWorld.initialiseTileMap();
+//		gameWorld.setTile(new Point(1,1), IsometricTile.TILESET.grass);
 		mainGameRenderer.start();
 
+
+
+		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
+		System.out.println(mainGameRenderer.toGrid(new Point(1930,0)));
 
 
 
