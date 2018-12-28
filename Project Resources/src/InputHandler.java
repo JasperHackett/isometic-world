@@ -65,13 +65,15 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			mouseButton = "right";
 		}
 
-		System.out.println("Mouse " + mouseButton +" clicked at: "+ e.getX() + ", " + e.getY());
+		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint()));
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
 					if(obj.getValue().clickTag == "mainmenustart") {
 						Game.currentState = Game.STATE.Game;
 						Game.gameWorld.updateDisplay();
+						Game.gameWorld.updateDisplay();
+
 					}else if (obj.getValue().clickTag == "tile") {
 						System.out.println("test");
 					}

@@ -41,6 +41,7 @@ public class Game {
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static SettingsHandler settingsControl;
+
 	public enum STATE{
 		Menu,
 		Exiting,
@@ -55,7 +56,9 @@ public class Game {
 		settingsControl = new SettingsHandler();
 		settingsControl.loadSettings();
 		currentState = STATE.Menu;
-		gameWorld = new World(new Dimension(worldWidth,worldHeight));
+;
+//		worldWidth = tileWidth *isoDims.width;
+//		 worldHeight = tileHeight *isoDims.height;
 		objectMap = new ObjectMap();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
@@ -68,18 +71,10 @@ public class Game {
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		
 		
-//		Image borderImage = new ImageIcon("assets/border.png").getImage();
-//		Image icon = new ImageIcon("assets/testImage.png").getImage();
-//		Image background = new ImageIcon("assets/background_draggable.png").getImage();
-//		Image tile = new ImageIcon("assets/grasstiles.png").getImage();
-//
-//		BufferedImage grasstiles = null;
-//		try {
-//			grasstiles = ImageIO.read(new File("assets/watertiles.png"));
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		
+		gameWorld = new World();
+		gameWorld.initialiseTileMap();
+
 
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -110,7 +105,7 @@ public class Game {
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 
-		gameWorld.initialiseTileMap();
+
 
 
 
@@ -120,16 +115,16 @@ public class Game {
 		window.getContentPane().addMouseMotionListener(inputControl);
 
 
-		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
+//		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
 		objectMap.updateMainDisplayObjects();
 		mainGameRenderer.start();
 
 
 
 		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
-		System.out.println(mainGameRenderer.toGrid(new Point(1930,0)));
-		System.out.println(gameWorld.isoDims);
-
+		System.out.println(mainGameRenderer.toGrid(new Point(1900,0)));
+		System.out.println("IsoDims: " +gameWorld.isoDims);
+		System.out.println("WorldDims: " +gameWorld.worldDims);
 
 
 

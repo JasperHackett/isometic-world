@@ -55,12 +55,12 @@ public class SettingsHandler {
 					case ("windowwidth"):
 						Game.width = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
 						break;
-					case ("worldwidth"):
-						Game.worldWidth = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
-						break;
-					case ("worldheight"):
-						Game.worldHeight = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
-						break;
+//					case ("worldwidth"):
+//						Game.worldWidth = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
+//						break;
+//					case ("worldheight"):
+//						Game.worldHeight = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
+//						break;
 					
 					
 					default:

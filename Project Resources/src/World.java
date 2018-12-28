@@ -34,14 +34,22 @@ public class World {
 	public Point staticWorldPoint;
 	public Dimension isoDims;
 	public int tileCount = 0;
+	public static int tileWidth = 64;
+	public static int tileHeight = 32;
 //	public Map<String,Image> imageAssetMap;
 
 
-	World(Dimension worldDims)  {
+	World()  {
+		
+		this.isoDims = initialiseTileMap();
+		
+		//This needs to be changed to accomodate different borders and resolutions
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
 		worldPoint = new Point(600,600);
-		this.worldDims = worldDims;
+		
+		
+		this.worldDims = new Dimension(isoDims.width*tileWidth+ 3*tileWidth,isoDims.height*tileHeight -2* tileHeight);
 
 	}
 
@@ -54,16 +62,16 @@ public class World {
 	}
 	
 
-	public void initialiseTileMap() {
+	public Dimension initialiseTileMap() {
 		
 		Point nextTileWorldCoords = new Point(400,400);
 //		System.out.println(nextTileWorldCoords.x);
 		BufferedReader br = null;
 		String line = "";
 		String delim = ",";
-		int renderConstant = 1030;
+		int renderConstant = 960;
 		int tileX = renderConstant;
-		int tileY = -1030;
+		int tileY = -960;
 		
 		int j = 0; //Used for calculating isoDims
 		
@@ -109,11 +117,8 @@ public class World {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		isoDims = new Dimension(tileCount/j,j);
-//		System.out.println(isoDims);
-		this.updateDisplay();
-			
-		
+//		this.updateDisplay();
+		return (new Dimension(tileCount/j,j));	
 	}
 	
 	public void setTile(Point isoPos,IsometricTile.TILESET type) {
