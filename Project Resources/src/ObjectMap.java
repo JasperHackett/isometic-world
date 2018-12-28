@@ -115,7 +115,6 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			offsetPoint.y = offsetPoint.y - 16;
 		}
 		
-		
 		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,IsometricTile.TILESET.grass,tilePos);
 		newTile.setProperties(dim,tilePos ,tileName,false);
 		newTile.hoverable = true;
