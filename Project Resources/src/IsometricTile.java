@@ -28,7 +28,8 @@ public class IsometricTile extends WorldObject{
 	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn, TILESET tileset, Point tilePos) {
 		super(type, worldDimsIn, worldPointIn);
 		this.tileset = tileset;
-		this.isoPos = tilePos;
+		this.isoPos = tilePos.getLocation();
+		System.out.println("iso pos:" + isoPos);
 		this.clickable = true;
 		this.clickTag = "tile";
 	}
@@ -51,6 +52,7 @@ public class IsometricTile extends WorldObject{
 	}
 	@Override
 	public void hoverAction() {
+//		System.out.println("tile hovered at:" + this.isoPos);
 		this.currentlyHovered = true;
 	}
 	@Override

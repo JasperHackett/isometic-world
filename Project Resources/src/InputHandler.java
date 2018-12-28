@@ -32,6 +32,15 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			}
 			return false;
 	}
+	public boolean checkContains(Point pointIn, Dimension dimensionIn, Point mousePosition) {
+		if(pointIn.getX() < mousePosition.getX() && pointIn.getY() < mousePosition.getY()
+				&& pointIn.getX()+dimensionIn.getWidth() > mousePosition.getX()
+				&& pointIn.getY()+dimensionIn.getHeight() > mousePosition.getY() ){
+
+			return true;
+		}
+		return false;
+}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -65,8 +74,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
 			mouseButton = "right";
 		}
-
-		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint()));
+		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
+		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
+		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint())+ ", Isometric2DPosition: " + iso2D);
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
@@ -118,25 +128,60 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 
 	}
+	public Point toIsometric(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+		tempPoint.x =  pointIn.x - pointIn.y;
+		tempPoint.y = (pointIn.x + pointIn.y) /2;
 
+
+		return(tempPoint);
+	}
+	public Point toGrid(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+
+		tempPoint.x = (2*pointIn.y + pointIn.x) / 2;
+		tempPoint.y = (2*pointIn.y - pointIn.x) / 2;
+
+		return(tempPoint);
+	}
 	//Checks for the object the mouse may be hovering over
 	public void checkHover(Point mousePos) {
-		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
-			if(obj.getValue().isHoverable()) {
-				if(checkContains(obj.getValue().getPosition(),mousePos)) {
-					if(hoveredObject == null) {
-						hoveredObject = obj.getValue();
-					}
-				
-					if(obj.getValue().equals(hoveredObject)) {
-						hoveredObject.hoverAction();
-					}else {
-						hoveredObject.disableHover();
-						this.hoveredObject = obj.getValue();
-						this.hoveredObject.hoverAction();
-					}
+		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(mousePos));
+		iso2D.setLocation((iso2D.getX() - 975), (iso2D.getY() + 975));
+		iso2D.setLocation((int) iso2D.getX() / 32, (int) iso2D.getY() / 32);
+//		System.out.println("tileX: "+ (int) iso2D.getX() / 32 + " tileY: "+ (int) iso2D.getY() / 32);
+		IsometricTile tempTile = null;
+//		System.out.println("tileX: "+ iso2D.getX() / 32 + "tileY: "+iso2D.getY() / 32);
+//		System.out.println("ISO2D: "+iso2D);
+		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
+			System.out.println("Accessing tile: "+ (int) iso2D.getX() +":"+ (int) iso2D.getY());
+			
+			if(!(tempTile.type == ObjectType.WORLD)){
+				Point isoMousePos = toIsometric(mousePos);
+			}else {
+				if(hoveredObject == null) {
+					hoveredObject = tempTile;
+				}
+
+				if(tempTile.equals(hoveredObject)) {
+					hoveredObject.hoverAction();
+				}else {
+					hoveredObject.disableHover();
+					this.hoveredObject = tempTile;
+					this.hoveredObject.hoverAction();
 				}
 			}
 		}
+//		for(Map.Entry<String, IsometricTile> obj : Game.objectMap.worldTiles.entrySet()) {
+//			if(obj.getValue().isHoverable()) {
+//				if(checkContains(obj.getValue().getPosition().getValue(),obj.getValue().getPosition().getKey(),mousePos)) {
+//					
+					
+		
+//				}
+
+//			}
+//		}
 	}
 }
