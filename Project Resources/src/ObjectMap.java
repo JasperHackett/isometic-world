@@ -109,11 +109,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "treetile" + Integer.toString(rn);
 			dim = new Dimension(64,40);
 			offsetPoint.y = offsetPoint.y - 8;
-		} else if (tileset == IsometricTile.TILESET.city) {
-			tileName = "city" + Integer.toString(rn);
-			dim = new Dimension(192,112);
-			offsetPoint.y = offsetPoint.y - 16;
-		}
+		} 
 		
 		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,IsometricTile.TILESET.grass,tilePos);
 		newTile.setProperties(dim,tilePos ,tileName,false);
@@ -123,6 +119,59 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		worldObjects.put(tileName, newTile);
 		worldTiles.put(tileName, newTile);
 //		System.out.println(tileName + ": " + worldObjects.get(tileName).getWorldPosition());
+	}
+	
+	public void addWorldStructure(Structure.StructureType type, Point masterTile, ArrayList<Point> tileList) {
+		
+		String imageName = "";
+		Random randomNum = new Random();
+		int rn = randomNum.nextInt(3);
+		
+		// calculating the dimensions of the structure
+		// based on the upper and lower limits of all of the tiles it occupies. 
+		int upperX = Integer.MIN_VALUE;
+		int lowerX = Integer.MAX_VALUE; 
+		int upperY = Integer.MIN_VALUE;
+		int lowerY = Integer.MAX_VALUE;
+		for (Point tilePos : tileList) {
+			IsometricTile tile = worldTiles.get(Integer.toString(tilePos.x) + ":" + Integer.toString(tilePos.y));
+			int x = tile.getWorldPosition().getValue().x;
+			int y = tile.getWorldPosition().getValue().y;
+			if (x > upperX) {
+				upperX = tilePos.x;
+			}
+			if (x < lowerX) {
+				lowerX = tilePos.x;
+			}
+			if (y > upperY) {
+				upperY = tilePos.y;
+			}
+			if (y < lowerY) {
+				lowerY = tilePos.y;
+			}
+		}
+		Dimension dim = new Dimension(upperX - lowerX, upperY - lowerY);
+		String structureName = "";
+		Structure newStructure = null;
+		
+		Point offsetPoint = new Point(lowerX, lowerY);
+		if (type == Structure.StructureType.city) {
+			imageName = "city" + Integer.toString(rn);
+			offsetPoint.y = offsetPoint.y - 16;
+			newStructure = new City(tileList, masterTile);
+			
+			structureName += "city";
+		}
+		// temporary way to create unique keys until a naming convention is decided for structures
+		while (true) {
+			structureName += Integer.toString(randomNum.nextInt(10));
+			if (this.putIfAbsent(structureName, newStructure) == null) {
+				break;
+			}
+		}
+		newStructure.setProperties(dim, offsetPoint, imageName);
+		
+		worldObjects.put(structureName, newStructure);
 	}
 	public void addImage(String imgID, String FilePath) {
 		Image newImage = new ImageIcon(FilePath).getImage();

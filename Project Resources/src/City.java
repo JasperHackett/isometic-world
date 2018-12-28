@@ -18,7 +18,7 @@ public class City extends Structure {
 	 * @param tileList
 	 */
 	public City(ArrayList<Point> tileList, Point masterTile) {
-		super(tileList, masterTile);	
+		super(tileList, masterTile, StructureType.city);	
 		
 	}
 

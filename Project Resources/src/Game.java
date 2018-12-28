@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -72,9 +73,6 @@ public class Game {
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
-		GameObject testCity = new GameObject(ObjectType.MAINMENU);
-		testCity.setProperties(new Dimension(192,112), new Point(600, 600), "citytile0");
-		objectMap.addObject(ObjectType.MAINMENU, "testCity", testCity);
 		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
@@ -129,7 +127,23 @@ public class Game {
 //		System.out.println(mainGameRenderer.toGrid(new Point(1900,0)));
 //		System.out.println("IsoDims: " +gameWorld.isoDims);
 //		System.out.println("WorldDims: " +gameWorld.worldDims);
-
+		
+		
+		
+		ArrayList<Point> testArray = new ArrayList<Point>();
+		testArray.add(new Point(14,19));
+		testArray.add(new Point(14,18));
+		testArray.add(new Point(14,17));
+		testArray.add(new Point(15,19));
+		testArray.add(new Point(15,18));
+		testArray.add(new Point(15,17));
+		testArray.add(new Point(16,19));
+		testArray.add(new Point(16,18));
+		testArray.add(new Point(16,17));
+		
+		
+		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
+//		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
 
 

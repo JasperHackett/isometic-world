@@ -93,9 +93,7 @@ public class World {
 						tileType = IsometricTile.TILESET.water;
 					} else if (tileLine[i].compareTo("f") == 0) {
 						tileType = IsometricTile.TILESET.trees;
-					} else if (tileLine[i].compareTo("c") == 0) {
-						tileType = IsometricTile.TILESET.city;
-					}
+					} 
 					
 					
 					if(tileType != null) {

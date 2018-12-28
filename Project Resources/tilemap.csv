@@ -14,7 +14,7 @@ w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,
 w,w,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w
 w,w,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w
 w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w
-w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,c,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,w,w,w
+w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,w,w,w
 w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,f,g,w,w,w
 w,w,w,w,g,g,g,f,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,w,w,w
 w,w,w,w,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w
@@ -22,7 +22,7 @@ w,w,w,g,g,g,g,g,g,g,g,f,f,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,f,f,g,g,g,g,g,g,
 w,w,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,f,f,f,g,g,g,g,g,g,g,g,g,g,f,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w
 w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,g,w,w,w
 w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w,w
-w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,c,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w,w
+w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w,w
 w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w,w,w
 w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,f,g,g,g,g,g,g,g,g,g,w,w,w,w,w,w,w
 w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w,w,w
@@ -33,8 +33,8 @@ w,w,w,w,g,g,g,g,g,g,f,g,g,g,g,f,g,g,g,g,g,g,g,g,f,f,g,g,g,g,f,f,g,g,g,g,g,g,g,g,
 w,w,w,w,w,g,g,g,g,f,f,f,g,g,g,g,g,g,g,g,g,g,g,f,g,f,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w
 w,w,w,w,w,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w
 w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w
-w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,c,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w
-w,w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,c,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,g,g,g,w,w,w,w,w
+w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w,w
+w,w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,g,g,g,w,w,w,w,w
 w,w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,f,g,g,g,w,w,w,w,w
 w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,g,g,g,w,w,w,w,w
 w,w,w,w,w,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,f,f,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w,w,w,w
