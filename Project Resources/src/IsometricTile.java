@@ -40,6 +40,23 @@ public class IsometricTile extends WorldObject{
 		}
 		
 	}
+	//Assigns a tile as the master tile for this one, actions on this tile will be executed on master
+	public void setMaster(Point masterPoint){
+		this.masterLocation.setLocation(masterPoint);
+	}
+	public Point getMaster(){
+		return this.masterLocation;
+	}
+//	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn, TILESET tileset, Point tilePos, Point masterPoint) {
+//		super(type, worldDimsIn, worldPointIn);
+//		this.tileset = tileset;
+//		this.isoPos = tilePos.getLocation();
+//		this.clickable = true;
+//		this.clickTag = "tile";
+//		this.walkable = false;
+//
+//		
+//	}
 	
 	public Point getIsoPoint() {
 		return this.isoPos;
