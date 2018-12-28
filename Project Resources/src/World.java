@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -191,4 +192,22 @@ public class World {
 		return new Point((this.worldPoint.x +  (mousePointIn.x - panelPoint.x)),((this.worldPoint.y +  (mousePointIn.y - panelPoint.y))));
 
 	}
+	
+	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd, ArrayList<String> tileList){
+		ArrayList<Point> returnList = new ArrayList<Point>();
+		if(tileList == null) {
+			System.out.println("Empty tile list");
+			return returnList;
+		}
+		
+		
+		
+		
+		
+		
+		
+		return returnList;
+	}
+		
+		
 }
