@@ -123,10 +123,10 @@ public class Game {
 
 
 
-		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
-		System.out.println(mainGameRenderer.toGrid(new Point(1900,0)));
-		System.out.println("IsoDims: " +gameWorld.isoDims);
-		System.out.println("WorldDims: " +gameWorld.worldDims);
+//		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
+//		System.out.println(mainGameRenderer.toGrid(new Point(1900,0)));
+//		System.out.println("IsoDims: " +gameWorld.isoDims);
+//		System.out.println("WorldDims: " +gameWorld.worldDims);
 
 
 

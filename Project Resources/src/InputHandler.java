@@ -76,7 +76,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
-		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint())+ ", Isometric2DPosition: " + iso2D);
+		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
+		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint())+ ", IsoGridPos: " + iso2D);
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
