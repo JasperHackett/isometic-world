@@ -31,6 +31,12 @@ public class IsometricTile extends WorldObject{
 		this.isoPos = tilePos;
 		this.clickable = true;
 		this.clickTag = "tile";
+		if (this.tileset == TILESET.grass) {
+			this.walkable = true;
+		} else {
+			this.walkable = false;
+		}
+		
 	}
 	
 	public Point getIsoPoint() {
