@@ -76,7 +76,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
-		System.out.println("tileX: "+ iso2D.getX() / 32 + "tileY: "+iso2D.getY() / 32);
 		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint())+ ", Isometric2DPosition: " + iso2D);
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
@@ -148,11 +147,13 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	//Checks for the object the mouse may be hovering over
 	public void checkHover(Point mousePos) {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(mousePos));
-		iso2D.setLocation((iso2D.getX() - 975)/Game.gameWorld.tileHeight, (iso2D.getY() + 975)/Game.gameWorld.tileHeight);
+		iso2D.setLocation((iso2D.getX() - 975), (iso2D.getY() + 975));
+		iso2D.setLocation((int) iso2D.getX() / 32, (int) iso2D.getY() / 32);
+//		System.out.println("tileX: "+ (int) iso2D.getX() / 32 + " tileY: "+ (int) iso2D.getY() / 32);
 		IsometricTile tempTile = null;
 //		System.out.println("tileX: "+ iso2D.getX() / 32 + "tileY: "+iso2D.getY() / 32);
-		System.out.println("ISO2D: "+iso2D);
-		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.height && iso2D.getY() < Game.gameWorld.isoDims.width) {
+//		System.out.println("ISO2D: "+iso2D);
+		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
 			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
 			System.out.println("Accessing tile: "+ (int) iso2D.getX() +":"+ (int) iso2D.getY());
 			
