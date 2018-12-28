@@ -55,9 +55,9 @@ public class IsometricTile extends WorldObject{
 	}
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x, coords.y+23, null);
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		if(currentlyHovered) {
-			g.drawImage(Game.objectMap.getImage("hover"), coords.x, coords.y+23, null);
+			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 	}
 }

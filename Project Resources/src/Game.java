@@ -41,6 +41,8 @@ public class Game {
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static SettingsHandler settingsControl;
+	public static final int xOffset = 3;
+	public static final int yOffset = 26;
 
 	public enum STATE{
 		Menu,
