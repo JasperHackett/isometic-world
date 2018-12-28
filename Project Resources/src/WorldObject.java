@@ -42,6 +42,5 @@ public class WorldObject extends GameObject {
 	 */
 //	public WorldObject(ObjectType world) {
 //		this.type = WORLD
-//		// TODO Auto-generated constructor stub
 //	}
 }
