@@ -64,7 +64,7 @@ public class Game {
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 
 		objectMap.addImage("border", "assets/border.png");
-//		objectMap.addImage("tile", "assets/grasstiles.png");
+		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);

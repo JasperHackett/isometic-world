@@ -20,8 +20,11 @@ public class GameObject {
 	protected String objectImage; //test for a single image object
 	protected boolean clickable;
 	private boolean isVisible;
+	public boolean hoverable;
+	public boolean currentlyHovered;
 	public ObjectType type;
 	public String clickTag;
+	public String objID;
 	
 	public GameObject(ObjectType type) {
 		this.type = type;
@@ -71,6 +74,16 @@ public class GameObject {
 	public boolean isClickable(){
 		return clickable;
 	}
+
+	public boolean isHoverable(){
+		return hoverable;
+	}
+	public void setHovered(boolean isHovered){
+		 this.currentlyHovered = isHovered;
+	}
+	public boolean isHovered(){
+		 return currentlyHovered;
+	}
 	
 	public boolean isVisible(){
 		return isVisible;
@@ -78,5 +91,12 @@ public class GameObject {
 	
 	public void setVisible(boolean isVisible){
 		this.isVisible = isVisible;
+	}
+	public void hoverAction(){
+		this.currentlyHovered = true;
+		System.out.println("Hovering on: ");
+	}
+	public void disableHover(){
+		this.currentlyHovered = false;
 	}
 }

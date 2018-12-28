@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 
 /**
@@ -11,7 +12,6 @@ import java.awt.Point;
  */
 public class IsometricTile extends WorldObject{
 	public Point isoPos;
-
 	public boolean walkable;
 	public enum TILESET{
 		grass,
@@ -47,6 +47,17 @@ public class IsometricTile extends WorldObject{
 		}
 		if(tilesetIn == TILESET.trees) {
 			this.objectImage = "treestile0";
+		}
+	}
+	@Override
+	public void hoverAction() {
+		this.currentlyHovered = true;
+	}
+	@Override
+	public void render(Graphics g) {
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x, coords.y+23, null);
+		if(currentlyHovered) {
+			g.drawImage(Game.objectMap.getImage("hover"), coords.x, coords.y+23, null);
 		}
 	}
 }

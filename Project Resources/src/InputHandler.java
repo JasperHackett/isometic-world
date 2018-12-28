@@ -19,6 +19,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	private Point mousePressPos;
 	private boolean dragEnabled;
+	private GameObject hoveredObject;
 
 
 
@@ -48,7 +49,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		checkHover(e.getPoint());
 
 	}
 
@@ -108,7 +109,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -119,5 +119,24 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	}
 
-
+	//Checks for the object the mouse may be hovering over
+	public void checkHover(Point mousePos) {
+		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
+			if(obj.getValue().isHoverable()) {
+				if(checkContains(obj.getValue().getPosition(),mousePos)) {
+					if(hoveredObject == null) {
+						hoveredObject = obj.getValue();
+					}
+				
+					if(obj.getValue().equals(hoveredObject)) {
+						hoveredObject.hoverAction();
+					}else {
+						hoveredObject.disableHover();
+						this.hoveredObject = obj.getValue();
+						this.hoveredObject.hoverAction();
+					}
+				}
+			}
+		}
+	}
 }
