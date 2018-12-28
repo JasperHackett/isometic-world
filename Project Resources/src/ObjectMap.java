@@ -109,7 +109,11 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "treetile" + Integer.toString(rn);
 			dim = new Dimension(64,40);
 			offsetPoint.y = offsetPoint.y - 8;
-		} 
+		} else if (tileset == IsometricTile.TILESET.city) {
+			tileName = "city" + Integer.toString(rn);
+			dim = new Dimension(192,112);
+			offsetPoint.y = offsetPoint.y - 16;
+		}
 		
 		
 		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,IsometricTile.TILESET.grass,tilePos);
@@ -133,6 +137,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tilesPerTileset.put(IsometricTile.TILESET.water, tileCount);
 		}else if (imgID == "treetile") {
 			tilesPerTileset.put(IsometricTile.TILESET.trees, tileCount);
+		}else if (imgID == "citytile") {
+			tilesPerTileset.put(IsometricTile.TILESET.city, tileCount);
 		}
 		String imgName;
 		BufferedImage tilesheet = null;

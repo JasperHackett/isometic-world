@@ -17,7 +17,7 @@ public class IsometricTile extends WorldObject{
 		grass,
 		water,
 		trees,
-		
+		city;
 	}
 	public TILESET tileset;
 	/**

@@ -71,8 +71,10 @@ public class Game {
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
-		
-		
+		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
+		GameObject testCity = new GameObject(ObjectType.MAINMENU);
+		testCity.setProperties(new Dimension(192,112), new Point(600, 600), "citytile0");
+		objectMap.addObject(ObjectType.MAINMENU, "testCity", testCity);
 		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
