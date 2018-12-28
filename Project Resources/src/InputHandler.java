@@ -118,12 +118,20 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 
 	}
+	public Point toIsometric(Point pointIn) {
+		Point tempPoint = new Point(0,0);
+		tempPoint.x =  pointIn.x - pointIn.y;
+		tempPoint.y = (pointIn.x + pointIn.y) /2;
+		
+		
+		return(tempPoint);
+	}
 
 	//Checks for the object the mouse may be hovering over
 	public void checkHover(Point mousePos) {
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isHoverable()) {
-				if(checkContains(obj.getValue().getPosition(),mousePos)) {
+				if(checkContains(obj.getValue().getPosition(),toIsometric(mousePos))) {
 					if(hoveredObject == null) {
 						hoveredObject = obj.getValue();
 					}
