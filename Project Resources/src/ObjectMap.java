@@ -44,7 +44,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	private HashMap<String, WorldObject> worldObjects;
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
-	private HashMap<String,IsometricTile> worldTiles;
+	public HashMap<String,IsometricTile> worldTiles;
 	private HashMap<String, Image> imageMap;
 	private HashMap<IsometricTile.TILESET,Integer> tilesPerTileset;
 
@@ -125,6 +125,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		Image newImage = new ImageIcon(FilePath).getImage();
 		imageMap.put(imgID, newImage);
 	}
+	
 	public void addTileImage(String imgID, String FilePath,Dimension tileDims,int tileCount) {
 		if(imgID == "grasstile") {
 			tilesPerTileset.put(IsometricTile.TILESET.grass, tileCount);

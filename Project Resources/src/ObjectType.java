@@ -7,5 +7,5 @@
  *
  */
 public enum ObjectType {
-	MAINMENU, WORLD, DEFAULT;
+	MAINMENU, WORLD,TILE, DEFAULT;
 }

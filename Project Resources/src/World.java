@@ -36,6 +36,7 @@ public class World {
 	public int tileCount = 0;
 	public static int tileWidth = 64;
 	public static int tileHeight = 32;
+	Pair<Dimension,Point> isometricPlane;
 //	public Map<String,Image> imageAssetMap;
 
 
