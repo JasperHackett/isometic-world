@@ -154,9 +154,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //		System.out.println("tileX: "+ iso2D.getX() / 32 + "tileY: "+iso2D.getY() / 32);
 //		System.out.println("ISO2D: "+iso2D);
 		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
-			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
-			System.out.println("Accessing tile: "+ (int) iso2D.getX() +":"+ (int) iso2D.getY());
-			
+			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
 			if(!(tempTile.type == ObjectType.WORLD)){
 				Point isoMousePos = toIsometric(mousePos);
 			}else {

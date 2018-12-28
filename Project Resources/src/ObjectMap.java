@@ -119,7 +119,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		this.put(tileName, newTile);
 		worldObjects.put(tileName, newTile);
 		worldTiles.put(tileName, newTile);
-		System.out.println(tileName + ": " + worldObjects.get(tileName).getWorldPosition());
+//		System.out.println(tileName + ": " + worldObjects.get(tileName).getWorldPosition());
 	}
 	public void addImage(String imgID, String FilePath) {
 		Image newImage = new ImageIcon(FilePath).getImage();

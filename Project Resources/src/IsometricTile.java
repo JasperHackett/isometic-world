@@ -29,7 +29,6 @@ public class IsometricTile extends WorldObject{
 		super(type, worldDimsIn, worldPointIn);
 		this.tileset = tileset;
 		this.isoPos = tilePos.getLocation();
-		System.out.println("iso pos:" + isoPos);
 		this.clickable = true;
 		this.clickTag = "tile";
 	}
