@@ -13,11 +13,13 @@ import java.awt.Point;
 public class IsometricTile extends WorldObject{
 	public Point isoPos;
 	public boolean walkable;
+	public Point masterLocation;
 	public enum TILESET{
 		grass,
 		water,
 		trees,
-		city;
+		city,
+		slave;
 	}
 	public TILESET tileset;
 	/**

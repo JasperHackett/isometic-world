@@ -17,8 +17,8 @@ public class City extends Structure {
 	 * @param worldPointIn
 	 * @param tileList
 	 */
-	public City(Dimension worldDimsIn, Point worldPointIn, ArrayList<Point> tileList) {
-		super(worldDimsIn, worldPointIn, tileList);	
+	public City(ArrayList<Point> tileList, Point masterTile) {
+		super(tileList, masterTile);	
 		
 	}
 

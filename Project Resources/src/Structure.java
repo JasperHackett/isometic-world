@@ -19,8 +19,8 @@ public class Structure extends WorldObject {
 	 * @param worldDimsIn
 	 * @param worldPointIn
 	 */
-	public Structure(Dimension worldDimsIn, Point worldPointIn, ArrayList<Point> tileList) {
-		super(ObjectType.WORLD);
+	public Structure(ArrayList<Point> tileList, Point masterTile) {
+		super();
 		this.tileList = tileList;
 	}
 }
