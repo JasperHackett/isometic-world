@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * 
@@ -30,5 +31,9 @@ public class Structure extends WorldObject {
 		this.tileList = tileList;
 		this.masterTile = masterTile;
 		this.type = type;
+		
+		for(Point tile : tileList) {
+			Game.gameWorld.enslaveTile(tile,this.isoPoint);
+		}
 	}
 }
