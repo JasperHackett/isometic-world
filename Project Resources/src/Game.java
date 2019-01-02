@@ -70,7 +70,7 @@ public class Game {
 		objectMap.addImage("hover", "assets/hovertile.png");
 
 		objectMap.addImage("click", "assets/click.png");
-		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 3);
+		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
