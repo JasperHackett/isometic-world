@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -38,25 +40,31 @@ public class World {
 	public static int tileWidth = 64;
 	public static int tileHeight = 32;
 	Pair<Dimension,Point> isometricPlane;
+	public Queue<Pair<String,Point>> structureList;
 //	public Map<String,Image> imageAssetMap;
+	public HashMap<Point,Point> worldToIsoTable;
 
 
 	World()  {
-		
+		worldToIsoTable = new HashMap<Point,Point>();
+		structureList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
 		
-		//This needs to be changed to accomodate different borders and resolutions
+		//This needs to be changed to accommodate different borders and resolutions
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
 		worldPoint = new Point(600,600);
+
 		
 		
-		this.worldDims = new Dimension(isoDims.width*tileWidth+ 3*tileWidth,isoDims.height*tileHeight -2* tileHeight);
+		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
+
+		initialiseStructures();
 
 	}
 
 	/**
-	 * creates a worldobject, laods its image from the map and adds it to the object map. Returns true if succesful
+	 * creates a worldobject, loads its image from the map and adds it to the object map. Returns true if succesful
 	 * @return
 	 */
 	public boolean newTileObject() {
@@ -71,6 +79,8 @@ public class World {
 		BufferedReader br = null;
 		String line = "";
 		String delim = ",";
+		
+		// renderConstant and tileY (960) use the magic value to position the isometric plane
 		int renderConstant = 960;
 		int tileX = renderConstant;
 		int tileY = -960;
@@ -91,9 +101,11 @@ public class World {
 						tileType = IsometricTile.TILESET.grass;
 					}else if(tileLine[i].compareTo("w") == 0){
 						tileType = IsometricTile.TILESET.water;
-					} else if (tileLine[i].compareTo("f") == 0) {
+					}else if (tileLine[i].compareTo("f") == 0) {
 						tileType = IsometricTile.TILESET.trees;
-					} 
+					}else if (tileLine[i] != null) {
+//						structureList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
+					}
 					
 					
 					if(tileType != null) {
@@ -120,11 +132,31 @@ public class World {
 			e.printStackTrace();
 		}
 //		this.updateDisplay();
+		
+		
+		
+
+		
+		
 		return (new Dimension(tileCount/j,j));	
 	}
 	
 	public void setTile(Point isoPos,IsometricTile.TILESET type) {
 		Game.objectMap.getTile(isoPos).changeTileset(type);
+	}
+	
+	public void initialiseStructures() {
+//		while(!structureList.isEmpty()) {
+//			Pair<String,Point> structure = structureList.poll();
+//			if(structure.getKey().equals("c1")) {
+//				Structure newStructure = new Structure(structure.getValue(),worldToIsoTable.get(structure.getValue()));
+//
+//				newStructure.setProperties(new Dimension(64,32),new Point(0,0),"citytile1", true);
+//				newStructure.dim = new Dimension(64,32);
+////				Game.objectMap.WorldObjects().put("c1", newStructure);
+//			}
+//			
+//		}
 	}
 
 	/**
@@ -133,7 +165,10 @@ public class World {
 	public void updateDisplay() {
 		Game.objectMap.updateMainDisplayObjects();
 
-		for(WorldObject obj : Game.objectMap.getMainDisplayObjects()) {
+		for(WorldObject obj : Game.objectMap.getMainDisplayTiles()) {
+			obj.setPosition(worldPoint,panelPoint);
+		}
+		for(Structure obj : Game.objectMap.getMainDisplayStructures()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
 
@@ -190,11 +225,15 @@ public class World {
 		return new Point((this.worldPoint.x +  (mousePointIn.x - panelPoint.x)),((this.worldPoint.y +  (mousePointIn.y - panelPoint.y))));
 
 	}
-	public void enslaveTile(Point tilePos, Point masterPos) {
-		String tileID = tilePos.x +":"+tilePos.y;
-		Game.objectMap.worldTiles.get(tileID).slave = true;
-		Game.objectMap.worldTiles.get(tileID).masterLocation = masterPos;
-	}
+//	public void enslaveTile(Point tilePos, Point masterPos) {
+////		if(tilePos != null && masterPos != null) {
+////			String tileID = tilePos.x +":"+tilePos.y;
+////			System.out.println(tileID);
+//////			Game.objectMap.worldTiles.get(tileID).setSlave(true);
+//////			Game.objectMap.worldTiles.get(tileID).setMaster(masterPos);
+//////			System.out.println("enslaved: "+ Game.objectMap.worldTiles.get(tileID).slave);
+////		}
+//	}
 	
 	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd, ArrayList<String> tileList){
 		ArrayList<Point> returnList = new ArrayList<Point>();

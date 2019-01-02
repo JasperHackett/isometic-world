@@ -41,22 +41,28 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 	
 	private ArrayList<WorldObject> mainDisplayObjects;
+	private ArrayList<Structure> mainDisplayStructures;
+	public ArrayList<IsometricTile> mainDisplayTiles;
 	private HashMap<String, WorldObject> worldObjects;
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
-	public HashMap<String,IsometricTile> worldTiles;
+	public HashMap<String, IsometricTile> worldTiles;
+	public HashMap<String, Structure> worldStructures;
+	
 	private HashMap<String, Image> imageMap;
 	private HashMap<IsometricTile.TILESET,Integer> tilesPerTileset;
 
 	public ObjectMap(){
 		super();
-		mainDisplayObjects = new ArrayList<WorldObject>();
+		mainDisplayStructures = new ArrayList<Structure>();
+		mainDisplayTiles = new ArrayList<IsometricTile>();
 		worldObjects = new HashMap<String, WorldObject>();
 		otherObjects = new HashMap<String, GameObject>();
 		menuObjects = new HashMap<String,GameObject>();
 		imageMap = new HashMap<String,Image>();
 		worldTiles = new HashMap<String,IsometricTile>();
 		tilesPerTileset = new HashMap<IsometricTile.TILESET,Integer>();
+		worldStructures = new HashMap<String,Structure>();
 	}
 
 	public void addObject(ObjectType type, String s, GameObject obj) {
@@ -112,13 +118,20 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		} 
 		
 		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,IsometricTile.TILESET.grass,tilePos);
-		newTile.setProperties(dim,tilePos ,tileName,false);
+		newTile.setProperties(dim,tilePos ,tileName,true);
 		newTile.hoverable = true;
 		tileName= Integer.toString(tilePos.x) + ":" + Integer.toString(tilePos.y);
 		this.put(tileName, newTile);
 		worldObjects.put(tileName, newTile);
 		worldTiles.put(tileName, newTile);
 //		System.out.println(tileName + ": " + worldObjects.get(tileName).getWorldPosition());
+	}
+	
+	public void addStructure(String structureName,Structure structureIn) {
+		structureIn.structureOffset = 48;
+		this.worldObjects.put(structureName,structureIn);
+		this.worldStructures.put(structureName,structureIn);
+		this.put(structureName, structureIn);
 	}
 	
 	public void addWorldStructure(Structure.StructureType type, Point masterTile, ArrayList<Point> tileList) {
@@ -158,7 +171,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		if (type == Structure.StructureType.city) {
 			imageName = "city" + Integer.toString(rn);
 			offsetPoint.y = offsetPoint.y - 16;
-			newStructure = new City(tileList, masterTile);
+//			newStructure = new City(tileList, masterTile);
 			
 			structureName += "city";
 		}
@@ -201,7 +214,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			imgName = imgID + Integer.toString(i);
 			imageMap.put(imgName,newImage);
 		}
-		
+//		System.out.println(this.imageMap.keySet());
 //		imageMap.put(imgID,newImage);
 	}
 	public Image getImage(String imgID) {
@@ -209,8 +222,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public IsometricTile getTile(Point pointIn) {
-		return this.worldTiles.get(pointIn.x + ":" + pointIn.y);
+		if(this.worldTiles.containsKey(pointIn.x + ":" + pointIn.y)) {
+			return this.worldTiles.get(pointIn.x + ":" + pointIn.y);
+		}else {
+			System.out.println("Invalid tile coordinate");
+			return null;
+		}
 	}
+	
 
 
 
@@ -222,7 +241,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		}
 		this.remove(s);
 		worldObjects.remove(s);
-		mainDisplayObjects.remove(s);
+		mainDisplayTiles.remove(s);
 		return true;
 	}
 
@@ -230,6 +249,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return (GameObject)this.get(s);
 	}
 
+	public ArrayList<IsometricTile> getMainDisplayTiles() {
+		return mainDisplayTiles;
+
+	}
+	public ArrayList<Structure> getMainDisplayStructures() {
+		return mainDisplayStructures;
+
+	}
 	public ArrayList<WorldObject> getMainDisplayObjects() {
 		return mainDisplayObjects;
 
@@ -253,17 +280,32 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			e.printStackTrace();
 		}
 
-
 		mainDisplayObjects = new ArrayList<WorldObject>();
+		mainDisplayTiles = new ArrayList<IsometricTile>();
 
-		for (Map.Entry<String, WorldObject> mapEntry : worldObjects.entrySet()) {
-			WorldObject obj = mapEntry.getValue();
+		for (Map.Entry<String, IsometricTile> mapEntry : worldTiles.entrySet()) {
+			IsometricTile obj = mapEntry.getValue();
 			if (isWithinDisplay(obj.getWorldPosition(), new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
+				mainDisplayTiles.add(mapEntry.getValue());
 				mainDisplayObjects.add(mapEntry.getValue());
 			}
 		}
+		
+		mainDisplayStructures= new ArrayList<Structure>();
+		if(worldStructures != null) {
+			for (Map.Entry<String, Structure> mapEntry : worldStructures.entrySet()) {
+				WorldObject obj = mapEntry.getValue();
+				if (isWithinDisplay(obj.getWorldPosition(), new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
+					mainDisplayStructures.add(mapEntry.getValue());
+					mainDisplayObjects.add(mapEntry.getValue());
+				}
+			}
+		}
+		
 		YAxisComparator comp = new YAxisComparator();
-		mainDisplayObjects.sort((Comparator)comp);
+//		mainDisplayObjects.sort((Comparator)comp);
+//		mainDisplayStructures.sort((Comparator)comp);
+		mainDisplayTiles.sort((Comparator)comp);
 		
 		Game.mainGameRenderer.semaphore.release();
 
@@ -275,6 +317,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		//checking each corner of the object to see if it is within the display's bounds
 
 		// top left corner == x,y
+		if(objectBounds == null) {
+			System.out.println("test");
+		}
 		int x = objectBounds.getValue().x;
 		int y = objectBounds.getValue().y;
 		if (x > displayBounds.getValue().x && x < displayBounds.getValue().x + displayBounds.getKey().getWidth()){

@@ -8,13 +8,14 @@ import java.awt.Point;
 
 /**
  * @author Jasper
- *
+ * 
  */
 public class IsometricTile extends WorldObject{
 	public Point isoPos;
 	public boolean walkable;
 	public boolean slave;
 	public Point masterLocation;
+	protected Structure structureOnTile = null;
 	public enum TILESET{
 		grass,
 		water,
@@ -40,16 +41,24 @@ public class IsometricTile extends WorldObject{
 		}
 		
 	}
+	public void setStructureOnTile(Structure structureOnTile) {
+		this.structureOnTile = structureOnTile;
+		
+	}
 	//Assigns a tile as the master tile for this one, actions on this tile will be executed on master
-	public void setMaster(Point masterPoint){
-		if(masterPoint != null) {
-			this.slave = true;
-		}
-		this.masterLocation.setLocation(masterPoint);
-	}
-	public Point getMaster(){
-		return this.masterLocation;
-	}
+//	public void setMaster(Point masterPoint){
+//		if(masterPoint != null) {
+//			this.slave = true;
+//			this.masterLocation = new Point(masterPoint);
+//		}
+//
+//	}
+//	public Point getMaster(){
+//		return this.masterLocation;
+//	}
+//	public void setSlave(boolean isSlave) {
+//		this.slave = isSlave;
+//	}
 //	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn, TILESET tileset, Point tilePos, Point masterPoint) {
 //		super(type, worldDimsIn, worldPointIn);
 //		this.tileset = tileset;

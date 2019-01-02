@@ -80,6 +80,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint())+ ", IsoGridPos: " + iso2D);
 		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
 			if(obj.getValue().isClickable()){
+//				System.out.println("clickable object clicked");
 				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
 					if(obj.getValue().clickTag == "mainmenustart") {
 						Game.currentState = Game.STATE.Game;
@@ -87,7 +88,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 						Game.gameWorld.updateDisplay();
 
 					}else if (obj.getValue().clickTag == "tile") {
-						System.out.println("test");
+
 					}
 				}
 			}
@@ -150,27 +151,30 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(mousePos));
 		iso2D.setLocation((iso2D.getX() - 975), (iso2D.getY() + 975));
 		iso2D.setLocation((int) iso2D.getX() / 32, (int) iso2D.getY() / 32);
-//		System.out.println("tileX: "+ (int) iso2D.getX() / 32 + " tileY: "+ (int) iso2D.getY() / 32);
+
 		IsometricTile tempTile = null;
-//		System.out.println("tileX: "+ iso2D.getX() / 32 + "tileY: "+iso2D.getY() / 32);
-//		System.out.println("ISO2D: "+iso2D);
+
 		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
 			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
-			if((tempTile.type == ObjectType.WORLD)){
-				if(tempTile.slave == true) {
-					tempTile = Game.objectMap.worldTiles.get(tempTile.masterLocation.getX() + ":" + tempTile.masterLocation.getY());
-				}
 
-				if(hoveredObject == null) {
-					hoveredObject = tempTile;
-				}
-
-				if(tempTile.equals(hoveredObject)) {
-					hoveredObject.hoverAction();
-				}else {
-					hoveredObject.disableHover();
-					this.hoveredObject = tempTile;
-					this.hoveredObject.hoverAction();
+			if(tempTile != null) {
+				if((tempTile.type == ObjectType.WORLD)){
+					if(tempTile.slave == true && tempTile.masterLocation != null) {
+						System.out.println((int)tempTile.masterLocation.getX() + ":" + (int)tempTile.masterLocation.getY());
+						tempTile = Game.objectMap.worldTiles.get((int)tempTile.masterLocation.getX() + ":" + (int)tempTile.masterLocation.getY());
+					}
+	
+					if(hoveredObject == null) {
+						hoveredObject = tempTile;
+					}
+	
+					if(tempTile.equals(hoveredObject)) {
+						hoveredObject.hoverAction();
+					}else {
+						hoveredObject.disableHover();
+						this.hoveredObject = tempTile;
+						this.hoveredObject.hoverAction();
+					}
 				}
 			}
 		}

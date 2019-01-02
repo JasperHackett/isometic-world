@@ -68,11 +68,14 @@ public class Game {
 
 		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
+
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
+		
+		objectMap.addImage("teststructure", "assets/structuretest.png");
 		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
@@ -107,9 +110,27 @@ public class Game {
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 
-
-
-
+		
+//		GameObject test = new GameObject(ObjectType.DEFAULT);
+//		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
+//		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
+		Structure city0;
+		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+		structureTiles.add(objectMap.getTile(new Point(17,38)));
+		city0 = new Structure(structureTiles);
+		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
+		objectMap.addObject(ObjectType.WORLD,"city", city0);
+		objectMap.addWorldObject("city0", city0);
+		objectMap.addStructure("city0",city0);
+		
+		Structure city1;
+		structureTiles.clear();
+		structureTiles.add(objectMap.getTile(new Point(40,19)));
+		city1 = new Structure(structureTiles);
+		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
+		objectMap.addObject(ObjectType.WORLD,"city", city1);
+		objectMap.addWorldObject("city1", city1);
+		objectMap.addStructure("city1",city1);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
@@ -130,26 +151,24 @@ public class Game {
 		
 		
 		
-		ArrayList<Point> testArray = new ArrayList<Point>();
-		testArray.add(new Point(14,19));
-		testArray.add(new Point(14,18));
-		testArray.add(new Point(14,17));
-		testArray.add(new Point(15,19));
-		testArray.add(new Point(15,18));
-		testArray.add(new Point(15,17));
-		testArray.add(new Point(16,19));
-		testArray.add(new Point(16,18));
-		testArray.add(new Point(16,17));
+//		ArrayList<Point> testArray = new ArrayList<Point>();
+//		testArray.add(new Point(14,18));
+//		testArray.add(new Point(14,17));
+//		testArray.add(new Point(15,19));
+//		testArray.add(new Point(15,18));
+//		testArray.add(new Point(15,17));
+//		testArray.add(new Point(16,19));
+//		testArray.add(new Point(16,18));
+//		testArray.add(new Point(16,17));
 		
-		
+//		Structure testStructure = new Structure(testArray,new Point(14,19));
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
 
 
+
+
 	}
-
-
-
 
 }
