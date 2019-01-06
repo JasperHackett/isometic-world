@@ -143,7 +143,7 @@ public class Game {
 		
 		
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
-//		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
+		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
 
 

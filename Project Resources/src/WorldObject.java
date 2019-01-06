@@ -13,10 +13,10 @@ import javafx.util.Pair;
  */
 public class WorldObject extends GameObject {
 	
-	private Dimension worldDims;
-	private Point worldPoint;
+	protected Dimension worldDims;
+	protected Point worldPoint;
 	
-	private Point isoPoint;
+	protected Point isoPoint;
 
 	public WorldObject() {
 		super(ObjectType.WORLD);

@@ -137,13 +137,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			IsometricTile tile = worldTiles.get(Integer.toString(tilePos.x) + ":" + Integer.toString(tilePos.y));
 			int x = tile.getWorldPosition().getValue().x;
 			int y = tile.getWorldPosition().getValue().y;
-			if (x > upperX) {
+			if (x + tile.getPosition().getKey().getWidth() > upperX) {
 				upperX = tilePos.x;
 			}
 			if (x < lowerX) {
 				lowerX = tilePos.x;
 			}
-			if (y > upperY) {
+			if (y + tile.getPosition().getKey().getHeight() > upperY) {
 				upperY = tilePos.y;
 			}
 			if (y < lowerY) {
@@ -158,7 +158,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		if (type == Structure.StructureType.city) {
 			imageName = "city" + Integer.toString(rn);
 			offsetPoint.y = offsetPoint.y - 16;
-			newStructure = new City(tileList, masterTile);
+			newStructure = new City(tileList, masterTile, offsetPoint);
 			
 			structureName += "city";
 		}

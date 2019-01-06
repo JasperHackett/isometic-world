@@ -25,10 +25,13 @@ public class Structure extends WorldObject {
 	 * @param worldDimsIn
 	 * @param worldPointIn
 	 */
-	public Structure(ArrayList<Point> tileList, Point masterTile, StructureType type) {
+	public Structure(ArrayList<Point> tileList, Point masterTile, StructureType type, Point worldPoint) {
 		super();
 		this.tileList = tileList;
 		this.masterTile = masterTile;
 		this.type = type;
+		this.worldPoint = worldPoint;
 	}
+	
+	
 }
