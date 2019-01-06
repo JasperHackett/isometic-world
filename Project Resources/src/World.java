@@ -239,25 +239,36 @@ public class World {
 		ArrayList<IsometricTile> returnList = new ArrayList<IsometricTile>();
 		//Check up and to the right for neighbour
 		if(centreTile.getIsoPoint().x > 0) {
-			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x - 1, centreTile.getIsoPoint().y)));
-		}
-		if(centreTile.getIsoPoint().y > 0) {
-			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x , centreTile.getIsoPoint().y- 1)));
-		}
-		if(centreTile.getIsoPoint().x <= this.isoDims.getWidth()-2) {
-			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x + 1, centreTile.getIsoPoint().y)));
-		}
-		if(centreTile.getIsoPoint().y <= this.isoDims.getHeight()-2) {
-			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x, centreTile.getIsoPoint().y + 1)));
-		}
-		for(IsometricTile tile : returnList) {
-			if(tile.walkable == false) {
-				returnList.remove(tile);
+			if(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x - 1, centreTile.getIsoPoint().y)).isWalkable()) {
+				returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x - 1, centreTile.getIsoPoint().y)));
 			}
 		}
-		
-		
-		System.out.println(returnList.size());
+		if(centreTile.getIsoPoint().y > 0) {
+			if(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x , centreTile.getIsoPoint().y- 1)).isWalkable()) {
+				returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x , centreTile.getIsoPoint().y- 1)));
+			}
+		}
+		if(centreTile.getIsoPoint().x <= this.isoDims.getWidth()-2) {
+			if(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x + 1, centreTile.getIsoPoint().y)).isWalkable()) {
+				returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x + 1, centreTile.getIsoPoint().y)));
+			}
+		}
+		if(centreTile.getIsoPoint().y <= this.isoDims.getHeight()-2) {
+			if(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x, centreTile.getIsoPoint().y + 1)).isWalkable()) {
+				returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x, centreTile.getIsoPoint().y + 1)));
+			}
+
+		}
+//		for(IsometricTile tile : returnList) {
+//			if(tile.walkable == false) {
+//				returnList.remove(tile);
+//			}
+//		}
+//		System.out.println("Returnlist:");
+//		for(IsometricTile it : returnList){
+//			System.out.println(it.getIsoPoint());
+//		}
+//		System.out.println(returnList.size());
 		return returnList;
 		
 	}

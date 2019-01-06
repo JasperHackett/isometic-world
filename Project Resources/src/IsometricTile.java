@@ -86,6 +86,11 @@ public class IsometricTile extends WorldObject{
 			this.objectImage = "treestile0";
 		}
 	}
+	
+	public boolean isWalkable() {
+		return walkable;
+	}
+	
 	@Override
 	public void hoverAction() {
 //		System.out.println("tile hovered at:" + this.isoPos);
