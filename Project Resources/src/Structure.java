@@ -49,6 +49,9 @@ public class Structure extends WorldObject {
 	public Structure(ArrayList<IsometricTile> tileList) {
 		
 		this.tileList = tileList;
+		for(IsometricTile tile : tileList) {
+			tile.setStructureOnTile(this);
+		}
 
 //		this.isoTileKey = (int) masterTile.getX() + ":" + (int) masterTile.getY();
 		this.worldPoint = tileList.get(0).worldPoint;
@@ -56,10 +59,20 @@ public class Structure extends WorldObject {
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(200,200);
 		this.objectImage = "citytile0";
+		this.clickTag = "city";
+	}
+	public void hoverAction() {
+//		System.out.println("structure hovered");
+		this.currentlyHovered = true;
+
 	}
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		if(currentlyHovered || currentlyClicked) {
+			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		}
 	}
+
 
 }

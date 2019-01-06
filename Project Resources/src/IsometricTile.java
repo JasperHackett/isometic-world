@@ -89,13 +89,39 @@ public class IsometricTile extends WorldObject{
 	@Override
 	public void hoverAction() {
 //		System.out.println("tile hovered at:" + this.isoPos);
-		this.currentlyHovered = true;
+
+		if(structureOnTile != null) {
+			structureOnTile.hoverAction();
+		}else {
+			this.currentlyHovered = true;
+		}
+	}
+	
+	@Override
+	public void clickAction() {
+		if(structureOnTile != null) {
+			System.out.println("Clicked a structure containing tile");
+		}else {
+			System.out.println("Clicked a tile of type: " + this.tileset + ". Walkable:"+this.walkable);
+		}
 	}
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
-		if(currentlyHovered) {
+		if(currentlyHovered && structureOnTile == null) {
 			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 	}
+	
+	@Override
+	public void disableHover(){
+		this.currentlyHovered = false;
+		if(structureOnTile != null) {
+			structureOnTile.disableHover();
+		}
+	}
+//	public void renderHover(Graphics g) {
+//		g.drawImage(Game.objectMap.getImage("hover"), this.coords.x + Game.xOffset, this.coords.y + Game.yOffset, null);
+//		System.out.println("renderHover");
+//	}
 }

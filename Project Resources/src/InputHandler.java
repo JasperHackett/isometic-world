@@ -3,6 +3,7 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javafx.util.Pair;
@@ -20,7 +21,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private Point mousePressPos;
 	private boolean dragEnabled;
 	private GameObject hoveredObject;
-
+	private GameObject clickedObject;
 
 
 	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
@@ -77,22 +78,60 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
-		System.out.println("Mouse clicked at: ("+ e.getX() + "," + e.getY()+ ") World position: " + Game.gameWorld.getWorldPosition(e.getPoint())+ ", IsoGridPos: " + iso2D);
-		for(Map.Entry<String, GameObject> obj : Game.objectMap.entrySet()) {
-			if(obj.getValue().isClickable()){
-//				System.out.println("clickable object clicked");
-				if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
-					if(obj.getValue().clickTag == "mainmenustart") {
-						Game.currentState = Game.STATE.Game;
-						Game.gameWorld.updateDisplay();
-						Game.gameWorld.updateDisplay();
-
-					}else if (obj.getValue().clickTag == "tile") {
-
+		System.out.println("MOUSE CLICK: Absolute position: ["+ e.getX() + "," + e.getY()+ "], "
+				+ "World position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "], "
+				+ "IsoGridPos: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
+		
+		if(Game.currentState == Game.STATE.Menu) {
+			for(Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {
+				if(obj.getValue().isClickable()){
+					if(checkContains(obj.getValue().getPosition(),e.getPoint())) {
+						if(obj.getValue().clickTag == "mainmenustart") {
+							Game.currentState = Game.STATE.Game;
+							Game.gameWorld.updateDisplay();
+							Game.gameWorld.updateDisplay();
+						}
 					}
 				}
 			}
 		}
+	
+
+		
+//		for(Map.Entry<String, WorldObject> worldObj : Game.objectMap.WorldObjects().entrySet()) {
+//			if(worldObj.getValue().isClickable()){
+				if(Game.currentState== Game.STATE.Game) {
+					if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+							clickedObject = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
+							if(this.clickedObject.isClicked()) {
+								this.clickedObject.setClicked(false);
+							}else {
+								try {
+//									System.out.println(Game.gameWorld.getPathBetween(new Point(0,0), new Point(15,15)).size());
+									ArrayList<Point> tempList = Game.gameWorld.getPathBetween(new Point(15,49), new Point(14,47));
+									for(Point p : tempList){
+										System.out.println(p);
+									}
+								}catch(Exception e2) {
+									System.out.println("pathfinding error");
+								}
+
+								this.clickedObject.setClicked(true);
+//								System.out.println("Click enabled on");
+							}
+							
+						
+						
+					}
+				}
+//				}else {				
+//					
+//				}		
+				
+
+//			}
+//		}
+
 	}
 
 	@Override
@@ -148,21 +187,22 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	}
 	//Checks for the object the mouse may be hovering over
 	public void checkHover(Point mousePos) {
+		
+		
+		/* CHECK HOVER FOR ISOMETRIC OBJECTS*/
+		//Convert mouse position to isometric
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(mousePos));
-		iso2D.setLocation((iso2D.getX() - 975), (iso2D.getY() + 975));
+		iso2D.setLocation((iso2D.getX() - 976), (iso2D.getY() + 976));
 		iso2D.setLocation((int) iso2D.getX() / 32, (int) iso2D.getY() / 32);
 
 		IsometricTile tempTile = null;
 
+		//Check iso coordinate is within world bounds (potentially useless)
 		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
 			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
 
 			if(tempTile != null) {
 				if((tempTile.type == ObjectType.WORLD)){
-					if(tempTile.slave == true && tempTile.masterLocation != null) {
-						System.out.println((int)tempTile.masterLocation.getX() + ":" + (int)tempTile.masterLocation.getY());
-						tempTile = Game.objectMap.worldTiles.get((int)tempTile.masterLocation.getX() + ":" + (int)tempTile.masterLocation.getY());
-					}
 	
 					if(hoveredObject == null) {
 						hoveredObject = tempTile;

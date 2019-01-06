@@ -117,7 +117,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			offsetPoint.y = offsetPoint.y - 8;
 		} 
 		
-		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,IsometricTile.TILESET.grass,tilePos);
+		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,tileset,tilePos);
 		newTile.setProperties(dim,tilePos ,tileName,true);
 		newTile.hoverable = true;
 		tileName= Integer.toString(tilePos.x) + ":" + Integer.toString(tilePos.y);
@@ -225,7 +225,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		if(this.worldTiles.containsKey(pointIn.x + ":" + pointIn.y)) {
 			return this.worldTiles.get(pointIn.x + ":" + pointIn.y);
 		}else {
-			System.out.println("Invalid tile coordinate");
+			System.out.println("Invalid tile coordinate: ["+ pointIn.x + "," + pointIn.y + "]" );
 			return null;
 		}
 	}

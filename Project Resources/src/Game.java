@@ -68,6 +68,7 @@ public class Game {
 
 		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
+		objectMap.addImage("cityhover", "assets/hovercity.png");
 
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
@@ -117,6 +118,14 @@ public class Game {
 		Structure city0;
 		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
 		structureTiles.add(objectMap.getTile(new Point(17,38)));
+		structureTiles.add(objectMap.getTile(new Point(18,38)));
+		structureTiles.add(objectMap.getTile(new Point(19,38)));
+		structureTiles.add(objectMap.getTile(new Point(17,37)));
+		structureTiles.add(objectMap.getTile(new Point(18,37)));
+		structureTiles.add(objectMap.getTile(new Point(19,37)));
+		structureTiles.add(objectMap.getTile(new Point(17,36)));
+		structureTiles.add(objectMap.getTile(new Point(18,36)));
+		structureTiles.add(objectMap.getTile(new Point(19,36)));
 		city0 = new Structure(structureTiles);
 		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
@@ -126,6 +135,14 @@ public class Game {
 		Structure city1;
 		structureTiles.clear();
 		structureTiles.add(objectMap.getTile(new Point(40,19)));
+		structureTiles.add(objectMap.getTile(new Point(41,19)));
+		structureTiles.add(objectMap.getTile(new Point(42,19)));
+		structureTiles.add(objectMap.getTile(new Point(40,18)));
+		structureTiles.add(objectMap.getTile(new Point(41,18)));
+		structureTiles.add(objectMap.getTile(new Point(42,18)));
+		structureTiles.add(objectMap.getTile(new Point(40,17)));
+		structureTiles.add(objectMap.getTile(new Point(41,17)));
+		structureTiles.add(objectMap.getTile(new Point(42,17)));
 		city1 = new Structure(structureTiles);
 		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
 		objectMap.addObject(ObjectType.WORLD,"city", city1);
@@ -167,6 +184,7 @@ public class Game {
 
 
 
+		
 
 
 	}

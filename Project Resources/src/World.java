@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,6 +27,13 @@ import javafx.util.Pair;
  */
 public class World {
 
+	
+	//WORLD CONSTANTS
+	public static int tileWidth = 64;
+	public static int tileHeight = 32;
+	public Double defaultTileDistance = 10.0; // Distance to traverse between two tiles
+	
+	
 	// panelDims = dimensions of the main display (the portion of the world currently being rendered)
 	// panelPoint = true location of the top left corner of the main display - (100, 100) relative to the ContentPane
 	// worldDims = dimensions of the entire world, including parts not currently being rendered
@@ -37,8 +45,7 @@ public class World {
 	public Point staticWorldPoint;
 	public Dimension isoDims;
 	public int tileCount = 0;
-	public static int tileWidth = 64;
-	public static int tileHeight = 32;
+
 	Pair<Dimension,Point> isometricPlane;
 	public Queue<Pair<String,Point>> structureList;
 //	public Map<String,Image> imageAssetMap;
@@ -225,31 +232,143 @@ public class World {
 		return new Point((this.worldPoint.x +  (mousePointIn.x - panelPoint.x)),((this.worldPoint.y +  (mousePointIn.y - panelPoint.y))));
 
 	}
-//	public void enslaveTile(Point tilePos, Point masterPos) {
-////		if(tilePos != null && masterPos != null) {
-////			String tileID = tilePos.x +":"+tilePos.y;
-////			System.out.println(tileID);
-//////			Game.objectMap.worldTiles.get(tileID).setSlave(true);
-//////			Game.objectMap.worldTiles.get(tileID).setMaster(masterPos);
-//////			System.out.println("enslaved: "+ Game.objectMap.worldTiles.get(tileID).slave);
-////		}
-//	}
+
 	
-	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd, ArrayList<String> tileList){
+	//Checks for all walkable neighbours of an isometrictile
+	public ArrayList<IsometricTile> getNeighbours(IsometricTile centreTile){
+		ArrayList<IsometricTile> returnList = new ArrayList<IsometricTile>();
+		//Check up and to the right for neighbour
+		if(centreTile.getIsoPoint().x > 0) {
+			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x - 1, centreTile.getIsoPoint().y)));
+		}
+		if(centreTile.getIsoPoint().y > 0) {
+			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x , centreTile.getIsoPoint().y- 1)));
+		}
+		if(centreTile.getIsoPoint().x <= this.isoDims.getWidth()-2) {
+			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x + 1, centreTile.getIsoPoint().y)));
+		}
+		if(centreTile.getIsoPoint().y <= this.isoDims.getHeight()-2) {
+			returnList.add(Game.objectMap.getTile(new Point(centreTile.getIsoPoint().x, centreTile.getIsoPoint().y + 1)));
+		}
+		for(IsometricTile tile : returnList) {
+			if(tile.walkable == false) {
+				returnList.remove(tile);
+			}
+		}
+		
+		
+		System.out.println(returnList.size());
+		return returnList;
+		
+	}
+
+	 private class PathValues {
+			double distance;
+//			double heuristic;
+			Point previousTile;
+			
+		 	PathValues(double distance, Point previousTile){
+		 		this.distance = distance;
+//		 		this.heuristic = heuristic;
+		 		this.previousTile = previousTile;
+		 	}
+
+	}
+	private class PathQueueComparator implements Comparator<Pair<Double,IsometricTile>> {
+			
+		public int compare(Pair<Double,IsometricTile> o1, Pair<Double,IsometricTile> o2) {
+			Double d1 = o1.getKey();
+			Double d2 = o2.getKey();
+
+			if (d1 >= d2) {
+				return 1;
+			} else  {
+				return -1;
+			}
+		}
+	}
+	
+	
+	
+	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd){
+		Double MAX_INTEGER = new Double(1000000);
 		ArrayList<Point> returnList = new ArrayList<Point>();
-		if(tileList == null) {
+		if(tileCount == 0) {
 			System.out.println("Empty tile list");
 			return returnList;
+		}
+		
+		//Stores each tile that has been discovered with the shortest distance to reach it and the point of the tile that path comes from
+		Map<IsometricTile,Pair<Double,Point>> distanceMap = new HashMap<IsometricTile,Pair<Double,Point>>();
+		//Queue of tiles for processing sorted by a heuristic double
+		Queue<Pair<Double,IsometricTile>> queuedTiles  = new PriorityQueue<Pair<Double,IsometricTile>>(new PathQueueComparator());
+		
+		
+		//Add initial tile to queue and distance map
+		queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
+		distanceMap.put(Game.objectMap.getTile(tilePosStart), new Pair<Double,Point>(0.0,tilePosStart));
+		
+		
+		while(!queuedTiles.isEmpty()) {
+
+			Pair<Double,IsometricTile> currentEntry = queuedTiles.poll();
+			
+			//Iterate through walkable neighbours of currentEntry
+			for(IsometricTile tile : getNeighbours(currentEntry.getValue())) {
+				if(tile == null) {
+					System.out.println("NULL TILE");
+				}
+
+				
+				//Check if tile has been visited before
+				if(distanceMap.containsKey(tile)) {
+					//Check if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
+					if(distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + defaultTileDistance) {
+						distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + defaultTileDistance,currentEntry.getValue().getIsoPoint()));
+						queuedTiles.add(new Pair<Double,IsometricTile>(
+								(Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
+								,tile));
+					}
+				}else {
+					distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + defaultTileDistance,currentEntry.getValue().getIsoPoint()));
+//					queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
+					queuedTiles.add(new Pair<Double,IsometricTile>(
+							(Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
+							,tile));
+				}
+				
+				if(tile.isoPos.equals(tilePosEnd)) {
+					System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
+					Point routePoint = tilePosEnd;
+					while(!routePoint.equals(tilePosStart)) {
+						routePoint = distanceMap.get(Game.objectMap.getTile(routePoint)).getValue();
+						returnList.add(routePoint);
+					}
+					return returnList;
+				}
+				
+	
+			}
+			
+			
 		}
 		
 		
 		
 		
 		
-		
-		
+		System.out.println(distanceMap.size());
+		System.out.println("No path found");
 		return returnList;
 	}
-		
+	
+	//Used for implementation of A* search
+//	public Double getHeuristicValue(Point tilePosStart, Point tilePosEnd) {
+//		
+//		 Double heuristicValue = Math.sqrt( (tilePosStart.x - tilePosEnd.x)*2 + (tilePosStart.y - tilePosEnd.y)*2);
+//		 return heuristicValue;
+//
+//	}
+//		
 		
 }

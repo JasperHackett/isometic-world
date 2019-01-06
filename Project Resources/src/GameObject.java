@@ -22,6 +22,7 @@ public class GameObject {
 	private boolean isVisible;
 	public boolean hoverable;
 	public boolean currentlyHovered;
+	public boolean currentlyClicked;
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
@@ -87,6 +88,27 @@ public class GameObject {
 	
 	public boolean isVisible(){
 		return isVisible;
+	}
+	public void clickAction() {
+		System.out.println("Click action on: "+this.objectImage);
+		this.currentlyClicked = true;
+	}
+	public void setClicked(boolean isClicked) {
+		if(isClicked) {
+			if(this.currentlyClicked == false) {
+				this.currentlyClicked = true;
+				this.clickAction();
+			}
+		}else {
+			if(this.currentlyClicked == true) {
+				this.currentlyClicked = false;
+			}
+		}
+		
+//		System.out.println("Click action on: "+this.objectImage);
+	}
+	public boolean isClicked() {
+		return currentlyClicked;
 	}
 	
 	public void setVisible(boolean isVisible){
