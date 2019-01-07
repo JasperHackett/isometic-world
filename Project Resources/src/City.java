@@ -3,7 +3,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 /**
- * 
+ *
  */
 
 /**
@@ -18,8 +18,8 @@ import java.util.ArrayList;
 //	 * @param tileList
 //	 */
 //	public City(ArrayList<Point> tileList, Point masterTile) {
-////		super(tileList, masterTile, StructureType.city);	
-//		
+////		super(tileList, masterTile, StructureType.city);
+//
 //	}
 //
 //}

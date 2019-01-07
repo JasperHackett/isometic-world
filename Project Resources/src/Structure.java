@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * 
+ *
  */
 
 /**
@@ -17,7 +17,7 @@ public class Structure extends WorldObject {
 	public enum StructureType {
 		city;
 	}
-	
+
 	public ArrayList<IsometricTile> tileList;
 	public Point masterTile;
 	public StructureType type;
@@ -29,25 +29,25 @@ public class Structure extends WorldObject {
 	 * @param worldPointIn
 	 */
 	public Structure() {
-		
+
 	}
 //	public Structure(ArrayList<IsometricTile> tileList, Point masterTile, StructureType type) {
 //		super();
 //		this.tileList = tileList;
 //		this.masterTile = masterTile;
 //		this.type = type;
-//		
+//
 //	}
-//	
+//
 //	public Structure(Point masterTile, ArrayList<IsometricTile> tileList) {
 //		super();
 //		this.tileList = tileList;
 //		this.masterTile = masterTile;
-//		
+//
 //
 //	}
 	public Structure(ArrayList<IsometricTile> tileList) {
-		
+
 		this.tileList = tileList;
 		for(IsometricTile tile : tileList) {
 			tile.setStructureOnTile(this);
@@ -60,7 +60,7 @@ public class Structure extends WorldObject {
 		this.objectImage = "citytile0";
 		this.clickTag = "city";
 	}
-	
+
 	@Override
 	public void clickAction() {
 //		if(structureOnTile != null) {
@@ -68,7 +68,7 @@ public class Structure extends WorldObject {
 //		}else {
 //			System.out.println("Clicked a tile of type: " + this.tileset + ". Walkable:"+this.walkable);
 //		}
-		
+
 		if(this.currentlyClicked == false) {
 			this.currentlyClicked = true;
 		}else {
