@@ -190,6 +190,11 @@ public class World {
 		return new Point((this.worldPoint.x +  (mousePointIn.x - panelPoint.x)),((this.worldPoint.y +  (mousePointIn.y - panelPoint.y))));
 
 	}
+	public void enslaveTile(Point tilePos, Point masterPos) {
+		String tileID = tilePos.x +":"+tilePos.y;
+		Game.objectMap.worldTiles.get(tileID).slave = true;
+		Game.objectMap.worldTiles.get(tileID).masterLocation = masterPos;
+	}
 	
 	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd, ArrayList<String> tileList){
 		ArrayList<Point> returnList = new ArrayList<Point>();

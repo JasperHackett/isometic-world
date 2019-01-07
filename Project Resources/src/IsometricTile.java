@@ -13,13 +13,13 @@ import java.awt.Point;
 public class IsometricTile extends WorldObject{
 	public Point isoPos;
 	public boolean walkable;
+	public boolean slave;
 	public Point masterLocation;
 	public enum TILESET{
 		grass,
 		water,
 		trees,
 		city,
-		slave;
 	}
 	public TILESET tileset;
 	/**
@@ -40,6 +40,26 @@ public class IsometricTile extends WorldObject{
 		}
 		
 	}
+	//Assigns a tile as the master tile for this one, actions on this tile will be executed on master
+	public void setMaster(Point masterPoint){
+		if(masterPoint != null) {
+			this.slave = true;
+		}
+		this.masterLocation.setLocation(masterPoint);
+	}
+	public Point getMaster(){
+		return this.masterLocation;
+	}
+//	public IsometricTile(ObjectType type, Dimension worldDimsIn, Point worldPointIn, TILESET tileset, Point tilePos, Point masterPoint) {
+//		super(type, worldDimsIn, worldPointIn);
+//		this.tileset = tileset;
+//		this.isoPos = tilePos.getLocation();
+//		this.clickable = true;
+//		this.clickTag = "tile";
+//		this.walkable = false;
+//
+//		
+//	}
 	
 	public Point getIsoPoint() {
 		return this.isoPos;
