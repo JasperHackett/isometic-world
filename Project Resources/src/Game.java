@@ -203,12 +203,17 @@ public class Game {
 		Game.gameWorld.addTickingObject(cube);
 		
 		while(true ) {
-			System.out.print("");
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
 
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(400);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

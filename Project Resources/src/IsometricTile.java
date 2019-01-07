@@ -42,6 +42,9 @@ public class IsometricTile extends WorldObject{
 		
 	}
 	public void setStructureOnTile(WorldObject structureOnTile) {
+		if(structureOnTile != null) {
+			this.walkable = false;
+		}
 		this.structureOnTile = structureOnTile;
 		
 	}
