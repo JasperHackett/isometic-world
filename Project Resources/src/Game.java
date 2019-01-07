@@ -161,7 +161,7 @@ public class Game {
 		
 		//Test unit
 		Unit cube;
-		cube = new Unit(new Point(30,30));
+		cube = new Unit(new Point(4,6));
 
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addStructure("placeholder", cube,8);
@@ -185,7 +185,7 @@ public class Game {
 //		System.out.println("WorldDims: " +gameWorld.worldDims);
 		
 		
-		
+//		Font testFont = new Font("Arial",11,11);
 //		ArrayList<Point> testArray = new ArrayList<Point>();
 //		testArray.add(new Point(14,18));
 //		testArray.add(new Point(14,17));
@@ -200,8 +200,8 @@ public class Game {
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
-
-
+		Game.gameWorld.addTickingObject(cube);
+		
 		while(true ) {
 			System.out.print("");
 			if(currentState == Game.STATE.Game) {
@@ -217,5 +217,4 @@ public class Game {
 		}
 
 	}
-
 }

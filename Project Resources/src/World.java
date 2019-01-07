@@ -45,7 +45,8 @@ public class World {
 	public Point staticWorldPoint;
 	public Dimension isoDims;
 	public int tileCount = 0;
-
+	public ArrayList<WorldObject> tickingObjects;
+	
 	Pair<Dimension,Point> isometricPlane;
 	public Queue<Pair<String,Point>> structureList;
 //	public Map<String,Image> imageAssetMap;
@@ -57,6 +58,7 @@ public class World {
 		structureList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
 		
+		tickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
 		panelDims = new Dimension(Game.width-200,Game.height-200);
 		panelPoint = new Point(100,100);
@@ -72,11 +74,16 @@ public class World {
 	
 	//Called every at every increment of time in the game
 	void tick() {
-		
+		if(!tickingObjects.isEmpty()) {
+			for(WorldObject obj : tickingObjects) {
+				obj.tickAction();
+			}
+			updateDisplay();
+		}
 	}
 
 	/**
-	 * creates a worldobject, loads its image from the map and adds it to the object map. Returns true if succesful
+	 * creates a worldObject, loads its image from the map and adds it to the object map. Returns true if successful
 	 * @return
 	 */
 	public boolean newTileObject() {
@@ -151,6 +158,10 @@ public class World {
 		
 		
 		return (new Dimension(tileCount/j,j));	
+	}
+	
+	public void addTickingObject(WorldObject tickingObj) {
+		this.tickingObjects.add(tickingObj);
 	}
 	
 	public void setTile(Point isoPos,IsometricTile.TILESET type) {
