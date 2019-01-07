@@ -205,18 +205,22 @@ public class Game {
 		TextObject testText2 = new TextObject(ObjectType.DEFAULT, "Hello World.", testFont);
 		testText2.setPosition(new Dimension(testText2.width, testText2.height), new Point(xOffset, 40));
 		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);
-
-		while(true ) {
+		int testInc = 0;
+		while(true) {
 			System.out.print("");
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
-
+				
+				//test code for ticking a TextObject
+				testText2.setText(Integer.toString(testInc));
+				
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				testInc++;
 			}
 		}
 

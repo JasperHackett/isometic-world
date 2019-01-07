@@ -30,4 +30,10 @@ public class TextObject extends GameObject {
 		g.setColor(Color.WHITE);
 		g.drawString(text, this.getPosition().getValue().x, this.getPosition().getValue().y);
 	}
+	
+	public void setText(String text) {
+		this.text = text;
+		this.width = Game.graphics.getFontMetrics(font).stringWidth(text);
+		this.height = Game.graphics.getFontMetrics(font).getHeight();
+	}
 }
