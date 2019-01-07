@@ -198,9 +198,13 @@ public class Game {
 		
 //		Structure testStructure = new Structure(testArray,new Point(14,19));
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
-		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
+//		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
-
+		
+		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
+		TextObject testText2 = new TextObject(ObjectType.DEFAULT, "Hello World.", testFont);
+		testText2.setPosition(new Dimension(testText2.width, testText2.height), new Point(xOffset, 40));
+		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);
 
 		while(true ) {
 			System.out.print("");
