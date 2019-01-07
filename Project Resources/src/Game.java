@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -16,6 +17,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 //import javafx.scene.paint.Color;
 
@@ -66,16 +68,17 @@ public class Game {
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 
+		
+		//Loading all image assets
 		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
-
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
-		
+		objectMap.addImage("placeholder", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		
 		gameWorld = new World();
@@ -111,6 +114,13 @@ public class Game {
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 
+		//Testing text
+		JLabel testText = new JLabel("testing");
+		testText.setSize(new Dimension(100,100));
+		testText.setForeground(Color.white);
+		window.add(testText);
+		
+		
 		
 //		GameObject test = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
@@ -130,7 +140,7 @@ public class Game {
 		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
 		objectMap.addWorldObject("city0", city0);
-		objectMap.addStructure("city0",city0);
+		objectMap.addStructure("city0",city0,48);
 		
 		Structure city1;
 		structureTiles.clear();
@@ -147,8 +157,16 @@ public class Game {
 		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
 		objectMap.addObject(ObjectType.WORLD,"city", city1);
 		objectMap.addWorldObject("city1", city1);
-		objectMap.addStructure("city1",city1);
+		objectMap.addStructure("city1",city1,48);
+		
+		//Test unit
+		Unit cube;
+		cube = new Unit(new Point(30,30));
 
+		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
+		objectMap.addStructure("placeholder", cube,8);
+		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
+		
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
@@ -184,8 +202,19 @@ public class Game {
 
 
 
-		
+		while(true ) {
+			System.out.print("");
+			if(currentState == Game.STATE.Game) {
+				gameWorld.tick();
 
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 
 	}
 

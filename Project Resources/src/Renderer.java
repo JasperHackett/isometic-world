@@ -85,6 +85,8 @@ public class Renderer implements Runnable{
            mainWindow.createBufferStrategy(3);
            return;
         }
+        
+        
 
         Graphics graphics = bs.getDrawGraphics();
 		graphics.clearRect(0, 0, Game.width, Game.height);

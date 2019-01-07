@@ -106,17 +106,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 							if(this.clickedObject.isClicked()) {
 								this.clickedObject.setClicked(false);
 							}else {
-								ArrayList<Point> tempList = Game.gameWorld.getPathBetween(new Point(15,49), new Point(14,47));
-								for(Point p : tempList){
-									System.out.println(p);
-								}
-								try {
-//									System.out.println(Game.gameWorld.getPathBetween(new Point(0,0), new Point(15,15)).size());
-
-								}catch(Exception e2) {
-									System.out.println(e2);
-								}
-
 								this.clickedObject.setClicked(true);
 //								System.out.println("Click enabled on");
 							}

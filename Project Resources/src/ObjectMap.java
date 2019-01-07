@@ -127,8 +127,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 //		System.out.println(tileName + ": " + worldObjects.get(tileName).getWorldPosition());
 	}
 	
-	public void addStructure(String structureName,Structure structureIn) {
-		structureIn.structureOffset = 48;
+	public void addStructure(String structureName,Structure structureIn, int structureOffset) {
+		structureIn.structureOffset = structureOffset;
 		this.worldObjects.put(structureName,structureIn);
 		this.worldStructures.put(structureName,structureIn);
 		this.put(structureName, structureIn);

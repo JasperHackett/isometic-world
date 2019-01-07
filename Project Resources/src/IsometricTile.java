@@ -15,7 +15,7 @@ public class IsometricTile extends WorldObject{
 	public boolean walkable;
 	public boolean slave;
 	public Point masterLocation;
-	protected Structure structureOnTile = null;
+	protected WorldObject structureOnTile = null;
 	public enum TILESET{
 		grass,
 		water,
@@ -41,7 +41,7 @@ public class IsometricTile extends WorldObject{
 		}
 		
 	}
-	public void setStructureOnTile(Structure structureOnTile) {
+	public void setStructureOnTile(WorldObject structureOnTile) {
 		this.structureOnTile = structureOnTile;
 		
 	}
@@ -106,6 +106,7 @@ public class IsometricTile extends WorldObject{
 	public void clickAction() {
 		if(structureOnTile != null) {
 			System.out.println("Clicked a structure containing tile");
+			structureOnTile.clickAction();
 		}else {
 			System.out.println("Clicked a tile of type: " + this.tileset + ". Walkable:"+this.walkable);
 		}
@@ -125,8 +126,12 @@ public class IsometricTile extends WorldObject{
 			structureOnTile.disableHover();
 		}
 	}
-//	public void renderHover(Graphics g) {
-//		g.drawImage(Game.objectMap.getImage("hover"), this.coords.x + Game.xOffset, this.coords.y + Game.yOffset, null);
-//		System.out.println("renderHover");
-//	}
+	@Override
+	public void disableClick(){
+		this.currentlyClicked = false;
+		if(structureOnTile != null) {
+			structureOnTile.disableClick();
+		}
+	}
+
 }

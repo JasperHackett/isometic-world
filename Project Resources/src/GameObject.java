@@ -102,6 +102,7 @@ public class GameObject {
 		}else {
 			if(this.currentlyClicked == true) {
 				this.currentlyClicked = false;
+				this.disableClick();
 			}
 		}
 		
@@ -120,5 +121,8 @@ public class GameObject {
 	}
 	public void disableHover(){
 		this.currentlyHovered = false;
+	}
+	public void disableClick(){
+		this.currentlyClicked = false;
 	}
 }

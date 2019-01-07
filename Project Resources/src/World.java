@@ -69,6 +69,11 @@ public class World {
 		initialiseStructures();
 
 	}
+	
+	//Called every at every increment of time in the game
+	void tick() {
+		
+	}
 
 	/**
 	 * creates a worldobject, loads its image from the map and adds it to the object map. Returns true if succesful

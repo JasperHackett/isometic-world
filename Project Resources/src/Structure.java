@@ -28,24 +28,24 @@ public class Structure extends WorldObject {
 	 * @param worldDimsIn
 	 * @param worldPointIn
 	 */
-	public Structure(ArrayList<IsometricTile> tileList, Point masterTile, StructureType type) {
-		super();
-		this.tileList = tileList;
-		this.masterTile = masterTile;
-		this.type = type;
+	public Structure() {
 		
-//		for(Point tile : tileList) {
-//			Game.gameWorld.enslaveTile(tile,this.isoPoint);
-//		}
 	}
-	
-	public Structure(Point masterTile, ArrayList<IsometricTile> tileList) {
-		super();
-		this.tileList = tileList;
-		this.masterTile = masterTile;
-		
-
-	}
+//	public Structure(ArrayList<IsometricTile> tileList, Point masterTile, StructureType type) {
+//		super();
+//		this.tileList = tileList;
+//		this.masterTile = masterTile;
+//		this.type = type;
+//		
+//	}
+//	
+//	public Structure(Point masterTile, ArrayList<IsometricTile> tileList) {
+//		super();
+//		this.tileList = tileList;
+//		this.masterTile = masterTile;
+//		
+//
+//	}
 	public Structure(ArrayList<IsometricTile> tileList) {
 		
 		this.tileList = tileList;
@@ -53,13 +53,27 @@ public class Structure extends WorldObject {
 			tile.setStructureOnTile(this);
 		}
 
-//		this.isoTileKey = (int) masterTile.getX() + ":" + (int) masterTile.getY();
 		this.worldPoint = tileList.get(0).worldPoint;
 		this.worldDims = new Dimension(128,64);
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(200,200);
 		this.objectImage = "citytile0";
 		this.clickTag = "city";
+	}
+	
+	@Override
+	public void clickAction() {
+//		if(structureOnTile != null) {
+//			System.out.println("Clicked a structure containing tile");
+//		}else {
+//			System.out.println("Clicked a tile of type: " + this.tileset + ". Walkable:"+this.walkable);
+//		}
+		
+		if(this.currentlyClicked == false) {
+			this.currentlyClicked = true;
+		}else {
+			this.currentlyClicked = false;
+		}
 	}
 	public void hoverAction() {
 //		System.out.println("structure hovered");
