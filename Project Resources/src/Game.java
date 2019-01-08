@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import javafx.util.Pair;
+
 //import javafx.scene.paint.Color;
 
 //import javafx.scene.paint.Color;
@@ -157,6 +159,12 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
 		objectMap.addWorldObject("city0", city0);
 		objectMap.addStructure("city0",city0,48);
+		
+		//test code for adding TextObject to city0
+		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
+		TextObject cityText = new TextObject(ObjectType.WORLD, "New Donk City", testFont);
+		objectMap.addObject(ObjectType.DEFAULT, "testCityText", cityText);
+		city0.addChild(cityText, new Pair<Integer, Integer>(0,0));
 
 		Structure city1;
 		structureTiles.clear();
@@ -217,7 +225,7 @@ public class Game {
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
 
-		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
+		
 		TextObject testText2 = new TextObject(ObjectType.DEFAULT, "Hello World.", testFont);
 		testText2.setPosition(new Dimension(testText2.width, testText2.height), new Point(xOffset, 40));
 		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);

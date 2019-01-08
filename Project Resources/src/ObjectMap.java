@@ -135,7 +135,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		this.worldStructures.put(structureName,structureIn);
 		this.put(structureName, structureIn);
 	}
-
+	
 	public void addWorldStructure(Structure.StructureType type, Point masterTile, ArrayList<Point> tileList) {
 
 		String imageName = "";

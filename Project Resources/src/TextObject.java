@@ -23,7 +23,7 @@ public class TextObject extends GameObject {
 		super(type);
 		this.text = text;
 		this.font = font;
-
+		this.coords = new Point();
 	}
 	public TextObject(ObjectType type, Font font) {
 		super(type);

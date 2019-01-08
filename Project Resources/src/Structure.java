@@ -2,7 +2,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+
+import javafx.util.Pair;
 
 /**
  *
@@ -23,6 +26,7 @@ public class Structure extends WorldObject {
 	public StructureType type;
 	public String isoTileKey;
 	public int structureOffset;
+	protected HashMap<GameObject, Pair<Integer, Integer>> children;
 	/**
 	 * @param type
 	 * @param worldDimsIn
@@ -59,6 +63,24 @@ public class Structure extends WorldObject {
 		this.coords = new Point(200,200);
 		this.objectImage = "citytile0";
 		this.clickTag = "city";
+		this.children = new HashMap<GameObject, Pair<Integer, Integer>>();
+	}
+	
+	public void addChild(GameObject child, Pair<Integer, Integer> positionOffset) {
+		this.children.put(child, positionOffset);
+		
+	}
+	@Override
+	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
+		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
+		if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				child.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())) + children.get(child).getKey(), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY())) + children.get(child).getValue()));
+			}
+		}
+		
 	}
 
 	@Override
