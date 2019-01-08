@@ -111,6 +111,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "grasstile" + Integer.toString(rn);
 		}else if(tileset == IsometricTile.TILESET.water) {
 			tileName = "watertile" + Integer.toString(rn);
+		}else if(tileset == IsometricTile.TILESET.road) {
+			tileName = "roadtile";
 		} else if(tileset == IsometricTile.TILESET.trees) {
 			tileName = "treetile" + Integer.toString(rn);
 			dim = new Dimension(64,40);
@@ -247,6 +249,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public GameObject getObject(String s) {
 		return (GameObject)this.get(s);
+	}
+	public TextObject getTextObject(String s) {
+		return (TextObject) this.get(s);
 	}
 
 	public ArrayList<IsometricTile> getMainDisplayTiles() {

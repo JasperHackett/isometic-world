@@ -74,6 +74,7 @@ public class Game {
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
+		objectMap.addImage("roadtile","assets/road.png");
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
@@ -102,6 +103,8 @@ public class Game {
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
+		Font gameFont = new Font("Arial", Font.BOLD, 12);
+		graphics.setFont(gameFont);
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -113,12 +116,25 @@ public class Game {
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
+		//Mouse data text objects
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 45));
+		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
-		//Testing text
-		JLabel testText = new JLabel("testing");
-		testText.setSize(new Dimension(100,100));
-		testText.setForeground(Color.white);
-		window.add(testText);
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 65));
+		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
+
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
+
+
+//		//Testing text
+//		JLabel testText = new JLabel("testing");
+//		testText.setSize(new Dimension(100,100));
+//		testText.setForeground(Color.white);
+//		window.add(testText);
 
 
 
@@ -161,11 +177,11 @@ public class Game {
 
 		//Test unit
 		Unit cube;
-		cube = new Unit(new Point(30,30));
-
+		cube = new Unit(new Point(4,6));
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addStructure("placeholder", cube,8);
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
+		Game.gameWorld.addTickingObject(cube);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
@@ -185,7 +201,7 @@ public class Game {
 //		System.out.println("WorldDims: " +gameWorld.worldDims);
 
 
-
+//		Font testFont = new Font("Arial",11,11);
 //		ArrayList<Point> testArray = new ArrayList<Point>();
 //		testArray.add(new Point(14,18));
 //		testArray.add(new Point(14,17));
@@ -207,23 +223,25 @@ public class Game {
 		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);
 		int testInc = 0;
 		while(true) {
-			System.out.print("");
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
-
 				//test code for ticking a TextObject
-				testText2.setText(Integer.toString(testInc));
+//				globalMousePosText.setText(Integer.toString(testInc));
 
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(600);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				testInc++;
 			}
 		}
 
 	}
-
 }

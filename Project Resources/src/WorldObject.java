@@ -37,6 +37,10 @@ public class WorldObject extends GameObject {
 	public Pair<Dimension, Point> getWorldPosition() {
 		return new Pair<Dimension, Point>(this.dim, worldPoint);
 	}
+	
+	public void tickAction() {
+		
+	}
 
 	/**
 	 * @param world
