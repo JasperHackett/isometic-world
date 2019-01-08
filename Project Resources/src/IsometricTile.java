@@ -35,7 +35,7 @@ public class IsometricTile extends WorldObject{
 		this.isoPos = tilePos.getLocation();
 		this.clickable = true;
 		this.clickTag = "tile";
-		if (this.tileset == TILESET.grass) {
+		if (this.tileset == TILESET.grass || this.tileset == TILESET.road) {
 			this.walkable = true;
 		} else {
 			this.walkable = false;

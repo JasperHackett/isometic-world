@@ -31,7 +31,7 @@ public class World {
 	//WORLD CONSTANTS
 	public static int tileWidth = 64;
 	public static int tileHeight = 32;
-	public Double defaultTileDistance = 10.0; // Distance to traverse between two tiles
+	public Double tileDistance = 10.0; // Distance to traverse between two tiles
 	
 	
 	// panelDims = dimensions of the main display (the portion of the world currently being rendered)
@@ -291,18 +291,7 @@ public class World {
 		
 	}
 
-	 private class PathValues {
-			double distance;
-//			double heuristic;
-			Point previousTile;
-			
-		 	PathValues(double distance, Point previousTile){
-		 		this.distance = distance;
-//		 		this.heuristic = heuristic;
-		 		this.previousTile = previousTile;
-		 	}
 
-	}
 	private class PathQueueComparator implements Comparator<Pair<Double,IsometricTile>> {
 			
 		public int compare(Pair<Double,IsometricTile> o1, Pair<Double,IsometricTile> o2) {
@@ -320,7 +309,6 @@ public class World {
 	
 	
 	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd){
-		Double MAX_INTEGER = new Double(1000000);
 		ArrayList<Point> returnList = new ArrayList<Point>();
 		if(tileCount == 0) {
 			System.out.println("Empty tile list");
@@ -344,25 +332,30 @@ public class World {
 			
 			//Iterate through walkable neighbours of currentEntry
 			for(IsometricTile tile : getNeighbours(currentEntry.getValue())) {
+				tileDistance = 10.0;
 				if(tile == null) {
 					System.out.println("NULL TILE");
+				}
+				if(tile.tileset == currentEntry.getValue().tileset) {
+					if(tile.tileset == IsometricTile.TILESET.road) {
+						tileDistance = 5.0;
+					}
 				}
 
 				
 				//Check if tile has been visited before
 				if(distanceMap.containsKey(tile)) {
 					//Check if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
-					if(distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + defaultTileDistance) {
-						distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + defaultTileDistance,currentEntry.getValue().getIsoPoint()));
+					if(distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + tileDistance) {
+						distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
 						queuedTiles.add(new Pair<Double,IsometricTile>(
-								(Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
+								(tileDistance * Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
 								,tile));
 					}
 				}else {
-					distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + defaultTileDistance,currentEntry.getValue().getIsoPoint()));
-//					queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
+					distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
 					queuedTiles.add(new Pair<Double,IsometricTile>(
-							(Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
+							(tileDistance * Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
 							,tile));
 				}
 				

@@ -126,7 +126,7 @@ public class Game {
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
 		
 		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		isoMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 		
 		
@@ -178,10 +178,10 @@ public class Game {
 		//Test unit
 		Unit cube;
 		cube = new Unit(new Point(4,6));
-
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addStructure("placeholder", cube,8);
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
+		Game.gameWorld.addTickingObject(cube);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
@@ -218,14 +218,19 @@ public class Game {
 
 
 		while(true) {
-			System.out.print("");
+			try {
+				Thread.sleep(0);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
 				//test code for ticking a TextObject
 //				globalMousePosText.setText(Integer.toString(testInc));
 
 				try {
-					Thread.sleep(400);
+					Thread.sleep(600);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
