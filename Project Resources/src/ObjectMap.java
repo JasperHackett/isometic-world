@@ -26,7 +26,7 @@ import javafx.util.Pair;
 public class ObjectMap extends HashMap<String, GameObject> {
 
 	private class YAxisComparator implements Comparator<IsometricTile> {
-		
+
 		public int compare(IsometricTile o1, IsometricTile o2) {
 			int y1 = (int)o1.getPosition().getValue().getY();
 			int y2 = (int)o2.getPosition().getValue().getY();
@@ -39,7 +39,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			}
 		}
 	}
-	
+
 	private ArrayList<WorldObject> mainDisplayObjects;
 	private ArrayList<Structure> mainDisplayStructures;
 	public ArrayList<IsometricTile> mainDisplayTiles;
@@ -48,7 +48,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	private HashMap<String, GameObject> otherObjects;
 	public HashMap<String, IsometricTile> worldTiles;
 	public HashMap<String, Structure> worldStructures;
-	
+
 	private HashMap<String, Image> imageMap;
 	private HashMap<IsometricTile.TILESET,Integer> tilesPerTileset;
 
@@ -99,14 +99,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public void addWorldTile(Point pointIn, IsometricTile.TILESET tileset, Point tilePos) {
-		
-		
+
+
 		Random randomNum = new Random();
 		int rn = randomNum.nextInt(3);
 		String tileName = "";
-		Dimension dim = new Dimension(64,32); // default dimensions is 64x32, the else if statement below changes this for tiles with bigger sprites e.g. trees. 
+		Dimension dim = new Dimension(64,32); // default dimensions is 64x32, the else if statement below changes this for tiles with bigger sprites e.g. trees.
 		Point offsetPoint = toIsometric(new Point(pointIn.x, pointIn.y)); // default offsetPoint is the same as pointIn, the else if statement can change this however
-		
+
 		if(tileset == IsometricTile.TILESET.grass) {
 			tileName = "grasstile" + Integer.toString(rn);
 		}else if(tileset == IsometricTile.TILESET.water) {
@@ -117,8 +117,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "treetile" + Integer.toString(rn);
 			dim = new Dimension(64,40);
 			offsetPoint.y = offsetPoint.y - 8;
-		} 
-		
+		}
+
 		IsometricTile newTile = new IsometricTile(ObjectType.WORLD,new Dimension(64,32), offsetPoint,tileset,tilePos);
 		newTile.setProperties(dim,tilePos ,tileName,true);
 		newTile.hoverable = true;
@@ -128,37 +128,37 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		worldTiles.put(tileName, newTile);
 //		System.out.println(tileName + ": " + worldObjects.get(tileName).getWorldPosition());
 	}
-	
+
 	public void addStructure(String structureName,Structure structureIn, int structureOffset) {
 		structureIn.structureOffset = structureOffset;
 		this.worldObjects.put(structureName,structureIn);
 		this.worldStructures.put(structureName,structureIn);
 		this.put(structureName, structureIn);
 	}
-	
+
 	public void addWorldStructure(Structure.StructureType type, Point masterTile, ArrayList<Point> tileList) {
-		
+
 		String imageName = "";
 		Random randomNum = new Random();
 		int rn = randomNum.nextInt(3);
-		
+
 		// calculating the dimensions of the structure
-		// based on the upper and lower limits of all of the tiles it occupies. 
+		// based on the upper and lower limits of all of the tiles it occupies.
 		int upperX = Integer.MIN_VALUE;
-		int lowerX = Integer.MAX_VALUE; 
+		int lowerX = Integer.MAX_VALUE;
 		int upperY = Integer.MIN_VALUE;
 		int lowerY = Integer.MAX_VALUE;
 		for (Point tilePos : tileList) {
 			IsometricTile tile = worldTiles.get(Integer.toString(tilePos.x) + ":" + Integer.toString(tilePos.y));
 			int x = tile.getWorldPosition().getValue().x;
 			int y = tile.getWorldPosition().getValue().y;
-			if (x > upperX) {
+			if (x + tile.getPosition().getKey().getWidth() > upperX) {
 				upperX = tilePos.x;
 			}
 			if (x < lowerX) {
 				lowerX = tilePos.x;
 			}
-			if (y > upperY) {
+			if (y + tile.getPosition().getKey().getHeight() > upperY) {
 				upperY = tilePos.y;
 			}
 			if (y < lowerY) {
@@ -168,13 +168,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		Dimension dim = new Dimension(upperX - lowerX, upperY - lowerY);
 		String structureName = "";
 		Structure newStructure = null;
-		
+
 		Point offsetPoint = new Point(lowerX, lowerY);
 		if (type == Structure.StructureType.city) {
 			imageName = "city" + Integer.toString(rn);
 			offsetPoint.y = offsetPoint.y - 16;
 //			newStructure = new City(tileList, masterTile);
-			
+
 			structureName += "city";
 		}
 		// temporary way to create unique keys until a naming convention is decided for structures
@@ -185,14 +185,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			}
 		}
 		newStructure.setProperties(dim, offsetPoint, imageName);
-		
+
 		worldObjects.put(structureName, newStructure);
 	}
 	public void addImage(String imgID, String FilePath) {
 		Image newImage = new ImageIcon(FilePath).getImage();
 		imageMap.put(imgID, newImage);
 	}
-	
+
 	public void addTileImage(String imgID, String FilePath,Dimension tileDims,int tileCount) {
 		if(imgID == "grasstile") {
 			tilesPerTileset.put(IsometricTile.TILESET.grass, tileCount);
@@ -231,7 +231,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			return null;
 		}
 	}
-	
+
 
 
 
@@ -292,7 +292,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 				mainDisplayObjects.add(mapEntry.getValue());
 			}
 		}
-		
+
 		mainDisplayStructures= new ArrayList<Structure>();
 		if(worldStructures != null) {
 			for (Map.Entry<String, Structure> mapEntry : worldStructures.entrySet()) {
@@ -303,12 +303,12 @@ public class ObjectMap extends HashMap<String, GameObject> {
 				}
 			}
 		}
-		
+
 		YAxisComparator comp = new YAxisComparator();
 //		mainDisplayObjects.sort((Comparator)comp);
 //		mainDisplayStructures.sort((Comparator)comp);
 		mainDisplayTiles.sort((Comparator)comp);
-		
+
 		Game.mainGameRenderer.semaphore.release();
 
 	}

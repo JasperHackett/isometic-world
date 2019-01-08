@@ -68,7 +68,7 @@ public class Game {
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 
-		
+
 		//Loading all image assets
 		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
@@ -81,7 +81,7 @@ public class Game {
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
 		objectMap.addImage("placeholder", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
-		
+
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
 
@@ -120,9 +120,9 @@ public class Game {
 		testText.setSize(new Dimension(100,100));
 		testText.setForeground(Color.white);
 		window.add(testText);
-		
-		
-		
+
+
+
 //		GameObject test = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
 //		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
@@ -142,7 +142,7 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
 		objectMap.addWorldObject("city0", city0);
 		objectMap.addStructure("city0",city0,48);
-		
+
 		Structure city1;
 		structureTiles.clear();
 		structureTiles.add(objectMap.getTile(new Point(40,19)));
@@ -159,7 +159,7 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD,"city", city1);
 		objectMap.addWorldObject("city1", city1);
 		objectMap.addStructure("city1",city1,48);
-		
+
 		//Test unit
 		Unit cube;
 		cube = new Unit(new Point(4,6));
@@ -167,7 +167,7 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addStructure("placeholder", cube,8);
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
-		
+
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
@@ -184,8 +184,8 @@ public class Game {
 //		System.out.println(mainGameRenderer.toGrid(new Point(1900,0)));
 //		System.out.println("IsoDims: " +gameWorld.isoDims);
 //		System.out.println("WorldDims: " +gameWorld.worldDims);
-		
-		
+
+
 //		Font testFont = new Font("Arial",11,11);
 //		ArrayList<Point> testArray = new ArrayList<Point>();
 //		testArray.add(new Point(14,18));
@@ -196,22 +196,24 @@ public class Game {
 //		testArray.add(new Point(16,19));
 //		testArray.add(new Point(16,18));
 //		testArray.add(new Point(16,17));
-		
+
 //		Structure testStructure = new Structure(testArray,new Point(14,19));
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
-		Game.gameWorld.addTickingObject(cube);
-		
-		while(true ) {
-			try {
-				Thread.sleep(0);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
+		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
+		TextObject testText2 = new TextObject(ObjectType.DEFAULT, "Hello World.", testFont);
+		testText2.setPosition(new Dimension(testText2.width, testText2.height), new Point(xOffset, 40));
+		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);
+		int testInc = 0;
+		while(true) {
+			System.out.print("");
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
+
+				//test code for ticking a TextObject
+				testText2.setText(Integer.toString(testInc));
 
 				try {
 					Thread.sleep(400);
@@ -219,6 +221,7 @@ public class Game {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				testInc++;
 			}
 		}
 
