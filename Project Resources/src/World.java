@@ -122,6 +122,8 @@ public class World {
 						tileType = IsometricTile.TILESET.water;
 					}else if (tileLine[i].compareTo("f") == 0) {
 						tileType = IsometricTile.TILESET.trees;
+					}else if(tileLine[i].compareTo("r") == 0){
+						tileType = IsometricTile.TILESET.road;
 					}else if (tileLine[i] != null) {
 //						structureList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
 					}
