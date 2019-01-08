@@ -164,7 +164,7 @@ public class Game {
 		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
 		TextObject cityText = new TextObject(ObjectType.WORLD, "New Donk City", testFont);
 		objectMap.addObject(ObjectType.DEFAULT, "testCityText", cityText);
-		city0.addChild(cityText, new Pair<Integer, Integer>(0,0));
+		city0.addChild(cityText, new Pair<Integer, Integer>(64,-32));
 
 		Structure city1;
 		structureTiles.clear();

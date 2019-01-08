@@ -73,7 +73,9 @@ public class Structure extends WorldObject {
 	@Override
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
 		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())), ((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
-		if (children.isEmpty()) {
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
 			return;
 		} else {
 			for (GameObject child : children.keySet()) {
