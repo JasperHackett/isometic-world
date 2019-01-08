@@ -103,6 +103,8 @@ public class Game {
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
+		Font gameFont = new Font("Arial", Font.BOLD, 12);
+		graphics.setFont(gameFont);
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -114,12 +116,25 @@ public class Game {
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
-
-		//Testing text
-		JLabel testText = new JLabel("testing");
-		testText.setSize(new Dimension(100,100));
-		testText.setForeground(Color.white);
-		window.add(testText);
+		//Mouse data text objects
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 45));
+		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
+		
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 65));
+		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
+		
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		isoMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
+		
+		
+//		//Testing text
+//		JLabel testText = new JLabel("testing");
+//		testText.setSize(new Dimension(100,100));
+//		testText.setForeground(Color.white);
+//		window.add(testText);
 
 
 
@@ -202,18 +217,12 @@ public class Game {
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
 
-		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
-		TextObject testText2 = new TextObject(ObjectType.DEFAULT, "Hello World.", testFont);
-		testText2.setPosition(new Dimension(testText2.width, testText2.height), new Point(xOffset, 40));
-		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);
-		int testInc = 0;
 		while(true) {
 			System.out.print("");
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
-
 				//test code for ticking a TextObject
-				testText2.setText(Integer.toString(testInc));
+//				globalMousePosText.setText(Integer.toString(testInc));
 
 				try {
 					Thread.sleep(400);
@@ -221,7 +230,6 @@ public class Game {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				testInc++;
 			}
 		}
 

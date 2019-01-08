@@ -59,6 +59,12 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
+		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
+		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
+		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
+		Game.objectMap.getTextObject("globalMousePosText").setText("Global mouse position: ["+ e.getX() + "," + e.getY()+ "]");
+		Game.objectMap.getTextObject("worldMousePosText").setText("World mouse position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "]");
+		Game.objectMap.getTextObject("isoMousePosText").setText("Iso mouse position: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
 		checkHover(e.getPoint());
 
 	}
@@ -78,9 +84,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
-		System.out.println("MOUSE CLICK: Absolute position: ["+ e.getX() + "," + e.getY()+ "], "
-				+ "World position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "], "
-				+ "IsoGridPos: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
+//		System.out.println("MOUSE CLICK: Absolute position: ["+ e.getX() + "," + e.getY()+ "], "
+//				+ "World position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "], "
+//				+ "IsoGridPos: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
 		
 		if(Game.currentState == Game.STATE.Menu) {
 			for(Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {

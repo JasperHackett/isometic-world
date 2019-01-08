@@ -132,7 +132,6 @@ public class Renderer implements Runnable{
 		}
 
 
-
         graphics.dispose();
         bs.show();
         

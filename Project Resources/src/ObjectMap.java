@@ -250,6 +250,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public GameObject getObject(String s) {
 		return (GameObject)this.get(s);
 	}
+	public TextObject getTextObject(String s) {
+		return (TextObject) this.get(s);
+	}
 
 	public ArrayList<IsometricTile> getMainDisplayTiles() {
 		return mainDisplayTiles;
