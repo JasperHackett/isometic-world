@@ -35,7 +35,7 @@ public class TextObject extends GameObject {
 		this.text = textIn;
 		this.textColour = textColour;
 		this.coords = pointIn;
-		System.out.println(this.width = Game.graphics.getFontMetrics(font).stringWidth(text));
+		this.width = Game.graphics.getFontMetrics(font).stringWidth(text);
 		this.height = Game.graphics.getFontMetrics(font).getHeight();
 	}
 	

@@ -81,7 +81,8 @@ public class Game {
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
 		objectMap.addImage("placeholder", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
-
+		objectMap.addImage("uibackground", "assets/uibackground.png");
+		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
 
@@ -110,6 +111,12 @@ public class Game {
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
+		
+		//UI Background
+		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
+		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
+		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
+		
 
 		//Menu button
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
