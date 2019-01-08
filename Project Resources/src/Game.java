@@ -189,6 +189,14 @@ public class Game {
 		objectMap.addStructure("placeholder", cube,8);
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
 		Game.gameWorld.addTickingObject(cube);
+		
+		
+		Unit cube2;
+		cube2 = new Unit(new Point(20,37));
+		objectMap.addObject(ObjectType.WORLD, "placeholder", cube2);
+		objectMap.addStructure("placeholder", cube2,8);
+		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
+		Game.gameWorld.addTickingObject(cube);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
