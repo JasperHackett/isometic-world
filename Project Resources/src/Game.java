@@ -74,18 +74,13 @@ public class Game {
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
-
-		gameWorld = new World();
-		gameWorld.initialiseTileMap();
-
-
+		
+		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		Dimension dim = new Dimension (width, height);
-
-
+		
+		
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
 		window.setMinimumSize(dim);
@@ -93,11 +88,23 @@ public class Game {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		window.setBackground(Color.DARK_GRAY);
-
+		
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 		Font gameFont = new Font("Arial", Font.PLAIN,11);
 		graphics.setFont(gameFont);
+		
+		
+		gameWorld = new World();
+		gameWorld.initialiseTileMap();
+		gameWorld.initialiseStructureMap();
+
+		
+		
+		
+
+
+		
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -140,41 +147,41 @@ public class Game {
 //		GameObject test = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
 //		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
-		City city0;
-		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-		structureTiles.add(objectMap.getTile(new Point(17,38)));
-		structureTiles.add(objectMap.getTile(new Point(18,38)));
-		structureTiles.add(objectMap.getTile(new Point(19,38)));
-		structureTiles.add(objectMap.getTile(new Point(17,37)));
-		structureTiles.add(objectMap.getTile(new Point(18,37)));
-		structureTiles.add(objectMap.getTile(new Point(19,37)));
-		structureTiles.add(objectMap.getTile(new Point(17,36)));
-		structureTiles.add(objectMap.getTile(new Point(18,36)));
-		structureTiles.add(objectMap.getTile(new Point(19,36)));
-		city0 = new City(structureTiles, "Brand Spanking New York City");
-		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
-		objectMap.addObject(ObjectType.WORLD,"city", city0);
-		objectMap.addWorldObject("city0", city0);
-		objectMap.addStructure("city0",city0,48);
+//		City city0;
+//		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+//		structureTiles.add(objectMap.getTile(new Point(17,38)));
+//		structureTiles.add(objectMap.getTile(new Point(18,38)));
+//		structureTiles.add(objectMap.getTile(new Point(19,38)));
+//		structureTiles.add(objectMap.getTile(new Point(17,37)));
+//		structureTiles.add(objectMap.getTile(new Point(18,37)));
+//		structureTiles.add(objectMap.getTile(new Point(19,37)));
+//		structureTiles.add(objectMap.getTile(new Point(17,36)));
+//		structureTiles.add(objectMap.getTile(new Point(18,36)));
+//		structureTiles.add(objectMap.getTile(new Point(19,36)));
+//		city0 = new City(structureTiles, "Brand Spanking New York City");
+//		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
+//		objectMap.addObject(ObjectType.WORLD,"city", city0);
+//		objectMap.addWorldObject("city0", city0);
+//		objectMap.addStructure("city0",city0,48);
 
 
 
-		City city1;
-		structureTiles.clear();
-		structureTiles.add(objectMap.getTile(new Point(40,19)));
-		structureTiles.add(objectMap.getTile(new Point(41,19)));
-		structureTiles.add(objectMap.getTile(new Point(42,19)));
-		structureTiles.add(objectMap.getTile(new Point(40,18)));
-		structureTiles.add(objectMap.getTile(new Point(41,18)));
-		structureTiles.add(objectMap.getTile(new Point(42,18)));
-		structureTiles.add(objectMap.getTile(new Point(40,17)));
-		structureTiles.add(objectMap.getTile(new Point(41,17)));
-		structureTiles.add(objectMap.getTile(new Point(42,17)));
-		city1 = new City(structureTiles, "Melbourne");
-		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
-		objectMap.addObject(ObjectType.WORLD,"city", city1);
-		objectMap.addWorldObject("city1", city1);
-		objectMap.addStructure("city1",city1,48);
+//		City city1;
+//		structureTiles.clear();
+//		structureTiles.add(objectMap.getTile(new Point(40,19)));
+//		structureTiles.add(objectMap.getTile(new Point(41,19)));
+//		structureTiles.add(objectMap.getTile(new Point(42,19)));
+//		structureTiles.add(objectMap.getTile(new Point(40,18)));
+//		structureTiles.add(objectMap.getTile(new Point(41,18)));
+//		structureTiles.add(objectMap.getTile(new Point(42,18)));
+//		structureTiles.add(objectMap.getTile(new Point(40,17)));
+//		structureTiles.add(objectMap.getTile(new Point(41,17)));
+//		structureTiles.add(objectMap.getTile(new Point(42,17)));
+//		city1 = new City(structureTiles, "Melbourne");
+//		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
+//		objectMap.addObject(ObjectType.WORLD,"city", city1);
+//		objectMap.addWorldObject("city1", city1);
+//		objectMap.addStructure("city1",city1,48);
 
 		//Test unit
 		Unit cube;
