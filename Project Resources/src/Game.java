@@ -82,12 +82,11 @@ public class Game {
 		gameWorld.initialiseTileMap();
 
 
-
+		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
+		
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
 		window.setMinimumSize(dim);

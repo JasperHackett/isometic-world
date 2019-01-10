@@ -118,7 +118,7 @@ public class Renderer implements Runnable {
 			obj.getValue().render(graphics);
 		}
 
-	Game.mainHUD.renderHUD(graphics);
+		Game.mainHUD.renderHUD(graphics);
         graphics.dispose();
         bs.show();
 
