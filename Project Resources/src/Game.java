@@ -116,15 +116,15 @@ public class Game {
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 		//Mouse data text objects
-		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
-		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
 
-		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
@@ -151,17 +151,13 @@ public class Game {
 		structureTiles.add(objectMap.getTile(new Point(17,36)));
 		structureTiles.add(objectMap.getTile(new Point(18,36)));
 		structureTiles.add(objectMap.getTile(new Point(19,36)));
-		city0 = new City(structureTiles);
+		city0 = new City(structureTiles, "Brand Spanking New York City");
 		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
 		objectMap.addWorldObject("city0", city0);
 		objectMap.addStructure("city0",city0,48);
 
-		//test code for adding TextObject to city0
-		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
-		TextObject cityText = new TextObject(ObjectType.WORLD, "New Donk City", testFont);
-		objectMap.addObject(ObjectType.CHILD, "testCityText", cityText);
-		city0.addChild(cityText, new Pair<Integer, Integer>(100,0));
+
 
 		City city1;
 		structureTiles.clear();
@@ -174,7 +170,7 @@ public class Game {
 		structureTiles.add(objectMap.getTile(new Point(40,17)));
 		structureTiles.add(objectMap.getTile(new Point(41,17)));
 		structureTiles.add(objectMap.getTile(new Point(42,17)));
-		city1 = new City(structureTiles);
+		city1 = new City(structureTiles, "Melbourne");
 		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
 		objectMap.addObject(ObjectType.WORLD,"city", city1);
 		objectMap.addWorldObject("city1", city1);

@@ -86,24 +86,6 @@ public class Structure extends WorldObject {
 			}
 		}
 	}
-	
-	@Override 
-	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
-		
-		if (children == null) {
-			return;
-		} else if (children.isEmpty()) {
-			return;
-		} else {
-			for (GameObject child : children.keySet()) {
-				if (Game.objectMap.isWithinDisplay(new Pair<Dimension, Point>(child.dim, child.coords), new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
-					child.render(g);
-				}
-			}
-		}
-		
-	}
 
 	@Override
 	public void clickAction() {
@@ -126,5 +108,20 @@ public class Structure extends WorldObject {
 		this.currentlyHovered = true;
 
 	}
-
+	@Override
+	public void render(Graphics g) {
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		if(currentlyHovered || currentlyClicked) {
+			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		}
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				child.render(g);
+			}
+		}
+	}
 }

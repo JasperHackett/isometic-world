@@ -31,10 +31,10 @@ public class TextObject extends GameObject {
 		this.font = font;
 		this.coords = new Point();
 	}
-	public TextObject(ObjectType type, Font font) {
+	public TextObject(ObjectType type, Font font, Color textColour) {
 		super(type);
 		this.font = font;
-
+		this.textColour = textColour;
 	}
 	
 	public void setProperties(String textIn, Color textColour, Point pointIn) {
@@ -50,7 +50,7 @@ public class TextObject extends GameObject {
 	public void render(Graphics g) {
 		g.setColor(textColour);
 		g.setFont(font);
-		g.drawString(text, this.getPosition().getValue().x, this.getPosition().getValue().y);
+		g.drawString(text, coords.x, coords.y);
 	}
 	
 	public void setText(String text) {
