@@ -172,13 +172,13 @@ public class World {
 						continue;
 					} else if (tileLine[x].equals("C")) {
 						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
 						City newCity = new City(structureTiles, "Generic Name Here");
