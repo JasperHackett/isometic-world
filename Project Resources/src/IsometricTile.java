@@ -97,7 +97,7 @@ public class IsometricTile extends WorldObject{
 			System.out.println("Clicked a structure containing tile");
 			structureOnTile.clickAction();
 		}else {
-			System.out.println("Clicked a tile of type: " + this.tileset + ". Walkable:"+this.walkable);
+			System.out.println("Clicked a tile of type: " + this.tileset);
 		}
 	}
 	@Override
@@ -120,6 +120,7 @@ public class IsometricTile extends WorldObject{
 	}
 	@Override
 	public void disableClick(){
+		System.out.println("Disabled click");
 		this.currentlyClicked = false;
 		if(structureOnTile != null) {
 			structureOnTile.disableClick();

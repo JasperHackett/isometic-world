@@ -1,9 +1,6 @@
-import java.awt.Dimension;
-import java.awt.Graphics;
+
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javafx.util.Pair;
 
@@ -59,14 +56,8 @@ public class Structure extends WorldObject {
 		for (IsometricTile tile : tileList) {
 			tile.setStructureOnTile(this);
 		}
-
 		this.worldPoint = tileList.get(0).worldPoint;
-		this.worldDims = new Dimension(128, 64);
-		this.dim = new Dimension(64, 32);
-		this.coords = new Point(200, 200);
-		this.objectImage = "citytile0";
-		this.clickTag = "city";
-		this.children = new HashMap<GameObject, Pair<Integer, Integer>>();
+
 	}
 
 	public void addChild(GameObject child, Pair<Integer, Integer> positionOffset) {
@@ -91,7 +82,6 @@ public class Structure extends WorldObject {
 								+ children.get(child).getValue()));
 			}
 		}
-
 	}
 
 	@Override
@@ -114,16 +104,6 @@ public class Structure extends WorldObject {
 		// System.out.println("structure hovered");
 		this.currentlyHovered = true;
 
-	}
-
-	@Override
-	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset,
-				coords.y + Game.yOffset - this.structureOffset, null);
-		if (currentlyHovered || currentlyClicked) {
-			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset,
-					coords.y + Game.yOffset - this.structureOffset, null);
-		}
 	}
 
 }

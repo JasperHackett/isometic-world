@@ -1,19 +1,14 @@
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Point;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Random;
 
-import javax.swing.ImageIcon;
 
 import javafx.util.Pair;
 
@@ -60,8 +55,8 @@ public class World {
 		
 		tickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
-		panelDims = new Dimension(Game.width-200,Game.height-200);
-		panelPoint = new Point(100,100);
+		panelDims = new Dimension(Game.width-200,Game.height-64);
+		panelPoint = new Point(0,34);
 		worldPoint = new Point(600,600);
 
 		
@@ -188,6 +183,12 @@ public class World {
 	 *  Repositions every object in the main display. Called after the display is offset
 	 */
 	public void updateDisplay() {
+//		try {
+//			Game.mainGameRenderer.semaphore.acquire();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		Game.objectMap.updateMainDisplayObjects();
 
 		for(WorldObject obj : Game.objectMap.getMainDisplayTiles()) {
@@ -196,6 +197,8 @@ public class World {
 		for(Structure obj : Game.objectMap.getMainDisplayStructures()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
+		
+//		Game.mainGameRenderer.semaphore.release();
 
 	}
 	public Pair<Dimension,Point> getMainDisplayCoords() {
@@ -349,13 +352,13 @@ public class World {
 					if(distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + tileDistance) {
 						distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
 						queuedTiles.add(new Pair<Double,IsometricTile>(
-								(tileDistance * Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
+								(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
 								,tile));
 					}
 				}else {
 					distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
 					queuedTiles.add(new Pair<Double,IsometricTile>(
-							(tileDistance * Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY()))
+							(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
 							,tile));
 				}
 				
@@ -379,18 +382,9 @@ public class World {
 		
 		
 		
-		System.out.println(distanceMap.size());
 		System.out.println("No path found");
 		return returnList;
 	}
 	
-	//Used for implementation of A* search
-//	public Double getHeuristicValue(Point tilePosStart, Point tilePosEnd) {
-//		
-//		 Double heuristicValue = Math.sqrt( (tilePosStart.x - tilePosEnd.x)*2 + (tilePosStart.y - tilePosEnd.y)*2);
-//		 return heuristicValue;
-//
-//	}
-//		
-		
+
 }

@@ -1,23 +1,11 @@
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 
 import javafx.util.Pair;
 
@@ -37,7 +25,7 @@ import javafx.util.Pair;
 public class Game {
 
 	public static int width;
-	public static int height;;
+	public static int height;
 	public static int worldWidth;
 	public static int worldHeight;
 	public static Graphics graphics;
@@ -72,7 +60,8 @@ public class Game {
 
 
 		//Loading all image assets
-		objectMap.addImage("border", "assets/border.png");
+//		objectMap.addImage("border", "assets/border.png");
+		objectMap.addImage("border", "assets/border_draft.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
@@ -81,9 +70,10 @@ public class Game {
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
-		objectMap.addImage("placeholder", "assets/placeholder.png");
+		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
+		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
@@ -106,13 +96,19 @@ public class Game {
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
-		Font gameFont = new Font("Arial", Font.BOLD, 12);
+		Font gameFont = new Font("Arial", Font.PLAIN,11);
 		graphics.setFont(gameFont);
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
+
+//		//UI Background
+//		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
+//		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
+//		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
+
 
 		//Menu button
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
@@ -121,15 +117,15 @@ public class Game {
 
 		//Mouse data text objects
 		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 45));
+		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
 		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 65));
+		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
 
 		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
 
@@ -144,7 +140,7 @@ public class Game {
 //		GameObject test = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
 //		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
-		Structure city0;
+		City city0;
 		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
 		structureTiles.add(objectMap.getTile(new Point(17,38)));
 		structureTiles.add(objectMap.getTile(new Point(18,38)));
@@ -155,19 +151,19 @@ public class Game {
 		structureTiles.add(objectMap.getTile(new Point(17,36)));
 		structureTiles.add(objectMap.getTile(new Point(18,36)));
 		structureTiles.add(objectMap.getTile(new Point(19,36)));
-		city0 = new Structure(structureTiles);
+		city0 = new City(structureTiles);
 		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
 		objectMap.addWorldObject("city0", city0);
 		objectMap.addStructure("city0",city0,48);
-		
+
 		//test code for adding TextObject to city0
 		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
 		TextObject cityText = new TextObject(ObjectType.WORLD, "New Donk City", testFont);
 		objectMap.addObject(ObjectType.DEFAULT, "testCityText", cityText);
 		city0.addChild(cityText, new Pair<Integer, Integer>(64,-32));
 
-		Structure city1;
+		City city1;
 		structureTiles.clear();
 		structureTiles.add(objectMap.getTile(new Point(40,19)));
 		structureTiles.add(objectMap.getTile(new Point(41,19)));
@@ -178,7 +174,7 @@ public class Game {
 		structureTiles.add(objectMap.getTile(new Point(40,17)));
 		structureTiles.add(objectMap.getTile(new Point(41,17)));
 		structureTiles.add(objectMap.getTile(new Point(42,17)));
-		city1 = new Structure(structureTiles);
+		city1 = new City(structureTiles);
 		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
 		objectMap.addObject(ObjectType.WORLD,"city", city1);
 		objectMap.addWorldObject("city1", city1);
@@ -189,8 +185,18 @@ public class Game {
 		cube = new Unit(new Point(4,6));
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addStructure("placeholder", cube,8);
-		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
+		cube.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+		cube.setDestination(new Point(41,55));
 		Game.gameWorld.addTickingObject(cube);
+
+
+		Unit cube2;
+		cube2 = new Unit(new Point(20,37));
+		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
+		objectMap.addStructure("placeholder2", cube2,8);
+		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+		cube2.setDestination(new Point(41,20));
+		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
@@ -232,7 +238,7 @@ public class Game {
 				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
 			}
 		}
-		
+
 		while(true) {
 			try {
 				Thread.sleep(0);
