@@ -16,6 +16,11 @@ public class TextObject extends GameObject {
 	public int width, height;
 	private Color textColour;
 	
+	
+	public TextObject(ObjectType type) {
+		super(type);
+	}
+	
 	/**
 	 * @param type
 	 */

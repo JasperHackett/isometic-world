@@ -1,23 +1,11 @@
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 
 //import javafx.scene.paint.Color;
 
@@ -35,7 +23,7 @@ import javax.swing.JLabel;
 public class Game {
 
 	public static int width;
-	public static int height;;
+	public static int height;
 	public static int worldWidth;
 	public static int worldHeight;
 	public static Graphics graphics;
@@ -82,6 +70,7 @@ public class Game {
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
 		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
+		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
@@ -148,7 +137,7 @@ public class Game {
 //		GameObject test = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
 //		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
-		Structure city0;
+		City city0;
 		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
 		structureTiles.add(objectMap.getTile(new Point(17,38)));
 		structureTiles.add(objectMap.getTile(new Point(18,38)));
@@ -159,13 +148,13 @@ public class Game {
 		structureTiles.add(objectMap.getTile(new Point(17,36)));
 		structureTiles.add(objectMap.getTile(new Point(18,36)));
 		structureTiles.add(objectMap.getTile(new Point(19,36)));
-		city0 = new Structure(structureTiles);
+		city0 = new City(structureTiles);
 		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
 		objectMap.addObject(ObjectType.WORLD,"city", city0);
 		objectMap.addWorldObject("city0", city0);
 		objectMap.addStructure("city0",city0,48);
 
-		Structure city1;
+		City city1;
 		structureTiles.clear();
 		structureTiles.add(objectMap.getTile(new Point(40,19)));
 		structureTiles.add(objectMap.getTile(new Point(41,19)));
@@ -176,7 +165,7 @@ public class Game {
 		structureTiles.add(objectMap.getTile(new Point(40,17)));
 		structureTiles.add(objectMap.getTile(new Point(41,17)));
 		structureTiles.add(objectMap.getTile(new Point(42,17)));
-		city1 = new Structure(structureTiles);
+		city1 = new City(structureTiles);
 		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
 		objectMap.addObject(ObjectType.WORLD,"city", city1);
 		objectMap.addWorldObject("city1", city1);

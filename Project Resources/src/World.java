@@ -1,19 +1,14 @@
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.Point;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Random;
 
-import javax.swing.ImageIcon;
 
 import javafx.util.Pair;
 

@@ -1,4 +1,4 @@
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferStrategy;
@@ -22,10 +22,6 @@ public class Renderer implements Runnable{
 
 
 
-	/**
-	 *  
-	 * 
-	 */
 	public Renderer(String name, JFrame windowIn){
 		threadName = name;
 		this.mainWindow = windowIn;
@@ -36,7 +32,10 @@ public class Renderer implements Runnable{
 		return this.graphics;
 	}
 
-
+	/**
+	 *  
+	 * 
+	 */
    public void start() {
 	      if(t == null) {
 	    	  t = new Thread(this, threadName);
@@ -44,10 +43,7 @@ public class Renderer implements Runnable{
 	      }
    }
 
-	/**
-	 *  
-	 * 
-	 */
+
    public void run() {
 
 	   long lastTime = System.nanoTime();
@@ -76,7 +72,7 @@ public class Renderer implements Runnable{
    }
 
 	/**
-	 *  Iterates through the set of worldObjects then the set of otherObjects and renders them
+	 *  Iterates through the set of visible GameObjects and calls their render method. Using a triple buffer
 	 * 
 	 */
 	public void renderFrame() {
@@ -100,12 +96,7 @@ public class Renderer implements Runnable{
 		
 		
 		if(Game.currentState == Game.STATE.Game) {
-//			for(WorldObject obj : Game.objectMap.getMainDisplayObjects()) {
-//				if(obj != null) {
-//					obj.render(graphics);
-//				}
-//
-//			}
+
 			for(IsometricTile obj : Game.objectMap.getMainDisplayTiles()) {
 				if(obj != null) {
 					obj.render(graphics);
@@ -139,23 +130,6 @@ public class Renderer implements Runnable{
 
 	}
 	
-
-	public Point toGrid(Point pointIn) {
-		Point tempPoint = new Point(0,0);
-		
-		tempPoint.x = (2*pointIn.y + pointIn.x) / 2;
-		tempPoint.y = (2*pointIn.y - pointIn.x) / 2;
-		
-		return(tempPoint);
-	}
-	public Point toIsometric(Point pointIn) {
-		Point tempPoint = new Point(0,0);
-		tempPoint.x =  pointIn.x - pointIn.y;
-		tempPoint.y = (pointIn.x + pointIn.y) /2;
-		
-		
-		return(tempPoint);
-	}
 };
 
 
