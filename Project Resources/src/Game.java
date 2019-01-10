@@ -70,7 +70,8 @@ public class Game {
 
 
 		//Loading all image assets
-		objectMap.addImage("border", "assets/border.png");
+//		objectMap.addImage("border", "assets/border.png");
+		objectMap.addImage("border", "assets/border_draft.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
@@ -79,9 +80,8 @@ public class Game {
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
-		objectMap.addImage("placeholder", "assets/placeholder.png");
+		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
-		objectMap.addImage("uibackground", "assets/uibackground.png");
 		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
@@ -104,7 +104,7 @@ public class Game {
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
-		Font gameFont = new Font("Arial", Font.BOLD, 12);
+		Font gameFont = new Font("Arial", Font.PLAIN,11);
 		graphics.setFont(gameFont);
 
 		//Border
@@ -112,10 +112,10 @@ public class Game {
 		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
 		
-		//UI Background
-		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
-		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
-		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
+//		//UI Background
+//		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
+//		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
+//		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
 		
 
 		//Menu button
@@ -125,15 +125,15 @@ public class Game {
 
 		//Mouse data text objects
 		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 45));
+		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 		
 		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 65));
+		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
 		
 		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
-		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 		
 		
@@ -187,16 +187,18 @@ public class Game {
 		cube = new Unit(new Point(4,6));
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addStructure("placeholder", cube,8);
-		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
+		cube.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+		cube.setDestination(new Point(41,55));
 		Game.gameWorld.addTickingObject(cube);
 		
 		
 		Unit cube2;
 		cube2 = new Unit(new Point(20,37));
-		objectMap.addObject(ObjectType.WORLD, "placeholder", cube2);
-		objectMap.addStructure("placeholder", cube2,8);
-		cube.setProperties(new Dimension(64,32), new Point(600,200),"placeholder");
-		Game.gameWorld.addTickingObject(cube);
+		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
+		objectMap.addStructure("placeholder2", cube2,8);
+		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+		cube2.setDestination(new Point(41,20));
+		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();

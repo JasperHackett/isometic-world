@@ -73,6 +73,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
+//		
 		String mouseButton = "not";
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			mouseButton = "left";
@@ -81,6 +82,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		} else if (e.getButton() == MouseEvent.BUTTON3) {
 			mouseButton = "right";
 		}
+		
+		
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
@@ -100,33 +103,28 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					}
 				}
 			}
-		}
-	
+		}else if(Game.currentState== Game.STATE.Game) {
+			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+					if(clickedObject != null) {
+						if(!clickedObject.equals(Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY()))){
+							clickedObject.setClicked(false);
+							clickedObject = null;
+						}
 
-		
-//		for(Map.Entry<String, WorldObject> worldObj : Game.objectMap.WorldObjects().entrySet()) {
-//			if(worldObj.getValue().isClickable()){
-				if(Game.currentState== Game.STATE.Game) {
-					if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
-							clickedObject = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
-							if(this.clickedObject.isClicked()) {
-								this.clickedObject.setClicked(false);
-							}else {
-								this.clickedObject.setClicked(true);
-//								System.out.println("Click enabled on");
-							}
-							
-						
-						
 					}
-				}
-//				}else {				
-//					
-//				}		
+					clickedObject = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
+					if(this.clickedObject.isClicked()) {
+						this.clickedObject.setClicked(false);
+						this.clickedObject = null;
+					}else {
+						this.clickedObject.setClicked(true);
+					}
+					
 				
+				
+			}
+		}
 
-//			}
-//		}
 
 	}
 
