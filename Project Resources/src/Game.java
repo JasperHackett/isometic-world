@@ -83,6 +83,7 @@ public class Game {
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
 		objectMap.addImage("placeholder", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
+		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
@@ -224,12 +225,14 @@ public class Game {
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
-
+		// test code to set a 3x3 area's "ownership" to red
+		// this render a translucent red tile on top of whatever tile is there
+		for (int x = 38; x < 54; x++) {
+			for (int y = 15; y < 25; y++) {
+				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
+			}
+		}
 		
-		TextObject testText2 = new TextObject(ObjectType.DEFAULT, "Hello World.", testFont);
-		testText2.setPosition(new Dimension(testText2.width, testText2.height), new Point(xOffset, 40));
-		objectMap.addObject(ObjectType.DEFAULT, "testText2", testText2);
-		int testInc = 0;
 		while(true) {
 			try {
 				Thread.sleep(0);
