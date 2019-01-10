@@ -23,7 +23,12 @@ public class IsometricTile extends WorldObject{
 		city,
 		road
 	}
+	public enum OWNERSET{
+		none,
+		red;
+	}
 	public TILESET tileset;
+	public OWNERSET currentOwner;
 	/**
 	 * @param type
 	 * @param worldDimsIn
@@ -40,7 +45,7 @@ public class IsometricTile extends WorldObject{
 		} else {
 			this.walkable = false;
 		}
-		
+		this.currentOwner = OWNERSET.none;
 	}
 	public void setStructureOnTile(WorldObject structureOnTile) {
 		if(structureOnTile != null) {
@@ -67,6 +72,10 @@ public class IsometricTile extends WorldObject{
 		}
 	}
 	
+	public void setOwner(OWNERSET newOwner) {
+		currentOwner = newOwner;
+	}
+ 	
 	public boolean isWalkable() {
 		return walkable;
 	}
@@ -96,6 +105,9 @@ public class IsometricTile extends WorldObject{
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		if(currentlyHovered && structureOnTile == null) {
 			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		}
+		if (this.currentOwner == OWNERSET.red) {
+			g.drawImage(Game.objectMap.getImage("redOwnedTile"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 	}
 	

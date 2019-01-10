@@ -6,7 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
- * 
+ *
  */
 
 /**
@@ -14,21 +14,21 @@ import javax.swing.JFrame;
  *
  */
 public class GameWindow {
-	
+
 	public static final int width = 1600;
 	public static final int height = 900;
 	public static Graphics graphics;
 	public static JFrame window;
-	
-	public GameWindow(){ 
+
+	public GameWindow(){
 //		window = new JFrame("Draggable");
 //		window.setLayout(null);
 //		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 ////		window.set
-//		
+//
 //		Container contentPane = window.getContentPane();
 //		Dimension dim = new Dimension (width, height);
-//		
+//
 //		window.setPreferredSize(dim);
 //		window.setMaximumSize(dim);
 //		window.setMinimumSize(dim);
@@ -36,7 +36,7 @@ public class GameWindow {
 //		window.setLocationRelativeTo(null);
 //		window.setVisible(true);
 ////		window.get
-//		
+//
 //		graphics = window.getGraphics();
 //		try {
 //			graphics.drawImage(new ImageIcon("testImage.png").getImage(), 0, 0, null);
@@ -47,9 +47,9 @@ public class GameWindow {
 ////		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
 ////		graphics.drawImage(new ImageIcon("testImage.png").getImage(), 10, 10, null);
 //	}
-//	
-//	
-//		
+//
+//
+//
 //	public void renderFrame() {
 //		if(window != null) {
 //			window.repaint();
@@ -59,6 +59,6 @@ public class GameWindow {
 ////		graphics.clearRect(0, 0, 800, 600);
 
 	}
-	
+
 
 }

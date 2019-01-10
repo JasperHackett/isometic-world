@@ -2,6 +2,7 @@
  * 
  */
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -28,12 +29,12 @@ public class TextObject extends GameObject {
 		super(type);
 		this.text = text;
 		this.font = font;
-
+		this.coords = new Point();
 	}
-	public TextObject(ObjectType type, Font font) {
+	public TextObject(ObjectType type, Font font, Color textColour) {
 		super(type);
 		this.font = font;
-
+		this.textColour = textColour;
 	}
 	
 	public void setProperties(String textIn, Color textColour, Point pointIn) {
@@ -42,18 +43,20 @@ public class TextObject extends GameObject {
 		this.coords = pointIn;
 		this.width = Game.graphics.getFontMetrics(font).stringWidth(text);
 		this.height = Game.graphics.getFontMetrics(font).getHeight();
+		this.dim = new Dimension(width,height);
 	}
 	
 	@Override
 	public void render(Graphics g) {
 		g.setColor(textColour);
 		g.setFont(font);
-		g.drawString(text, this.getPosition().getValue().x, this.getPosition().getValue().y);
+		g.drawString(text, coords.x, coords.y);
 	}
 	
 	public void setText(String text) {
 		this.text = text;
 		this.width = Game.graphics.getFontMetrics(font).stringWidth(text);
 		this.height = Game.graphics.getFontMetrics(font).getHeight();
+		this.dim = new Dimension(width,height);
 	}
 }

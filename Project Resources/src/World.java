@@ -48,7 +48,7 @@ public class World {
 	public HashMap<Point,Point> worldToIsoTable;
 
 
-	World()  {
+	public World()  {
 		worldToIsoTable = new HashMap<Point,Point>();
 		structureList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
@@ -163,6 +163,47 @@ public class World {
 		
 		
 		return (new Dimension(tileCount/j,j));	
+	}
+	
+	public void initialiseStructureMap() {
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader("structuremap.csv"));
+			String line = "";
+			String delim = ",";
+			int y = 0;
+			int numStructures = 0;
+			while((line = br.readLine()) != null){
+				String[] tileLine = line.split(delim);
+				for (int x = 0; x < tileLine.length; x++) {
+					if (tileLine[x].equals("")) {
+						continue;
+					} else if (tileLine[x].equals("C")) {
+						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
+						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
+						City newCity = new City(structureTiles, "Generic Name Here");
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city" + Integer.toString(numStructures));
+						Game.objectMap.addObject(ObjectType.WORLD, "city" + Integer.toString(numStructures), newCity);
+						Game.objectMap.addWorldObject("city" + Integer.toString(numStructures), newCity);
+						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
+						numStructures++;
+					}
+				}
+				y++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	public void addTickingObject(WorldObject tickingObj) {

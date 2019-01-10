@@ -7,12 +7,11 @@ import java.util.concurrent.Semaphore;
 
 import javax.swing.JFrame;
 
-
 /**
  * @author Jasper
  *
  */
-public class Renderer implements Runnable{
+public class Renderer implements Runnable {
 	private Thread t;
 	private String threadName;
 	private Graphics graphics;
@@ -28,13 +27,13 @@ public class Renderer implements Runnable{
 
 	}
 
-	public Graphics getGraphic(){
+	public Graphics getGraphic() {
 		return this.graphics;
 	}
 
 	/**
-	 *  
-	 * 
+	 *
+	 *
 	 */
    public void start() {
 	      if(t == null) {
@@ -73,69 +72,64 @@ public class Renderer implements Runnable{
 
 	/**
 	 *  Iterates through the set of visible GameObjects and calls their render method. Using a triple buffer
-	 * 
+	 *
 	 */
 	public void renderFrame() {
 		BufferStrategy bs = mainWindow.getBufferStrategy();
-        if (bs == null) {
-           mainWindow.createBufferStrategy(3);
-           return;
-        }
-        
-        
+		if (bs == null) {
+			mainWindow.createBufferStrategy(3);
+			return;
+		}
 
-        Graphics graphics = bs.getDrawGraphics();
+		Graphics graphics = bs.getDrawGraphics();
 		graphics.clearRect(0, 0, Game.width, Game.height);
-		
+
 		try {
 			semaphore.acquire();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 		if(Game.currentState == Game.STATE.Game) {
 
 			for(IsometricTile obj : Game.objectMap.getMainDisplayTiles()) {
 				if(obj != null) {
 					obj.render(graphics);
 				}
-	
+
 			}
-			
-			for(Structure obj : Game.objectMap.getMainDisplayStructures()) {
-				if(obj != null) {
+
+			for (Structure obj : Game.objectMap.getMainDisplayStructures()) {
+				if (obj != null) {
 					obj.render(graphics);
 				}
-	
+
 			}
-			
-			
-		}else if(Game.currentState == Game.STATE.Menu) {
-			for(Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {
+
+		} else if (Game.currentState == Game.STATE.Menu) {
+			for (Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {
 				obj.getValue().render(graphics);
 			}
 		}
-		
-		for(Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
+
+		for (Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
 			obj.getValue().render(graphics);
 		}
 
-		Game.mainHUD.renderHUD(graphics);
+	Game.mainHUD.renderHUD(graphics);
         graphics.dispose();
         bs.show();
-        
+
         semaphore.release();
 
 	}
-	
+
+
+
+
+
+
+
 };
-
-
-
-
-
-
-
-

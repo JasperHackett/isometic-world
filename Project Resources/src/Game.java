@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 
 
+import javafx.util.Pair;
+
 //import javafx.scene.paint.Color;
 
 //import javafx.scene.paint.Color;
@@ -73,8 +75,9 @@ public class Game {
 		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
 		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
+		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
-		
+
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
 
@@ -83,8 +86,6 @@ public class Game {
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		Dimension dim = new Dimension (width, height);
 
 
 		window.setPreferredSize(dim);
@@ -100,17 +101,29 @@ public class Game {
 		Font gameFont = new Font("Arial", Font.PLAIN,11);
 		graphics.setFont(gameFont);
 
+
+		gameWorld = new World();
+		gameWorld.initialiseTileMap();
+		gameWorld.initialiseStructureMap();
+
+
+
+
+
+
+
+
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		Game.objectMap.addObject(ObjectType.DEFAULT,  "border", border);
 		Game.objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
-		
-		
+
+
 //		//UI Background
 //		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
-		
+
 
 		//Menu button
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
@@ -118,19 +131,19 @@ public class Game {
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 		//Mouse data text objects
-		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
-		
-		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
-		
-		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont);
+
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
-		
-		
+
+
 //		//Testing text
 //		JLabel testText = new JLabel("testing");
 //		testText.setSize(new Dimension(100,100));
@@ -142,39 +155,41 @@ public class Game {
 //		GameObject test = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
 //		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
-		City city0;
-		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-		structureTiles.add(objectMap.getTile(new Point(17,38)));
-		structureTiles.add(objectMap.getTile(new Point(18,38)));
-		structureTiles.add(objectMap.getTile(new Point(19,38)));
-		structureTiles.add(objectMap.getTile(new Point(17,37)));
-		structureTiles.add(objectMap.getTile(new Point(18,37)));
-		structureTiles.add(objectMap.getTile(new Point(19,37)));
-		structureTiles.add(objectMap.getTile(new Point(17,36)));
-		structureTiles.add(objectMap.getTile(new Point(18,36)));
-		structureTiles.add(objectMap.getTile(new Point(19,36)));
-		city0 = new City(structureTiles);
-		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
-		objectMap.addObject(ObjectType.WORLD,"city", city0);
-		objectMap.addWorldObject("city0", city0);
-		objectMap.addStructure("city0",city0,48);
+//		City city0;
+//		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+//		structureTiles.add(objectMap.getTile(new Point(17,38)));
+//		structureTiles.add(objectMap.getTile(new Point(18,38)));
+//		structureTiles.add(objectMap.getTile(new Point(19,38)));
+//		structureTiles.add(objectMap.getTile(new Point(17,37)));
+//		structureTiles.add(objectMap.getTile(new Point(18,37)));
+//		structureTiles.add(objectMap.getTile(new Point(19,37)));
+//		structureTiles.add(objectMap.getTile(new Point(17,36)));
+//		structureTiles.add(objectMap.getTile(new Point(18,36)));
+//		structureTiles.add(objectMap.getTile(new Point(19,36)));
+//		city0 = new City(structureTiles, "Brand Spanking New York City");
+//		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
+//		objectMap.addObject(ObjectType.WORLD,"city", city0);
+//		objectMap.addWorldObject("city0", city0);
+//		objectMap.addStructure("city0",city0,48);
 
-		City city1;
-		structureTiles.clear();
-		structureTiles.add(objectMap.getTile(new Point(40,19)));
-		structureTiles.add(objectMap.getTile(new Point(41,19)));
-		structureTiles.add(objectMap.getTile(new Point(42,19)));
-		structureTiles.add(objectMap.getTile(new Point(40,18)));
-		structureTiles.add(objectMap.getTile(new Point(41,18)));
-		structureTiles.add(objectMap.getTile(new Point(42,18)));
-		structureTiles.add(objectMap.getTile(new Point(40,17)));
-		structureTiles.add(objectMap.getTile(new Point(41,17)));
-		structureTiles.add(objectMap.getTile(new Point(42,17)));
-		city1 = new City(structureTiles);
-		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
-		objectMap.addObject(ObjectType.WORLD,"city", city1);
-		objectMap.addWorldObject("city1", city1);
-		objectMap.addStructure("city1",city1,48);
+
+
+//		City city1;
+//		structureTiles.clear();
+//		structureTiles.add(objectMap.getTile(new Point(40,19)));
+//		structureTiles.add(objectMap.getTile(new Point(41,19)));
+//		structureTiles.add(objectMap.getTile(new Point(42,19)));
+//		structureTiles.add(objectMap.getTile(new Point(40,18)));
+//		structureTiles.add(objectMap.getTile(new Point(41,18)));
+//		structureTiles.add(objectMap.getTile(new Point(42,18)));
+//		structureTiles.add(objectMap.getTile(new Point(40,17)));
+//		structureTiles.add(objectMap.getTile(new Point(41,17)));
+//		structureTiles.add(objectMap.getTile(new Point(42,17)));
+//		city1 = new City(structureTiles, "Melbourne");
+//		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
+//		objectMap.addObject(ObjectType.WORLD,"city", city1);
+//		objectMap.addWorldObject("city1", city1);
+//		objectMap.addStructure("city1",city1,48);
 
 		//Test unit
 		Unit cube;
@@ -184,8 +199,8 @@ public class Game {
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"cube");
 		cube.setDestination(new Point(41,55));
 		Game.gameWorld.addTickingObject(cube);
-		
-		
+
+
 		Unit cube2;
 		cube2 = new Unit(new Point(20,37));
 		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
@@ -227,6 +242,13 @@ public class Game {
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
 //		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
 
+		// test code to set a 3x3 area's "ownership" to red
+		// this render a translucent red tile on top of whatever tile is there
+		for (int x = 38; x < 54; x++) {
+			for (int y = 15; y < 25; y++) {
+				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
+			}
+		}
 
 		while(true) {
 			try {
