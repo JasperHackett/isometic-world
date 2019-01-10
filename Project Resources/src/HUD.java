@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,19 +14,11 @@ import java.util.Map;
  */
 public class HUD {
 	
-	Map<String,GameObject> HUDElements;
-	ArrayList<GameObject> TopBarElements;
-	Map<String,GameObject> ActiveContainer;
-	
-	HUD(){
-		HUDElements = new HashMap<String,GameObject>();
-	}
-	
-	private class cityDashboard{
+	private class CityDashboard{
 		TextObject cityName;
 		GameObject cityButton;
 		
-		cityDashboard(City city){
+		CityDashboard(City city){
 			cityName = new TextObject(ObjectType.DEFAULT);
 //			cityName.setProperties(city.name,Color.WHITE );
 			cityName.setText(city.name);
@@ -34,10 +27,32 @@ public class HUD {
 		}
 		
 	}
+	ArrayList<CityDashboard> HUDElements;
+	ArrayList<GameObject> TopBarElements;
+	Map<String,GameObject> ActiveContainer;
 	
+	public HUD(){
+		HUDElements = new ArrayList<CityDashboard>();
+		TopBarElements = new ArrayList<GameObject>();
+		ActiveContainer = new HashMap<String,GameObject>();
+	}
+
+
+	
+	public void displayCityOnHUD(City city) {
+		CityDashboard activeDashboard = new CityDashboard(city);
+		HUDElements.add(activeDashboard);
+	}
 	
 	public void addHUDElement(GameObject newHUDElement) {
 		
 	}
+
+
+
+	public void renderHUD(Graphics g) {
+		
+	}
+
 
 }

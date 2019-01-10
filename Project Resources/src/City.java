@@ -34,5 +34,15 @@ public class City extends Structure {
 			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		}
 	}
+	
+	@Override
+	public void clickAction() {
+		System.out.println("Click action on: "+this.objectImage);
+		this.currentlyClicked = true;
+//		if(Game.mainHUD == null) {
+//			System.out.println("testtestsetsets");
+//		}
+		Game.mainHUD.displayCityOnHUD(this);
+	}
 
 }

@@ -64,6 +64,7 @@ public class World {
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
 
 		initialiseStructures();
+		initialiseHUD();
 
 	}
 	
@@ -85,7 +86,14 @@ public class World {
 		return false;
 	}
 	
+	public void initialiseHUD() {
 
+		
+
+		
+		
+	}
+	
 	public Dimension initialiseTileMap() {
 		
 		Point nextTileWorldCoords = new Point(400,400);

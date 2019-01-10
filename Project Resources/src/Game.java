@@ -29,6 +29,7 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
+	public static HUD mainHUD = new HUD();
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static SettingsHandler settingsControl;
@@ -41,15 +42,17 @@ public class Game {
 		Game
 	}
 	public static STATE currentState;
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		HUD mainHUD = new HUD();
+//		mainHUD.displayCityOnHUD();
 
 		settingsControl = new SettingsHandler();
 		settingsControl.loadSettings();
 		currentState = STATE.Menu;
-;
 //		worldWidth = tileWidth *isoDims.width;
 //		 worldHeight = tileHeight *isoDims.height;
 		objectMap = new ObjectMap();
@@ -76,6 +79,7 @@ public class Game {
 		gameWorld.initialiseTileMap();
 
 
+
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -98,8 +102,9 @@ public class Game {
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
-		objectMap.addObject(ObjectType.DEFAULT,  "border", border);
-		objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
+		Game.objectMap.addObject(ObjectType.DEFAULT,  "border", border);
+		Game.objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
+		
 		
 //		//UI Background
 //		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
