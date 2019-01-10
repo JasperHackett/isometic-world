@@ -1,6 +1,7 @@
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.util.Pair;
 
@@ -61,7 +62,7 @@ public class Structure extends WorldObject {
 	}
 
 	public void addChild(GameObject child, Pair<Integer, Integer> positionOffset) {
-		this.children.put(child, positionOffset);
+//		this.children.put(child, positionOffset);
 
 	}
 

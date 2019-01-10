@@ -125,17 +125,10 @@ public class Renderer implements Runnable {
 
 	}
 
-};
 
 
 
 
-
-		tempPoint.x = (2 * pointIn.y + pointIn.x) / 2;
-		tempPoint.y = (2 * pointIn.y - pointIn.x) / 2;
-
-		return (tempPoint);
-	}
 
 	public Point toIsometric(Point pointIn) {
 		Point tempPoint = new Point(0, 0);
