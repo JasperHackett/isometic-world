@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
-
+import java.util.Random;
 
 import javafx.util.Pair;
 
@@ -157,7 +157,24 @@ public class World {
 		return (new Dimension(tileCount/j,j));	
 	}
 	
+	public ArrayList<String> populateNameList() {
+		ArrayList<String> nameList = new ArrayList<String>();
+		BufferedReader br;
+		String line = "";
+		try {
+			br = new BufferedReader(new FileReader("citynamelist.csv"));
+			while((line = br.readLine()) != null) {
+				nameList.add(line);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return nameList;
+	}
+	
 	public void initialiseStructureMap() {
+		Random rn = new Random();
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader("structuremap.csv"));
@@ -181,11 +198,14 @@ public class World {
 						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
-						City newCity = new City(structureTiles, "Generic Name Here");
+						
+						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
+						City newCity = new City(structureTiles, name);
 						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city" + Integer.toString(numStructures));
 						Game.objectMap.addObject(ObjectType.WORLD, "city" + Integer.toString(numStructures), newCity);
 						Game.objectMap.addWorldObject("city" + Integer.toString(numStructures), newCity);
 						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
+						
 						numStructures++;
 					}
 				}

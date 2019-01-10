@@ -33,6 +33,7 @@ public class Game {
 	public static Renderer mainGameRenderer;
 	public static ObjectMap objectMap;
 	public static World gameWorld;
+	public static ArrayList<String> nameList;
 	public static SettingsHandler settingsControl;
 	public static final int xOffset = 3;
 	public static final int yOffset = 26;
@@ -97,8 +98,9 @@ public class Game {
 		
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
+		nameList = gameWorld.populateNameList();
 		gameWorld.initialiseStructureMap();
-
+		
 		
 		
 		
