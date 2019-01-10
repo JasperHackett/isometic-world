@@ -2,6 +2,7 @@
  * 
  */
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -42,6 +43,7 @@ public class TextObject extends GameObject {
 		this.coords = pointIn;
 		this.width = Game.graphics.getFontMetrics(font).stringWidth(text);
 		this.height = Game.graphics.getFontMetrics(font).getHeight();
+		this.dim = new Dimension(width,height);
 	}
 	
 	@Override
@@ -55,5 +57,6 @@ public class TextObject extends GameObject {
 		this.text = text;
 		this.width = Game.graphics.getFontMetrics(font).stringWidth(text);
 		this.height = Game.graphics.getFontMetrics(font).getHeight();
+		this.dim = new Dimension(width,height);
 	}
 }

@@ -1,4 +1,6 @@
 
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +85,24 @@ public class Structure extends WorldObject {
 								+ children.get(child).getValue()));
 			}
 		}
+	}
+	
+	@Override 
+	public void render(Graphics g) {
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				if (Game.objectMap.isWithinDisplay(new Pair<Dimension, Point>(child.dim, child.coords), new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
+					child.render(g);
+				}
+			}
+		}
+		
 	}
 
 	@Override

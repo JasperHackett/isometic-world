@@ -160,8 +160,8 @@ public class Game {
 		//test code for adding TextObject to city0
 		Font testFont = new Font(Font.SERIF, Font.PLAIN, 12);
 		TextObject cityText = new TextObject(ObjectType.WORLD, "New Donk City", testFont);
-		objectMap.addObject(ObjectType.DEFAULT, "testCityText", cityText);
-		city0.addChild(cityText, new Pair<Integer, Integer>(64,-32));
+		objectMap.addObject(ObjectType.CHILD, "testCityText", cityText);
+		city0.addChild(cityText, new Pair<Integer, Integer>(100,0));
 
 		City city1;
 		structureTiles.clear();

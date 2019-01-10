@@ -75,6 +75,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		case DEFAULT:
 			otherObjects.put(s, obj);
 			break;
+		case CHILD:
 		default:
 			break;
 		}
