@@ -30,6 +30,7 @@ public class Game {
 	public static int height;
 	public static int worldWidth;
 	public static int worldHeight;
+	public static Menu gameMenu;
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
@@ -77,7 +78,8 @@ public class Game {
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
-		objectMap.addImage("menuButton1", "assets/menuButton1");
+		objectMap.addImage("menuButton1", "assets/menuButton1.png");
+		objectMap.addImage("menuBackground", "assets/menuBackground.png");
 		
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
@@ -104,6 +106,7 @@ public class Game {
 		nameList = gameWorld.populateNameList();
 		gameWorld.initialiseStructureMap();
 		
+		gameMenu = new Menu();
 		
 		
 		
@@ -123,22 +126,6 @@ public class Game {
 //		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
-
-
-		//Menu buttons
-		Font menuFont = new Font("Yu Gothic UI Semibold", Font.BOLD, 30);
-		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
-		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
-		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
-		
-		GameObject newGameButton = new GameObject(ObjectType.MAINMENU);
-		objectMap.addObject(ObjectType.MAINMENU, "newGameButton", newGameButton);
-		objectMap.getObject("newGameButton").setProperties(new Dimension(250,100), new Point(50,500), "menuButton1", true, "newGameButton");
-		
-		
-		TextObject menuText = new TextObject(ObjectType.MAINMENU, menuFont, Color.WHITE);
-		menuText.setProperties("New Game", Color.WHITE, new Point(50,500));
-		objectMap.addObject(ObjectType.MAINMENU, "menutext", menuText);
 		
 		//Mouse data text objects
 		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);

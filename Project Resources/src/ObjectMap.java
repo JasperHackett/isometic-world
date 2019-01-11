@@ -195,6 +195,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public void addImage(String imgID, String FilePath) {
 		Image newImage = new ImageIcon(FilePath).getImage();
 		imageMap.put(imgID, newImage);
+		System.out.println(imgID + " added to imageMap");
 	}
 
 	public void addTileImage(String imgID, String FilePath, Dimension tileDims, int tileCount) {
@@ -276,9 +277,24 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return otherObjects;
 	}
 
-	public Map<String, GameObject> getMenuObjects() {
-		return menuObjects;
+	public ArrayList<GameObject> getMenuObjects() {
+		
+		ArrayList<GameObject> orderedList = new ArrayList<GameObject>();
+		// the following is the rendering order priority
+		// if any new menu objects are added, they must also be manually added here
+		orderedList.add(menuObjects.get("menuBackground"));
+		orderedList.add(menuObjects.get("newGameButton"));
+		orderedList.add(menuObjects.get("loadGameButton"));
+		orderedList.add(menuObjects.get("optionsButton"));
+		orderedList.add(menuObjects.get("quitButton"));
+		orderedList.add(menuObjects.get("newGameText"));
+		orderedList.add(menuObjects.get("loadGameText"));
+		orderedList.add(menuObjects.get("optionsText"));
+		orderedList.add(menuObjects.get("quitText"));
+		
+		return orderedList;
 	}
+	
 
 	public Map<String, WorldObject> WorldObjects() {
 		return worldObjects;
