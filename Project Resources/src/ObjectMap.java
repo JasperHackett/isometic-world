@@ -49,7 +49,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public HashMap<String, Structure> worldStructures;
 
 	private HashMap<String, Image> imageMap;
-	private HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
+	public HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
 
 	public ObjectMap() {
 		super();
@@ -63,7 +63,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		tilesPerTileset = new HashMap<IsometricTile.TILESET, Integer>();
 		worldStructures = new HashMap<String, Structure>();
 	}
-
+	
 	
 	public void addObject(ObjectType type, String s, GameObject obj) {
 
@@ -75,7 +75,6 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		case DEFAULT:
 			otherObjects.put(s, obj);
 			break;
-		case CHILD:
 		default:
 			break;
 		}

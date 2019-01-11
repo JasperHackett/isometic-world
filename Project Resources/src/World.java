@@ -201,9 +201,7 @@ public class World {
 						
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
 						City newCity = new City(structureTiles, name);
-						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city" + Integer.toString(numStructures));
-						Game.objectMap.addObject(ObjectType.WORLD, "city" + Integer.toString(numStructures), newCity);
-						Game.objectMap.addWorldObject("city" + Integer.toString(numStructures), newCity);
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + rn.nextInt(3), true, "city" + Integer.toString(numStructures));
 						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
 						
 						numStructures++;
