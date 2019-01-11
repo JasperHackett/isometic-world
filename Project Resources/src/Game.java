@@ -2,7 +2,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
@@ -75,6 +77,7 @@ public class Game {
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
+		objectMap.addImage("menuButton1", "assets/menuButton1");
 		
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
@@ -104,8 +107,11 @@ public class Game {
 		
 		
 		
-
-
+		// un-comment to print a list of available fonts in console
+//		String[] fontList = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+//		for (int i = 0; i < fontList.length; i++) {
+//			System.out.println(fontList[i]);
+//		}
 		
 
 		//Border
@@ -119,11 +125,21 @@ public class Game {
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
 
 
-		//Menu button
+		//Menu buttons
+		Font menuFont = new Font("Yu Gothic UI Semibold", Font.BOLD, 30);
 		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
 		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
 		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
-
+		
+		GameObject newGameButton = new GameObject(ObjectType.MAINMENU);
+		objectMap.addObject(ObjectType.MAINMENU, "newGameButton", newGameButton);
+		objectMap.getObject("newGameButton").setProperties(new Dimension(250,100), new Point(50,500), "menuButton1", true, "newGameButton");
+		
+		
+		TextObject menuText = new TextObject(ObjectType.MAINMENU, menuFont, Color.WHITE);
+		menuText.setProperties("New Game", Color.WHITE, new Point(50,500));
+		objectMap.addObject(ObjectType.MAINMENU, "menutext", menuText);
+		
 		//Mouse data text objects
 		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
 		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
