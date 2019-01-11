@@ -1,7 +1,9 @@
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -162,7 +164,7 @@ public class World {
 		BufferedReader br;
 		String line = "";
 		try {
-			br = new BufferedReader(new FileReader("citynamelist.csv"));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream("citynamelist.csv"), "UTF-8"));
 			while((line = br.readLine()) != null) {
 				nameList.add(line);
 			}
