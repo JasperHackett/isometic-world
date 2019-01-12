@@ -44,8 +44,7 @@ public class Road extends Structure {
 		if (!(neighbours.get(3).structureOnTile == null)) {
 			roadDown = neighbours.get(3).structureOnTile.type == StructureType.road;
 		} 
-		// straight vertical road
-		// no neighbours also defaults to a straight vertical road
+		// straight vertical road (also default for roads with no neighbours)
 		if ((!roadLeft && !roadRight && !roadUp && !roadDown) || (roadUp && roadDown && !roadLeft && !roadRight) || (!roadLeft && !roadRight && roadUp && !roadDown) || (!roadLeft && !roadRight && !roadUp && roadDown)) {
 			this.objectImage = "road1";
 		} 
@@ -94,5 +93,8 @@ public class Road extends Structure {
 	public void render(Graphics g) {
 		updateRoadImage();
 		super.render(g);
+		if(currentlyHovered) {
+			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		}
 	}
 }

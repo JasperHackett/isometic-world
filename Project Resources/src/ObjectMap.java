@@ -25,8 +25,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	 * Sorts via Y axis
 	 *
 	 */
-	private class YAxisComparator implements Comparator<IsometricTile> {
-		public int compare(IsometricTile o1, IsometricTile o2) {
+	private class YAxisComparator implements Comparator<WorldObject> {
+		public int compare(WorldObject o1, WorldObject o2) {
 			int y1 = (int) o1.getPosition().getValue().getY();
 			int y2 = (int) o2.getPosition().getValue().getY();
 			if (y1 == y2) {
@@ -325,11 +325,26 @@ public class ObjectMap extends HashMap<String, GameObject> {
 				}
 			}
 		}
-
+		
 		YAxisComparator comp = new YAxisComparator();
-		// mainDisplayObjects.sort((Comparator)comp);
-		// mainDisplayStructures.sort((Comparator)comp);
-		mainDisplayTiles.sort((Comparator) comp);
+		mainDisplayTiles.sort((Comparator<WorldObject>) comp);
+		
+		// sorting mainDisplayStructures
+		ArrayList<City> cities = new ArrayList<City>();
+		ArrayList<Road> roads = new ArrayList<Road>();
+		for (Structure structure : mainDisplayStructures) {
+			if (structure.type == Structure.StructureType.city) {
+				cities.add((City) structure);
+			} else if (structure.type == Structure.StructureType.road) {
+				roads.add((Road) structure);
+			}
+		}
+		cities.sort((Comparator<WorldObject>) comp);
+		roads.sort((Comparator<WorldObject>) comp);
+		mainDisplayStructures = new ArrayList<Structure>();
+		mainDisplayStructures.addAll(roads);
+		mainDisplayStructures.addAll(cities);
+		
 
 		Game.mainGameRenderer.semaphore.release();
 
