@@ -243,11 +243,11 @@ public class Game {
 
 		// test code to set a 3x3 area's "ownership" to red
 		// this render a translucent red tile on top of whatever tile is there
-		for (int x = 38; x < 54; x++) {
-			for (int y = 15; y < 25; y++) {
-				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
-			}
-		}
+//		for (int x = 38; x < 54; x++) {
+//			for (int y = 15; y < 25; y++) {
+//				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
+//			}
+//		}
 
 		while(true) {
 			try {

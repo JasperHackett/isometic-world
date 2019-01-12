@@ -19,9 +19,9 @@ public class HUD {
 		GameObject cityButton;
 		
 		CityDashboard(City city){
-			cityName = new TextObject(ObjectType.DEFAULT);
+			cityName = new TextObject(ObjectType.DEFAULT,city.name);
 //			cityName.setProperties(city.name,Color.WHITE );
-			cityName.setText(city.name);
+//			cityName.setText(city.name);
 //			cityButton = new GameObject()
 			
 		}
