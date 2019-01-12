@@ -80,6 +80,7 @@ public class Game {
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
+		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");

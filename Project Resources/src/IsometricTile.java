@@ -15,7 +15,7 @@ public class IsometricTile extends WorldObject{
 	public boolean walkable;
 	public boolean slave;
 	public Point masterLocation;
-	protected WorldObject structureOnTile = null;
+	protected Structure structureOnTile = null;
 	public enum TILESET{
 		grass,
 		water,
@@ -47,7 +47,7 @@ public class IsometricTile extends WorldObject{
 		}
 		this.currentOwner = OWNERSET.none;
 	}
-	public void setStructureOnTile(WorldObject structureOnTile) {
+	public void setStructureOnTile(Structure structureOnTile) {
 		if(structureOnTile != null) {
 			this.walkable = false;
 		}

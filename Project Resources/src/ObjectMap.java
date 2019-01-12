@@ -49,7 +49,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public HashMap<String, Structure> worldStructures;
 
 	private HashMap<String, Image> imageMap;
-	public HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
+	public HashMap<String, Integer> tilesPerTileset;
 
 	public ObjectMap() {
 		super();
@@ -60,7 +60,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		menuObjects = new HashMap<String, GameObject>();
 		imageMap = new HashMap<String, Image>();
 		worldTiles = new HashMap<String, IsometricTile>();
-		tilesPerTileset = new HashMap<IsometricTile.TILESET, Integer>();
+		tilesPerTileset = new HashMap<String, Integer>();
 		worldStructures = new HashMap<String, Structure>();
 	}
 	
@@ -199,15 +199,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public void addTileImage(String imgID, String FilePath, Dimension tileDims, int tileCount) {
-		if (imgID == "grasstile") {
-			tilesPerTileset.put(IsometricTile.TILESET.grass, tileCount);
-		} else if (imgID == "watertile") {
-			tilesPerTileset.put(IsometricTile.TILESET.water, tileCount);
-		} else if (imgID == "treetile") {
-			tilesPerTileset.put(IsometricTile.TILESET.trees, tileCount);
-		} else if (imgID == "citytile") {
-			tilesPerTileset.put(IsometricTile.TILESET.city, tileCount);
-		}
+		tilesPerTileset.put(imgID, tileCount);
 		String imgName;
 		BufferedImage tilesheet = null;
 		try {
@@ -215,6 +207,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		Image newImage = null;
 		for (int i = 0; i < tileCount; i++) {
 			newImage = tilesheet.getSubimage(tileDims.width * i, 0, tileDims.width, tileDims.height);

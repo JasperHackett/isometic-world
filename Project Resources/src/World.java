@@ -60,13 +60,11 @@ public class World {
 		panelDims = new Dimension(Game.width-200,Game.height-64);
 		panelPoint = new Point(0,34);
 		worldPoint = new Point(600,600);
-
+		
 		
 		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
-
 		initialiseStructures();
-
 	}
 	
 	//Called every at every increment of time in the game
@@ -203,11 +201,19 @@ public class World {
 						
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
 						City newCity = new City(structureTiles, name);
-						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + rn.nextInt(3), true, "city" + Integer.toString(numStructures));
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numStructures));
 						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
+						numStructures++;
 						
+					} else if (tileLine[x].equals("R")) {
+						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						Road newRoad = new Road(structureTiles);
+						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numStructures));
+						Game.objectMap.addStructure("road" + Integer.toString(numStructures), newRoad, 0);
 						numStructures++;
 					}
+					
 				}
 				y++;
 			}
@@ -317,6 +323,7 @@ public class World {
 
 	
 	//Checks for all walkable neighbours of an isometrictile
+	// returns an ArrayList in the following order: Left,Up,Right,Down
 	public ArrayList<IsometricTile> getNeighbours(IsometricTile centreTile){
 		ArrayList<IsometricTile> returnList = new ArrayList<IsometricTile>();
 		//Check up and to the right for neighbour
@@ -401,8 +408,11 @@ public class World {
 					System.out.println("NULL TILE");
 				}
 				if(tile.tileset == currentEntry.getValue().tileset) {
-					if(tile.tileset == IsometricTile.TILESET.road) {
-						tileDistance = 5.0;
+					if(!(tile.structureOnTile == null)) {
+						if (tile.structureOnTile.type == Structure.StructureType.road) {
+							tileDistance = 5.0;
+						}
+						
 					}
 				}
 

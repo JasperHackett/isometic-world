@@ -18,7 +18,7 @@ import javafx.util.Pair;
 public class Structure extends WorldObject {
 
 	public enum StructureType {
-		city;
+		city, road;
 	}
 
 	public ArrayList<IsometricTile> tileList;
@@ -53,8 +53,8 @@ public class Structure extends WorldObject {
 	//
 	//
 	// }
-	public Structure(ArrayList<IsometricTile> tileList) {
-
+	public Structure(StructureType type, ArrayList<IsometricTile> tileList) {
+		this.type = type;
 		this.tileList = tileList;
 		for (IsometricTile tile : tileList) {
 			tile.setStructureOnTile(this);
@@ -111,9 +111,7 @@ public class Structure extends WorldObject {
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
-		if(currentlyHovered || currentlyClicked) {
-			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
-		}
+		
 		if (children == null) {
 			return;
 		} else if (children.isEmpty()) {
