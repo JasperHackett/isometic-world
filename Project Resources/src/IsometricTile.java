@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  * 
@@ -16,6 +17,7 @@ public class IsometricTile extends WorldObject{
 	public boolean slave;
 	public Point masterLocation;
 	protected Structure structureOnTile = null;
+	public String roadImage;
 	public enum TILESET{
 		grass,
 		water,
@@ -46,6 +48,7 @@ public class IsometricTile extends WorldObject{
 			this.walkable = false;
 		}
 		this.currentOwner = OWNERSET.none;
+		roadImage = null;
 	}
 	public void setStructureOnTile(Structure structureOnTile) {
 		if(structureOnTile != null) {
@@ -100,6 +103,90 @@ public class IsometricTile extends WorldObject{
 			System.out.println("Clicked a tile of type: " + this.tileset);
 		}
 	}
+	
+	public Boolean hasRoad() {
+		if (roadImage == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void setRoad(Boolean b) {
+		if (b == false) {
+			roadImage = null;
+		} else {
+			roadImage = "road1";
+		}
+	}
+	
+	private void updateRoadImage() {
+		ArrayList<IsometricTile> neighbours = new ArrayList<IsometricTile>();
+		neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x-1, this.isoPos.y)));
+		neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y-1)));
+		neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x+1, this.isoPos.y)));
+		neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y+1)));
+		Boolean roadLeft = false;
+		Boolean roadRight = false;
+		Boolean roadUp = false;
+		Boolean roadDown = false;
+		if (neighbours.get(0).hasRoad()) {
+			roadLeft = true;
+		} 
+		if (neighbours.get(1).hasRoad()) {
+			roadUp = true;
+		}
+		if (neighbours.get(2).hasRoad()) {
+			roadRight = true;
+		} 
+		if (neighbours.get(3).hasRoad()) {
+			roadDown = true;
+		} 
+		// straight vertical road (also default for roads with no neighbours)
+		if ((!roadLeft && !roadRight && !roadUp && !roadDown) || (roadUp && roadDown && !roadLeft && !roadRight) || (!roadLeft && !roadRight && roadUp && !roadDown) || (!roadLeft && !roadRight && !roadUp && roadDown)) {
+			this.roadImage = "road1";
+		} 
+		// straight horizontal road
+		else if ((roadLeft && roadRight && !roadUp && !roadDown) || (!roadLeft && roadRight && !roadUp && !roadDown) || (roadLeft && !roadRight && !roadUp && !roadDown)) {
+			this.roadImage = "road0";
+		}
+		// corner left and up
+		else if (roadLeft && !roadRight && roadUp && !roadDown) {
+			this.roadImage = "road2";
+		}
+		// corner right and down
+		else if (!roadLeft && roadRight && !roadUp && roadDown) {
+			this.roadImage = "road3";
+		} 
+		// corner left and down
+		else if (roadLeft && !roadRight && !roadUp && roadDown) {
+			this.roadImage = "road4";
+		} 
+		// corner right and up
+		else if (!roadLeft && roadRight && roadUp && !roadDown) {
+			this.roadImage = "road5";
+		} 
+		// 3way left, down, right
+		else if (roadLeft && roadRight && !roadUp && roadDown) {
+			this.roadImage = "road6";
+		} 
+		// 3way down, right, up
+		else if (!roadLeft && roadRight && roadUp && roadDown) {
+			this.roadImage = "road7";
+		} 
+		// 3way down, left, up
+		else if (roadLeft && !roadRight && roadUp && roadDown) {
+			this.roadImage = "road8";
+		}
+		// 3way left, up, right
+		else if (roadLeft && roadRight && roadUp && !roadDown) {
+			this.roadImage = "road9";
+		}
+		// 4way
+		else if (roadLeft && roadRight && roadUp && roadDown) {
+			this.roadImage = "road10";
+		}
+	}
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
@@ -108,6 +195,10 @@ public class IsometricTile extends WorldObject{
 		}
 		if (this.currentOwner == OWNERSET.red) {
 			g.drawImage(Game.objectMap.getImage("redOwnedTile"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		}
+		if (hasRoad()) {
+			updateRoadImage();
+			g.drawImage(Game.objectMap.getImage(roadImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 	}
 	

@@ -331,18 +331,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		
 		// sorting mainDisplayStructures
 		ArrayList<City> cities = new ArrayList<City>();
-		ArrayList<Road> roads = new ArrayList<Road>();
 		for (Structure structure : mainDisplayStructures) {
 			if (structure.type == Structure.StructureType.city) {
 				cities.add((City) structure);
-			} else if (structure.type == Structure.StructureType.road) {
-				roads.add((Road) structure);
-			}
+			} 
 		}
 		cities.sort((Comparator<WorldObject>) comp);
-		roads.sort((Comparator<WorldObject>) comp);
 		mainDisplayStructures = new ArrayList<Structure>();
-		mainDisplayStructures.addAll(roads);
 		mainDisplayStructures.addAll(cities);
 		
 

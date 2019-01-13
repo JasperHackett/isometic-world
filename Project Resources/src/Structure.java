@@ -18,7 +18,7 @@ import javafx.util.Pair;
 public class Structure extends WorldObject {
 
 	public enum StructureType {
-		city, road;
+		city;
 	}
 
 	public ArrayList<IsometricTile> tileList;

@@ -206,11 +206,12 @@ public class World {
 						numStructures++;
 						
 					} else if (tileLine[x].equals("R")) {
-						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
-						Road newRoad = new Road(structureTiles);
-						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numStructures));
-						Game.objectMap.addStructure("road" + Integer.toString(numStructures), newRoad, 0);
+//						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
+//						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
+//						Road newRoad = new Road(structureTiles);
+//						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numStructures));
+//						Game.objectMap.addStructure("road" + Integer.toString(numStructures), newRoad, 0);
+						Game.objectMap.getTile(new Point(x,y)).setRoad(true);
 						numStructures++;
 					}
 					
