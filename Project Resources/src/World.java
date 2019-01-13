@@ -410,7 +410,7 @@ public class World {
 				}
 				if(tile.tileset == currentEntry.getValue().tileset) {
 					if(!(tile.structureOnTile == null)) {
-						if (tile.structureOnTile.type == Structure.StructureType.road) {
+						if (tile.hasRoad()) {
 							tileDistance = 5.0;
 						}
 						
