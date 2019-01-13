@@ -47,7 +47,7 @@ public class IsometricTile extends WorldObject{
 		}
 		this.currentOwner = OWNERSET.none;
 	}
-	public void setStructureOnTile(WorldObject structureOnTile) {
+	public void setEntityOnTile(WorldObject structureOnTile) {
 		if(structureOnTile != null) {
 			this.walkable = false;
 		}

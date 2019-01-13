@@ -103,7 +103,7 @@ public class Game {
 
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
-		gameWorld.initialiseStructureMap();
+		gameWorld.initialiseEntityMap();
 
 
 
@@ -169,7 +169,7 @@ public class Game {
 //		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
 //		objectMap.addObject(ObjectType.WORLD,"city", city0);
 //		objectMap.addWorldObject("city0", city0);
-//		objectMap.addStructure("city0",city0,48);
+//		objectMap.addEntity("city0",city0,48);
 
 
 
@@ -188,13 +188,13 @@ public class Game {
 //		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
 //		objectMap.addObject(ObjectType.WORLD,"city", city1);
 //		objectMap.addWorldObject("city1", city1);
-//		objectMap.addStructure("city1",city1,48);
+//		objectMap.addEntity("city1",city1,48);
 
 		//Test unit
 		Unit cube;
 		cube = new Unit(new Point(4,6));
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
-		objectMap.addStructure("placeholder", cube,8);
+		objectMap.addEntity("placeholder", cube,8);
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"cube");
 		cube.setDestination(new Point(41,55));
 		Game.gameWorld.addTickingObject(cube);
@@ -203,7 +203,7 @@ public class Game {
 		Unit cube2;
 		cube2 = new Unit(new Point(20,37));
 		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
-		objectMap.addStructure("placeholder2", cube2,8);
+		objectMap.addEntity("placeholder2", cube2,8);
 		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
 		cube2.setDestination(new Point(41,20));
 		Game.gameWorld.addTickingObject(cube2);
@@ -237,9 +237,9 @@ public class Game {
 //		testArray.add(new Point(16,18));
 //		testArray.add(new Point(16,17));
 
-//		Structure testStructure = new Structure(testArray,new Point(14,19));
+//		Entity testEntity = new Entity(testArray,new Point(14,19));
 		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
-//		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
+//		objectMap.addWorldEntity(Entity.EntityType.city, new Point(14,19), testArray);
 
 		// test code to set a 3x3 area's "ownership" to red
 		// this render a translucent red tile on top of whatever tile is there

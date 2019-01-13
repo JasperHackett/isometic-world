@@ -40,20 +40,20 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	private ArrayList<WorldObject> mainDisplayObjects;
-	private ArrayList<Structure> mainDisplayStructures;
+	private ArrayList<Entity> mainDisplayEntitys;
 	public ArrayList<IsometricTile> mainDisplayTiles;
 	private HashMap<String, WorldObject> worldObjects;
 	private HashMap<String, GameObject> menuObjects;
 	private HashMap<String, GameObject> otherObjects;
 	public HashMap<String, IsometricTile> worldTiles;
-	public HashMap<String, Structure> worldStructures;
+	public HashMap<String, Entity> worldEntitys;
 
 	private HashMap<String, Image> imageMap;
 	private HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
 
 	public ObjectMap() {
 		super();
-		mainDisplayStructures = new ArrayList<Structure>();
+		mainDisplayEntitys = new ArrayList<Entity>();
 		mainDisplayTiles = new ArrayList<IsometricTile>();
 		worldObjects = new HashMap<String, WorldObject>();
 		otherObjects = new HashMap<String, GameObject>();
@@ -61,7 +61,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		imageMap = new HashMap<String, Image>();
 		worldTiles = new HashMap<String, IsometricTile>();
 		tilesPerTileset = new HashMap<IsometricTile.TILESET, Integer>();
-		worldStructures = new HashMap<String, Structure>();
+		worldEntitys = new HashMap<String,Entity>();
 	}
 
 	
@@ -132,14 +132,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		// worldObjects.get(tileName).getWorldPosition());
 	}
 
-	public void addStructure(String structureName, Structure structureIn, int structureOffset) {
+	public void addEntity(String structureName, Entity structureIn, int structureOffset) {
 		structureIn.structureOffset = structureOffset;
 		this.worldObjects.put(structureName, structureIn);
-		this.worldStructures.put(structureName, structureIn);
+		this.worldEntitys.put(structureName, structureIn);
 		this.put(structureName, structureIn);
 	}
 	
-	public void addWorldStructure(Structure.StructureType type, Point masterTile, ArrayList<Point> tileList) {
+	public void addWorldEntity(Entity.EntityType type, Point masterTile, ArrayList<Point> tileList) {
 
 		String imageName = "";
 		Random randomNum = new Random();
@@ -170,13 +170,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		}
 		Dimension dim = new Dimension(upperX - lowerX, upperY - lowerY);
 		String structureName = "";
-		Structure newStructure = null;
+		Entity newEntity = null;
 
 		Point offsetPoint = new Point(lowerX, lowerY);
-		if (type == Structure.StructureType.city) {
+		if (type == Entity.EntityType.city) {
 			imageName = "city" + Integer.toString(rn);
 			offsetPoint.y = offsetPoint.y - 16;
-			// newStructure = new City(tileList, masterTile);
+			// newEntity = new City(tileList, masterTile);
 
 			structureName += "city";
 		}
@@ -184,13 +184,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		// structures
 		while (true) {
 			structureName += Integer.toString(randomNum.nextInt(10));
-			if (this.putIfAbsent(structureName, newStructure) == null) {
+			if (this.putIfAbsent(structureName, newEntity) == null) {
 				break;
 			}
 		}
-		newStructure.setProperties(dim, offsetPoint, imageName);
+		newEntity.setProperties(dim, offsetPoint, imageName);
 
-		worldObjects.put(structureName, newStructure);
+		worldObjects.put(structureName, newEntity);
 	}
 
 	public void addImage(String imgID, String FilePath) {
@@ -263,8 +263,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	}
 
-	public ArrayList<Structure> getMainDisplayStructures() {
-		return mainDisplayStructures;
+	public ArrayList<Entity> getMainDisplayEntitys() {
+		return mainDisplayEntitys;
 
 	}
 
@@ -306,13 +306,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			}
 		}
 
-		mainDisplayStructures = new ArrayList<Structure>();
-		if (worldStructures != null) {
-			for (Map.Entry<String, Structure> mapEntry : worldStructures.entrySet()) {
+		mainDisplayEntitys = new ArrayList<Entity>();
+		if (worldEntitys != null) {
+			for (Map.Entry<String, Entity> mapEntry : worldEntitys.entrySet()) {
 				WorldObject obj = mapEntry.getValue();
 				if (isWithinDisplay(obj.getWorldPosition(),
 						new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
-					mainDisplayStructures.add(mapEntry.getValue());
+					mainDisplayEntitys.add(mapEntry.getValue());
 					mainDisplayObjects.add(mapEntry.getValue());
 				}
 			}
@@ -320,7 +320,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 		YAxisComparator comp = new YAxisComparator();
 		// mainDisplayObjects.sort((Comparator)comp);
-		// mainDisplayStructures.sort((Comparator)comp);
+		// mainDisplayEntitys.sort((Comparator)comp);
 		mainDisplayTiles.sort((Comparator) comp);
 
 		Game.mainGameRenderer.semaphore.release();

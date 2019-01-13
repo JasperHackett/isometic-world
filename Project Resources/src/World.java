@@ -63,7 +63,7 @@ public class World {
 		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
 
-		initialiseStructures();
+		initialiseEntitys();
 		initialiseHUD();
 
 	}
@@ -165,14 +165,14 @@ public class World {
 		return (new Dimension(tileCount/j,j));	
 	}
 	
-	public void initialiseStructureMap() {
+	public void initialiseEntityMap() {
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader("structuremap.csv"));
 			String line = "";
 			String delim = ",";
 			int y = 0;
-			int numStructures = 0;
+			int numEntitys = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
 				for (int x = 0; x < tileLine.length; x++) {
@@ -190,11 +190,11 @@ public class World {
 						structureTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
 						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
 						City newCity = new City(structureTiles, "Generic Name Here");
-						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city" + Integer.toString(numStructures));
-						Game.objectMap.addObject(ObjectType.WORLD, "city" + Integer.toString(numStructures), newCity);
-						Game.objectMap.addWorldObject("city" + Integer.toString(numStructures), newCity);
-						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
-						numStructures++;
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city" + Integer.toString(numEntitys));
+						Game.objectMap.addObject(ObjectType.WORLD, "city" + Integer.toString(numEntitys), newCity);
+						Game.objectMap.addWorldObject("city" + Integer.toString(numEntitys), newCity);
+						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
+						numEntitys++;
 					}
 				}
 				y++;
@@ -214,15 +214,15 @@ public class World {
 		Game.objectMap.getTile(isoPos).changeTileset(type);
 	}
 	
-	public void initialiseStructures() {
+	public void initialiseEntitys() {
 //		while(!structureList.isEmpty()) {
 //			Pair<String,Point> structure = structureList.poll();
 //			if(structure.getKey().equals("c1")) {
-//				Structure newStructure = new Structure(structure.getValue(),worldToIsoTable.get(structure.getValue()));
+//				Entity newEntity = new Entity(structure.getValue(),worldToIsoTable.get(structure.getValue()));
 //
-//				newStructure.setProperties(new Dimension(64,32),new Point(0,0),"citytile1", true);
-//				newStructure.dim = new Dimension(64,32);
-////				Game.objectMap.WorldObjects().put("c1", newStructure);
+//				newEntity.setProperties(new Dimension(64,32),new Point(0,0),"citytile1", true);
+//				newEntity.dim = new Dimension(64,32);
+////				Game.objectMap.WorldObjects().put("c1", newEntity);
 //			}
 //			
 //		}
@@ -243,7 +243,7 @@ public class World {
 		for(WorldObject obj : Game.objectMap.getMainDisplayTiles()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
-		for(Structure obj : Game.objectMap.getMainDisplayStructures()) {
+		for(Entity obj : Game.objectMap.getMainDisplayEntitys()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
 		

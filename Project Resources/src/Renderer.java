@@ -101,7 +101,7 @@ public class Renderer implements Runnable {
 
 			}
 
-			for (Structure obj : Game.objectMap.getMainDisplayStructures()) {
+			for (Entity obj : Game.objectMap.getMainDisplayEntitys()) {
 				if (obj != null) {
 					obj.render(graphics);
 				}
