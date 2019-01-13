@@ -107,16 +107,16 @@ public class Renderer implements Runnable {
 				}
 
 			}
-
-		} else if (Game.currentState == Game.STATE.Menu) {
-			for (Map.Entry<String, GameObject> obj : Game.objectMap.getMenuObjects().entrySet()) {
+			for (Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
 				obj.getValue().render(graphics);
+			}
+		} else if (Game.currentState == Game.STATE.Menu) {
+			for (GameObject obj : Game.objectMap.getMenuObjects()) {
+				obj.render(graphics);
 			}
 		}
 
-		for (Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
-			obj.getValue().render(graphics);
-		}
+		
 
 		Game.mainHUD.renderHUD(graphics);
         graphics.dispose();

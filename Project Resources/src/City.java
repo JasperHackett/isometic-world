@@ -21,7 +21,7 @@ public class City extends Structure {
 	public final Font cityFont = new Font("Callibri", Font.BOLD, 15);
 
 	public City(ArrayList<IsometricTile> tileList, String name) {
-		super(tileList);
+		super(StructureType.city, tileList);
 
 		this.worldDims = new Dimension(128,64);
 		this.dim = new Dimension(192,96);
@@ -37,12 +37,9 @@ public class City extends Structure {
 		this.addChild((GameObject)cityName, offset);
 	}
 
-
-
-
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		super.render(g);
 		if(currentlyHovered || currentlyClicked) {
 			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		}

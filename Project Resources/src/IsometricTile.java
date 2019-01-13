@@ -3,19 +3,19 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 /**
- * 
+ *
  */
 
 /**
  * @author Jasper
- * 
+ *
  */
 public class IsometricTile extends WorldObject{
 	public Point isoPos;
 	public boolean walkable;
 	public boolean slave;
 	public Point masterLocation;
-	protected WorldObject structureOnTile = null;
+	protected Structure structureOnTile = null;
 	public enum TILESET{
 		grass,
 		water,
@@ -52,13 +52,13 @@ public class IsometricTile extends WorldObject{
 			this.walkable = false;
 		}
 		this.structureOnTile = structureOnTile;
-		
+
 	}
 
 	public Point getIsoPoint() {
 		return this.isoPos;
 	}
-	
+
 	public void changeTileset(TILESET tilesetIn) {
 		this.tileset = tilesetIn;
 		if(tilesetIn == TILESET.water) {
@@ -71,15 +71,15 @@ public class IsometricTile extends WorldObject{
 			this.objectImage = "treestile0";
 		}
 	}
-	
+
 	public void setOwner(OWNERSET newOwner) {
 		currentOwner = newOwner;
 	}
- 	
+
 	public boolean isWalkable() {
 		return walkable;
 	}
-	
+
 	@Override
 	public void hoverAction() {
 //		System.out.println("tile hovered at:" + this.isoPos);
@@ -90,7 +90,7 @@ public class IsometricTile extends WorldObject{
 			this.currentlyHovered = true;
 		}
 	}
-	
+
 	@Override
 	public void clickAction() {
 		if(structureOnTile != null) {
@@ -110,7 +110,7 @@ public class IsometricTile extends WorldObject{
 			g.drawImage(Game.objectMap.getImage("redOwnedTile"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 	}
-	
+
 	@Override
 	public void disableHover(){
 		this.currentlyHovered = false;

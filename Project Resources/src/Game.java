@@ -2,7 +2,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
@@ -28,12 +30,14 @@ public class Game {
 	public static int height;
 	public static int worldWidth;
 	public static int worldHeight;
+	public static Menu gameMenu;
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
 	public static HUD mainHUD = new HUD();
 	public static ObjectMap objectMap;
 	public static World gameWorld;
+	public static ArrayList<String> nameList;
 	public static SettingsHandler settingsControl;
 	public static final int xOffset = 3;
 	public static final int yOffset = 26;
@@ -72,21 +76,20 @@ public class Game {
 		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
 		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
 		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
-		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 1);
+		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 3);
 		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
-
-		gameWorld = new World();
-		gameWorld.initialiseTileMap();
-
+		objectMap.addImage("menuButton1", "assets/menuButton1.png");
+		objectMap.addImage("menuBackground", "assets/menuBackground.png");
+		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
 		window.setMinimumSize(dim);
@@ -104,8 +107,8 @@ public class Game {
 		gameWorld = new World();
 		gameWorld.initialiseTileMap();
 		gameWorld.initialiseEntityMap();
-
-
+		gameMenu = new Menu();
+		nameList = gameWorld.populateNameList();
 
 
 
@@ -122,12 +125,6 @@ public class Game {
 //		GameObject uibackground = new GameObject(ObjectType.DEFAULT);
 //		objectMap.addObject(ObjectType.DEFAULT,  "uibackground", uibackground);
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
-
-
-		//Menu button
-		GameObject menuButton = new GameObject(ObjectType.MAINMENU);
-		objectMap.addObject(ObjectType.MAINMENU, "menubutton", menuButton);
-		objectMap.getObject("menubutton").setProperties(new Dimension(146,75), new Point(150,600), "click",true,"mainmenustart");
 
 		//Mouse data text objects
 		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
