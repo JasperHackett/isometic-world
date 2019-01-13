@@ -111,7 +111,7 @@ public class Renderer implements Runnable {
 				obj.getValue().render(graphics);
 			}
 		} else if (Game.currentState == Game.STATE.Menu) {
-			for (GameObject obj : Game.objectMap.getMenuObjects()) {
+			for (GameObject obj : Game.objectMap.getMenuObjects().values()) {
 				obj.render(graphics);
 			}
 		}

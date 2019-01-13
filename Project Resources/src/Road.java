@@ -10,14 +10,14 @@ import java.util.ArrayList;
  * @author Orly
  *
  */
-public class Road extends Structure {
+public class Road extends Entity {
 	
 	public IsometricTile tile;
 	/**
 	 * @param tileList
 	 */
 	public Road(ArrayList<IsometricTile> tileList) {
-		super(StructureType.road, tileList);
+		super(tileList);
 		this.tile = tileList.get(0);
 		tile.walkable = true;
 	}
@@ -32,17 +32,17 @@ public class Road extends Structure {
 		Boolean roadRight = false;
 		Boolean roadUp = false;
 		Boolean roadDown = false;
-		if (!(neighbours.get(0).structureOnTile == null)) {
-			roadLeft = neighbours.get(0).structureOnTile.type == StructureType.road;
+		if (!(neighbours.get(0).entityOnTile == null)) {
+			roadLeft = neighbours.get(0).entityOnTile.type == EntityType.road;
 		} 
-		if (!(neighbours.get(1).structureOnTile == null)) {
-			roadUp = neighbours.get(1).structureOnTile.type == StructureType.road;
+		if (!(neighbours.get(1).entityOnTile == null)) {
+			roadUp = neighbours.get(1).entityOnTile.type == EntityType.road;
 		}
-		if (!(neighbours.get(2).structureOnTile == null)) {
-			roadRight = neighbours.get(2).structureOnTile.type == StructureType.road;
+		if (!(neighbours.get(2).entityOnTile == null)) {
+			roadRight = neighbours.get(2).entityOnTile.type == EntityType.road;
 		} 
-		if (!(neighbours.get(3).structureOnTile == null)) {
-			roadDown = neighbours.get(3).structureOnTile.type == StructureType.road;
+		if (!(neighbours.get(3).entityOnTile == null)) {
+			roadDown = neighbours.get(3).entityOnTile.type == EntityType.road;
 		} 
 		// straight vertical road (also default for roads with no neighbours)
 		if ((!roadLeft && !roadRight && !roadUp && !roadDown) || (roadUp && roadDown && !roadLeft && !roadRight) || (!roadLeft && !roadRight && roadUp && !roadDown) || (!roadLeft && !roadRight && !roadUp && roadDown)) {

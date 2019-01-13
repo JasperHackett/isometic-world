@@ -92,7 +92,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //				+ "IsoGridPos: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
 		
 		if(Game.currentState == Game.STATE.Menu) {
-			for(GameObject obj : Game.objectMap.getMenuObjects()) {
+			for(GameObject obj : Game.objectMap.getMenuObjects().values()) {
 				if(obj.isClickable()){
 					if(checkContains(obj.getPosition(),e.getPoint())) {
 						if(obj.clickTag == "newGameButton") {

@@ -45,14 +45,14 @@ public class World {
 	public ArrayList<WorldObject> tickingObjects;
 
 	Pair<Dimension,Point> isometricPlane;
-	public Queue<Pair<String,Point>> structureList;
+	public Queue<Pair<String,Point>> entityList;
 //	public Map<String,Image> imageAssetMap;
 	public HashMap<Point,Point> worldToIsoTable;
 
 
 	public World()  {
 		worldToIsoTable = new HashMap<Point,Point>();
-		structureList = new PriorityQueue<Pair<String,Point>>();
+		entityList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
 
 		tickingObjects = new ArrayList<WorldObject>();
@@ -130,7 +130,7 @@ public class World {
 					}else if(tileLine[i].compareTo("r") == 0){
 						tileType = IsometricTile.TILESET.road;
 					}else if (tileLine[i] != null) {
-//						structureList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
+//						entityList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
 					}
 
 
@@ -186,42 +186,43 @@ public class World {
 	public void initialiseEntityMap() {
 		Random rn = new Random();
 		BufferedReader br;
+
 		try {
-			br = new BufferedReader(new FileReader("structuremap.csv"));
+			int numEntitys = 0;
+			br = new BufferedReader(new FileReader("entitymap.csv"));
 			String line = "";
 			String delim = ",";
 			int y = 0;
-			int numEntitys = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
 				for (int x = 0; x < tileLine.length; x++) {
 					if (tileLine[x].equals("")) {
 						continue;
 					} else if (tileLine[x].equals("C")) {
-						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
 
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
-						City newCity = new City(structureTiles, name);
-						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numStructures));
-						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
-						numStructures++;
+						City newCity = new City(entityTiles, name);
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
+						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
+						numEntitys++;
 
 					} else if (tileLine[x].equals("R")) {
-						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
-						Road newRoad = new Road(structureTiles);
-						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numStructures));
-						Game.objectMap.addStructure("road" + Integer.toString(numStructures), newRoad, 0);
-						numStructures++;
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						Road newRoad = new Road(entityTiles);
+						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numEntitys));
+						Game.objectMap.addEntity("road" + Integer.toString(numEntitys), newRoad, 0);
+						numEntitys++;
 					}
 
 				}
@@ -243,10 +244,10 @@ public class World {
 	}
 
 	public void initialiseEntitys() {
-//		while(!structureList.isEmpty()) {
-//			Pair<String,Point> structure = structureList.poll();
-//			if(structure.getKey().equals("c1")) {
-//				Entity newEntity = new Entity(structure.getValue(),worldToIsoTable.get(structure.getValue()));
+//		while(!entityList.isEmpty()) {
+//			Pair<String,Point> entity = entityList.poll();
+//			if(entity.getKey().equals("c1")) {
+//				Entity newEntity = new Entity(entity.getValue(),worldToIsoTable.get(entity.getValue()));
 //
 //				newEntity.setProperties(new Dimension(64,32),new Point(0,0),"citytile1", true);
 //				newEntity.dim = new Dimension(64,32);
@@ -418,8 +419,8 @@ public class World {
 					System.out.println("NULL TILE");
 				}
 				if(tile.tileset == currentEntry.getValue().tileset) {
-					if(!(tile.structureOnTile == null)) {
-						if (tile.structureOnTile.type == Structure.StructureType.road) {
+					if(!(tile.entityOnTile == null)) {
+						if (tile.entityOnTile.type == Entity.EntityType.road) {
 							tileDistance = 5.0;
 						}
 

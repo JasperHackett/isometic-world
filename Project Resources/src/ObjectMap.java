@@ -25,8 +25,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	 * Sorts via Y axis
 	 *
 	 */
-	private class YAxisComparator implements Comparator<WorldObject> {
-		public int compare(WorldObject o1, WorldObject o2) {
+	private class YAxisComparator implements Comparator<IsometricTile> {
+		public int compare(IsometricTile o1, IsometricTile o2) {
 			int y1 = (int) o1.getPosition().getValue().getY();
 			int y2 = (int) o2.getPosition().getValue().getY();
 			if (y1 == y2) {
@@ -49,7 +49,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public HashMap<String, Entity> worldEntitys;
 
 	private HashMap<String, Image> imageMap;
-	public HashMap<String, Integer> tilesPerTileset;
+	private HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
 
 	public ObjectMap() {
 		super();
@@ -64,7 +64,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		worldEntitys = new HashMap<String,Entity>();
 	}
 
-
+	
 	public void addObject(ObjectType type, String s, GameObject obj) {
 
 		this.put(s, obj);
@@ -75,6 +75,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		case DEFAULT:
 			otherObjects.put(s, obj);
 			break;
+		case CHILD:
 		default:
 			break;
 		}
@@ -137,7 +138,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		this.worldEntitys.put(structureName, structureIn);
 		this.put(structureName, structureIn);
 	}
-
+	
 	public void addWorldEntity(Entity.EntityType type, Point masterTile, ArrayList<Point> tileList) {
 
 		String imageName = "";
@@ -195,11 +196,18 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public void addImage(String imgID, String FilePath) {
 		Image newImage = new ImageIcon(FilePath).getImage();
 		imageMap.put(imgID, newImage);
-		System.out.println(imgID + " added to imageMap");
 	}
 
 	public void addTileImage(String imgID, String FilePath, Dimension tileDims, int tileCount) {
-		tilesPerTileset.put(imgID, tileCount);
+		if (imgID == "grasstile") {
+			tilesPerTileset.put(IsometricTile.TILESET.grass, tileCount);
+		} else if (imgID == "watertile") {
+			tilesPerTileset.put(IsometricTile.TILESET.water, tileCount);
+		} else if (imgID == "treetile") {
+			tilesPerTileset.put(IsometricTile.TILESET.trees, tileCount);
+		} else if (imgID == "citytile") {
+			tilesPerTileset.put(IsometricTile.TILESET.city, tileCount);
+		}
 		String imgName;
 		BufferedImage tilesheet = null;
 		try {
@@ -207,7 +215,6 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		Image newImage = null;
 		for (int i = 0; i < tileCount; i++) {
 			newImage = tilesheet.getSubimage(tileDims.width * i, 0, tileDims.width, tileDims.height);
@@ -270,24 +277,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return otherObjects;
 	}
 
-	public ArrayList<GameObject> getMenuObjects() {
-
-		ArrayList<GameObject> orderedList = new ArrayList<GameObject>();
-		// the following is the rendering order priority
-		// if any new menu objects are added, they must also be manually added here
-		orderedList.add(menuObjects.get("menuBackground"));
-		orderedList.add(menuObjects.get("newGameButton"));
-		orderedList.add(menuObjects.get("loadGameButton"));
-		orderedList.add(menuObjects.get("optionsButton"));
-		orderedList.add(menuObjects.get("quitButton"));
-		orderedList.add(menuObjects.get("newGameText"));
-		orderedList.add(menuObjects.get("loadGameText"));
-		orderedList.add(menuObjects.get("optionsText"));
-		orderedList.add(menuObjects.get("quitText"));
-
-		return orderedList;
+	public Map<String, GameObject> getMenuObjects() {
+		return menuObjects;
 	}
-
 
 	public Map<String, WorldObject> WorldObjects() {
 		return worldObjects;
@@ -327,24 +319,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		}
 
 		YAxisComparator comp = new YAxisComparator();
-		mainDisplayTiles.sort((Comparator<WorldObject>) comp);
-
-		// sorting mainDisplayStructures
-		ArrayList<City> cities = new ArrayList<City>();
-		ArrayList<Road> roads = new ArrayList<Road>();
-		for (Structure structure : mainDisplayStructures) {
-			if (structure.type == Structure.StructureType.city) {
-				cities.add((City) structure);
-			} else if (structure.type == Structure.StructureType.road) {
-				roads.add((Road) structure);
-			}
-		}
-		cities.sort((Comparator<WorldObject>) comp);
-		roads.sort((Comparator<WorldObject>) comp);
-		mainDisplayStructures = new ArrayList<Structure>();
-		mainDisplayStructures.addAll(roads);
-		mainDisplayStructures.addAll(cities);
-
+		// mainDisplayObjects.sort((Comparator)comp);
+		// mainDisplayEntitys.sort((Comparator)comp);
+		mainDisplayTiles.sort((Comparator) comp);
 
 		Game.mainGameRenderer.semaphore.release();
 

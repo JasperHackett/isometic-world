@@ -16,7 +16,8 @@ import javafx.util.Pair;
 public class Entity extends WorldObject{
 
 	public enum EntityType {
-		city;
+		city,
+		road;
 	}
 
 	public ArrayList<IsometricTile> tileList;

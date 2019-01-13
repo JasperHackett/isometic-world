@@ -105,10 +105,11 @@ public class Game {
 
 
 		gameWorld = new World();
+		nameList = gameWorld.populateNameList();
 		gameWorld.initialiseTileMap();
 		gameWorld.initialiseEntityMap();
 		gameMenu = new Menu();
-		nameList = gameWorld.populateNameList();
+
 
 
 

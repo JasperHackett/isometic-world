@@ -21,7 +21,7 @@ public class City extends Structure {
 	public final Font cityFont = new Font("Callibri", Font.BOLD, 15);
 
 	public City(ArrayList<IsometricTile> tileList, String name) {
-		super(StructureType.city, tileList);
+		super(tileList);
 
 		this.worldDims = new Dimension(128,64);
 		this.dim = new Dimension(192,96);
