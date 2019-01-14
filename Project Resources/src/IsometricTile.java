@@ -16,7 +16,7 @@ public class IsometricTile extends WorldObject{
 	public boolean walkable;
 	public boolean slave;
 	public Point masterLocation;
-	protected Structure structureOnTile = null;
+	protected Entity entityOnTile = null;
 	public String roadImage;
 	public enum TILESET{
 		grass,
@@ -50,11 +50,11 @@ public class IsometricTile extends WorldObject{
 		this.currentOwner = OWNERSET.none;
 		roadImage = null;
 	}
-	public void setStructureOnTile(Structure structureOnTile) {
-		if(structureOnTile != null) {
+	public void setEntityOnTile(Entity entityOnTile) {
+		if(entityOnTile != null) {
 			this.walkable = false;
 		}
-		this.structureOnTile = structureOnTile;
+		this.entityOnTile = entityOnTile;
 		
 	}
 
@@ -87,8 +87,8 @@ public class IsometricTile extends WorldObject{
 	public void hoverAction() {
 //		System.out.println("tile hovered at:" + this.isoPos);
 
-		if(structureOnTile != null) {
-			structureOnTile.hoverAction();
+		if(entityOnTile != null) {
+			entityOnTile.hoverAction();
 		}else {
 			this.currentlyHovered = true;
 		}
@@ -96,9 +96,9 @@ public class IsometricTile extends WorldObject{
 	
 	@Override
 	public void clickAction() {
-		if(structureOnTile != null) {
-			System.out.println("Clicked a structure containing tile");
-			structureOnTile.clickAction();
+		if(entityOnTile != null) {
+			System.out.println("Clicked a entity containing tile");
+			entityOnTile.clickAction();
 		}else {
 			System.out.println("Clicked a tile of type: " + this.tileset);
 		}
@@ -190,7 +190,7 @@ public class IsometricTile extends WorldObject{
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
-		if(currentlyHovered && structureOnTile == null) {
+		if(currentlyHovered && entityOnTile == null) {
 			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 		if (this.currentOwner == OWNERSET.red) {
@@ -205,16 +205,16 @@ public class IsometricTile extends WorldObject{
 	@Override
 	public void disableHover(){
 		this.currentlyHovered = false;
-		if(structureOnTile != null) {
-			structureOnTile.disableHover();
+		if(entityOnTile != null) {
+			entityOnTile.disableHover();
 		}
 	}
 	@Override
 	public void disableClick(){
 		System.out.println("Disabled click");
 		this.currentlyClicked = false;
-		if(structureOnTile != null) {
-			structureOnTile.disableClick();
+		if(entityOnTile != null) {
+			entityOnTile.disableClick();
 		}
 	}
 

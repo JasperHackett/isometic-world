@@ -24,13 +24,13 @@ import javafx.util.Pair;
  */
 public class World {
 
-
+	
 	//WORLD CONSTANTS
 	public static int tileWidth = 64;
 	public static int tileHeight = 32;
 	public Double tileDistance = 10.0; // Distance to traverse between two tiles
-
-
+	
+	
 	// panelDims = dimensions of the main display (the portion of the world currently being rendered)
 	// panelPoint = true location of the top left corner of the main display - (100, 100) relative to the ContentPane
 	// worldDims = dimensions of the entire world, including parts not currently being rendered
@@ -43,7 +43,7 @@ public class World {
 	public Dimension isoDims;
 	public int tileCount = 0;
 	public ArrayList<WorldObject> tickingObjects;
-
+	
 	Pair<Dimension,Point> isometricPlane;
 	public Queue<Pair<String,Point>> entityList;
 //	public Map<String,Image> imageAssetMap;
@@ -54,22 +54,19 @@ public class World {
 		worldToIsoTable = new HashMap<Point,Point>();
 		entityList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
-
+		
 		tickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
 		panelDims = new Dimension(Game.width-200,Game.height-64);
 		panelPoint = new Point(0,34);
 		worldPoint = new Point(600,600);
-
-
-
+		
+		
+		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
-
 		initialiseEntitys();
-		initialiseHUD();
-
 	}
-
+	
 	//Called every at every increment of time in the game
 	void tick() {
 		if(!tickingObjects.isEmpty()) {
@@ -87,36 +84,29 @@ public class World {
 	public boolean newTileObject() {
 		return false;
 	}
-
-	public void initialiseHUD() {
-
-
-
-
-
-	}
+	
 
 	public Dimension initialiseTileMap() {
-
+		
 		Point nextTileWorldCoords = new Point(400,400);
 //		System.out.println(nextTileWorldCoords.x);
 		BufferedReader br = null;
 		String line = "";
 		String delim = ",";
-
+		
 		// renderConstant and tileY (960) use the magic value to position the isometric plane
 		int renderConstant = 960;
 		int tileX = renderConstant;
 		int tileY = -960;
-
+		
 		int j = 0; //Used for calculating isoDims
-
+		
 		// Iterates through a .csv file and checks each field for a string that matches a known tile type.
 		try {
 			br = new BufferedReader(new FileReader("tilemap.csv"));
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
-
+				
 				IsometricTile.TILESET tileType = null;
 				for(int i = 0; i < tileLine.length; i++) {
 
@@ -132,12 +122,12 @@ public class World {
 					}else if (tileLine[i] != null) {
 //						entityList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
 					}
-
-
+					
+					
 					if(tileType != null) {
 						nextTileWorldCoords = new Point(tileX, tileY);
 						Game.objectMap.addWorldTile(nextTileWorldCoords,tileType,new Point(i,j));
-
+						
 //						System.out.println(nextTileWorldCoords);
 						tileCount ++;
 
@@ -151,22 +141,22 @@ public class World {
 
 				j++;
 			}
-
+			
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 //		this.updateDisplay();
+		
+		
+		
 
-
-
-
-
-
-		return (new Dimension(tileCount/j,j));
+		
+		
+		return (new Dimension(tileCount/j,j));	
 	}
-
+	
 	public ArrayList<String> populateNameList() {
 		ArrayList<String> nameList = new ArrayList<String>();
 		BufferedReader br;
@@ -176,23 +166,22 @@ public class World {
 			while((line = br.readLine()) != null) {
 				nameList.add(line);
 			}
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return nameList;
 	}
-
+	
 	public void initialiseEntityMap() {
 		Random rn = new Random();
 		BufferedReader br;
-
 		try {
-			int numEntitys = 0;
 			br = new BufferedReader(new FileReader("entitymap.csv"));
 			String line = "";
 			String delim = ",";
 			int y = 0;
+			int numEntitys = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
 				for (int x = 0; x < tileLine.length; x++) {
@@ -209,40 +198,41 @@ public class World {
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
-
+						
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
 						City newCity = new City(entityTiles, name);
 						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
 						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
 						numEntitys++;
-
+						
 					} else if (tileLine[x].equals("R")) {
-						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
-						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
-						Road newRoad = new Road(entityTiles);
-						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numEntitys));
-						Game.objectMap.addEntity("road" + Integer.toString(numEntitys), newRoad, 0);
+//						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+//						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+//						Road newRoad = new Road(entityTiles);
+//						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numEntitys));
+//						Game.objectMap.addEntity("road" + Integer.toString(numEntitys), newRoad, 0);
+						Game.objectMap.getTile(new Point(x,y)).setRoad(true);
 						numEntitys++;
 					}
-
+					
 				}
 				y++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
+		
+		
 	}
-
+	
 	public void addTickingObject(WorldObject tickingObj) {
 		this.tickingObjects.add(tickingObj);
 	}
-
+	
 	public void setTile(Point isoPos,IsometricTile.TILESET type) {
 		Game.objectMap.getTile(isoPos).changeTileset(type);
 	}
-
+	
 	public void initialiseEntitys() {
 //		while(!entityList.isEmpty()) {
 //			Pair<String,Point> entity = entityList.poll();
@@ -253,7 +243,7 @@ public class World {
 //				newEntity.dim = new Dimension(64,32);
 ////				Game.objectMap.WorldObjects().put("c1", newEntity);
 //			}
-//
+//			
 //		}
 	}
 
@@ -275,7 +265,7 @@ public class World {
 		for(Entity obj : Game.objectMap.getMainDisplayEntitys()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
-
+		
 //		Game.mainGameRenderer.semaphore.release();
 
 	}
@@ -332,7 +322,7 @@ public class World {
 
 	}
 
-
+	
 	//Checks for all walkable neighbours of an isometrictile
 	// returns an ArrayList in the following order: Left,Up,Right,Down
 	public ArrayList<IsometricTile> getNeighbours(IsometricTile centreTile){
@@ -370,12 +360,12 @@ public class World {
 //		}
 //		System.out.println(returnList.size());
 		return returnList;
-
+		
 	}
 
 
 	private class PathQueueComparator implements Comparator<Pair<Double,IsometricTile>> {
-
+			
 		public int compare(Pair<Double,IsometricTile> o1, Pair<Double,IsometricTile> o2) {
 			Double d1 = o1.getKey();
 			Double d2 = o2.getKey();
@@ -387,31 +377,31 @@ public class World {
 			}
 		}
 	}
-
-
-
+	
+	
+	
 	public ArrayList<Point> getPathBetween(Point tilePosStart, Point tilePosEnd){
 		ArrayList<Point> returnList = new ArrayList<Point>();
 		if(tileCount == 0) {
 			System.out.println("Empty tile list");
 			return returnList;
 		}
-
+		
 		//Stores each tile that has been discovered with the shortest distance to reach it and the point of the tile that path comes from
 		Map<IsometricTile,Pair<Double,Point>> distanceMap = new HashMap<IsometricTile,Pair<Double,Point>>();
 		//Queue of tiles for processing sorted by a heuristic double
 		Queue<Pair<Double,IsometricTile>> queuedTiles  = new PriorityQueue<Pair<Double,IsometricTile>>(new PathQueueComparator());
-
-
+		
+		
 		//Add initial tile to queue and distance map
 		queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
 		distanceMap.put(Game.objectMap.getTile(tilePosStart), new Pair<Double,Point>(0.0,tilePosStart));
-
-
+		
+		
 		while(!queuedTiles.isEmpty()) {
 
 			Pair<Double,IsometricTile> currentEntry = queuedTiles.poll();
-
+			
 			//Iterate through walkable neighbours of currentEntry
 			for(IsometricTile tile : getNeighbours(currentEntry.getValue())) {
 				tileDistance = 10.0;
@@ -420,14 +410,14 @@ public class World {
 				}
 				if(tile.tileset == currentEntry.getValue().tileset) {
 					if(!(tile.entityOnTile == null)) {
-						if (tile.entityOnTile.type == Entity.EntityType.road) {
+						if (tile.hasRoad()) {
 							tileDistance = 5.0;
 						}
-
+						
 					}
 				}
 
-
+				
 				//Check if tile has been visited before
 				if(distanceMap.containsKey(tile)) {
 					//Check if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
@@ -443,7 +433,7 @@ public class World {
 							(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
 							,tile));
 				}
-
+				
 				if(tile.isoPos.equals(tilePosEnd)) {
 					System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
 					Point routePoint = tilePosEnd;
@@ -453,20 +443,20 @@ public class World {
 					}
 					return returnList;
 				}
-
-
+				
+	
 			}
-
-
+			
+			
 		}
-
-
-
-
-
+		
+		
+		
+		
+		
 		System.out.println("No path found");
 		return returnList;
 	}
-
+	
 
 }
