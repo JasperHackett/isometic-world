@@ -111,8 +111,6 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			tileName = "grasstile" + Integer.toString(rn);
 		} else if (tileset == IsometricTile.TILESET.water) {
 			tileName = "watertile" + Integer.toString(rn);
-		} else if (tileset == IsometricTile.TILESET.road) {
-			tileName = "roadtile";
 		} else if (tileset == IsometricTile.TILESET.trees) {
 			tileName = "treetile" + Integer.toString(rn);
 			dim = new Dimension(64, 40);
@@ -220,6 +218,12 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public Image getImage(String imgID) {
 		return this.imageMap.get(imgID);
+	}
+	
+	public Boolean tileExists(Point pointIn) {
+		if (this.worldTiles.containsKey(pointIn.x + ":" + pointIn.y)) {
+			return true;
+		} else return false;
 	}
 
 	public IsometricTile getTile(Point pointIn) {

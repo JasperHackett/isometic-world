@@ -81,6 +81,8 @@ public class Game {
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
 		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
+		objectMap.addTileImage("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
+		objectMap.addTileImage("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
 		
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
@@ -218,36 +220,23 @@ public class Game {
 		mainGameRenderer.start();
 
 
-
-//		System.out.println(mainGameRenderer.toIsometric(new Point(650,100)));
-//		System.out.println(mainGameRenderer.toGrid(new Point(1900,0)));
-//		System.out.println("IsoDims: " +gameWorld.isoDims);
-//		System.out.println("WorldDims: " +gameWorld.worldDims);
-
-
-//		Font testFont = new Font("Arial",11,11);
-//		ArrayList<Point> testArray = new ArrayList<Point>();
-//		testArray.add(new Point(14,18));
-//		testArray.add(new Point(14,17));
-//		testArray.add(new Point(15,19));
-//		testArray.add(new Point(15,18));
-//		testArray.add(new Point(15,17));
-//		testArray.add(new Point(16,19));
-//		testArray.add(new Point(16,18));
-//		testArray.add(new Point(16,17));
-
-//		Structure testStructure = new Structure(testArray,new Point(14,19));
-		// THIS CODE MAKES THE GAME UNPLAYABLE SOMEHOW AND ITS 3AM SO IM WORKING IT OUT LATER
-//		objectMap.addWorldStructure(Structure.StructureType.city, new Point(14,19), testArray);
-
-		// test code to set a 3x3 area's "ownership" to red
-		// this render a translucent red tile on top of whatever tile is there
-		for (int x = 38; x < 54; x++) {
-			for (int y = 15; y < 25; y++) {
+		// test code to set an area's "ownership" to red
+		// this renders a border
+		for (int x = 36; x < 54; x++) {
+			for (int y = 15; y < 27; y++) {
 				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
 			}
 		}
-
+		objectMap.getTile(new Point(45,27)).setOwner(IsometricTile.OWNERSET.red);
+		objectMap.getTile(new Point(40,26)).setOwner(IsometricTile.OWNERSET.none);
+		objectMap.getTile(new Point(35,20)).setOwner(IsometricTile.OWNERSET.red);
+		objectMap.getTile(new Point(36,24)).setOwner(IsometricTile.OWNERSET.none);
+		objectMap.getTile(new Point(45,14)).setOwner(IsometricTile.OWNERSET.red);
+		objectMap.getTile(new Point(40,15)).setOwner(IsometricTile.OWNERSET.none);
+		objectMap.getTile(new Point(54,20)).setOwner(IsometricTile.OWNERSET.red);
+		objectMap.getTile(new Point(53,24)).setOwner(IsometricTile.OWNERSET.none);
+		
+		
 		while(true) {
 			try {
 				Thread.sleep(0);
