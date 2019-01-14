@@ -77,6 +77,23 @@ public class IsometricTile extends WorldObject{
 	
 	public void setOwner(OWNERSET newOwner) {
 		currentOwner = newOwner;
+		if (newOwner == OWNERSET.none) {
+			borderImage = null;
+		}
+		ArrayList<IsometricTile> neighbours = new ArrayList<IsometricTile>();
+		if (Game.objectMap.tileExists(new Point(this.isoPos.x-1, this.isoPos.y))) {neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x-1, this.isoPos.y)));} else {neighbours.add(null);}
+		if (Game.objectMap.tileExists(new Point(this.isoPos.x, this.isoPos.y-1))) {neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y-1)));} else {neighbours.add(null);}
+		if (Game.objectMap.tileExists(new Point(this.isoPos.x+1, this.isoPos.y))) {neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x+1, this.isoPos.y)));} else {neighbours.add(null);}
+		if (Game.objectMap.tileExists(new Point(this.isoPos.x, this.isoPos.y+1))) {neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y+1)));} else {neighbours.add(null);}
+		for (int i = 0; i < neighbours.size(); i++) {
+			if (neighbours.get(i) != null) {
+				if (neighbours.get(i).currentOwner != OWNERSET.none) {
+					neighbours.get(i).updateBorderImage();
+				}
+			}
+		}
+		this.updateBorderImage();
+		System.out.println(Integer.toString(this.isoPos.x) + ", " + Integer.toString(this.isoPos.y) + " updated.");
 	}
  	
 	public boolean isWalkable() {
@@ -125,6 +142,18 @@ public class IsometricTile extends WorldObject{
 			roadImage = null;
 		} else {
 			roadImage = "road1";
+			ArrayList<IsometricTile> neighbours = new ArrayList<IsometricTile>();
+			neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x-1, this.isoPos.y)));
+			neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y-1)));
+			neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x+1, this.isoPos.y)));
+			neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y+1)));
+			
+			for (IsometricTile tile : neighbours) {
+				if (tile.hasRoad()) {
+					tile.updateRoadImage();
+				}
+			}
+			this.updateRoadImage();
 		}
 	}
 	
@@ -196,7 +225,7 @@ public class IsometricTile extends WorldObject{
 		}
 	}
 	
-	public void updateBorderImage() {
+	private void updateBorderImage() {
 		ArrayList<IsometricTile> neighbours = new ArrayList<IsometricTile>();
 		if (Game.objectMap.tileExists(new Point(this.isoPos.x-1, this.isoPos.y))) {neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x-1, this.isoPos.y)));} else {neighbours.add(null);}
 		if (Game.objectMap.tileExists(new Point(this.isoPos.x, this.isoPos.y-1))) {neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y-1)));} else {neighbours.add(null);}
@@ -291,11 +320,9 @@ public class IsometricTile extends WorldObject{
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		if (hasRoad()) {
-			updateRoadImage();
 			g.drawImage(Game.objectMap.getImage(roadImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 		if (this.currentOwner != OWNERSET.none) {
-			updateBorderImage();
 			g.drawImage(Game.objectMap.getImage(borderImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 		if(currentlyHovered && structureOnTile == null) {
