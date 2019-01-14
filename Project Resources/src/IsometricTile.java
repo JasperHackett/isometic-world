@@ -100,8 +100,16 @@ public class IsometricTile extends WorldObject{
 			System.out.println("Clicked a structure containing tile");
 			structureOnTile.clickAction();
 		}else {
-			System.out.println("Clicked a tile of type: " + this.tileset);
-		}
+			String toPrint = "Clicked a " + this.tileset + " tile";
+			if (this.hasRoad()) {
+				toPrint += " with a road";
+			}
+			if (this.currentOwner != OWNERSET.none) {
+				toPrint += ". This tile is owned by " + this.currentOwner;
+			}
+			toPrint += ".";
+			System.out.println(toPrint);
+		} 
 	}
 	
 	public Boolean hasRoad() {
@@ -282,17 +290,19 @@ public class IsometricTile extends WorldObject{
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
-		if(currentlyHovered && structureOnTile == null) {
-			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		if (hasRoad()) {
+			updateRoadImage();
+			g.drawImage(Game.objectMap.getImage(roadImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 		if (this.currentOwner != OWNERSET.none) {
 			updateBorderImage();
 			g.drawImage(Game.objectMap.getImage(borderImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
-		if (hasRoad()) {
-			updateRoadImage();
-			g.drawImage(Game.objectMap.getImage(roadImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		if(currentlyHovered && structureOnTile == null) {
+			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
+		
+		
 	}
 	
 	@Override

@@ -220,11 +220,15 @@ public class Game {
 		mainGameRenderer.start();
 
 
-		// test code to set an area's "ownership" to red
-		// this renders a border
+		// testing tile ownership
 		for (int x = 36; x < 54; x++) {
 			for (int y = 15; y < 27; y++) {
 				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
+			}
+		}
+		for (int x = 25; x < 36; x++) {
+			for (int y = 15; y < 27; y++) {
+				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.blue);
 			}
 		}
 		objectMap.getTile(new Point(45,27)).setOwner(IsometricTile.OWNERSET.red);
@@ -235,8 +239,12 @@ public class Game {
 		objectMap.getTile(new Point(40,15)).setOwner(IsometricTile.OWNERSET.none);
 		objectMap.getTile(new Point(54,20)).setOwner(IsometricTile.OWNERSET.red);
 		objectMap.getTile(new Point(53,24)).setOwner(IsometricTile.OWNERSET.none);
+		objectMap.getTile(new Point(36,21)).setOwner(IsometricTile.OWNERSET.blue);
+		objectMap.getTile(new Point(37,21)).setOwner(IsometricTile.OWNERSET.blue);
+		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 		
 		
+		// temporary "tick" loop
 		while(true) {
 			try {
 				Thread.sleep(0);
