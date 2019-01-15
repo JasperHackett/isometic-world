@@ -23,10 +23,12 @@ public class InterfaceController {
 			boolean visible = false;
 			Point elementSpacing;
 			Point nextElementPos;
+			ArrayList<UIContainer> containers;
 			ArrayList<UserInterfaceObject> elements;
 			
 			UIContainer(){
 				elements = new ArrayList<UserInterfaceObject>();
+				containers = new ArrayList<UIContainer>();
 			}
 			
 			public void addObject(UserInterfaceObject newObject){
@@ -70,11 +72,6 @@ public class InterfaceController {
 			}
 			
 		
-
-		
-//			UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame"
-		
-		
 			objectsContainer.addObject(newUIObject);
 		}else {
 			System.out.println("UIContainer does not exist");
@@ -82,7 +79,38 @@ public class InterfaceController {
 		}
 		
 	}
-
+	/**
+	 * @param elementType
+	 * @param containerName
+	 * @param objectKey
+	 * @param clickTag
+	 * @param buttonText
+	 * 
+	 * Used for UI elements that contain text
+	 */
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag, String buttonText) {
+		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+		if(containerMap.containsKey(containerName)) {
+			UIContainer objectsContainer = containerMap.get(containerName);
+			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag);
+				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+			}
+			
+			if(elementType == UserInterfaceObject.UIElementType.SMALLTEXT) {
+				if(newUIObject.elementText == null) {
+					System.out.println("Something is null");
+				}
+			}
+			
+			
+			objectsContainer.addObject(newUIObject);
+		}else {
+			System.out.println("UIContainer does not exist");
+			return;
+		}
+	}
 
 
 	public void enableInterfaceContainer(String containerName) {

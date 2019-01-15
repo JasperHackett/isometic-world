@@ -25,7 +25,7 @@ public class Entity extends WorldObject{
 	public EntityType type;
 	public String isoTileKey;
 	public int structureOffset;
-	protected HashMap<GameObject, Pair<Integer, Integer>> children;
+//	protected HashMap<GameObject, Pair<Integer, Integer>> children;
 
 	
 	public Entity() {
@@ -39,13 +39,13 @@ public class Entity extends WorldObject{
 			tile.setEntityOnTile(this);
 		}
 		this.worldPoint = tileList.get(0).worldPoint;
-		this.children = new HashMap<GameObject, Pair<Integer, Integer>>();
+//		this.children = new HashMap<GameObject, Pair<Integer, Integer>>();
 	}
 
-	public void addChild(GameObject child, Pair<Integer, Integer> positionOffset) {
-		this.children.put(child, positionOffset);
-
-	}
+//	public void addChild(GameObject child, Pair<Integer, Integer> positionOffset) {
+//		this.children.put(child, positionOffset);
+//
+//	}
 
 	@Override
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {

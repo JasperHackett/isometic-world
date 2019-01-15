@@ -19,6 +19,10 @@ public class TextObject extends GameObject {
 	private Color textColour;
 	
 	
+	public TextObject(ObjectType type) {
+		super(type);
+	}
+	
 	public TextObject(ObjectType type, String text) {
 		super(type);
 		this.text = text;

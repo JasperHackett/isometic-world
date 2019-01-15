@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.HashMap;
 
 import javafx.util.Pair;
 
@@ -25,9 +26,11 @@ public class GameObject {
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
+	protected HashMap<GameObject, Pair<Double, Double>> children;
 	
 	public GameObject(ObjectType type) {
 		this.type = type;
+		this.children = new HashMap<GameObject, Pair<Double, Double>>();
 	}
 	
 	public void setProperties(Dimension dimIn, Point posIn, String imageIn) {
@@ -62,6 +65,11 @@ public class GameObject {
 	public void setPosition(Dimension dimIn, Point posIn) {
 		this.coords = posIn;
 		this.dim = dimIn;
+	}
+	
+	public void addChild(GameObject child, Pair<Double, Double> positionOffset) {
+		this.children.put(child, positionOffset);
+
 	}
 	
 	/**

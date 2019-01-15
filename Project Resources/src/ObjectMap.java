@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -49,6 +50,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public HashMap<String, Entity> worldEntitys;
 	public HashMap<String,UserInterfaceObject> uiObjects;
 	public ArrayList<UserInterfaceObject> enabledUIObjects;
+	public HashMap<String,Font> gameFonts;
 
 	private HashMap<String, Image> imageMap;
 	private HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
@@ -66,6 +68,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		worldEntitys = new HashMap<String,Entity>();
 		uiObjects = new HashMap<String,UserInterfaceObject>();
 		enabledUIObjects = new ArrayList<UserInterfaceObject>();
+		gameFonts = new HashMap<String,Font>();
 	}
 
 	
@@ -99,6 +102,15 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		tempPoint.y = (pointIn.x + pointIn.y) / 2;
 
 		return (tempPoint);
+	}
+	
+	public void addFont(String fontKey, String fontName, int fontSize) {
+		Font newFont = new Font(fontName,Font.PLAIN,fontSize);
+		this.gameFonts.put(fontKey, newFont);
+//				Font.p
+	}
+	public Font getFont(String fontKey) {
+		return gameFonts.get(fontKey);
 	}
 
 	public void addWorldTile(Point pointIn, IsometricTile.TILESET tileset, Point tilePos) {

@@ -58,6 +58,7 @@ public class Game {
 		objectMap = new ObjectMap();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
+		
 
 
 		//Loading all image assets
@@ -79,6 +80,7 @@ public class Game {
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
 		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
+		objectMap.addFont("smallbuttonfont", "Calibri",10);
 
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
@@ -95,8 +97,9 @@ public class Game {
 
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
-		Font gameFont = new Font("Arial", Font.PLAIN,11);
-		graphics.setFont(gameFont);
+//		Font gameFont = new Font("Arial", Font.PLAIN,11);
+		objectMap.addFont("primarygamefont", "Arial", 11);
+		graphics.setFont(objectMap.getFont("primarygamefont"));
 
 
 		gameWorld = new World();
@@ -110,7 +113,7 @@ public class Game {
 		
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
 		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALLTEXT,"mainmenu", "newgamebutton","newgame","Start");
 		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit");
 		userInterface.enableInterfaceContainer("mainmenu");
 //		objectMap.put("testbutton", testButton);
@@ -132,15 +135,15 @@ public class Game {
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
 
 		//Mouse data text objects
-		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
 		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
-		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
 		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
 
-		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,gameFont, Color.WHITE);
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
 		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
@@ -260,8 +263,7 @@ public class Game {
 			}
 			if(currentState == Game.STATE.Game) {
 				gameWorld.tick();
-				//test code for ticking a TextObject
-//				globalMousePosText.setText(Integer.toString(testInc));
+
 
 				try {
 					Thread.sleep(600);

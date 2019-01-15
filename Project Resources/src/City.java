@@ -33,7 +33,7 @@ public class City extends Structure {
 		// creating and adding child component for city name
 		TextObject cityName = new TextObject(ObjectType.CHILD, cityFont, Color.WHITE);
 		cityName.setProperties(name, Color.WHITE, new Point(0,0));
-		Pair<Integer, Integer> offset = new Pair<Integer, Integer>(((int)this.dim.getWidth()/2) - (cityName.width/2), -32);
+		Pair<Double,Double> offset = new Pair<Double,Double>((this.dim.getWidth()/2) - (cityName.width/2), -32.0);
 		this.addChild((GameObject)cityName, offset);
 	}
 
@@ -49,9 +49,6 @@ public class City extends Structure {
 	public void clickAction() {
 		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
-//		if(Game.mainHUD == null) {
-//			System.out.println("testtestsetsets");
-//		}
 
 	}
 
