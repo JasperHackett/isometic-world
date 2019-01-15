@@ -221,18 +221,22 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
 			if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
 				tempObj = uiObj;
+				
+				if(tempObj.equals(hoveredObject)) {
+					hoveredObject.setHovered(true);
+				}
+				
 				if(hoveredObject == null) {
 					hoveredObject = tempObj;
 				}
 
-				if(tempObj.equals(hoveredObject)) {
-					hoveredObject.setHovered(true);
-				}
+
 			}
 		}
 		
 		if(tempObj == null && hoveredObject != null) {
 			hoveredObject.setHovered(false);
+			hoveredObject = null;
 		}
 //		GameObject tempObj = null;
 	}
