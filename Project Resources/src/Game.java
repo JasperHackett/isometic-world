@@ -181,7 +181,7 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
 		objectMap.addEntity("placeholder2", cube2,8);
 		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		cube2.setDestination(new Point(41,20));
+		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
 		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
@@ -218,7 +218,13 @@ public class Game {
 		objectMap.getTile(new Point(37,21)).setOwner(IsometricTile.OWNERSET.blue);
 		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 
-
+//
+		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
+		
+		System.out.println(objectMap.getTile(new Point(54,20)).toString());
+		
+		
+		
 		// temporary "tick" loop
 		while(true) {
 			try {

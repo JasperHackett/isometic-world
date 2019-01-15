@@ -58,6 +58,10 @@ public class IsometricTile extends WorldObject{
 		this.entityOnTile = entityOnTile;
 
 	}
+	
+	public Entity getEntityOnTile() {
+		return entityOnTile;
+	}
 
 	public Point getIsoPoint() {
 		return this.isoPos;
