@@ -18,7 +18,7 @@ import javafx.util.Pair;
 public class City extends Structure {
 
 	public String name;
-	public final Font cityFont = new Font("Callibri", Font.BOLD, 15);
+//	public final Font cityFont = new Font("Callibri", Font.BOLD, 15);
 
 	public City(ArrayList<IsometricTile> tileList, String name) {
 		super(tileList);
@@ -31,8 +31,8 @@ public class City extends Structure {
 		this.name = name;
 
 		// creating and adding child component for city name
-		TextObject cityName = new TextObject(ObjectType.CHILD, cityFont, Color.WHITE);
-		cityName.setProperties(name, Color.WHITE, new Point(0,0));
+		TextObject cityName = new TextObject(ObjectType.CHILD);
+		cityName.setTextProperties(name,Game.objectMap.getFont("primarygamefont"), Color.WHITE, new Point(0,0));
 		Pair<Double,Double> offset = new Pair<Double,Double>((this.dim.getWidth()/2) - (cityName.width/2), -32.0);
 		this.addChild((GameObject)cityName, offset);
 	}

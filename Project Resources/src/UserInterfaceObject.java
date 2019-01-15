@@ -53,15 +53,19 @@ public class UserInterfaceObject extends GameObject{
 		switch(uiType) {
 		
 			case SMALL :
+				System.out.println("small obj created");
 				this.dim = (new Dimension(64,32));
 				this.objectImage = "uibuttonsmall";
 				break;
 				
 			case SMALLTEXT:
+				
+				System.out.println("smalltext created");
 				this.dim = (new Dimension(64,32));
 				this.objectImage = "uibuttonsmall";
-				TextObject elementText = new TextObject(ObjectType.CHILD,Game.objectMap.getFont("smallbuttonfont"),Color.WHITE);
-				elementText.setProperties("",Color.WHITE,new Point(0,0));
+				TextObject elementText = new TextObject(ObjectType.CHILD);
+//				TextObject elementText = new TextObject(ObjectType.CHILD);
+				elementText.setTextProperties("Test",Game.objectMap.getFont("smallbuttonfont"),Color.WHITE,new Point(0,0));
 				Pair<Double,Double> offset = new Pair<Double,Double>((this.dim.getWidth()/2) , (this.dim.getHeight()/2));
 				this.addChild(elementText, offset);
 				

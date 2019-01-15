@@ -136,17 +136,27 @@ public class Game {
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
 
 		//Mouse data text objects
-		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT);
+		globalMousePosText.setTextProperties("Global mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
-		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT);
+		worldMousePosText.setTextProperties("World mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
-
-		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
+//		
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT);
+		isoMousePosText.setTextProperties("Iso mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
+		
+//		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
+		
+//		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
+//		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+//		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
+//
+//		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
+//		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
+//		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
 
 //		//Testing text

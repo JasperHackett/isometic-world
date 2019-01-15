@@ -99,9 +99,7 @@ public class InterfaceController {
 			}
 			
 			if(elementType == UserInterfaceObject.UIElementType.SMALLTEXT) {
-				if(newUIObject.elementText == null) {
-					System.out.println("Something is null");
-				}
+//				newUIObject.addChild(child, positionOffset);
 			}
 			
 			
