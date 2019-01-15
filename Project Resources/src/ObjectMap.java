@@ -212,7 +212,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		imageMap.put(imgID, newImage);
 	}
 
-	public void addTileImage(String imgID, String FilePath, Dimension tileDims, int tileCount) {
+	public void addImageSheet(String imgID, String FilePath, Dimension tileDims, int tileCount) {
 		if (imgID == "grasstile") {
 			tilesPerTileset.put(IsometricTile.TILESET.grass, tileCount);
 		} else if (imgID == "watertile") {

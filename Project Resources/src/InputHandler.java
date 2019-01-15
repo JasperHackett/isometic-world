@@ -191,39 +191,50 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		iso2D.setLocation((iso2D.getX() - 976), (iso2D.getY() + 976));
 		iso2D.setLocation((int) iso2D.getX() / 32, (int) iso2D.getY() / 32);
 
-		IsometricTile tempTile = null;
+		GameObject tempObj = null;
 
 		//Check iso coordinate is within world bounds (potentially useless)
-		if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
-			tempTile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
-
-			if(tempTile != null) {
-				if((tempTile.type == ObjectType.WORLD)){
+		if(Game.currentState == Game.STATE.Game) {
+			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
 	
-					if(hoveredObject == null) {
-						hoveredObject = tempTile;
+				if(tempObj != null) {
+					if((tempObj.type == ObjectType.WORLD)){
+		
+						if(hoveredObject == null) {
+							hoveredObject = tempObj;
+						}
+		
+						if(tempObj.equals(hoveredObject)) {
+							hoveredObject.hoverAction();
+						}else {
+							hoveredObject.disableHover();
+							this.hoveredObject = tempObj;
+							this.hoveredObject.hoverAction();
+						}
 					}
 	
-					if(tempTile.equals(hoveredObject)) {
-						hoveredObject.hoverAction();
-					}else {
-						hoveredObject.disableHover();
-						this.hoveredObject = tempTile;
-						this.hoveredObject.hoverAction();
-					}
 				}
 			}
 		}
-//		for(Map.Entry<String, IsometricTile> obj : Game.objectMap.worldTiles.entrySet()) {
-//			if(obj.getValue().isHoverable()) {
-//				if(checkContains(obj.getValue().getPosition().getValue(),obj.getValue().getPosition().getKey(),mousePos)) {
-//					
-					
 		
-//				}
+		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
+			if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
+				tempObj = uiObj;
+				if(hoveredObject == null) {
+					hoveredObject = tempObj;
+				}
 
-//			}
-//		}
+				if(tempObj.equals(hoveredObject)) {
+					hoveredObject.setHovered(true);
+				}
+			}
+		}
+		
+		if(tempObj == null && hoveredObject != null) {
+			hoveredObject.setHovered(false);
+		}
+//		GameObject tempObj = null;
 	}
 	
 	/**

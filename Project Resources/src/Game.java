@@ -64,27 +64,28 @@ public class Game {
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");
-		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
+//		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addImage("roadtile","assets/road.png");
-		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
-		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
-		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
-		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 3);
+		objectMap.addImageSheet("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
+		objectMap.addImageSheet("watertile","assets/watertiles.png", new Dimension(64,32), 3);
+		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
+		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
 		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
-		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
-		objectMap.addTileImage("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
-		objectMap.addTileImage("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
+		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
 		
 		//Adding fonts
-		objectMap.addFont("smallbuttonfont", "Calibri",Font.PLAIN,10);
+		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,12);
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
 		
@@ -120,8 +121,8 @@ public class Game {
 
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
 		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","its a very long sentence");
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","Start");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit","Quit");
 		userInterface.enableInterfaceContainer("mainmenu");
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);

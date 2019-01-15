@@ -23,6 +23,7 @@ public class UserInterfaceObject extends GameObject{
 	}
 	UIElementType type;
 	TextObject elementText;
+
 	
 	public UserInterfaceObject(ObjectType objectType) {
 		super(objectType);
@@ -40,7 +41,7 @@ public class UserInterfaceObject extends GameObject{
 		this.clickTag = clickTag;
 		TextObject elementText = new TextObject(ObjectType.CHILD);
 		System.out.println(pos);
-		elementText.setTextProperties(buttonText,Game.objectMap.getFont("primarygamefont"),Color.WHITE,pos);
+		elementText.setTextProperties(buttonText,Game.objectMap.getFont("smallbuttonfont"),Color.LIGHT_GRAY,pos);
 		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
 		this.addChild(elementText, offset);
 			
@@ -56,7 +57,8 @@ public class UserInterfaceObject extends GameObject{
 			case SMALL :
 //				System.out.println("small obj created");
 				this.dim = (new Dimension(64,32));
-				this.objectImage = "uibuttonsmall";
+				this.objectImage = "uibuttonsmall0";
+				this.hoverImage = "uibuttonsmall1";
 				break;
 				
 			case MEDIUM :

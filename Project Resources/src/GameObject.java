@@ -26,6 +26,7 @@ public class GameObject {
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
+	protected String hoverImage;
 	protected HashMap<GameObject, Dimension> children;
 	
 	public GameObject(ObjectType type) {
@@ -116,10 +117,22 @@ public class GameObject {
 		return hoverable;
 	}
 	public void setHovered(boolean isHovered){
-		 this.currentlyHovered = isHovered;
+		
+		if(isHovered) {
+			if(!this.currentlyHovered) {
+				hoverAction();
+			}
+		}else {
+			if(this.currentlyHovered) {
+				disableHover();
+			}
+		}
+
+
+
 	}
 	public boolean isHovered(){
-		 return currentlyHovered;
+		return currentlyHovered;
 	}
 	
 	public boolean isVisible(){
@@ -153,7 +166,7 @@ public class GameObject {
 	}
 	public void hoverAction(){
 		this.currentlyHovered = true;
-		System.out.println("Hovering on: ");
+		System.out.println("Hovering on");
 	}
 	public void disableHover(){
 		this.currentlyHovered = false;
