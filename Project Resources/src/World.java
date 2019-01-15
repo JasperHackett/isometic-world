@@ -45,14 +45,16 @@ public class World {
 	public ArrayList<WorldObject> tickingObjects;
 	
 	Pair<Dimension,Point> isometricPlane;
-	public Queue<Pair<String,Point>> structureList;
+	public Queue<Pair<String,Point>> entityList;
 //	public Map<String,Image> imageAssetMap;
 	public HashMap<Point,Point> worldToIsoTable;
 
 
 	public World()  {
+		
+		
 		worldToIsoTable = new HashMap<Point,Point>();
-		structureList = new PriorityQueue<Pair<String,Point>>();
+		entityList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
 		
 		tickingObjects = new ArrayList<WorldObject>();
@@ -64,7 +66,14 @@ public class World {
 		
 		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
-		initialiseStructures();
+		initialiseEntitys();
+//		initialiseTileMap();
+//		initialiseEntityMap();
+		
+		
+
+		
+		
 	}
 	
 	//Called every at every increment of time in the game
@@ -118,7 +127,7 @@ public class World {
 					}else if (tileLine[i].compareTo("f") == 0) {
 						tileType = IsometricTile.TILESET.trees;
 					}else if (tileLine[i] != null) {
-//						structureList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
+//						entityList.add(new Pair<String,Point>(tileLine[i],new Point(i,j)));
 					}
 					
 					
@@ -171,46 +180,46 @@ public class World {
 		return nameList;
 	}
 	
-	public void initialiseStructureMap() {
+	public void initialiseEntityMap() {
 		Random rn = new Random();
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new FileReader("structuremap.csv"));
+			br = new BufferedReader(new FileReader("entitymap.csv"));
 			String line = "";
 			String delim = ",";
 			int y = 0;
-			int numStructures = 0;
+			int numEntitys = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
 				for (int x = 0; x < tileLine.length; x++) {
 					if (tileLine[x].equals("")) {
 						continue;
 					} else if (tileLine[x].equals("C")) {
-						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
-						structureTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
 						
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
-						City newCity = new City(structureTiles, name);
-						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numStructures));
-						Game.objectMap.addStructure("city" + Integer.toString(numStructures), newCity, 48);
-						numStructures++;
+						City newCity = new City(entityTiles, name);
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
+						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
+						numEntitys++;
 						
 					} else if (tileLine[x].equals("R")) {
-//						ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-//						structureTiles.add(Game.objectMap.getTile(new Point(x,y)));
-//						Road newRoad = new Road(structureTiles);
-//						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numStructures));
-//						Game.objectMap.addStructure("road" + Integer.toString(numStructures), newRoad, 0);
+//						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+//						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+//						Road newRoad = new Road(entityTiles);
+//						newRoad.setProperties(new Dimension(64,32), new Point(0,0), "road10", false, "road" + Integer.toString(numEntitys));
+//						Game.objectMap.addEntity("road" + Integer.toString(numEntitys), newRoad, 0);
 						Game.objectMap.getTile(new Point(x,y)).setRoad(true);
-						numStructures++;
+						numEntitys++;
 					}
 					
 				}
@@ -231,15 +240,15 @@ public class World {
 		Game.objectMap.getTile(isoPos).changeTileset(type);
 	}
 	
-	public void initialiseStructures() {
-//		while(!structureList.isEmpty()) {
-//			Pair<String,Point> structure = structureList.poll();
-//			if(structure.getKey().equals("c1")) {
-//				Structure newStructure = new Structure(structure.getValue(),worldToIsoTable.get(structure.getValue()));
+	public void initialiseEntitys() {
+//		while(!entityList.isEmpty()) {
+//			Pair<String,Point> entity = entityList.poll();
+//			if(entity.getKey().equals("c1")) {
+//				Entity newEntity = new Entity(entity.getValue(),worldToIsoTable.get(entity.getValue()));
 //
-//				newStructure.setProperties(new Dimension(64,32),new Point(0,0),"citytile1", true);
-//				newStructure.dim = new Dimension(64,32);
-////				Game.objectMap.WorldObjects().put("c1", newStructure);
+//				newEntity.setProperties(new Dimension(64,32),new Point(0,0),"citytile1", true);
+//				newEntity.dim = new Dimension(64,32);
+////				Game.objectMap.WorldObjects().put("c1", newEntity);
 //			}
 //			
 //		}
@@ -260,7 +269,7 @@ public class World {
 		for(WorldObject obj : Game.objectMap.getMainDisplayTiles()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
-		for(Structure obj : Game.objectMap.getMainDisplayStructures()) {
+		for(Entity obj : Game.objectMap.getMainDisplayEntitys()) {
 			obj.setPosition(worldPoint,panelPoint);
 		}
 		
@@ -407,7 +416,7 @@ public class World {
 					System.out.println("NULL TILE");
 				}
 				if(tile.tileset == currentEntry.getValue().tileset) {
-					if(!(tile.structureOnTile == null)) {
+					if(!(tile.entityOnTile == null)) {
 						if (tile.hasRoad()) {
 							tileDistance = 5.0;
 						}

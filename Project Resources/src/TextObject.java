@@ -14,12 +14,18 @@ public class TextObject extends GameObject {
 
 	public String text;
 	public Font font;
-	public int width, height;
+	public int width = 0;
+	public int height = 0;
 	private Color textColour;
 	
 	
 	public TextObject(ObjectType type) {
 		super(type);
+	}
+	
+	public TextObject(ObjectType type, String text) {
+		super(type);
+		this.text = text;
 	}
 	
 	/**

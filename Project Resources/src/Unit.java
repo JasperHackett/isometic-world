@@ -11,11 +11,12 @@ import java.util.LinkedList;
  * @author Jasper
  *
  */
-public class Unit extends Structure{
+public class Unit extends Entity{
 
 	LinkedList<Point> currentPath;
 	
 	Unit(Point isoPos){
+		
 //		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(new Point(4,6), new Point(41,55)));
 		this.structureOffset = 16;
 		this.isoPoint = isoPos;
