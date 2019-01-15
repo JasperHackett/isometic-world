@@ -205,6 +205,8 @@ public class Game {
 //
 		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
 		
+		System.out.println(objectMap.getTile(new Point(54,20)).toString());
+		
 		
 		
 		// temporary "tick" loop
