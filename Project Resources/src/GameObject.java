@@ -26,7 +26,7 @@ public class GameObject {
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
-	protected String hoverImage;
+
 	protected HashMap<GameObject, Dimension> children;
 	
 	public GameObject(ObjectType type) {

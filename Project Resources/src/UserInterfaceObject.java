@@ -23,6 +23,8 @@ public class UserInterfaceObject extends GameObject{
 	}
 	UIElementType type;
 	TextObject elementText;
+	String defaultObjectImage;
+	String hoverImage;
 
 	
 	public UserInterfaceObject(ObjectType objectType) {
@@ -57,7 +59,9 @@ public class UserInterfaceObject extends GameObject{
 			case SMALL :
 //				System.out.println("small obj created");
 				this.dim = (new Dimension(64,32));
+
 				this.objectImage = "uibuttonsmall0";
+				this.defaultObjectImage = objectImage;
 				this.hoverImage = "uibuttonsmall1";
 				break;
 				
@@ -71,6 +75,15 @@ public class UserInterfaceObject extends GameObject{
 
 		
 		
+	}
+	
+	public void hoverAction(){
+		this.currentlyHovered = true;
+		this.objectImage = hoverImage;
+	}
+	public void disableHover(){
+		this.currentlyHovered = false;
+		this.objectImage = defaultObjectImage;
 	}
 	
 	
