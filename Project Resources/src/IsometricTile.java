@@ -93,7 +93,7 @@ public class IsometricTile extends WorldObject{
 			}
 		}
 		this.updateBorderImage();
-		System.out.println(Integer.toString(this.isoPos.x) + ", " + Integer.toString(this.isoPos.y) + " updated.");
+		
 	}
  	
 	public boolean isWalkable() {
