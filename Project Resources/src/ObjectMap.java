@@ -234,8 +234,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 	
 	
-	public UserInterfaceObject addUIObject(String objectKey) {
-		UserInterfaceObject newElement = new UserInterfaceObject(ObjectType.DEFAULT);
+	public UserInterfaceObject addUIObject(String objectKey, UserInterfaceObject.UIElementType elementType) {
+		UserInterfaceObject newElement = new UserInterfaceObject(ObjectType.DEFAULT, elementType);
 		this.put(objectKey, newElement);
 		this.uiObjects.put(objectKey, newElement);
 		return newElement;

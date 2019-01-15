@@ -87,8 +87,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 		
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
-			callClickAction(uiObj.clickTag);
-			break;
+			if(checkContains(uiObj.getPosition(),e.getPoint())) {
+//				System.out.println(uiObj.clickTag);
+				callClickAction(uiObj.clickTag);
+				break;
+			}
 		}
 
 		
@@ -235,11 +238,14 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}
 		
 		if(clickTag.equals("newgame")) {
-			System.out.println("new game button clicked");
+			System.out.println("New game button clicked");
 //			Game.gameWorld = new World();
 			Game.userInterface.disableInterfaceContainer("mainmenu");
 			Game.currentState = Game.STATE.Game;
 //			Game.gameWorld.updateDisplay();
+		}else if (clickTag.equals("exit")) {
+			System.out.println("Exiting");
+			System.exit(0);
 		}
 		
 		

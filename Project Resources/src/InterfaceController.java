@@ -47,20 +47,39 @@ public class InterfaceController {
 
 
 	
-	public void createUIContainer(String containerName) {
+	/**
+	 * @param containerName
+	 * Creates a container which will store a set of UI objects that will always render together
+	 */
+	public void createUIContainer(String containerName, Point firstElementPos, Point elementSpacing) {
 		UIContainer newContainer = new UIContainer();
+		newContainer.nextElementPos = firstElementPos;
+		newContainer.elementSpacing = elementSpacing;
 //		newContainer.visible = true;
 		containerMap.put(containerName, newContainer);
 	}
 	
-	public void addInterfaceObject(String containerName, String objectKey, String clickTag) {
-		UserInterfaceObject tempObject = Game.objectMap.addUIObject(objectKey);
-		tempObject.setProperties(new Dimension(64,32), new Point(500,500), "uibuttonsmall", true, "newgame");
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag) {
+		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+		if(containerMap.containsKey(containerName)) {
+			UIContainer objectsContainer = containerMap.get(containerName);
+			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag);
+				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+			}
+			
 		
-//		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame"
+
+		
+//			UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame"
 		
 		
-		containerMap.get(containerName).addObject(tempObject);
+			objectsContainer.addObject(newUIObject);
+		}else {
+			System.out.println("UIContainer does not exist");
+			return;
+		}
 		
 	}
 
@@ -82,17 +101,7 @@ public class InterfaceController {
 	}
 	
 	
-//	public void renderInterfaceController(Graphics g) {
-//
-//		for (Entry<String,UIContainer> container : containerMap.entrySet()) {
-////			System.out.println("asasdasd");
-//			if(container.getValue().visible == true) {
-//				for(UserInterfaceObject element : container.getValue().getObjects()) {
-//					element.render(g);
-//				}
-//			}
-//		}
-//	}
+
 
 
 }

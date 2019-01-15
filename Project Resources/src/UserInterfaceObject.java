@@ -15,6 +15,7 @@ public class UserInterfaceObject extends GameObject{
 	
 	
 	public enum UIElementType{
+		CUSTOM,
 		SMALL,
 		MEDIUM,
 		TEXT
@@ -24,13 +25,20 @@ public class UserInterfaceObject extends GameObject{
 		super(objectType);
 	}
 	
-	public UserInterfaceObject(ObjectType objectType, UIElementType uiType, Point posIn, String clickTag) {
+	public void setProperties(Point pos, String clickTag) {
+		this.coords = pos;
+		this.clickable = true;
+		this.clickTag = clickTag;
+	}
+	
+	public UserInterfaceObject(ObjectType objectType, UIElementType uiType) {
 		super(objectType);
 		
 		switch(uiType) {
 		
 			case SMALL :
-				this.setProperties(new Dimension(64,32), posIn,"uibuttonsmall",true, clickTag);
+				this.dim = (new Dimension(64,32));
+				this.objectImage = "uibuttonsmall";
 				break;
 			case MEDIUM :
 				break;

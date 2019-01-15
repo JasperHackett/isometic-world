@@ -109,8 +109,9 @@ public class Game {
 		
 		
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
-		userInterface.createUIContainer("mainmenu");
-		userInterface.addInterfaceObject("mainmenu", "newgamebutton","newgame");
+		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit");
 		userInterface.enableInterfaceContainer("mainmenu");
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
