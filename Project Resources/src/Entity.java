@@ -52,7 +52,7 @@ public class Entity extends WorldObject{
 	 * returns an Iso Point corresponding to a neighbour of this entity
 	 * that is closest to the given Iso Point
 	 */
-	public Point getClosestNeighbour(Point IsoPoint) {
+	public Point getClosestNeighbour(Point pointIn) {
 		ArrayList<IsometricTile> entityNeighbours = new ArrayList<IsometricTile>();
 		for (IsometricTile entityTile : tileList) {
 			ArrayList<IsometricTile> tileNeighbours = Game.gameWorld.getNeighbours(entityTile);
@@ -62,8 +62,8 @@ public class Entity extends WorldObject{
 				}
 			}
 		}
-		int fromX = isoPoint.x;
-		int fromY = isoPoint.y;
+		int fromX = pointIn.x;
+		int fromY = pointIn.y;
 		int closestDistance = Integer.MAX_VALUE;
 		Point output = null;
 		for (IsometricTile tile : entityNeighbours) {

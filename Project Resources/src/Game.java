@@ -202,7 +202,7 @@ public class Game {
 		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 
 //
-//		objectMap.getTile(new Point())
+		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
 		
 		
 		
