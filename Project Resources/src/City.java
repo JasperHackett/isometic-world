@@ -52,7 +52,7 @@ public class City extends Structure {
 //		if(Game.mainHUD == null) {
 //			System.out.println("testtestsetsets");
 //		}
-		Game.mainHUD.displayCityOnHUD(this);
+
 	}
 
 }

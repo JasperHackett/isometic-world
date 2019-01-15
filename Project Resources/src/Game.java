@@ -2,14 +2,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JFrame;
-
-
-import javafx.util.Pair;
 
 //import javafx.scene.paint.Color;
 
@@ -30,11 +25,11 @@ public class Game {
 	public static int height;
 	public static int worldWidth;
 	public static int worldHeight;
-	public static Menu gameMenu;
+//	public static Menu gameMenu;
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static HUD mainHUD = new HUD();
+	public static InterfaceController userInterface = new InterfaceController();
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static ArrayList<String> nameList;
@@ -53,7 +48,6 @@ public class Game {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		HUD mainHUD = new HUD();
 //		mainHUD.displayCityOnHUD();
 
 		settingsControl = new SettingsHandler();
@@ -69,6 +63,7 @@ public class Game {
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");
+		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
@@ -108,9 +103,17 @@ public class Game {
 		nameList = gameWorld.populateNameList();
 		gameWorld.initialiseTileMap();
 		gameWorld.initialiseEntityMap();
-		gameMenu = new Menu();
+//		gameMenu = new Menu();
+//		gameWorld.
 
-
+		
+		
+//		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
+		userInterface.createUIContainer("mainmenu");
+		userInterface.addInterfaceObject("mainmenu", "newgamebutton","newgame");
+		userInterface.enableInterfaceContainer("mainmenu");
+//		objectMap.put("testbutton", testButton);
+//		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
 
 
 

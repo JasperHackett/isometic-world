@@ -47,6 +47,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	private HashMap<String, GameObject> otherObjects;
 	public HashMap<String, IsometricTile> worldTiles;
 	public HashMap<String, Entity> worldEntitys;
+	public HashMap<String,UserInterfaceObject> uiObjects;
+	public ArrayList<UserInterfaceObject> enabledUIObjects;
 
 	private HashMap<String, Image> imageMap;
 	private HashMap<IsometricTile.TILESET, Integer> tilesPerTileset;
@@ -62,6 +64,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		worldTiles = new HashMap<String, IsometricTile>();
 		tilesPerTileset = new HashMap<IsometricTile.TILESET, Integer>();
 		worldEntitys = new HashMap<String,Entity>();
+		uiObjects = new HashMap<String,UserInterfaceObject>();
+		enabledUIObjects = new ArrayList<UserInterfaceObject>();
 	}
 
 	
@@ -228,6 +232,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public Image getImage(String imgID) {
 		return this.imageMap.get(imgID);
 	}
+	
+	
+	public UserInterfaceObject addUIObject(String objectKey) {
+		UserInterfaceObject newElement = new UserInterfaceObject(ObjectType.DEFAULT);
+		this.put(objectKey, newElement);
+		this.uiObjects.put(objectKey, newElement);
+		return newElement;
+	}
 
 	public IsometricTile getTile(Point pointIn) {
 		if (this.worldTiles.containsKey(pointIn.x + ":" + pointIn.y)) {
@@ -277,8 +289,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return otherObjects;
 	}
 
-	public Map<String, GameObject> getMenuObjects() {
-		return menuObjects;
+	public Map<String, UserInterfaceObject> getUIObjects() {
+		return uiObjects;
+	}
+	
+	public ArrayList<UserInterfaceObject> getEnabledUIObjects(){
+		return enabledUIObjects;
+		
 	}
 
 	public Map<String, WorldObject> WorldObjects() {

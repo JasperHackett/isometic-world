@@ -73,39 +73,36 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
-//		
-		String mouseButton = "not";
-		if (e.getButton() == MouseEvent.BUTTON1) {
-			mouseButton = "left";
-		} else if (e.getButton() == MouseEvent.BUTTON2) {
-			mouseButton = "middle";
-		} else if (e.getButton() == MouseEvent.BUTTON3) {
-			mouseButton = "right";
-		}
-		
+//		String mouseButton = "not";
+//		if (e.getButton() == MouseEvent.BUTTON1) {
+//			mouseButton = "left";
+//		} else if (e.getButton() == MouseEvent.BUTTON2) {
+//			mouseButton = "middle";
+//		} else if (e.getButton() == MouseEvent.BUTTON3) {
+//			mouseButton = "right";
+//		}
 		
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
-//		System.out.println("MOUSE CLICK: Absolute position: ["+ e.getX() + "," + e.getY()+ "], "
-//				+ "World position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "], "
-//				+ "IsoGridPos: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
+		
+		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
+			callClickAction(uiObj.clickTag);
+			break;
+		}
+
+		
 		
 		if(Game.currentState == Game.STATE.Menu) {
-			for(GameObject obj : Game.objectMap.getMenuObjects().values()) {
+			for(GameObject obj : Game.objectMap.getOtherObjects().values()) {
 				if(obj.isClickable()){
 					if(checkContains(obj.getPosition(),e.getPoint())) {
-						if(obj.clickTag == "newGameButton") {
-							Game.currentState = Game.STATE.Game;
-							Game.gameWorld.updateDisplay();
-							Game.gameWorld.updateDisplay();
-						} else if (obj.clickTag == "quitButton") {
-							System.exit(0);
-						}
+						callClickAction(obj.clickTag);
 					}
 				}
 			}
 		}else if(Game.currentState== Game.STATE.Game) {
+
 			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
 					if(clickedObject != null) {
 						if(!clickedObject.equals(Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY()))){
@@ -224,5 +221,27 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 //			}
 //		}
+	}
+	
+	/**
+	 * @param clickTag
+	 * Stores all possible actions when a button is clicked
+	 */
+	public void callClickAction(String clickTag) {
+		
+		if(clickTag.isEmpty()) {
+			System.out.println("Blank click tag");
+			return;
+		}
+		
+		if(clickTag.equals("newgame")) {
+			System.out.println("new game button clicked");
+//			Game.gameWorld = new World();
+			Game.userInterface.disableInterfaceContainer("mainmenu");
+			Game.currentState = Game.STATE.Game;
+//			Game.gameWorld.updateDisplay();
+		}
+		
+		
 	}
 }

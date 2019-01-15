@@ -51,6 +51,8 @@ public class World {
 
 
 	public World()  {
+		
+		
 		worldToIsoTable = new HashMap<Point,Point>();
 		entityList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
@@ -65,6 +67,13 @@ public class World {
 		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
 		initialiseEntitys();
+//		initialiseTileMap();
+//		initialiseEntityMap();
+		
+		
+
+		
+		
 	}
 	
 	//Called every at every increment of time in the game
