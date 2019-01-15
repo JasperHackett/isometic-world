@@ -93,7 +93,7 @@ public class InterfaceController {
 		if(containerMap.containsKey(containerName)) {
 			UIContainer objectsContainer = containerMap.get(containerName);
 			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
-				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag);
+				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
 				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
 						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
 			}

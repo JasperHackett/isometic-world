@@ -41,8 +41,12 @@ public class UserInterfaceObject extends GameObject{
 		this.clickable = true;
 		this.clickTag = clickTag;
 		if(type == UIElementType.SMALLTEXT) {
-
-			elementText.setText(buttonText);
+			TextObject elementText = new TextObject(ObjectType.CHILD);
+			elementText.setTextProperties(buttonText,Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(pos.x+30,pos.y+40));
+			Pair<Double,Double> offset = new Pair<Double,Double>(500.0,500.0);
+			this.addChild(elementText, offset);
+			
+//			elementText.setText(buttonText);
 		}
 	}
 
@@ -63,11 +67,7 @@ public class UserInterfaceObject extends GameObject{
 				System.out.println("smalltext created");
 				this.dim = (new Dimension(64,32));
 				this.objectImage = "uibuttonsmall";
-				TextObject elementText = new TextObject(ObjectType.CHILD);
-				elementText.setTextProperties("Test",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(0,0));
-				Pair<Double,Double> offset = new Pair<Double,Double>((this.dim.getWidth()/2) , (this.dim.getHeight()/2));
-				this.addChild(elementText, offset);
-				
+
 				break;
 			case MEDIUM :
 				break;

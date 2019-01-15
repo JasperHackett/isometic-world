@@ -65,6 +65,24 @@ public class GameObject {
 	public void setPosition(Dimension dimIn, Point posIn) {
 		this.coords = posIn;
 		this.dim = dimIn;
+		setChildrenPosition();
+		
+	}
+	
+	public void setChildrenPosition() {
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				child.coords.setLocation(
+						(this.coords.x)
+								+ children.get(child).getKey(),
+						(this.coords.y)
+								+ children.get(child).getValue());
+			}
+		}
 	}
 	
 	public void addChild(GameObject child, Pair<Double, Double> positionOffset) {
