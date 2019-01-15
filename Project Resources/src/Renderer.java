@@ -63,7 +63,7 @@ public class Renderer implements Runnable {
 		   frames++;
            if(System.currentTimeMillis() - timer > 1000) {
                timer += 1000;
-               System.out.println("FPS: " + frames);
+//               System.out.println("FPS: " + frames);
                frames = 0;
            }
 	   }
@@ -101,27 +101,38 @@ public class Renderer implements Runnable {
 
 			}
 
-			for (Structure obj : Game.objectMap.getMainDisplayStructures()) {
+			for (Entity obj : Game.objectMap.getMainDisplayEntitys()) {
 				if (obj != null) {
 					obj.render(graphics);
 				}
 
 			}
-			for (Map.Entry<String, GameObject> obj : Game.objectMap.getOtherObjects().entrySet()) {
-				obj.getValue().render(graphics);
-			}
-		} else if (Game.currentState == Game.STATE.Menu) {
-			for (GameObject obj : Game.objectMap.getMenuObjects()) {
+			
+			for (GameObject obj : Game.objectMap.getOtherObjects().values()) {
 				obj.render(graphics);
 			}
+
 		}
 
+//		else if (Game.currentState == Game.STATE.Menu) {
+//			for (GameObject obj : Game.objectMap.getMenuObjects().values()) {
+//				obj.render(graphics);
+//			}
+//		}
+		
+		for (UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
+			if( uiObj != null) {
+				uiObj.render(graphics);
+			}
+
+		}
 		
 
-		graphics.dispose();
-		bs.show();
+//		Game.userInterface.renderInterfaceController(graphics);
+        graphics.dispose();
+        bs.show();
 
-		semaphore.release();
+        semaphore.release();
 
 	}
 
