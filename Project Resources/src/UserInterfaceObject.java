@@ -42,7 +42,7 @@ public class UserInterfaceObject extends GameObject{
 		this.clickTag = clickTag;
 		if(type == UIElementType.SMALLTEXT) {
 			TextObject elementText = new TextObject(ObjectType.CHILD);
-			elementText.setTextProperties(buttonText,Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(pos.x+30,pos.y+40));
+			elementText.setTextProperties(buttonText,Game.objectMap.getFont("primarygamefont"),Color.WHITE,pos);
 			Pair<Double,Double> offset = new Pair<Double,Double>(500.0,500.0);
 			this.addChild(elementText, offset);
 			
