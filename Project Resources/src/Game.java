@@ -164,7 +164,8 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
 		objectMap.addEntity("placeholder2", cube2,8);
 		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		cube2.setDestination(new Point(41,20));
+		objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint);
+		cube2.setDestination(new Point(41,21));
 		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler

@@ -415,7 +415,7 @@ public class World {
 				if(tile == null) {
 					System.out.println("NULL TILE");
 				}
-				if(tile.tileset == currentEntry.getValue().tileset) {
+				if(currentEntry.getValue().hasRoad()) {
 					if (tile.hasRoad()) {
 						tileDistance = 5.0;
 					}

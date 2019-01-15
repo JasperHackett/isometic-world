@@ -26,8 +26,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	 * Sorts via Y axis
 	 *
 	 */
-	private class YAxisComparator implements Comparator<IsometricTile> {
-		public int compare(IsometricTile o1, IsometricTile o2) {
+	private class YAxisComparator implements Comparator<WorldObject> {
+		public int compare(WorldObject o1, WorldObject o2) {
 			int y1 = (int) o1.getPosition().getValue().getY();
 			int y2 = (int) o2.getPosition().getValue().getY();
 			if (y1 == y2) {
