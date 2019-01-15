@@ -98,11 +98,7 @@ public class InterfaceController {
 						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
 			}
 			
-			if(elementType == UserInterfaceObject.UIElementType.SMALLTEXT) {
-//				newUIObject.add
-			}
 			
-			System.out.println(newUIObject.children.size());
 			objectsContainer.addObject(newUIObject);
 		}else {
 			System.out.println("UIContainer does not exist");

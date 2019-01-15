@@ -26,11 +26,11 @@ public class GameObject {
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
-	protected HashMap<GameObject, Pair<Double, Double>> children;
+	protected HashMap<GameObject, Dimension> children;
 	
 	public GameObject(ObjectType type) {
 		this.type = type;
-		this.children = new HashMap<GameObject, Pair<Double, Double>>();
+		this.children = new HashMap<GameObject, Dimension>();
 	}
 	
 	public void setProperties(Dimension dimIn, Point posIn, String imageIn) {
@@ -78,16 +78,17 @@ public class GameObject {
 			for (GameObject child : children.keySet()) {
 				child.coords.setLocation(
 						(this.coords.x)
-								+ children.get(child).getKey(),
+								+ children.get(child).width,
 						(this.coords.y)
-								+ children.get(child).getValue());
+								+ children.get(child).height);
 			}
 		}
 	}
 	
-	public void addChild(GameObject child, Pair<Double, Double> positionOffset) {
+	public void addChild(GameObject child, Dimension positionOffset) {
+		child.setPosition(child.dim, new Point(this.coords.x+positionOffset.width+Game.xOffset,this.coords.y+positionOffset.height+Game.yOffset));
 		this.children.put(child, positionOffset);
-
+		
 	}
 	
 	/**

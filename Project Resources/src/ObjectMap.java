@@ -104,8 +104,8 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		return (tempPoint);
 	}
 
-	public void addFont(String fontKey, String fontName, int fontSize) {
-		Font newFont = new Font(fontName,Font.PLAIN,fontSize);
+	public void addFont(String fontKey, String fontName,int fontStyle, int fontSize) {
+		Font newFont = new Font(fontName,fontStyle,fontSize);
 		this.gameFonts.put(fontKey, newFont);
 //				Font.p
 	}
@@ -253,7 +253,6 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 
 	public UserInterfaceObject addUIObject(String objectKey, UserInterfaceObject.UIElementType elementType) {
-		System.out.println(elementType);
 		UserInterfaceObject newElement = new UserInterfaceObject(ObjectType.DEFAULT, elementType);
 		this.put(objectKey, newElement);
 		this.uiObjects.put(objectKey, newElement);

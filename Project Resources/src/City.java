@@ -33,7 +33,7 @@ public class City extends Structure {
 		// creating and adding child component for city name
 		TextObject cityName = new TextObject(ObjectType.CHILD);
 		cityName.setTextProperties(name,Game.objectMap.getFont("primarygamefont"), Color.WHITE, new Point(0,0));
-		Pair<Double,Double> offset = new Pair<Double,Double>((this.dim.getWidth()/2) - (cityName.width/2), -32.0);
+		Dimension offset = new Dimension(((int)this.dim.getWidth()/2) - (cityName.width/2), -32);
 		this.addChild((GameObject)cityName, offset);
 	}
 

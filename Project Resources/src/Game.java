@@ -82,7 +82,13 @@ public class Game {
 		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		objectMap.addTileImage("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
 		objectMap.addTileImage("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
-		objectMap.addFont("smallbuttonfont", "Calibri",10);
+		
+		//Adding fonts
+		objectMap.addFont("smallbuttonfont", "Calibri",Font.PLAIN,10);
+		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,12);
+		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
+		
+		
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -99,7 +105,7 @@ public class Game {
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 //		Font gameFont = new Font("Arial", Font.PLAIN,11);
-		objectMap.addFont("primarygamefont", "Arial", 11);
+
 		graphics.setFont(objectMap.getFont("primarygamefont"));
 
 
@@ -114,7 +120,7 @@ public class Game {
 
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
 		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALLTEXT,"mainmenu", "newgamebutton","newgame","Start");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","its a very long sentence");
 		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit");
 		userInterface.enableInterfaceContainer("mainmenu");
 //		objectMap.put("testbutton", testButton);
