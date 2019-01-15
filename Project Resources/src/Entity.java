@@ -46,7 +46,40 @@ public class Entity extends WorldObject{
 //		this.children.put(child, positionOffset);
 //
 //	}
-
+	
+	
+	/**
+	 * returns an Iso Point corresponding to a neighbour of this entity
+	 * that is closest to the given Iso Point
+	 */
+	public Point getClosestNeighbour(Point IsoPoint) {
+		ArrayList<IsometricTile> entityNeighbours = new ArrayList<IsometricTile>();
+		for (IsometricTile entityTile : tileList) {
+			ArrayList<IsometricTile> tileNeighbours = Game.gameWorld.getNeighbours(entityTile);
+			for (IsometricTile tile : tileNeighbours) {
+				if (tile.isWalkable() && !entityNeighbours.contains(tile) && !tileList.contains(tile)) {
+					entityNeighbours.add(tile);
+				}
+			}
+		}
+		int fromX = isoPoint.x;
+		int fromY = isoPoint.y;
+		int closestDistance = Integer.MAX_VALUE;
+		Point output = null;
+		for (IsometricTile tile : entityNeighbours) {
+			int toX = tile.getIsoPoint().x;
+			int toY = tile.getIsoPoint().y;
+			int differenceX = Math.abs(toX - fromX);
+			int differenceY = Math.abs(toY - fromY);
+			int difference = differenceX + differenceY;
+			if (difference < closestDistance) {
+				closestDistance = difference;
+				output = new Point(toX, toY);
+			}
+		}
+		return output;
+	}
+	
 	@Override
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
 		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())),
@@ -90,9 +123,6 @@ public class Entity extends WorldObject{
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
-		if(currentlyHovered || currentlyClicked) {
-			g.drawImage(Game.objectMap.getImage("cityhover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
-		}
 		if (children == null) {
 			return;
 		} else if (children.isEmpty()) {

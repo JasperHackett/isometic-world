@@ -201,7 +201,11 @@ public class Game {
 		objectMap.getTile(new Point(37,21)).setOwner(IsometricTile.OWNERSET.blue);
 		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 
-
+//
+//		objectMap.getTile(new Point())
+		
+		
+		
 		// temporary "tick" loop
 		while(true) {
 			try {
