@@ -22,7 +22,8 @@ public class IsometricTile extends WorldObject{
 	public enum TILESET{
 		grass,
 		water,
-		trees;
+		trees,
+		city;
 	}
 	public enum OWNERSET{
 		none,
@@ -331,7 +332,7 @@ public class IsometricTile extends WorldObject{
 		if (this.currentOwner != OWNERSET.none) {
 			g.drawImage(Game.objectMap.getImage(borderImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
-		if(currentlyHovered && structureOnTile == null) {
+		if(currentlyHovered && entityOnTile == null) {
 			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 
