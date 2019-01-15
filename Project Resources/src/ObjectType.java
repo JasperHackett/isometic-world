@@ -8,4 +8,6 @@
  */
 public enum ObjectType {
 	MAINMENU, WORLD,TILE, DEFAULT, CHILD;
+	
+	
 }
