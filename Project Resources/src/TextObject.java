@@ -58,6 +58,7 @@ public class TextObject extends GameObject {
 	
 	@Override
 	public void render(Graphics g) {
+//		System.out.println("Printing text");
 		g.setColor(textColour);
 		g.setFont(font);
 		g.drawString(text, coords.x, coords.y);

@@ -99,10 +99,10 @@ public class InterfaceController {
 			}
 			
 			if(elementType == UserInterfaceObject.UIElementType.SMALLTEXT) {
-//				newUIObject.addChild(child, positionOffset);
+//				newUIObject.add
 			}
 			
-			
+			System.out.println(newUIObject.children.size());
 			objectsContainer.addObject(newUIObject);
 		}else {
 			System.out.println("UIContainer does not exist");

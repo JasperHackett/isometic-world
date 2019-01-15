@@ -110,7 +110,7 @@ public class Game {
 //		gameMenu = new Menu();
 //		gameWorld.
 
-
+//		Game.objectMap.get
 
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
 		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));

@@ -77,6 +77,16 @@ public class GameObject {
 	 */
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				child.render(g);
+			}
+		}
+		
 	}
 	
 	public boolean isClickable(){
