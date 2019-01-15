@@ -417,7 +417,7 @@ public class World {
 				}
 				if(currentEntry.getValue().hasRoad()) {
 					if (tile.hasRoad()) {
-						tileDistance = 5.0;
+						tileDistance = 1.0;
 					}
 					
 				}
