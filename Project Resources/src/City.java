@@ -59,6 +59,7 @@ public class City extends Structure {
 	@Override
 	public void disableClick() {
 		this.currentlyClicked = false;
+		Game.userInterface.disableInterfaceContainer("cityinterface");
 	}
 
 }
