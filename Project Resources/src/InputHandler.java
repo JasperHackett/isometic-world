@@ -106,7 +106,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			}
 		}else if(Game.currentState== Game.STATE.Game) {
 
-			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
 					if(clickedObject != null) {
 						if(!clickedObject.equals(Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY()))){
 							clickedObject.setClicked(false);
@@ -195,7 +195,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 		//Check iso coordinate is within world bounds (potentially useless)
 		if(Game.currentState == Game.STATE.Game) {
-			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+			if(checkContains(Game.gameWorld.getMainDisplayCoords(),mousePos)) {
+//				iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height
 				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
 	
 				if(tempObj != null) {
