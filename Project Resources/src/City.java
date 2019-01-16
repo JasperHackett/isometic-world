@@ -49,7 +49,16 @@ public class City extends Structure {
 	public void clickAction() {
 		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
-
+		
+		Game.userInterface.createUIContainer("cityinterface", new Point(1410,36), new Point(0,50));
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+		Game.userInterface.enableInterfaceContainer("cityinterface");
+	}
+	
+	@Override
+	public void disableClick() {
+		this.currentlyClicked = false;
 	}
 
 }

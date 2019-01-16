@@ -216,7 +216,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 		//Check iso coordinate is within world bounds (potentially useless)
 		if(Game.currentState == Game.STATE.Game) {
-			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
+			if(/*iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height*/
+				iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.panelDims.width && iso2D.getY() < Game.gameWorld.panelDims.height	) {
 				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
 	
 				if(tempObj != null) {
@@ -282,6 +283,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if (clickTag.equals("exit")) {
 			System.out.println("Exiting");
 			System.exit(0);
+		}else if (clickTag.equals("hello")) {
+			System.out.println("hello");
+		}else if (clickTag.equals("goodbye")) {
+			System.out.println("goodbye");
 		}
 		
 		
