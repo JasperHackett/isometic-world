@@ -107,21 +107,42 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(Game.currentState== Game.STATE.Game) {
 
 			if(iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height) {
-					if(clickedObject != null) {
-						if(!clickedObject.equals(Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY()))){
+				
+				IsometricTile tile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
+				Boolean clickedEntity = tile.getEntityOnTile() != null;
+				
+				if(clickedObject != null) {
+					if (clickedEntity && clickedObject.type != ObjectType.TILE) {
+						if (!tile.getEntityOnTile().equals(clickedObject)) {
 							clickedObject.setClicked(false);
 							clickedObject = null;
 						}
-
-					}
-					clickedObject = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
-					if(this.clickedObject.isClicked()) {
-						this.clickedObject.setClicked(false);
-						this.clickedObject = null;
-					}else {
-						this.clickedObject.setClicked(true);
+					} else {
+						if(!clickedObject.equals(tile)){
+							clickedObject.setClicked(false);
+							clickedObject = null;
+						}
 					}
 					
+					
+
+				}
+				
+				if (clickedEntity) {
+					clickedObject = tile.getEntityOnTile();
+				} else {
+					clickedObject = tile;
+				}
+					
+
+				
+				if(this.clickedObject.isClicked()) {
+					this.clickedObject.setClicked(false);
+					this.clickedObject = null;
+				}else {
+					this.clickedObject.setClicked(true);
+				}
+				
 				
 				
 			}

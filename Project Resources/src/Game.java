@@ -86,7 +86,7 @@ public class Game {
 		
 		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
-		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,12);
+		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
 		
 		
