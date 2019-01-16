@@ -173,5 +173,6 @@ public class GameObject {
 	}
 	public void disableClick(){
 		this.currentlyClicked = false;
+		
 	}
 }

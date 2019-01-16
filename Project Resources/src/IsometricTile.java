@@ -58,6 +58,10 @@ public class IsometricTile extends WorldObject{
 		this.entityOnTile = entityOnTile;
 
 	}
+	
+	public Entity getEntityOnTile() {
+		return entityOnTile;
+	}
 
 	public Point getIsoPoint() {
 		return this.isoPos;
@@ -114,10 +118,6 @@ public class IsometricTile extends WorldObject{
 
 	@Override
 	public void clickAction() {
-		if(entityOnTile != null) {
-			System.out.println("Clicked a entity containing tile");
-			entityOnTile.clickAction();
-		}else {
 			String toPrint = "Clicked a " + this.tileset + " tile";
 			if (this.hasRoad()) {
 				toPrint += " with a road";
@@ -127,7 +127,6 @@ public class IsometricTile extends WorldObject{
 			}
 			toPrint += ".";
 			System.out.println(toPrint);
-		}
 	}
 
 	public Boolean hasRoad() {

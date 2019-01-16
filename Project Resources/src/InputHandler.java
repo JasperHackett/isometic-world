@@ -81,11 +81,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //		} else if (e.getButton() == MouseEvent.BUTTON3) {
 //			mouseButton = "right";
 //		}
-		
+
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
-		
+
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
 			if(checkContains(uiObj.getPosition(),e.getPoint())) {
 //				System.out.println(uiObj.clickTag);
@@ -94,8 +94,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			}
 		}
 
-		
-		
+
+
 		if(Game.currentState == Game.STATE.Menu) {
 			for(GameObject obj : Game.objectMap.getOtherObjects().values()) {
 				if(obj.isClickable()){
@@ -107,23 +107,44 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(Game.currentState== Game.STATE.Game) {
 
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
-					if(clickedObject != null) {
-						if(!clickedObject.equals(Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY()))){
+
+				IsometricTile tile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
+				Boolean clickedEntity = tile.getEntityOnTile() != null;
+
+				if(clickedObject != null) {
+					if (clickedEntity && clickedObject.type != ObjectType.TILE) {
+						if (!tile.getEntityOnTile().equals(clickedObject)) {
 							clickedObject.setClicked(false);
 							clickedObject = null;
 						}
+					} else {
+						if(!clickedObject.equals(tile)){
+							clickedObject.setClicked(false);
+							clickedObject = null;
+						}
+					}
 
-					}
-					clickedObject = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
-					if(this.clickedObject.isClicked()) {
-						this.clickedObject.setClicked(false);
-						this.clickedObject = null;
-					}else {
-						this.clickedObject.setClicked(true);
-					}
-					
-				
-				
+
+
+				}
+
+				if (clickedEntity) {
+					clickedObject = tile.getEntityOnTile();
+				} else {
+					clickedObject = tile;
+				}
+
+
+
+				if(this.clickedObject.isClicked()) {
+					this.clickedObject.setClicked(false);
+					this.clickedObject = null;
+				}else {
+					this.clickedObject.setClicked(true);
+				}
+
+
+
 			}
 		}
 
@@ -183,8 +204,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	}
 	//Checks for the object the mouse may be hovering over
 	public void checkHover(Point mousePos) {
-		
-		
+
+
 		/* CHECK HOVER FOR ISOMETRIC OBJECTS*/
 		//Convert mouse position to isometric
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(mousePos));
@@ -197,15 +218,15 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		if(Game.currentState == Game.STATE.Game) {
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),mousePos)) {
 //				iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height
-				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());	
-	
+				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
+
 				if(tempObj != null) {
 					if((tempObj.type == ObjectType.WORLD)){
-		
+
 						if(hoveredObject == null) {
 							hoveredObject = tempObj;
 						}
-		
+
 						if(tempObj.equals(hoveredObject)) {
 							hoveredObject.hoverAction();
 						}else {
@@ -214,19 +235,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 							this.hoveredObject.hoverAction();
 						}
 					}
-	
+
 				}
 			}
 		}
-		
+
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
 			if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
 				tempObj = uiObj;
-				
+
 				if(tempObj.equals(hoveredObject)) {
 					hoveredObject.setHovered(true);
 				}
-				
+
 				if(hoveredObject == null) {
 					hoveredObject = tempObj;
 				}
@@ -234,25 +255,25 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 			}
 		}
-		
+
 		if(tempObj == null && hoveredObject != null) {
 			hoveredObject.setHovered(false);
 			hoveredObject = null;
 		}
 //		GameObject tempObj = null;
 	}
-	
+
 	/**
 	 * @param clickTag
 	 * Stores all possible actions when a button is clicked
 	 */
 	public void callClickAction(String clickTag) {
-		
+
 		if(clickTag.isEmpty()) {
 			System.out.println("Blank click tag");
 			return;
 		}
-		
+
 		if(clickTag.equals("newgame")) {
 			System.out.println("New game button clicked");
 //			Game.gameWorld = new World();
@@ -262,8 +283,12 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if (clickTag.equals("exit")) {
 			System.out.println("Exiting");
 			System.exit(0);
+		}else if (clickTag.equals("hello")) {
+			System.out.println("hello");
+		}else if (clickTag.equals("goodbye")) {
+			System.out.println("goodbye");
 		}
-		
-		
+
+
 	}
 }

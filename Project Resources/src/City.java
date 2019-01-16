@@ -32,7 +32,7 @@ public class City extends Structure {
 
 		// creating and adding child component for city name
 		TextObject cityName = new TextObject(ObjectType.CHILD);
-		cityName.setTextProperties(name,Game.objectMap.getFont("primarygamefont"), Color.WHITE, new Point(0,0));
+		cityName.setTextProperties(name,Game.objectMap.getFont("citytitlefont"), Color.WHITE, new Point(0,0));
 		Dimension offset = new Dimension(((int)this.dim.getWidth()/2) - (cityName.width/2), -32);
 		this.addChild((GameObject)cityName, offset);
 	}
@@ -49,7 +49,17 @@ public class City extends Structure {
 	public void clickAction() {
 		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
-
+		
+		Game.userInterface.createUIContainer("cityinterface", new Point(1410,36), new Point(0,50));
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+		Game.userInterface.enableInterfaceContainer("cityinterface");
+	}
+	
+	@Override
+	public void disableClick() {
+		this.currentlyClicked = false;
+		Game.userInterface.disableInterfaceContainer("cityinterface");
 	}
 
 }

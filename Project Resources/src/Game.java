@@ -86,7 +86,7 @@ public class Game {
 		
 		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
-		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,12);
+		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
 		
 		
@@ -166,53 +166,6 @@ public class Game {
 //		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
 
-//		//Testing text
-//		JLabel testText = new JLabel("testing");
-//		testText.setSize(new Dimension(100,100));
-//		testText.setForeground(Color.white);
-//		window.add(testText);
-
-
-
-//		GameObject test = new GameObject(ObjectType.DEFAULT);
-//		objectMap.addObject(ObjectType.DEFAULT,  "test", border);
-//		objectMap.getObject("test").setProperties(new Dimension(300,100), new Point(500,500),"citytile0");
-//		City city0;
-//		ArrayList<IsometricTile> structureTiles = new ArrayList<IsometricTile>();
-//		structureTiles.add(objectMap.getTile(new Point(17,38)));
-//		structureTiles.add(objectMap.getTile(new Point(18,38)));
-//		structureTiles.add(objectMap.getTile(new Point(19,38)));
-//		structureTiles.add(objectMap.getTile(new Point(17,37)));
-//		structureTiles.add(objectMap.getTile(new Point(18,37)));
-//		structureTiles.add(objectMap.getTile(new Point(19,37)));
-//		structureTiles.add(objectMap.getTile(new Point(17,36)));
-//		structureTiles.add(objectMap.getTile(new Point(18,36)));
-//		structureTiles.add(objectMap.getTile(new Point(19,36)));
-//		city0 = new City(structureTiles, "Brand Spanking New York City");
-//		city0.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city0");
-//		objectMap.addObject(ObjectType.WORLD,"city", city0);
-//		objectMap.addWorldObject("city0", city0);
-//		objectMap.addEntity("city0",city0,48);
-
-
-
-//		City city1;
-//		structureTiles.clear();
-//		structureTiles.add(objectMap.getTile(new Point(40,19)));
-//		structureTiles.add(objectMap.getTile(new Point(41,19)));
-//		structureTiles.add(objectMap.getTile(new Point(42,19)));
-//		structureTiles.add(objectMap.getTile(new Point(40,18)));
-//		structureTiles.add(objectMap.getTile(new Point(41,18)));
-//		structureTiles.add(objectMap.getTile(new Point(42,18)));
-//		structureTiles.add(objectMap.getTile(new Point(40,17)));
-//		structureTiles.add(objectMap.getTile(new Point(41,17)));
-//		structureTiles.add(objectMap.getTile(new Point(42,17)));
-//		city1 = new City(structureTiles, "Melbourne");
-//		city1.setProperties(new Dimension(192,96), new Point(500,500), "citytile0", true, "city1");
-//		objectMap.addObject(ObjectType.WORLD,"city", city1);
-//		objectMap.addWorldObject("city1", city1);
-//		objectMap.addEntity("city1",city1,48);
-
 		//Test unit
 		Unit cube;
 		cube = new Unit(new Point(4,6));
@@ -228,7 +181,7 @@ public class Game {
 		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
 		objectMap.addEntity("placeholder2", cube2,8);
 		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		cube2.setDestination(new Point(41,20));
+		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
 		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
@@ -265,7 +218,13 @@ public class Game {
 		objectMap.getTile(new Point(37,21)).setOwner(IsometricTile.OWNERSET.blue);
 		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 
-
+//
+		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
+		
+		System.out.println(objectMap.getTile(new Point(54,20)).toString());
+		
+		
+		
 		// temporary "tick" loop
 		while(true) {
 			try {
