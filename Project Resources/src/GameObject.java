@@ -26,11 +26,12 @@ public class GameObject {
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
-	protected HashMap<GameObject, Pair<Double, Double>> children;
+
+	protected HashMap<GameObject, Dimension> children;
 	
 	public GameObject(ObjectType type) {
 		this.type = type;
-		this.children = new HashMap<GameObject, Pair<Double, Double>>();
+		this.children = new HashMap<GameObject, Dimension>();
 	}
 	
 	public void setProperties(Dimension dimIn, Point posIn, String imageIn) {
@@ -65,11 +66,30 @@ public class GameObject {
 	public void setPosition(Dimension dimIn, Point posIn) {
 		this.coords = posIn;
 		this.dim = dimIn;
+		setChildrenPosition();
+		
 	}
 	
-	public void addChild(GameObject child, Pair<Double, Double> positionOffset) {
+	public void setChildrenPosition() {
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				child.coords.setLocation(
+						(this.coords.x)
+								+ children.get(child).width,
+						(this.coords.y)
+								+ children.get(child).height);
+			}
+		}
+	}
+	
+	public void addChild(GameObject child, Dimension positionOffset) {
+		child.setPosition(child.dim, new Point(this.coords.x+positionOffset.width+Game.xOffset,this.coords.y+positionOffset.height+Game.yOffset));
 		this.children.put(child, positionOffset);
-
+		
 	}
 	
 	/**
@@ -77,6 +97,16 @@ public class GameObject {
 	 */
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		if (children == null) {
+			return;
+		} else if (children.isEmpty()) {
+			return;
+		} else {
+			for (GameObject child : children.keySet()) {
+				child.render(g);
+			}
+		}
+		
 	}
 	
 	public boolean isClickable(){
@@ -87,10 +117,22 @@ public class GameObject {
 		return hoverable;
 	}
 	public void setHovered(boolean isHovered){
-		 this.currentlyHovered = isHovered;
+		
+		if(isHovered) {
+			if(!this.currentlyHovered) {
+				hoverAction();
+			}
+		}else {
+			if(this.currentlyHovered) {
+				disableHover();
+			}
+		}
+
+
+
 	}
 	public boolean isHovered(){
-		 return currentlyHovered;
+		return currentlyHovered;
 	}
 	
 	public boolean isVisible(){
@@ -124,7 +166,7 @@ public class GameObject {
 	}
 	public void hoverAction(){
 		this.currentlyHovered = true;
-		System.out.println("Hovering on: ");
+		System.out.println("Hovering on");
 	}
 	public void disableHover(){
 		this.currentlyHovered = false;

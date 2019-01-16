@@ -64,25 +64,32 @@ public class Game {
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");
-		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
+//		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addImage("roadtile","assets/road.png");
-		objectMap.addTileImage("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
-		objectMap.addTileImage("watertile","assets/watertiles.png", new Dimension(64,32), 3);
-		objectMap.addTileImage("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
-		objectMap.addTileImage("citytile", "assets/City1.png", new Dimension(192,112), 3);
+		objectMap.addImageSheet("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
+		objectMap.addImageSheet("watertile","assets/watertiles.png", new Dimension(64,32), 3);
+		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
+		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
 		objectMap.addImage("cube", "assets/placeholder.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
-		objectMap.addTileImage("road", "assets/roadTiles.png", new Dimension(64,32), 11);
-		objectMap.addTileImage("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
-		objectMap.addTileImage("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
-		objectMap.addFont("smallbuttonfont", "Calibri",10);
+		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
+		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
+		
+		//Adding fonts
+		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
+		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,12);
+		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
+		
+		
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -99,7 +106,7 @@ public class Game {
 		graphics = window.getGraphics();
 		Renderer mainGameRenderer = new Renderer("mainGameRenderer", window);
 //		Font gameFont = new Font("Arial", Font.PLAIN,11);
-		objectMap.addFont("primarygamefont", "Arial", 11);
+
 		graphics.setFont(objectMap.getFont("primarygamefont"));
 
 
@@ -110,12 +117,12 @@ public class Game {
 //		gameMenu = new Menu();
 //		gameWorld.
 
-
+//		Game.objectMap.get
 
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
 		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALLTEXT,"mainmenu", "newgamebutton","newgame","Start");
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","Start");
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit","Quit");
 		userInterface.enableInterfaceContainer("mainmenu");
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
@@ -136,17 +143,27 @@ public class Game {
 //		objectMap.getObject("uibackground").setProperties(new Dimension(200,300), new Point(1289,110),"uibackground");
 
 		//Mouse data text objects
-		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		globalMousePosText.setProperties("Global mouse position:",Color.WHITE, new Point(xOffset+5, 70));
+		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT);
+		globalMousePosText.setTextProperties("Global mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 70));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
-		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT);
+		worldMousePosText.setTextProperties("World mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
-
-		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
+//		
+		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT);
+		isoMousePosText.setTextProperties("Iso mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
+		
+//		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
+		
+//		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
+//		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
+//		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
+//
+//		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
+//		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
+//		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
 
 		//Test unit

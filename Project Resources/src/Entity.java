@@ -84,19 +84,9 @@ public class Entity extends WorldObject{
 	public void setPosition(Point worldPointIn, Point displayPanelPoint) {
 		this.coords.setLocation((displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX())),
 				((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))));
-		if (children == null) {
-			return;
-		} else if (children.isEmpty()) {
-			return;
-		} else {
-			for (GameObject child : children.keySet()) {
-				child.coords.setLocation(
-						(displayPanelPoint.getX() + (this.worldPoint.getX() - worldPointIn.getX()))
-								+ children.get(child).getKey(),
-						((displayPanelPoint.getY() + (this.worldPoint.getY() - worldPointIn.getY()))
-								+ children.get(child).getValue()));
-			}
-		}
+
+			setChildrenPosition();
+		
 	}
 
 	@Override
