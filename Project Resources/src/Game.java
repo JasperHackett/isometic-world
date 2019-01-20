@@ -127,6 +127,11 @@ public class Game {
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
 
+		userInterface.createUIContainer("citymanageinterface", new Point(1450,120), new Point(0,50));
+		
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+//		Game.userInterface.enableInterfaceContainer("cityinterface");
 
 
 
@@ -168,7 +173,7 @@ public class Game {
 
 		//Test unit
 		Unit cube;
-		cube = new Unit(new Point(4,6));
+		cube = new Unit(new Point(6,8));
 		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
 		objectMap.addEntity("placeholder", cube,8);
 		cube.setProperties(new Dimension(64,32), new Point(600,200),"cube");
@@ -176,13 +181,13 @@ public class Game {
 		Game.gameWorld.addTickingObject(cube);
 
 
-		Unit cube2;
-		cube2 = new Unit(new Point(20,37));
-		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
-		objectMap.addEntity("placeholder2", cube2,8);
-		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
-		Game.gameWorld.addTickingObject(cube2);
+//		Unit cube2;
+//		cube2 = new Unit(new Point(20,37));
+//		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
+//		objectMap.addEntity("placeholder2", cube2,8);
+//		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+//		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
+//		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();

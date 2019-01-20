@@ -393,61 +393,70 @@ public class World {
 			System.out.println("Empty tile list");
 			return returnList;
 		}
-		
+
 		//Stores each tile that has been discovered with the shortest distance to reach it and the point of the tile that path comes from
 		Map<IsometricTile,Pair<Double,Point>> distanceMap = new HashMap<IsometricTile,Pair<Double,Point>>();
 		//Queue of tiles for processing sorted by a heuristic double
 		Queue<Pair<Double,IsometricTile>> queuedTiles  = new PriorityQueue<Pair<Double,IsometricTile>>(new PathQueueComparator());
+		//Distance of each tile from the start point
+		Map<IsometricTile,Double> distanceFromStartMap = new HashMap<IsometricTile,Double>();
 		
 		
 		//Add initial tile to queue and distance map
 		queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
 		distanceMap.put(Game.objectMap.getTile(tilePosStart), new Pair<Double,Point>(0.0,tilePosStart));
-		
+		distanceFromStartMap.put(Game.objectMap.getTile(tilePosStart),0.0);
+		double distFromStart = 0.0;
 		
 		while(!queuedTiles.isEmpty()) {
 
 			Pair<Double,IsometricTile> currentEntry = queuedTiles.poll();
 			
-			//Iterate through walkable neighbours of currentEntry
+			//Iterate through walkable neighbors of currentEntry
 			for(IsometricTile tile : getNeighbours(currentEntry.getValue())) {
-				tileDistance = 10.0;
-				if(tile == null) {
-					System.out.println("NULL TILE");
-				}
-				if(currentEntry.getValue().hasRoad()) {
-					if (tile.hasRoad()) {
-						tileDistance = 1.0;
-					}
-					
-				}
 
-				
-				//Check if tile has been visited before
-				if(distanceMap.containsKey(tile)) {
-					//Check if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
-					if(distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + tileDistance) {
+					
+					//Temp code for tile distance
+					tileDistance = 10.0;
+					if(currentEntry.getValue().hasRoad()) {
+						if (tile.hasRoad()) {
+							tileDistance = 2.0;
+						}
+						
+					}
+	
+					
+					//Check if tile has been visited before and if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
+					if(!distanceMap.containsKey(tile)  || distanceMap.containsKey(tile) && distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + tileDistance) {
+	
+						if(distanceFromStartMap.containsKey(tile)) {
+							if(distanceFromStartMap.get(tile) < distanceFromStartMap.get(currentEntry.getValue()) + tileDistance) {
+								distanceFromStartMap.put(tile, distanceFromStartMap.get(currentEntry.getValue()) + tileDistance);
+							}
+						}else {
+							distanceFromStartMap.put(tile, distanceFromStartMap.get(currentEntry.getValue()) + tileDistance);
+						}
+						
+						
 						distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
 						queuedTiles.add(new Pair<Double,IsometricTile>(
-								(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
+								distanceFromStartMap.get(tile) +
+								(tileDistance* (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
+								
 								,tile));
+	
 					}
-				}else {
-					distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
-					queuedTiles.add(new Pair<Double,IsometricTile>(
-							(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
-							,tile));
-				}
-				
-				if(tile.isoPos.equals(tilePosEnd)) {
-					System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
-					Point routePoint = tilePosEnd;
-					while(!routePoint.equals(tilePosStart)) {
-						routePoint = distanceMap.get(Game.objectMap.getTile(routePoint)).getValue();
-						returnList.add(routePoint);
+			
+					//Found the destination
+					if(tile.isoPos.equals(tilePosEnd)) {
+						System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
+						Point routePoint = tilePosEnd;
+						while(!routePoint.equals(tilePosStart)) {
+							routePoint = distanceMap.get(Game.objectMap.getTile(routePoint)).getValue();
+							returnList.add(routePoint);
+						}
+						return returnList;
 					}
-					return returnList;
-				}
 				
 	
 			}
