@@ -73,14 +73,18 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
-//		String mouseButton = "not";
-//		if (e.getButton() == MouseEvent.BUTTON1) {
-//			mouseButton = "left";
-//		} else if (e.getButton() == MouseEvent.BUTTON2) {
-//			mouseButton = "middle";
-//		} else if (e.getButton() == MouseEvent.BUTTON3) {
-//			mouseButton = "right";
-//		}
+		
+		/*
+		 * Working code for button presses
+		 */
+		//		String mouseButton = "not";
+		//		if (e.getButton() == MouseEvent.BUTTON1) {
+		//			mouseButton = "left";
+		//		} else if (e.getButton() == MouseEvent.BUTTON2) {
+		//			mouseButton = "middle";
+		//		} else if (e.getButton() == MouseEvent.BUTTON3) {
+		//			mouseButton = "right";
+		//		}
 
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
@@ -90,7 +94,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			if(checkContains(uiObj.getPosition(),e.getPoint())) {
 //				System.out.println(uiObj.clickTag);
 				callClickAction(uiObj.clickTag);
-				break;
+				return;
 			}
 		}
 
@@ -283,10 +287,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if (clickTag.equals("exit")) {
 			System.out.println("Exiting");
 			System.exit(0);
-		}else if (clickTag.equals("hello")) {
-			System.out.println("hello");
-		}else if (clickTag.equals("goodbye")) {
-			System.out.println("goodbye");
+		}else if (clickTag.equals("cityworld")){
+
+			Game.userInterface.enableInterfaceContainer("citymanager");
 		}
 
 

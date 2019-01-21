@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -42,12 +43,23 @@ public class UserInterfaceObject extends GameObject{
 		this.clickable = true;
 		this.clickTag = clickTag;
 		TextObject elementText = new TextObject(ObjectType.CHILD);
-		System.out.println(pos);
+//		System.out.println(pos);
 		elementText.setTextProperties(buttonText,Game.objectMap.getFont("smallbuttonfont"),Color.LIGHT_GRAY,pos);
 		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
 		this.addChild(elementText, offset);
 			
 
+	}
+	public void setElementTextProperties(String text, String fontKey,Color textColor, Point pos) {
+		this.coords = pos;
+		elementText = new TextObject(ObjectType.CHILD);
+		elementText.setTextProperties(text, Game.objectMap.getFont(fontKey),textColor, pos);
+//		this.dim = new Dimension(Game.graphics.getFontMetrics(font).stringWidth(text);)
+		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		this.addChild(elementText, offset);
+	}
+	public void setElementText(String text) {
+		elementText.setText(text);
 	}
 
 	
@@ -56,6 +68,9 @@ public class UserInterfaceObject extends GameObject{
 		type = uiType;
 		switch(uiType) {
 		
+			case TEXT:
+				this.dim = new Dimension(64,32);
+				break;
 			case SMALL :
 //				System.out.println("small obj created");
 				this.dim = (new Dimension(64,32));

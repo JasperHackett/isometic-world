@@ -330,6 +330,7 @@ public class World {
 	}
 
 	
+	
 	//Checks for all walkable neighbours of an isometrictile
 	// returns an ArrayList in the following order: Left,Up,Right,Down
 	public ArrayList<IsometricTile> getNeighbours(IsometricTile centreTile){
@@ -406,7 +407,6 @@ public class World {
 		queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
 		distanceMap.put(Game.objectMap.getTile(tilePosStart), new Pair<Double,Point>(0.0,tilePosStart));
 		distanceFromStartMap.put(Game.objectMap.getTile(tilePosStart),0.0);
-		double distFromStart = 0.0;
 		
 		while(!queuedTiles.isEmpty()) {
 
@@ -420,7 +420,7 @@ public class World {
 					tileDistance = 10.0;
 					if(currentEntry.getValue().hasRoad()) {
 						if (tile.hasRoad()) {
-							tileDistance = 2.0;
+							tileDistance = 5.0;
 						}
 						
 					}
@@ -449,7 +449,7 @@ public class World {
 			
 					//Found the destination
 					if(tile.isoPos.equals(tilePosEnd)) {
-						System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
+//						System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
 						Point routePoint = tilePosEnd;
 						while(!routePoint.equals(tilePosStart)) {
 							routePoint = distanceMap.get(Game.objectMap.getTile(routePoint)).getValue();

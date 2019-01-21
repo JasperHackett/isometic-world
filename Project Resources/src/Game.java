@@ -127,10 +127,9 @@ public class Game {
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
 
-		userInterface.createUIContainer("citymanageinterface", new Point(1450,120), new Point(0,50));
-		
-//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
-//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+		userInterface.createUIContainer("citymanager", new Point(1450,120), new Point(0,50));
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "cuberun", "hello", "Hello");
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (1430,60));
 //		Game.userInterface.enableInterfaceContainer("cityinterface");
 
 
@@ -181,13 +180,13 @@ public class Game {
 		Game.gameWorld.addTickingObject(cube);
 
 
-//		Unit cube2;
-//		cube2 = new Unit(new Point(20,37));
-//		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
-//		objectMap.addEntity("placeholder2", cube2,8);
-//		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-//		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
-//		Game.gameWorld.addTickingObject(cube2);
+		Unit cube2;
+		cube2 = new Unit(new Point(20,37));
+		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
+		objectMap.addEntity("placeholder2", cube2,8);
+		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
+		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
@@ -197,6 +196,15 @@ public class Game {
 
 //		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
 		objectMap.updateMainDisplayObjects();
+		gameWorld.updateDisplay();
+		
+		//Sleep to stop concurrent modification exception
+		try {
+			Thread.sleep(10);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		mainGameRenderer.start();
 
 
@@ -224,9 +232,9 @@ public class Game {
 		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 
 //
-		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
-		
-		System.out.println(objectMap.getTile(new Point(54,20)).toString());
+//		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
+//		
+//		System.out.println(objectMap.getTile(new Point(54,20)).toString());
 		
 		
 		
