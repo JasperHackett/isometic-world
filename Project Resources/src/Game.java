@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
+
 import javax.swing.JFrame;
 
 //import javafx.scene.paint.Color;
@@ -36,6 +38,7 @@ public class Game {
 	public static SettingsHandler settingsControl;
 	public static final int xOffset = 3;
 	public static final int yOffset = 26;
+	public static Semaphore sem = new Semaphore(1);
 
 	public enum STATE{
 		Menu,
@@ -48,6 +51,7 @@ public class Game {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 //		mainHUD.displayCityOnHUD();
 
 		settingsControl = new SettingsHandler();
@@ -60,11 +64,11 @@ public class Game {
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 
 
-
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");
 //		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
+		objectMap.addImage("2x2hover", "assets/2x2hover.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
@@ -74,20 +78,26 @@ public class Game {
 		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
 		objectMap.addImage("cube", "assets/placeholder.png");
+		objectMap.addImage("ironore", "assets/iron.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
+		objectMap.addImage("ironhut","assets/ironhut.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
 		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
-		
+		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
+		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
 		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
+		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
 		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
+		objectMap.addFont("topbarfont","Times New Roman",Font.BOLD, 15);
+//		objectMap.getFont("topbarfont").
 		
 		
 		Dimension dim = new Dimension (width, height);
@@ -126,14 +136,34 @@ public class Game {
 		userInterface.enableInterfaceContainer("mainmenu");
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
+		
+		userInterface.createUIContainer("topmenubar", new Point(384,4), new Point(128,0));
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "hello", "Labour");
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", "citiesmenu", "Cities");
 
 		userInterface.createUIContainer("citymanager", new Point(1450,120), new Point(0,50));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "cuberun", "hello", "Hello");
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
 		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (1430,60));
 //		Game.userInterface.enableInterfaceContainer("cityinterface");
+		
+		
+		userInterface.createUIContainer("constructionmenu",new Point(1450,200), new Point(0,50));
+		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionmenu", "buildironmine","buildironmine","Iron Mine");
+		
+		userInterface.createUIContainer("citiesmenu",new Point(1450,200), new Point(0,40));
+		for(City city : gameWorld.cityList) {
+			userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
+		}
 
 
-
+		userInterface.createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30));
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorkerToResourceStructure", "Add");
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (1430,60));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (1430,250));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,250));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (1430,300));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,300));
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -209,27 +239,27 @@ public class Game {
 
 
 		// testing tile ownership
-		for (int x = 36; x < 54; x++) {
-			for (int y = 15; y < 27; y++) {
-				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
-			}
-		}
-		for (int x = 25; x < 36; x++) {
-			for (int y = 15; y < 27; y++) {
-				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.blue);
-			}
-		}
-		objectMap.getTile(new Point(45,27)).setOwner(IsometricTile.OWNERSET.red);
-		objectMap.getTile(new Point(40,26)).setOwner(IsometricTile.OWNERSET.none);
-		objectMap.getTile(new Point(35,20)).setOwner(IsometricTile.OWNERSET.red);
-		objectMap.getTile(new Point(36,24)).setOwner(IsometricTile.OWNERSET.none);
-		objectMap.getTile(new Point(45,14)).setOwner(IsometricTile.OWNERSET.red);
-		objectMap.getTile(new Point(40,15)).setOwner(IsometricTile.OWNERSET.none);
-		objectMap.getTile(new Point(54,20)).setOwner(IsometricTile.OWNERSET.red);
-		objectMap.getTile(new Point(53,24)).setOwner(IsometricTile.OWNERSET.none);
-		objectMap.getTile(new Point(36,21)).setOwner(IsometricTile.OWNERSET.blue);
-		objectMap.getTile(new Point(37,21)).setOwner(IsometricTile.OWNERSET.blue);
-		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
+//		for (int x = 36; x < 54; x++) {
+//			for (int y = 15; y < 27; y++) {
+//				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.red);
+//			}
+//		}
+//		for (int x = 25; x < 36; x++) {
+//			for (int y = 15; y < 27; y++) {
+//				objectMap.getTile(new Point(x,y)).setOwner(IsometricTile.OWNERSET.blue);
+//			}
+//		}
+//		objectMap.getTile(new Point(45,27)).setOwner(IsometricTile.OWNERSET.red);
+//		objectMap.getTile(new Point(40,26)).setOwner(IsometricTile.OWNERSET.none);
+//		objectMap.getTile(new Point(35,20)).setOwner(IsometricTile.OWNERSET.red);
+//		objectMap.getTile(new Point(36,24)).setOwner(IsometricTile.OWNERSET.none);
+//		objectMap.getTile(new Point(45,14)).setOwner(IsometricTile.OWNERSET.red);
+//		objectMap.getTile(new Point(40,15)).setOwner(IsometricTile.OWNERSET.none);
+//		objectMap.getTile(new Point(54,20)).setOwner(IsometricTile.OWNERSET.red);
+//		objectMap.getTile(new Point(53,24)).setOwner(IsometricTile.OWNERSET.none);
+//		objectMap.getTile(new Point(36,21)).setOwner(IsometricTile.OWNERSET.blue);
+//		objectMap.getTile(new Point(37,21)).setOwner(IsometricTile.OWNERSET.blue);
+//		objectMap.getTile(new Point(37,20)).setOwner(IsometricTile.OWNERSET.blue);
 
 //
 //		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));

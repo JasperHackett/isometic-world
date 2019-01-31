@@ -22,6 +22,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private boolean dragEnabled;
 	private GameObject hoveredObject;
 	private GameObject clickedObject;
+	private Entity clickedEntity;
 
 
 	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
@@ -86,18 +87,30 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		//			mouseButton = "right";
 		//		}
 
+		//iso2D is the mouse position isometrically converted. Used for mouse detection on iso grid. Uses magic number
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 
+		
+		
+		//Check all interface objects for click
+		try {
+			Game.sem.acquire();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
-			if(checkContains(uiObj.getPosition(),e.getPoint())) {
-//				System.out.println(uiObj.clickTag);
-				callClickAction(uiObj.clickTag);
-				return;
+			if(uiObj.isClickable()) {
+				if(checkContains(uiObj.getPosition(),e.getPoint())) {
+					uiObjectClicked(uiObj);
+					Game.sem.release();
+					return;
+				}
 			}
 		}
-
+		Game.sem.release();
 
 
 		if(Game.currentState == Game.STATE.Menu) {
@@ -113,10 +126,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
 
 				IsometricTile tile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
-				Boolean clickedEntity = tile.getEntityOnTile() != null;
+				Boolean entityClicked = tile.getEntityOnTile() != null;
 
 				if(clickedObject != null) {
-					if (clickedEntity && clickedObject.type != ObjectType.TILE) {
+					if (entityClicked && clickedObject.type != ObjectType.TILE) {
 						if (!tile.getEntityOnTile().equals(clickedObject)) {
 							clickedObject.setClicked(false);
 							clickedObject = null;
@@ -132,8 +145,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 				}
 
-				if (clickedEntity) {
+				if (entityClicked) {
 					clickedObject = tile.getEntityOnTile();
+					clickedEntity = tile.getEntityOnTile();
 				} else {
 					clickedObject = tile;
 				}
@@ -266,6 +280,23 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}
 //		GameObject tempObj = null;
 	}
+	
+	
+	
+	public void entityClicked(Entity entity) {
+		
+	}
+	
+	public void uiObjectClicked(UserInterfaceObject uiObj) {
+		clickedObject = uiObj;
+		if(this.clickedObject.isClicked()) {
+			this.clickedObject.setClicked(false);
+			this.clickedObject = null;
+		}else {
+			this.clickedObject.setClicked(true);
+		}
+		callClickAction(uiObj.clickTag);
+	}
 
 	/**
 	 * @param clickTag
@@ -282,14 +313,44 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			System.out.println("New game button clicked");
 //			Game.gameWorld = new World();
 			Game.userInterface.disableInterfaceContainer("mainmenu");
+			Game.userInterface.enableInterfaceContainer("topmenubar");
 			Game.currentState = Game.STATE.Game;
 //			Game.gameWorld.updateDisplay();
 		}else if (clickTag.equals("exit")) {
 			System.out.println("Exiting");
 			System.exit(0);
-		}else if (clickTag.equals("cityworld")){
+			
+		}else if (clickTag.equals("citybtn")){
+			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
+			if(clickedObject == null) {
+				System.out.println("clickedobj null");
+			}
+			if(uiObject != null) {
+				System.out.println("ui not null");
+				City city = null;
+				if(uiObject.referenceObject != null) {
+					 city = (City) uiObject.referenceObject;
+				}
+				Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
+				Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
+				uiObject.disableClick();
+				clickedObject = city;
+			}else {
+				System.out.println("ui null");
+			}
 
-			Game.userInterface.enableInterfaceContainer("citymanager");
+			
+			
+//			Game.userInterface.enableInterfaceContainer("citymanager");
+		}else if (clickTag.equals("addWorkerToResourceStructure")) {
+			
+			ResourceStructure clickedStructure = (ResourceStructure) clickedEntity;
+			clickedStructure.addWorker();
+			Game.userInterface.updateContainerValues("resourcestructure");
+		}else if(clickTag.equals("citiesmenu")) {
+			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
+		}else if(clickTag.equals("constructionmenu")) {
+			Game.userInterface.enableInterfaceContainer("constructionmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}
 
 

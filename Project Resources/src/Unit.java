@@ -14,6 +14,7 @@ import java.util.LinkedList;
 public class Unit extends Entity{
 
 	LinkedList<Point> currentPath;
+	Integer waitTicks; //Number of ticks this unit needs to wait
 	
 	Unit(Point isoPos){
 		

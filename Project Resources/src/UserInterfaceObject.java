@@ -14,23 +14,27 @@ import javafx.util.Pair;
  */
 public class UserInterfaceObject extends GameObject{
 	
-	
+	public String fontKey = "smallbuttonfont";
 	
 	public enum UIElementType{
 		CUSTOM,
 		SMALL,
 		MEDIUM,
-		TEXT
+		TEXT,
+		TOPBAR
 	}
 	UIElementType type;
 	TextObject elementText;
 	String defaultObjectImage;
 	String hoverImage;
+	GameObject referenceObject;
+
 
 	
 	public UserInterfaceObject(ObjectType objectType) {
 		super(objectType);
 		elementText = new TextObject(ObjectType.CHILD);
+		this.fontKey = "smallbuttonfont";
 	}
 	
 	public void setProperties(Point pos, String clickTag) {
@@ -44,7 +48,10 @@ public class UserInterfaceObject extends GameObject{
 		this.clickTag = clickTag;
 		TextObject elementText = new TextObject(ObjectType.CHILD);
 //		System.out.println(pos);
-		elementText.setTextProperties(buttonText,Game.objectMap.getFont("smallbuttonfont"),Color.LIGHT_GRAY,pos);
+		if(fontKey == null) {
+			fontKey = "smallbuttonfont";
+		}
+		elementText.setTextProperties(buttonText,Game.objectMap.getFont(fontKey),Color.LIGHT_GRAY,pos);
 		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
 		this.addChild(elementText, offset);
 			
@@ -53,6 +60,7 @@ public class UserInterfaceObject extends GameObject{
 	public void setElementTextProperties(String text, String fontKey,Color textColor, Point pos) {
 		this.coords = pos;
 		elementText = new TextObject(ObjectType.CHILD);
+		this.clickable = false;
 		elementText.setTextProperties(text, Game.objectMap.getFont(fontKey),textColor, pos);
 //		this.dim = new Dimension(Game.graphics.getFontMetrics(font).stringWidth(text);)
 		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
@@ -66,6 +74,7 @@ public class UserInterfaceObject extends GameObject{
 	public UserInterfaceObject(ObjectType objectType, UIElementType uiType) {
 		super(objectType);
 		type = uiType;
+		fontKey = "smallbuttonfont";
 		switch(uiType) {
 		
 			case TEXT:
@@ -80,7 +89,20 @@ public class UserInterfaceObject extends GameObject{
 				this.hoverImage = "uibuttonsmall1";
 				break;
 				
+			case TOPBAR:
+				this.dim = (new Dimension(96,24));
+				fontKey = "topbarfont";
+				this.objectImage = "topbarbtn0";
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = "topbarbtn1";
+				break;
 			case MEDIUM :
+				this.dim = (new Dimension(128,32));
+
+				this.objectImage = "uibuttonmedium0";
+				this.fontKey = "mediumbuttonfont";
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = "uibuttonmedium1";
 				break;
 				
 				

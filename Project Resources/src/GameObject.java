@@ -30,6 +30,8 @@ public class GameObject {
 	protected HashMap<GameObject, Dimension> children;
 	
 	public GameObject(ObjectType type) {
+		this.coords = new Point(0,0);
+		this.dim = new Dimension(64,32);
 		this.type = type;
 		this.children = new HashMap<GameObject, Dimension>();
 	}
@@ -139,7 +141,7 @@ public class GameObject {
 		return isVisible;
 	}
 	public void clickAction() {
-		System.out.println("Click action on: "+this.objectImage);
+//		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
 	}
 	public void setClicked(boolean isClicked) {
@@ -166,7 +168,6 @@ public class GameObject {
 	}
 	public void hoverAction(){
 		this.currentlyHovered = true;
-		System.out.println("Hovering on");
 	}
 	public void disableHover(){
 		this.currentlyHovered = false;

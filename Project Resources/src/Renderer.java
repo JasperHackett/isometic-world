@@ -85,7 +85,7 @@ public class Renderer implements Runnable {
 		graphics.clearRect(0, 0, Game.width, Game.height);
 
 		try {
-			semaphore.acquire();
+			Game.sem.acquire();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,7 +132,7 @@ public class Renderer implements Runnable {
         graphics.dispose();
         bs.show();
 
-        semaphore.release();
+        Game.sem.release();
 
 	}
 

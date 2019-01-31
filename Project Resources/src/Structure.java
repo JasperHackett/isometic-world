@@ -18,6 +18,7 @@ import javafx.util.Pair;
 public class Structure extends Entity {
 
 
+	public String name;
 	/**
 	 * @param type
 	 * @param worldDimsIn
@@ -25,6 +26,7 @@ public class Structure extends Entity {
 	 */
 	public Structure(ArrayList<IsometricTile> tileList) {
 		super(tileList);
+		name = "undefined";
 	}
 
 	// public Structure(ArrayList<IsometricTile> tileList, Point masterTile,
@@ -93,10 +95,23 @@ public class Structure extends Entity {
 //		}
 //	}
 //
-//	public void hoverAction() {
+//	public void hoverAction() {G
 //		// System.out.println("structure hovered");
 //		this.currentlyHovered = true;
 //
+	
+	
+	@Override
+	public void clickAction() {
+//		System.out.println("Click action on: "+ this.name);
+		this.currentlyClicked = true;
+//		Game.userInterface.passCityToInterfaceContainer(this, "citymanager");
+//		Game.userInterface.enableInterfaceContainer("citymanager");
+//		Game.userInterface.createUIContainer("cityinterface", new Point(1410,36), new Point(0,50));
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+//		Game.userInterface.enableInterfaceContainer("cityinterface");
+	}
 //	}
 //	@Override
 //	public void render(Graphics g) {

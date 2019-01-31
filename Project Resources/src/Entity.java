@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -31,14 +32,28 @@ public class Entity extends WorldObject{
 	public Entity() {
 		
 	}
+	Entity(Point isoPos){
+		
+//		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(new Point(4,6), new Point(41,55)));
+//		this.structureOffset = 16;
+		this.isoPoint = isoPos;
+//		Game.objectMap.getTile(isoPos);
+		this.worldPoint = Game.objectMap.getTile(isoPos).worldPoint;
+		this.worldDims = new Dimension(64,32);
+		this.dim = new Dimension(64,32);
+		this.coords = new Point(0,0);
+	}
+	
 	
 	public Entity(ArrayList<IsometricTile> tileList) {
-
+//		System.out.println(tileList.size());
 		this.tileList = tileList;
 		for (IsometricTile tile : tileList) {
 			tile.setEntityOnTile(this);
 		}
 		this.worldPoint = tileList.get(0).worldPoint;
+		this.isoPoint = tileList.get(0).isoPos;
+//		System.out.println(isoPoint);
 //		this.children = new HashMap<GameObject, Pair<Integer, Integer>>();
 	}
 
@@ -113,11 +128,7 @@ public class Entity extends WorldObject{
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
-		if (children == null) {
-			return;
-		} else if (children.isEmpty()) {
-			return;
-		} else {
+		if (children != null) {
 			for (GameObject child : children.keySet()) {
 				child.render(g);
 			}
