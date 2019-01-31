@@ -18,6 +18,7 @@ public class ResourceStructure extends Structure{
 	int currentWorkers = 0;
 	int resourceRange = 0; //How many tiles away resources can be collected
 	ArrayList<Resource> resources;
+	int nextResourceTile = 0;
 	/**
 	 * @param tileList
 	 */
@@ -70,6 +71,7 @@ public class ResourceStructure extends Structure{
 	}
 	public void addWorker() {
 		this.currentWorkers ++;
+		sendWorker();
 	}
 	
 	public void detectResources() {
@@ -92,6 +94,23 @@ public class ResourceStructure extends Structure{
 				}
 				
 			}
+//			resourceCount = resources.size();
+		}
+	}
+	public void sendWorker() {
+		if(currentWorkers > 0 && resources.size() > 0) {
+			Unit worker = new Unit(new Point(this.isoPoint.x -1,this.isoPoint.y-1));
+			Game.objectMap.addObject(ObjectType.WORLD, "worker" + this.currentWorkers, worker);
+			Game.objectMap.addEntity("worker" + this.currentWorkers, worker,8);
+
+			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+			worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
+			if(nextResourceTile < resources.size()-1) {
+				nextResourceTile ++;
+			}else {
+				nextResourceTile = 0;
+			}
+			Game.gameWorld.addTickingObject(worker);
 		}
 	}
 

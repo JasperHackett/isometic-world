@@ -240,7 +240,8 @@ public class World {
 						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
 						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.IRON);
-						Game.objectMap.addEntity("ironmine" + Integer.toString(ironCount), newRStructure,  48);
+						Game.objectMap.addEntity("ironmine" + Integer.toString(numEntitys), newRStructure,  48);
+						numEntitys++;
 					
 					
 					}
