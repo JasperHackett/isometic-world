@@ -23,6 +23,13 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject hoveredObject;
 	private GameObject clickedObject;
 	private Entity clickedEntity;
+	
+	private enum InputState{
+		DEFAULT,
+		CONSTRUCTION,
+		SELECT
+	};
+	InputState currentState = InputState.DEFAULT;
 
 
 	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
@@ -68,6 +75,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		Game.objectMap.getTextObject("isoMousePosText").setText("Iso mouse position: [" + (int) iso2D.getX() + "," + (int) iso2D.getY() + "]");
 		checkHover(e.getPoint());
 
+
+
 	}
 
 
@@ -78,14 +87,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		/*
 		 * Working code for button presses
 		 */
-		//		String mouseButton = "not";
-		//		if (e.getButton() == MouseEvent.BUTTON1) {
-		//			mouseButton = "left";
-		//		} else if (e.getButton() == MouseEvent.BUTTON2) {
-		//			mouseButton = "middle";
-		//		} else if (e.getButton() == MouseEvent.BUTTON3) {
-		//			mouseButton = "right";
-		//		}
+				String mouseButton = "not";
+				if (e.getButton() == MouseEvent.BUTTON1) {
+					mouseButton = "left";
+				} else if (e.getButton() == MouseEvent.BUTTON2) {
+					mouseButton = "middle";
+				} else if (e.getButton() == MouseEvent.BUTTON3) {
+					mouseButton = "right";
+				}
+			if(mouseButton.equals("right")) {
+				if(currentState == InputState.CONSTRUCTION) {
+					currentState = InputState.DEFAULT;
+				}
+			}
 
 		//iso2D is the mouse position isometrically converted. Used for mouse detection on iso grid. Uses magic number
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
@@ -101,15 +115,53 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
 			if(uiObj.isClickable()) {
 				if(checkContains(uiObj.getPosition(),e.getPoint())) {
+					if(clickedObject != null) {
+						if(uiObj.referenceObject != null) {
+							if(!uiObj.referenceObject.equals(clickedObject)) {
+								clickedObject.disableClick();
+							}
+								
+						}else {
+							clickedObject.disableClick();
+						}
+						
+					}
 					uiObjectClicked(uiObj);
 					Game.sem.release();
 					return;
 				}
 			}
 		}
+		
+		switch(currentState) {
+		case SELECT:
+			
+			break;
+		case CONSTRUCTION:
+			
+			
+			
+			
+			break;
+		case DEFAULT:
+			
+
+			
+			
+			
+			
+			
+			
+			break;
+		}
+		
+		
+
 		Game.sem.release();
 
 
@@ -237,6 +289,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),mousePos)) {
 //				iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height
 				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
+				
+				if(currentState == InputState.CONSTRUCTION) {
+//					Game.objectMap.get(key)
+				}
 
 				if(tempObj != null) {
 					if((tempObj.type == ObjectType.WORLD)){
@@ -350,7 +406,42 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(clickTag.equals("citiesmenu")) {
 			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}else if(clickTag.equals("constructionmenu")) {
+			clickedObject.disableClick();
 			Game.userInterface.enableInterfaceContainer("constructionmenu",InterfaceController.InterfaceZone.TopSidePanel);
+		}else if(clickTag.equals("buildironmine")) {
+			System.out.println("test");
+			currentState = InputState.CONSTRUCTION;
+//			Game.gameWorld.const
+//			for(String str : Game.objectMap.keySet()) {
+//				System.out.println(str);
+//			}
+//			WorldObject ironMine = new WorldObject();
+//			ironMine.setProperties(new Dimension(128,64), new Point(600,600),"ironhut");
+//			Game.objectMap.addWorldObject("ironhuthover", ironMine);
+//			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
+//			if(clickedObject == null) {
+//				System.out.println("clickedobj null");
+//			}
+//			if(uiObject != null) {
+//				System.out.println("ui not null");
+//				Structure structure = null;
+//				if(uiObject.referenceObject != null) {
+//					 structure = (Structure) uiObject.referenceObject;
+//				}
+////				Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
+////				Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
+////				uiObject.disableClick();
+////				clickedObject = city;
+//			}else {
+//				System.out.println("ui null");
+//			}
+		}else if(clickTag.equals("workersmenu")) {
+			clickedObject.disableClick();
+			Game.userInterface.enableInterfaceContainer("workersmenu",InterfaceController.InterfaceZone.TopSidePanel);
+		}else if(clickTag.equals("hireworker")) {
+			Game.player.workers++;
+			 UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("totalworkersvalue");
+			 textObj.setElementText(Integer.toString(Game.player.workers));
 		}
 
 

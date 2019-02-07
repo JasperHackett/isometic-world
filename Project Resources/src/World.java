@@ -81,6 +81,13 @@ public class World {
 	
 	//Called every at every increment of time in the game
 	void tick() {
+		Game.player.tick();
+		UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("moneyvalue");
+		textObj.setElementText(Double.toString(Game.player.money));
+		 textObj = (UserInterfaceObject)Game.objectMap.get("totalworkersvalue");
+		 textObj.setElementText(Integer.toString(Game.player.workers));
+		 textObj = (UserInterfaceObject)Game.objectMap.get("totalcostvalue");
+		 textObj.setElementText(Double.toString(Game.player.labourCost));
 		if(!tickingObjects.isEmpty()) {
 			for(WorldObject obj : tickingObjects) {
 				obj.tickAction();

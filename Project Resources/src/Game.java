@@ -39,6 +39,8 @@ public class Game {
 	public static final int xOffset = 3;
 	public static final int yOffset = 26;
 	public static Semaphore sem = new Semaphore(1);
+	public static Player player;
+
 
 	public enum STATE{
 		Menu,
@@ -51,6 +53,7 @@ public class Game {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+
 
 //		mainHUD.displayCityOnHUD();
 
@@ -138,9 +141,11 @@ public class Game {
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
 		
 		userInterface.createUIContainer("topmenubar", new Point(384,4), new Point(128,0));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "hello", "Labour");
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
 		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
 		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", "citiesmenu", "Cities");
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(800,4));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (830,4));
 
 		userInterface.createUIContainer("citymanager", new Point(1450,120), new Point(0,50));
 		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
@@ -155,6 +160,13 @@ public class Game {
 		for(City city : gameWorld.cityList) {
 			userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
 		}
+		
+		userInterface.createUIContainer("workersmenu",new Point(1450,200), new Point(0,40));
+		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (1430,250));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,250));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (1430,300));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (1510,300));
 
 
 		userInterface.createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30));
@@ -198,6 +210,8 @@ public class Game {
 //		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
 //		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 //		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
+		
+		player = new Player();
 
 
 		//Test unit
