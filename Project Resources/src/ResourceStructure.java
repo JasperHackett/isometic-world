@@ -70,8 +70,14 @@ public class ResourceStructure extends Structure{
 		}
 	}
 	public void addWorker() {
-		this.currentWorkers ++;
-		sendWorker();
+		if(Game.player.availableWorkers > 0) {
+			this.currentWorkers ++;
+			sendWorker();
+			Game.player.employWorker();
+		}else {
+			System.out.println("no available workers");
+		}
+
 	}
 	
 	public void detectResources() {
@@ -80,8 +86,13 @@ public class ResourceStructure extends Structure{
 		}
 		if(this.resourceRange > 0 && this.isoPoint != null) {
 
-			for(int i = this.isoPoint.x-resourceRange; i < this.isoPoint.x+resourceRange+1;i++) {
-				for(int j = this.isoPoint.y-resourceRange; j < this.isoPoint.y+resourceRange+1;j++) {
+			for(int i = this.isoPoint.x-resourceRange; i < this.isoPoint.x+resourceRange+2;i++) {
+				for(int j = this.isoPoint.y-resourceRange-1; j < this.isoPoint.y+resourceRange+1;j++) {
+					
+					/* Shows range that is checked:
+					 * Game.objectMap.getTile(new Point(i,j)).setHovered(true); 
+					 */
+					
 					if(Game.objectMap.getTile(new Point(i,j)).entityOnTile instanceof Resource) {
 						Resource resource = (Resource) Game.objectMap.getTile(new Point(i,j)).entityOnTile;
 						if(resource.resourceType == this.structureType) {
@@ -98,10 +109,10 @@ public class ResourceStructure extends Structure{
 		}
 	}
 	public void sendWorker() {
-		if(currentWorkers > 0 && resources.size() > 0) {
+		if(currentWorkers > 0 && resources.size() > 0 ) {
 			Unit worker = new Unit(new Point(this.isoPoint.x -1,this.isoPoint.y-1));
 			Game.objectMap.addObject(ObjectType.WORLD, "worker" + this.currentWorkers, worker);
-			Game.objectMap.addEntity("worker" + this.currentWorkers, worker,8);
+			Game.objectMap.addEntity("worker" + this.objID + this.currentWorkers, worker,8);
 
 			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
 			worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));

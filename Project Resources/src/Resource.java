@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,6 +24,7 @@ public class Resource extends Entity{
 	Resource(ArrayList<IsometricTile> tileList,ResourceType resourceType){
 		super(tileList);
 		this.resourceType = resourceType;
+		
 		
 //		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(new Point(4,6), new Point(41,55)));
 //		this.structureOffset = 16;
@@ -66,6 +68,18 @@ public class Resource extends Entity{
 		System.out.println("Clicked on a resource");
 		this.currentlyClicked = true;
 
+	}
+	@Override
+	public void render(Graphics g) {
+		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		if(currentlyHovered) {
+			g.drawImage(Game.objectMap.getImage("resourcehover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		}
+		if (children != null) {
+			for (GameObject child : children.keySet()) {
+				child.render(g);
+			}
+		}
 	}
 	
 	

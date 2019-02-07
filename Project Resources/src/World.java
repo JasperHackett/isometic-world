@@ -247,7 +247,8 @@ public class World {
 						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
 						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.IRON);
-						Game.objectMap.addEntity("ironmine" + Integer.toString(numEntitys), newRStructure,  48);
+						newRStructure.objID = "ironmine" + Integer.toString(numEntitys);
+						Game.objectMap.addEntity(newRStructure.objID, newRStructure,  48);
 						numEntitys++;
 					
 					
@@ -509,6 +510,23 @@ public class World {
 		
 		System.out.println("No path found");
 		return returnList;
+	}
+	
+	public ArrayList<Point> getPathBetweenEntitys(Entity entityStart, Entity entityEnd){
+		if(entityStart == null || entityEnd == null) {
+			System.out.println("Attempted to get path between a null entity");
+			return null;
+		}
+		
+		Point startPoint = new Point(entityStart.worldPoint);
+		Point endPoint = new Point(entityEnd.worldPoint);
+		
+		
+		
+		
+		
+		
+		return getPathBetween(startPoint,endPoint);
 	}
 	
 

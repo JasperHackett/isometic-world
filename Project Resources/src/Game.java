@@ -73,6 +73,7 @@ public class Game {
 //		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("2x2hover", "assets/2x2hover.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
+		objectMap.addImage("resourcehover", "assets/resourcehover.png");
 		objectMap.addImage("cityhover", "assets/hovercity.png");
 		objectMap.addImage("click", "assets/click.png");
 		objectMap.addImage("roadtile","assets/road.png");
@@ -165,8 +166,10 @@ public class Game {
 		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
 		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (1430,250));
 		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,250));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (1430,300));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (1510,300));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Available workers:","primarygamefont",Color.WHITE,new Point (1430,290));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,290));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (1430,330));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (1510,330));
 
 
 		userInterface.createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30));

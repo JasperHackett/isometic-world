@@ -439,9 +439,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			clickedObject.disableClick();
 			Game.userInterface.enableInterfaceContainer("workersmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}else if(clickTag.equals("hireworker")) {
-			Game.player.workers++;
-			 UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("totalworkersvalue");
-			 textObj.setElementText(Integer.toString(Game.player.workers));
+			Game.player.hireWorker();
+			
 		}
 
 
