@@ -148,6 +148,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public void addEntity(String structureName, Entity structureIn, int structureOffset) {
 		structureIn.structureOffset = structureOffset;
+		structureIn.objID = structureName;
 		this.worldObjects.put(structureName, structureIn);
 		this.worldEntitys.put(structureName, structureIn);
 		this.put(structureName, structureIn);
@@ -357,11 +358,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		if (worldEntitys != null) {
 			for (Map.Entry<String, Entity> mapEntry : worldEntitys.entrySet()) {
 				WorldObject obj = mapEntry.getValue();
-				if (isWithinDisplay(obj.getWorldPosition(),
+
+				if (obj.isVisible() && isWithinDisplay(obj.getWorldPosition(),
 						new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
 					mainDisplayEntitys.add(mapEntry.getValue());
 					mainDisplayObjects.add(mapEntry.getValue());
 				}
+			
 			}
 		}
 
@@ -372,6 +375,10 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 		Game.sem.release();
 
+	}
+	public void removeEntity(Entity entityIn) {
+//		Game.sem.aq
+		this.worldEntitys.remove(entityIn);
 	}
 
 	// returns true if at least one corner of a given object is within the Display's

@@ -23,7 +23,8 @@ public class Unit extends Entity{
 		GOTODEST,
 		RETURN,
 		GETTASK,
-		WAIT;
+		WAIT,
+		ENTER;
 		
 	};
 	LinkedList<Point> currentPath;
@@ -59,6 +60,14 @@ public class Unit extends Entity{
 		actionsQueue.add(Actions.GOTODEST);
 	}
 	
+	//This function will probably need to be moved to a child Worker class or something similar
+	public void getResource(Point destinationPos) {
+		addAction(Actions.GOTODEST, destinationPos);
+		setDestination(destinationPos);
+		addAction(Actions.WAIT, 4);
+		addAction(Actions.RETURN);
+	}
+	
 	public void addAction(Actions action) {
 		switch(action) {
 		case GETTASK:
@@ -68,11 +77,7 @@ public class Unit extends Entity{
 			
 			break;
 		case RETURN:
-			if(parentStructure != null) {
-				setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
-			}else {
-				System.out.println("Unit given RETURN action with no parentStructure");
-			}
+
 			break;
 		case WAIT:
 			break;
@@ -91,11 +96,7 @@ public class Unit extends Entity{
 			
 			break;
 		case RETURN:
-			if(parentStructure != null) {
-				setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
-			}else {
-				System.out.println("Unit given RETURN action with no parentStructure");
-			}
+
 			break;
 		case WAIT:
 			break;
@@ -114,11 +115,7 @@ public class Unit extends Entity{
 			
 			break;
 		case RETURN:
-			if(parentStructure != null) {
-				setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
-			}else {
-				System.out.println("Unit given RETURN action with no parentStructure");
-			}
+			
 			break;
 		case WAIT:
 			break;
@@ -163,10 +160,10 @@ public class Unit extends Entity{
 					this.isoPoint = currentPath.removeLast();
 					this.worldPoint = Game.objectMap.getTile(isoPoint).worldPoint;
 				}else {
-					System.out.println("Destination reached");
+					
 					if(parentStructure != null) {
-						this.setVisible(false);
-						System.out.println("unit reached dest");
+//						this.setVisible(false);
+//						System.out.println("unit reached dest");
 					}
 					actionsQueue.poll();
 				}
@@ -174,15 +171,34 @@ public class Unit extends Entity{
 			case GETTASK:
 				break;
 			case RETURN:
+				if(parentStructure != null) {
+					setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
+					actionsQueue.poll();
+					addAction(Actions.GOTODEST);
+					addAction(Actions.ENTER);
+				}else {
+					System.out.println("Unit given RETURN action with no parentStructure");
+				}
 				break;
 			case WAIT:
 				if(waitTicks > 0) {
+//					System.out.println("Wait ticK: "+waitTicks);
 					waitTicks--;
 				}else {
 					waitTicks = 0;
+					actionsQueue.poll();
 //					actionsQueue.pop();
 				}
 
+				break;
+				
+			case ENTER:
+				this.setVisible(false);
+				ResourceStructure rStruct = (ResourceStructure) parentStructure;
+				rStruct.workerReturn(this);
+//				Game.gameWorld.tickingObjects.remove(this);
+				actionsQueue.poll();
+				
 				break;
 			default:
 				break;

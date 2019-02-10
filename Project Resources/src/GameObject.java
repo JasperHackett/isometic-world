@@ -19,7 +19,7 @@ public class GameObject {
 	protected Point coords; //Top left corner of object
 	protected String objectImage; //test for a single image object
 	protected boolean clickable;
-	private boolean isVisible;
+	private boolean visible = true;
 	public boolean hoverable;
 	public boolean currentlyHovered;
 	public boolean currentlyClicked;
@@ -138,7 +138,7 @@ public class GameObject {
 	}
 	
 	public boolean isVisible(){
-		return isVisible;
+		return visible;
 	}
 	public void clickAction() {
 //		System.out.println("Click action on: "+this.objectImage);
@@ -164,7 +164,7 @@ public class GameObject {
 	}
 	
 	public void setVisible(boolean isVisible){
-		this.isVisible = isVisible;
+		this.visible = isVisible;
 	}
 	public void hoverAction(){
 		this.currentlyHovered = true;

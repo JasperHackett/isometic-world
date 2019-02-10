@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class ResourceStructure extends Structure{
 	
 	ArrayList<Unit> workers;
+	int nextWorkerOut= 0;
 	int resourceStored = 0;
 	int currentWorkers = 0;
 	int activeWorkers = 0;
@@ -76,6 +77,12 @@ public class ResourceStructure extends Structure{
 
 		if(Game.player.availableWorkers > 0) {
 			this.currentWorkers ++;
+			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1),this);
+			workers.add(worker);
+			Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
+			Game.objectMap.addEntity(worker.toString(), worker,8);
+			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+			worker.setVisible(false);
 			
 			Game.player.employWorker();
 		}else {
@@ -89,6 +96,7 @@ public class ResourceStructure extends Structure{
 		if(this.currentlyClicked) {
 			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("workertickvalue");
 			textObj.setElementText(Integer.toString(tickCounter));
+			
 		}
 		if(tickCounter > 0) {
 			tickCounter--;
@@ -133,19 +141,45 @@ public class ResourceStructure extends Structure{
 	
 	public void sendWorker() {
 		if(activeWorkers < currentWorkers) {
-			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1));
-			Game.objectMap.addObject(ObjectType.WORLD, "worker" + this.currentWorkers, worker);
-			Game.objectMap.addEntity("worker" + this.objID + this.currentWorkers, worker,8);
+			for(Unit worker : workers) {
+				if(worker.actionsQueue.size() == 0) {
+//					worker.setPosition(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1));
+					worker.worldPoint = new Point(this.isoPoint.x-1 ,this.isoPoint.y-1);
+//					this.worldPoint = Game.objectMap.getTile(isoPos).worldPoint;
+					worker.setVisible(true);
 
-			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-			worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
-			if(nextResourceTile < resources.size()-1) {
-				nextResourceTile ++;
-			}else {
-				nextResourceTile = 0;
+					worker.getResource(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
+					if(nextResourceTile < resources.size()-1) {
+						nextResourceTile ++;
+					}else {
+						nextResourceTile = 0;
+					}
+					Game.gameWorld.addTickingObject(worker);
+//					worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
+				}
 			}
-			Game.gameWorld.addTickingObject(worker);
+//			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1),this);
+//			Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
+//			Game.objectMap.addEntity(worker.toString(), worker,8);
+//
+//			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+//			worker.getResource(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
+//			worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
+
 		}
+	}
+	public void workerReturn(Unit worker) {
+		Game.objectMap.removeEntity(worker);
+		this.resourceStored++;
+		if(this.currentlyClicked) {
+			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("resourcestoredvalue");
+			if(textObj != null) {
+				textObj.setElementText(Integer.toString(resourceStored));
+			}
+
+		}
+//		System.out.println("tesT");
+//		Game.objectMap
 	}
 
 }
