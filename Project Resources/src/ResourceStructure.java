@@ -16,9 +16,12 @@ public class ResourceStructure extends Structure{
 	ArrayList<Unit> workers;
 	int resourceStored = 0;
 	int currentWorkers = 0;
+	int activeWorkers = 0;
 	int resourceRange = 0; //How many tiles away resources can be collected
 	ArrayList<Resource> resources;
 	int nextResourceTile = 0;
+	int workerTicks = 12;
+	int tickCounter = 0;
 	/**
 	 * @param tileList
 	 */
@@ -70,14 +73,33 @@ public class ResourceStructure extends Structure{
 		}
 	}
 	public void addWorker() {
+
 		if(Game.player.availableWorkers > 0) {
 			this.currentWorkers ++;
-			sendWorker();
+			
 			Game.player.employWorker();
 		}else {
 			System.out.println("no available workers");
 		}
 
+	}
+	@Override
+	public void tickAction() {
+//		tickCounter++;
+		if(this.currentlyClicked) {
+			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("workertickvalue");
+			textObj.setElementText(Integer.toString(tickCounter));
+		}
+		if(tickCounter > 0) {
+			tickCounter--;
+		}else {
+			tickCounter = workerTicks;
+			if(activeWorkers < currentWorkers) {
+				
+				sendWorker();
+			}
+
+		}
 	}
 	
 	public void detectResources() {
@@ -108,9 +130,10 @@ public class ResourceStructure extends Structure{
 //			resourceCount = resources.size();
 		}
 	}
+	
 	public void sendWorker() {
-		if(currentWorkers > 0 && resources.size() > 0 ) {
-			Unit worker = new Unit(new Point(this.isoPoint.x -1,this.isoPoint.y-1));
+		if(activeWorkers < currentWorkers) {
+			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1));
 			Game.objectMap.addObject(ObjectType.WORLD, "worker" + this.currentWorkers, worker);
 			Game.objectMap.addEntity("worker" + this.objID + this.currentWorkers, worker,8);
 

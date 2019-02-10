@@ -59,6 +59,97 @@ public class Unit extends Entity{
 		actionsQueue.add(Actions.GOTODEST);
 	}
 	
+	public void addAction(Actions action) {
+		switch(action) {
+		case GETTASK:
+
+			break;
+		case GOTODEST:
+			
+			break;
+		case RETURN:
+			if(parentStructure != null) {
+				setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
+			}else {
+				System.out.println("Unit given RETURN action with no parentStructure");
+			}
+			break;
+		case WAIT:
+			break;
+		default:
+			break;
+			
+		}
+		actionsQueue.add(action);
+		
+	}
+	public void addAction(Actions action, GameObject objectIn) {
+		switch(action) {
+		case GETTASK:
+			break;
+		case GOTODEST:
+			
+			break;
+		case RETURN:
+			if(parentStructure != null) {
+				setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
+			}else {
+				System.out.println("Unit given RETURN action with no parentStructure");
+			}
+			break;
+		case WAIT:
+			break;
+		default:
+			break;
+			
+		}
+		actionsQueue.add(action);
+		
+	}
+	public void addAction(Actions action, Point pointIn) {
+		switch(action) {
+		case GETTASK:
+			break;
+		case GOTODEST:
+			
+			break;
+		case RETURN:
+			if(parentStructure != null) {
+				setDestination(parentStructure.getClosestNeighbour(this.isoPoint));
+			}else {
+				System.out.println("Unit given RETURN action with no parentStructure");
+			}
+			break;
+		case WAIT:
+			break;
+		default:
+			break;
+			
+		}
+		actionsQueue.add(action);
+		
+	}
+	public void addAction(Actions action, Integer intIn) {
+		switch(action) {
+		case GETTASK:
+			break;
+		case GOTODEST:
+			
+			break;
+		case RETURN:
+			
+			break;
+		case WAIT:
+			waitTicks = intIn;
+			break;
+		default:
+			break;
+			
+		}
+		actionsQueue.add(action);
+		
+	}
+	
 	@Override
 	public void tickAction() {
 		if(!actionsQueue.isEmpty()) {
@@ -74,7 +165,8 @@ public class Unit extends Entity{
 				}else {
 					System.out.println("Destination reached");
 					if(parentStructure != null) {
-						//New available worker for parent structure
+						this.setVisible(false);
+						System.out.println("unit reached dest");
 					}
 					actionsQueue.poll();
 				}
@@ -84,6 +176,13 @@ public class Unit extends Entity{
 			case RETURN:
 				break;
 			case WAIT:
+				if(waitTicks > 0) {
+					waitTicks--;
+				}else {
+					waitTicks = 0;
+//					actionsQueue.pop();
+				}
+
 				break;
 			default:
 				break;

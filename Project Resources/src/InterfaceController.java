@@ -236,6 +236,8 @@ public class InterfaceController {
 			resourceStructureContainer.elements.get("resourcestoredvalue").setElementText(Integer.toString(rStructure.resourceStored));
 			resourceStructureContainer.elements.get("workerslabel").setElementText("Workers:");
 			resourceStructureContainer.elements.get("workersvalue").setElementText(Integer.toString(rStructure.currentWorkers));
+			resourceStructureContainer.elements.get("workerticklabel").setElementText("Next worker:");
+			resourceStructureContainer.elements.get("workertickvalue").setElementText(Integer.toString(rStructure.tickCounter));
 			for(UserInterfaceObject uiObj : containerMap.get(containerName).elements.values()) {
 				uiObj.referenceObject =rStructure;
 			}

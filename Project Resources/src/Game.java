@@ -179,6 +179,8 @@ public class Game {
 		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,250));
 		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (1430,300));
 		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,300));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerticklabel","undefined","primarygamefont",Color.WHITE,new Point (1430,330));
+		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workertickvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,330));
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -217,6 +219,11 @@ public class Game {
 		player = new Player();
 
 
+		Entity constructionHover = new Entity(new Point(0,0));
+		constructionHover.setProperties("teststructure", false);
+		objectMap.addEntity("conhover", constructionHover, 16);
+		objectMap.addObject(ObjectType.WORLD, "conhover", constructionHover);
+		
 		//Test unit
 		Unit cube;
 		cube = new Unit(new Point(6,8));
@@ -240,6 +247,7 @@ public class Game {
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
+		inputControl.setConstructionOutline(constructionHover);
 
 
 //		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);

@@ -44,6 +44,7 @@ public class World {
 	public int tileCount = 0;
 	public ArrayList<City> cityList;
 	public ArrayList<WorldObject> tickingObjects;
+	public ArrayList<WorldObject> newTickingObjects; //A queue of tickingObjects to be added each tick to avoid collision
 	public int cityCount;
 	Pair<Dimension,Point> isometricPlane;
 	public Queue<Pair<String,Point>> entityList;
@@ -60,6 +61,7 @@ public class World {
 		this.isoDims = initialiseTileMap();
 		
 		tickingObjects = new ArrayList<WorldObject>();
+		newTickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
 		panelDims = new Dimension(Game.width-200,Game.height-64);
 		panelPoint = new Point(0,34);
@@ -88,6 +90,12 @@ public class World {
 		 textObj.setElementText(Integer.toString(Game.player.workers));
 		 textObj = (UserInterfaceObject)Game.objectMap.get("totalcostvalue");
 		 textObj.setElementText(Double.toString(Game.player.labourCost));
+		if(!newTickingObjects.isEmpty()) {
+			for(WorldObject newObj : newTickingObjects) {
+				tickingObjects.add(newObj);
+			}
+			newTickingObjects.clear();
+		}
 		if(!tickingObjects.isEmpty()) {
 			for(WorldObject obj : tickingObjects) {
 				obj.tickAction();
@@ -249,6 +257,7 @@ public class World {
 						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.IRON);
 						newRStructure.objID = "ironmine" + Integer.toString(numEntitys);
 						Game.objectMap.addEntity(newRStructure.objID, newRStructure,  48);
+						Game.gameWorld.addTickingObject(newRStructure);
 						numEntitys++;
 					
 					
@@ -266,7 +275,7 @@ public class World {
 	}
 	
 	public void addTickingObject(WorldObject tickingObj) {
-		this.tickingObjects.add(tickingObj);
+		this.newTickingObjects.add(tickingObj);
 	}
 	
 	public void setTile(Point isoPos,IsometricTile.TILESET type) {

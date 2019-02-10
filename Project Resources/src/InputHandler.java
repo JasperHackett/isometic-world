@@ -23,6 +23,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject hoveredObject;
 	private GameObject clickedObject;
 	private Entity clickedEntity;
+	private Entity constructionOutline;
 	
 	private enum InputState{
 		DEFAULT,
@@ -77,6 +78,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 
 
+	}
+	public void setConstructionOutline(Entity outline) {
+		this.constructionOutline = outline;
 	}
 
 
@@ -143,8 +147,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			
 			break;
 		case CONSTRUCTION:
-			
-			
+			System.out.println("tesT");
+
 			
 			
 			break;
@@ -166,52 +170,57 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 
 		if(Game.currentState == Game.STATE.Menu) {
-			for(GameObject obj : Game.objectMap.getOtherObjects().values()) {
-				if(obj.isClickable()){
-					if(checkContains(obj.getPosition(),e.getPoint())) {
-						callClickAction(obj.clickTag);
-					}
-				}
-			}
+//			for(GameObject obj : Game.objectMap.getOtherObjects().values()) {
+//				if(obj.isClickable()){
+//					if(checkContains(obj.getPosition(),e.getPoint())) {
+//						callClickAction(obj.clickTag);
+//					}
+//				}
+//			}
 		}else if(Game.currentState== Game.STATE.Game) {
 
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
 
 				IsometricTile tile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
-				Boolean entityClicked = tile.getEntityOnTile() != null;
+//				Boolean entityClicked = tile.getEntityOnTile() != null;
+				
+				if(tile != null) {
+					if(clickedObject != null && tile != null) {
+						
+						if ((tile.getEntityOnTile() != null)&& clickedObject.type != ObjectType.TILE) {
+							if (!tile.getEntityOnTile().equals(clickedObject)) {
+								clickedObject.setClicked(false);
+								clickedObject = null;
+							}
+						} else {
+							if(!clickedObject.equals(tile)){
+								clickedObject.setClicked(false);
+								clickedObject = null;
+							}
+						}
+	
+	
+	
+					}
+					if (tile.getEntityOnTile() != null) {
+						clickedObject = tile.getEntityOnTile();
+						clickedEntity = tile.getEntityOnTile();
+					} else {
+						clickedObject = tile;
+					}
+				
+				}
+
 
 				if(clickedObject != null) {
-					if (entityClicked && clickedObject.type != ObjectType.TILE) {
-						if (!tile.getEntityOnTile().equals(clickedObject)) {
-							clickedObject.setClicked(false);
-							clickedObject = null;
-						}
-					} else {
-						if(!clickedObject.equals(tile)){
-							clickedObject.setClicked(false);
-							clickedObject = null;
-						}
+					if(this.clickedObject.isClicked()) {
+						this.clickedObject.setClicked(false);
+						this.clickedObject = null;
+					}else {
+						this.clickedObject.setClicked(true);
 					}
-
-
-
 				}
-
-				if (entityClicked) {
-					clickedObject = tile.getEntityOnTile();
-					clickedEntity = tile.getEntityOnTile();
-				} else {
-					clickedObject = tile;
-				}
-
-
-
-				if(this.clickedObject.isClicked()) {
-					this.clickedObject.setClicked(false);
-					this.clickedObject = null;
-				}else {
-					this.clickedObject.setClicked(true);
-				}
+				
 
 
 
@@ -286,11 +295,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 		//Check iso coordinate is within world bounds (potentially useless)
 		if(Game.currentState == Game.STATE.Game) {
-			if(checkContains(Game.gameWorld.getMainDisplayCoords(),mousePos)) {
+			//This should check for inside iso world as well as inside main display
+			if(checkContains(Game.gameWorld.getMainDisplayCoords(),mousePos)) { 
 //				iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height
 				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
 				
 				if(currentState == InputState.CONSTRUCTION) {
+					if(constructionOutline != null && tempObj != null) {
+
+						WorldObject tempWObj = (WorldObject) tempObj;
+						constructionOutline.isoPoint = tempWObj.isoPoint;
+						constructionOutline.worldPoint = tempWObj.worldPoint;
+//						constructionOutline.setP
+					}
 //					Game.objectMap.get(key)
 				}
 
@@ -410,6 +427,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.enableInterfaceContainer("constructionmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}else if(clickTag.equals("buildironmine")) {
 			System.out.println("test");
+			constructionOutline.isoPoint = new Point(5,5);
+			System.out.println(constructionOutline.isoPoint);
 			currentState = InputState.CONSTRUCTION;
 //			Game.gameWorld.const
 //			for(String str : Game.objectMap.keySet()) {
