@@ -29,7 +29,7 @@ public class InterfaceController {
 		Point coords;
 		Point elementSpacing;
 		Point nextElementPos;
-		ArrayList<UIContainer> containers;
+		HashMap<String,UIContainer> containers;
 		HashMap<String,UserInterfaceObject> elements;
 		HashMap<String,TextObject> textObjects;
 		GameObject parentObject;
@@ -40,7 +40,7 @@ public class InterfaceController {
 			this.coords = coords;
 			elements = new HashMap<String,UserInterfaceObject>();
 			textObjects = new HashMap<String,TextObject>();
-			containers = new ArrayList<UIContainer>();
+			containers = new HashMap<String,UIContainer>();
 		}
 		
 		public void addObject(String objKey,UserInterfaceObject newObject){
@@ -58,19 +58,32 @@ public class InterfaceController {
 		public HashMap<String,UserInterfaceObject> getObjects(){
 			return elements;
 		}
+		public void addContainer(String containerName,UIContainer containerIn) {
+			this.containers.put(containerName, containerIn);
+		}
 		public HashMap<String,TextObject> getTextObjects(){
 			return textObjects;
 		}
 
 		public void updateValues() {
-			if(parentObject !=null) {
-				ResourceStructure rStructure = (ResourceStructure) parentObject;
-				this.elements.get("resourcestoredvalue").setElementText(Integer.toString(rStructure.resourceStored));
-				this.elements.get("workersvalue").setElementText(Integer.toString(rStructure.currentWorkers));
-				
-			}else {
-				System.out.println("updateValues called with null parentObject");
-			}
+//			if(parentObject !=null) {
+//				if(this.containers.containsKey("resourcestructure")) {
+//					if(containerMap.get("resourcestructure").visible) {
+//						ResourceStructure rStructure = (ResourceStructure) parentObject;
+//						this.elements.get("resourcestoredvalue").setElementText(Integer.toString(rStructure.resourceStored));
+//						this.elements.get("workersvalue").setElementText(Integer.toString(rStructure.currentWorkers));
+//					}
+//				}
+//				if(this.containers.containsKey("workersvalue")) {
+//						Warehouse rStructure = (Warehouse) parentObject;
+//						this.elements.get("workersvalue").setElementText(Integer.toString(rStructure.currentWorkers));
+//					}
+//				}
+//
+//				
+//			}else {
+//				System.out.println("updateValues called with null parentObject");
+//			}
 		}
 		
 	}
@@ -89,20 +102,22 @@ public class InterfaceController {
 	 * @param containerName
 	 * Creates a container which will store a set of UI objects that will always render together
 	 */
-	public void createUIContainer(String containerName, Point firstElementPos, Point elementSpacing) {
+	public UIContainer createUIContainer(String containerName, Point firstElementPos, Point elementSpacing) {
 		UIContainer newContainer = new UIContainer(firstElementPos);
 		newContainer.nextElementPos = firstElementPos;
 		newContainer.elementSpacing = elementSpacing;
 //		newContainer.visible = true;
 		containerMap.put(containerName, newContainer);
+		return newContainer;
 	}
 	
-	public void createUIContainer(String containerName, Point firstElementPos, Point elementSpacing,GameObject parentObject) {
+	public UIContainer createUIContainer(String containerName, Point firstElementPos, Point elementSpacing,GameObject parentObject) {
 		UIContainer newContainer = new UIContainer(firstElementPos);
 		newContainer.nextElementPos = firstElementPos;
 		newContainer.elementSpacing = elementSpacing;
 		newContainer.parentObject = parentObject;
 		containerMap.put(containerName, newContainer);
+		return newContainer;
 	}
 	
 	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag) {
@@ -197,7 +212,7 @@ public class InterfaceController {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey, elementType);
 		if(containerMap.containsKey(containerName)) {
 			UIContainer objectsContainer = containerMap.get(containerName);
-			if(elementType == UserInterfaceObject.UIElementType.TEXTBOX) {
+			if(elementType == UserInterfaceObject.UIElementType.TEXTBOX || elementType == UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE || elementType == UserInterfaceObject.UIElementType.TEXTBOXSTATIC) {
 				Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
 				newUIObject.coords = newPos;
 //				newPos.setLocation(x, y);
@@ -226,11 +241,36 @@ public class InterfaceController {
 		
 	}
 	
-	public void updateContainerValues(String containerName) {
-		if(containerName.equals("resourcestructure")) {
-			containerMap.get(containerName).updateValues();
+	public void updateContainerValues() {
+		UIContainer visibleContainer;
+		if(containerMap.get("resourcestructure").visible) {
+			visibleContainer = containerMap.get("resourcestructure");
+			passRStructureToInterfaceContainer((ResourceStructure) visibleContainer.parentObject, "resourcestructure");
+//			disableInterfaceContainer("resourcestructure");
+//			enableInterfaceContainer("resourcestructure")
 //			containerMap.get(containerName)
 //			resourceStructureContainer.elements.get("workersvalue").setElementText(Integer.toString(p))
+		}else if(containerMap.get("warehouse").visible) {
+			visibleContainer = containerMap.get("warehouse");
+			populateWorkersListContainer((Structure) visibleContainer.parentObject);
+//			populateWorkersListContainer((Warehouse) visibleContainer.parentObject);
+			
+//			enableInterfaceContainer("workerslist");
+		}
+		
+		if(containerMap.get("workerslist").visible) {
+			System.out.println("test");
+			if(containerMap.containsKey("workerslist")) {
+//				containerMap.get("workerslist").elements.clear();
+//				Structure currentStruct = (Structure) containerMap.get("workerslist").parentObject;
+
+//				disableInterfaceContainer("workerslist");
+//				enableInterfaceContainer("workerslist");
+//				enableInterfaceContainer("workerslist");
+//				warehouseContainer.addContainer("workerslist", containerMap.get("workerslist"));
+	
+				
+			}
 		}
 	}
 	public void setParentObject(String containerName, GameObject parentObject) {
@@ -242,7 +282,17 @@ public class InterfaceController {
 		for(UserInterfaceObject uiObj : containerMap.get(containerName).getObjects().values()) {
 			Game.objectMap.enabledUIObjects.add(uiObj);
 		}
+		for(UIContainer cont: containerMap.get(containerName).containers.values()) {
+			enableInterfaceContainer(cont);
+		}
 
+	}
+	
+	public void enableInterfaceContainer(UIContainer container) {
+		container.visible = true;
+		for(UserInterfaceObject uiObj : container.getObjects().values()) {
+			Game.objectMap.enabledUIObjects.add(uiObj);
+		}
 	}
 	public void enableInterfaceContainer(String containerName,InterfaceZone zoneIn) {
 		disableInterfaceContainer(zoneMap.get(zoneIn));
@@ -250,6 +300,9 @@ public class InterfaceController {
 		for(UserInterfaceObject uiObj : containerMap.get(containerName).getObjects().values()) {
 			Game.objectMap.enabledUIObjects.add(uiObj);
 		}
+//		for(UIContainer cont: containerMap.get(containerName).containers.values()) {
+//			enableInterfaceContainer(cont);
+//		}
 		zoneMap.put(zoneIn, containerName);
 
 	}
@@ -258,7 +311,16 @@ public class InterfaceController {
 		for(UserInterfaceObject uiObj : containerMap.get(containerName).getObjects().values()) {
 			Game.objectMap.enabledUIObjects.remove(uiObj);
 		}
+//		for(UIContainer cont: containerMap.get(containerName).containers.values()) {
+//			disableInterfaceContainer(cont);
+//		}
 
+	}
+	public void disableInterfaceContainer(UIContainer container) {
+		container.visible = false;
+		for(UserInterfaceObject uiObj : container.getObjects().values()) {
+			Game.objectMap.enabledUIObjects.remove(uiObj);
+		}
 	}
 	
 	/**
@@ -284,6 +346,7 @@ public class InterfaceController {
 			resourceStructureContainer.elements.get("workersvalue").setElementText(Integer.toString(rStructure.currentWorkers));
 //			resourceStructureContainer.elements.get("workerticklabel").setElementText("Next worker:");
 //			resourceStructureContainer.elements.get("workertickvalue").setElementText(Integer.toString(rStructure.tickCounter));
+			resourceStructureContainer.containers.get("workerlist");
 			for(UserInterfaceObject uiObj : containerMap.get(containerName).elements.values()) {
 				uiObj.referenceObject =rStructure;
 			}
@@ -305,10 +368,40 @@ public class InterfaceController {
 			for(UserInterfaceObject uiObj : containerMap.get(containerName).elements.values()) {
 				uiObj.referenceObject = warehouse;
 			}
-			
+			enableInterfaceContainer("workerslist");
+			populateWorkersListContainer(warehouse);
+//			warehouseContainer.addContainer("workerslist", containerMap.get("workerslist"));
+
+		}
+	}
+	public void populateWorkersListContainer(Structure sourceOfWorkers) {
+		if(containerMap.containsKey("workerslist")) {
+			UIContainer workerslist = containerMap.get("workerslist");
+			boolean reenable = false;
+			if(workerslist.visible) {
+				reenable = true;
+			}
+			disableInterfaceContainer(workerslist);
+//			System.out.println("disabled int");
+//			containerMap.get("workerslist")
+			workerslist.elements.clear();
+			workerslist.parentObject = sourceOfWorkers;
+			int offset = 24;
+			for(Unit worker : sourceOfWorkers.workers) {
+				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString() + worker.objID,worker.objID,"primarygamefont",Color.WHITE,new Point (-30,offset));
+				offset += 24;
+			}
+			if(reenable) {
+				enableInterfaceContainer(workerslist);
+			}
+
+//			
 		}
 	}
 	
+	/**
+	 *  Called on program start. Creates main menu UIContainer
+	 */
 	public void initaliseMainMenuInterface() {
 		createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","Start");
@@ -316,7 +409,11 @@ public class InterfaceController {
 		enableInterfaceContainer("mainmenu");
 	}
 	
+	/**
+	 *  Called when the game starts, creates all the UIContainers for the main game
+	 */
 	public void initialiseMainGameInterface() {
+		
 		createUIContainer("topmenubar", new Point(384,4), new Point(128,0));
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
@@ -338,33 +435,38 @@ public class InterfaceController {
 			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
 		}
 		
+		createUIContainer("workerslist", new Point(1450,400),new Point(0,20));
+
+		
 		createUIContainer("workersmenu",new Point(1450,200), new Point(0,40));
 		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (0,0));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,0));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Available workers:","primarygamefont",Color.WHITE,new Point (00,30));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,30));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (0,60));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (80,60));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (0,20));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,20));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Available workers:","primarygamefont",Color.WHITE,new Point (00,50));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,50));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (0,80));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (80,80));
 
 
 		createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30));
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50));
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorker", "Assign");
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (130,50));
 	
 //		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (100,0));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (-30,10));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (-30,10));
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (130,20));
 //		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (0,30));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (130,50));
+
 		
 		
 		createUIContainer("warehouse", new Point(1450,120), new Point(0,30));
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50));
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "warehouse", "addworkerbtn", "addWorker", "Assign");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "warehouse","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,30));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (100,40));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "warehouse","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (130,50));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (30,260));
 		
 	}
 	

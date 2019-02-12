@@ -420,7 +420,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			
 			Structure clickedStructure = (Structure)clickedEntity;
 			clickedStructure.addWorker();
-			Game.userInterface.updateContainerValues("resourcestructure");
+			Game.userInterface.updateContainerValues();
 		}else if(clickTag.equals("citiesmenu")) {
 			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}else if(clickTag.equals("constructionmenu")) {

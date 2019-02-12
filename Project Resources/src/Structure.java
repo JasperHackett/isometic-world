@@ -45,7 +45,6 @@ public class Structure extends Entity {
 			Game.objectMap.addEntity(worker.toString(), worker,8);
 			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
 			worker.setVisible(false);
-			
 			Game.player.employWorker();
 		}else {
 			System.out.println("no available workers");

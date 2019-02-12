@@ -48,6 +48,7 @@ public class Warehouse extends Structure{
 	public void disableClick() {
 		this.currentlyClicked = false;
 		Game.userInterface.disableInterfaceContainer("warehouse");
+		Game.userInterface.disableInterfaceContainer("workerslist");
 		Game.userInterface.setParentObject("warehouse",null);
 	}
 	

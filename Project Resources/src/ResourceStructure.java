@@ -60,6 +60,7 @@ public class ResourceStructure extends Structure{
 	public void disableClick() {
 		this.currentlyClicked = false;
 		Game.userInterface.disableInterfaceContainer("resourcestructure");
+		Game.userInterface.disableInterfaceContainer("workerslist");
 		Game.userInterface.setParentObject("resourcestructure",null);
 	}
 	
