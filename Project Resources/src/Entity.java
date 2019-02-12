@@ -42,6 +42,7 @@ public class Entity extends WorldObject{
 		this.worldDims = new Dimension(64,32);
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(0,0);
+		
 	}
 	
 	

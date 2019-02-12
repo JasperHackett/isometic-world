@@ -261,6 +261,23 @@ public class World {
 						numEntitys++;
 					
 					
+					}else if(tileLine[x].equals("WA")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
+						
+						Warehouse newWarehouse = new Warehouse(entityTiles);
+//						newWarehouse.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
+						Game.objectMap.addEntity("warehouse" + Integer.toString(numEntitys), newWarehouse, 48);
+						numEntitys++;
+						
 					}
 					
 				}
