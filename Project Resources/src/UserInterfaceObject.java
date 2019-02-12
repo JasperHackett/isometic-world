@@ -151,6 +151,13 @@ public class UserInterfaceObject extends GameObject{
 		this.currentlyHovered = false;
 		this.objectImage = defaultObjectImage;
 	}
+	@Override
+	public void disableClick(){
+		this.currentlyClicked = false;
+		if(this.referenceObject != null) {
+			referenceObject.disableClick();
+		}
+	}
 	
 	
 	

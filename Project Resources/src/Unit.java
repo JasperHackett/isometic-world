@@ -31,6 +31,7 @@ public class Unit extends Entity{
 	LinkedList<Actions> actionsQueue;
 	Integer waitTicks; //Number of ticks this unit needs to wait
 	Structure parentStructure;
+	String actionTag = "Unassigned";
 	
 	Unit(Point isoPos){
 		actionsQueue = new LinkedList<Actions>();
@@ -62,6 +63,8 @@ public class Unit extends Entity{
 	
 	//This function will probably need to be moved to a child Worker class or something similar
 	public void getResource(Point destinationPos) {
+		
+		actionTag= "Mining";
 		addAction(Actions.GOTODEST, destinationPos);
 		setDestination(destinationPos);
 		addAction(Actions.WAIT, 4);

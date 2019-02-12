@@ -127,7 +127,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					if(clickedObject != null) {
 						if(uiObj.referenceObject != null) {
 							if(!uiObj.referenceObject.equals(clickedObject)) {
-								clickedObject.disableClick();
+								if(clickedObject.isClicked()) {
+									clickedObject.disableClick();
+								}
+
 							}
 								
 						}else {
@@ -363,12 +366,14 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	public void uiObjectClicked(UserInterfaceObject uiObj) {
 		clickedObject = uiObj;
 		if(this.clickedObject.isClicked()) {
+
 			this.clickedObject.setClicked(false);
 			this.clickedObject = null;
 		}else {
 			this.clickedObject.setClicked(true);
+			callClickAction(uiObj.clickTag);
 		}
-		callClickAction(uiObj.clickTag);
+
 	}
 
 	/**
@@ -417,7 +422,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			
 //			Game.userInterface.enableInterfaceContainer("citymanager");
 		}else if (clickTag.equals("addWorker")) {
-			
+			clickedObject.currentlyClicked = false;
+//			clickedObject = null;
 			Structure clickedStructure = (Structure)clickedEntity;
 			clickedStructure.addWorker();
 			Game.userInterface.updateContainerValues();
