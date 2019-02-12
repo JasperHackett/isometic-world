@@ -183,11 +183,11 @@ public class Game {
 		player = new Player();
 
 
-		Entity constructionHover = new Entity(new Point(0,0));
-		constructionHover.setProperties("teststructure", false);
-		objectMap.addEntity("conhover", constructionHover, 16);
-		objectMap.addObject(ObjectType.WORLD, "conhover", constructionHover);
-		
+//		Entity constructionHover = new Entity(new Point(0,0));
+//		constructionHover.setProperties("teststructure", false);
+//		objectMap.addEntity("conhover", constructionHover, 16);
+//		objectMap.addObject(ObjectType.WORLD, "conhover", constructionHover);
+//		
 		//Test unit
 //		Unit cube;
 //		cube = new Unit(new Point(6,8));
@@ -214,7 +214,7 @@ public class Game {
 		
 		
 		//Non working code
-		inputControl.setConstructionOutline(constructionHover);
+//		inputControl.setConstructionOutline(constructionHover);
 
 
 //		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
