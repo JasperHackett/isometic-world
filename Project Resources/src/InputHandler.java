@@ -385,6 +385,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		if(clickTag.equals("newgame")) {
 			System.out.println("New game button clicked");
 //			Game.gameWorld = new World();
+			Game.userInterface.initialiseMainGameInterface();
 			Game.userInterface.disableInterfaceContainer("mainmenu");
 			Game.userInterface.enableInterfaceContainer("topmenubar");
 			Game.currentState = Game.STATE.Game;
@@ -415,11 +416,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			
 			
 //			Game.userInterface.enableInterfaceContainer("citymanager");
-		}else if (clickTag.equals("addWorkerToResourceStructure")) {
+		}else if (clickTag.equals("addWorker")) {
 			
-			ResourceStructure clickedStructure = (ResourceStructure) clickedEntity;
+			Structure clickedStructure = (Structure)clickedEntity;
 			clickedStructure.addWorker();
-			Game.userInterface.updateContainerValues("resourcestructure");
+			Game.userInterface.updateContainerValues();
 		}else if(clickTag.equals("citiesmenu")) {
 			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}else if(clickTag.equals("constructionmenu")) {

@@ -13,22 +13,19 @@ import java.util.ArrayList;
  */
 public class ResourceStructure extends Structure{
 	
-	ArrayList<Unit> workers;
-	int nextWorkerOut= 0;
+
+
 	int resourceStored = 0;
-	int currentWorkers = 0;
-	int activeWorkers = 0;
 	int resourceRange = 0; //How many tiles away resources can be collected
 	ArrayList<Resource> resources;
 	int nextResourceTile = 0;
-	int workerTicks = 12;
-	int tickCounter = 0;
+
 	/**
 	 * @param tileList
 	 */
 	public ResourceStructure(ArrayList<IsometricTile> tileList, Resource.ResourceType RType) {
 		super(tileList);
-		workers = new ArrayList<Unit>();
+
 		resources = new ArrayList<Resource>();
 //		this.tileList = tileList;
 //		for (IsometricTile tile : tileList) {
@@ -63,6 +60,7 @@ public class ResourceStructure extends Structure{
 	public void disableClick() {
 		this.currentlyClicked = false;
 		Game.userInterface.disableInterfaceContainer("resourcestructure");
+		Game.userInterface.disableInterfaceContainer("workerslist");
 		Game.userInterface.setParentObject("resourcestructure",null);
 	}
 	
@@ -73,29 +71,13 @@ public class ResourceStructure extends Structure{
 			g.drawImage(Game.objectMap.getImage("2x2hover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset +32, null);
 		}
 	}
-	public void addWorker() {
 
-		if(Game.player.availableWorkers > 0) {
-			this.currentWorkers ++;
-			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1),this);
-			workers.add(worker);
-			Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
-			Game.objectMap.addEntity(worker.toString(), worker,8);
-			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-			worker.setVisible(false);
-			
-			Game.player.employWorker();
-		}else {
-			System.out.println("no available workers");
-		}
-
-	}
 	@Override
 	public void tickAction() {
 //		tickCounter++;
 		if(this.currentlyClicked) {
-			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("workertickvalue");
-			textObj.setElementText(Integer.toString(tickCounter));
+//			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("workertickvalue");
+//			textObj.setElementText(Integer.toString(tickCounter));
 			
 		}
 		if(tickCounter > 0) {

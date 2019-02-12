@@ -21,6 +21,9 @@ public class UserInterfaceObject extends GameObject{
 		SMALL,
 		MEDIUM,
 		TEXT,
+		TEXTBOX,
+		TEXTBOXSTATIC,
+		TEXTBOXSTATICVALUE,
 		TOPBAR
 	}
 	UIElementType type;
@@ -63,7 +66,13 @@ public class UserInterfaceObject extends GameObject{
 		this.clickable = false;
 		elementText.setTextProperties(text, Game.objectMap.getFont(fontKey),textColor, pos);
 //		this.dim = new Dimension(Game.graphics.getFontMetrics(font).stringWidth(text);)
-		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		Dimension offset = null;
+		if( this.type == UIElementType.TEXTBOXSTATICVALUE || this.type == UIElementType.TEXTBOXSTATIC) {
+			 offset = new Dimension(this.dim.width/4 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		}else {
+			 offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		}
+
 		this.addChild(elementText, offset);
 	}
 	public void setElementText(String text) {
@@ -78,7 +87,24 @@ public class UserInterfaceObject extends GameObject{
 		switch(uiType) {
 		
 			case TEXT:
-				this.dim = new Dimension(64,32);
+				this.dim = new Dimension(0,0);
+				break;
+			case TEXTBOX:
+				this.dim = new Dimension(160,20);
+				this.objectImage = "textbox2";
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = "textbox1";
+				break;
+			case TEXTBOXSTATIC:
+				this.dim = new Dimension(160,20);
+				this.objectImage = "textbox2";
+				this.defaultObjectImage = objectImage;
+				break;
+				
+			case TEXTBOXSTATICVALUE:
+				this.dim = new Dimension(160,20);
+				this.objectImage = "textbox3";
+				this.defaultObjectImage = objectImage;
 				break;
 			case SMALL :
 //				System.out.println("small obj created");
@@ -116,7 +142,10 @@ public class UserInterfaceObject extends GameObject{
 	
 	public void hoverAction(){
 		this.currentlyHovered = true;
-		this.objectImage = hoverImage;
+		if(hoverImage != null) {
+			this.objectImage = hoverImage;
+		}
+
 	}
 	public void disableHover(){
 		this.currentlyHovered = false;

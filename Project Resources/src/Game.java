@@ -69,33 +69,35 @@ public class Game {
 
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
-//		objectMap.addImage("border", "assets/border_draft.png");
-////		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
-//		objectMap.addImage("2x2hover", "assets/2x2hover.png");
-//		objectMap.addImage("hover", "assets/hovertile.png");
-//		objectMap.addImage("resourcehover", "assets/resourcehover.png");
-//		objectMap.addImage("cityhover", "assets/hovercity.png");
-//		objectMap.addImage("click", "assets/click.png");
-//		objectMap.addImage("roadtile","assets/road.png");
-//		objectMap.addImageSheet("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
-//		objectMap.addImageSheet("watertile","assets/watertiles.png", new Dimension(64,32), 3);
-//		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
-//		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
-//		objectMap.addImage("cube", "assets/placeholder.png");
-//		objectMap.addImage("ironore", "assets/iron.png");
-//		objectMap.addImage("teststructure", "assets/structuretest.png");
-//		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
-//		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
-//		objectMap.addImage("menuButton1", "assets/menuButton1.png");
-//		objectMap.addImage("ironhut","assets/ironhut.png");
-//		objectMap.addImage("menuBackground", "assets/menuBackground.png");
-//		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
-//		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
-//		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
-//		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
-//		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
-//		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
-//		//Adding fonts
+		objectMap.addImage("border", "assets/border_draft.png");
+//		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
+		objectMap.addImage("2x2hover", "assets/2x2hover.png");
+		objectMap.addImage("hover", "assets/hovertile.png");
+		objectMap.addImage("resourcehover", "assets/resourcehover.png");
+		objectMap.addImage("cityhover", "assets/hovercity.png");
+		objectMap.addImage("click", "assets/click.png");
+		objectMap.addImage("roadtile","assets/road.png");
+		objectMap.addImage("warehouse", "assets/warehouse.png");
+		objectMap.addImageSheet("grasstile","assets/grasstiles.png", new Dimension(64,32), 4);
+		objectMap.addImageSheet("watertile","assets/watertiles.png", new Dimension(64,32), 3);
+		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
+		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
+		objectMap.addImage("cube", "assets/placeholder.png");
+		objectMap.addImage("ironore", "assets/iron.png");
+		objectMap.addImage("teststructure", "assets/structuretest.png");
+		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
+		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
+		objectMap.addImage("menuButton1", "assets/menuButton1.png");
+		objectMap.addImage("ironhut","assets/ironhut.png");
+		objectMap.addImage("menuBackground", "assets/menuBackground.png");
+		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
+		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
+		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
+		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
+		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),4);
+		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
 		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
@@ -132,55 +134,17 @@ public class Game {
 //		gameWorld.
 
 //		Game.objectMap.get
-
+		userInterface.initaliseMainMenuInterface();
 //		UserInterfaceObject testButton = new UserInterfaceElement(ObjectType.DEFAULT,UserInterfaceElement.UIElementType.SMALL,new Point(400,400),"newgame");
-		userInterface.createUIContainer("mainmenu",new Point(200,600), new Point(0,50));
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","Start");
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit","Quit");
-		userInterface.enableInterfaceContainer("mainmenu");
+
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
 		
-		userInterface.createUIContainer("topmenubar", new Point(384,4), new Point(128,0));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", "citiesmenu", "Cities");
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(800,4));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (830,4));
-
-		userInterface.createUIContainer("citymanager", new Point(1450,120), new Point(0,50));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (1430,60));
-//		Game.userInterface.enableInterfaceContainer("cityinterface");
 		
 		
-		userInterface.createUIContainer("constructionmenu",new Point(1450,200), new Point(0,50));
-		userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionmenu", "buildironmine","buildironmine","Iron Mine");
 		
-		userInterface.createUIContainer("citiesmenu",new Point(1450,200), new Point(0,40));
-		for(City city : gameWorld.cityList) {
-			userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
-		}
-		
-		userInterface.createUIContainer("workersmenu",new Point(1450,200), new Point(0,40));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (1430,250));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,250));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Available workers:","primarygamefont",Color.WHITE,new Point (1430,290));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,290));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (1430,330));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (1510,330));
-
-
-		userInterface.createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorkerToResourceStructure", "Add");
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (1430,60));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (1430,250));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,250));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (1430,300));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,300));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerticklabel","undefined","primarygamefont",Color.WHITE,new Point (1430,330));
-		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workertickvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,330));
+//		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerticklabel","undefined","primarygamefont",Color.WHITE,new Point (1430,330));
+//		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workertickvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,330));
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
@@ -219,35 +183,38 @@ public class Game {
 		player = new Player();
 
 
-		Entity constructionHover = new Entity(new Point(0,0));
-		constructionHover.setProperties("teststructure", false);
-		objectMap.addEntity("conhover", constructionHover, 16);
-		objectMap.addObject(ObjectType.WORLD, "conhover", constructionHover);
-		
+//		Entity constructionHover = new Entity(new Point(0,0));
+//		constructionHover.setProperties("teststructure", false);
+//		objectMap.addEntity("conhover", constructionHover, 16);
+//		objectMap.addObject(ObjectType.WORLD, "conhover", constructionHover);
+//		
 		//Test unit
-		Unit cube;
-		cube = new Unit(new Point(6,8));
-		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
-		objectMap.addEntity("placeholder", cube,8);
-		cube.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		cube.setDestination(new Point(41,55));
-		Game.gameWorld.addTickingObject(cube);
-
-
-		Unit cube2;
-		cube2 = new Unit(new Point(20,37));
-		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
-		objectMap.addEntity("placeholder2", cube2,8);
-		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
-//		gameWorld.getNeighbours(centreTile)
-		Game.gameWorld.addTickingObject(cube2);
+//		Unit cube;
+//		cube = new Unit(new Point(6,8));
+//		objectMap.addObject(ObjectType.WORLD, "placeholder", cube);
+//		objectMap.addEntity("placeholder", cube,8);
+//		cube.setProperties(new Dimension(64,32), new Point(600,200),"textbox2");
+//		cube.setDestination(new Point(41,55));
+//		Game.gameWorld.addTickingObject(cube);
+//
+//
+//		Unit cube2;
+//		cube2 = new Unit(new Point(20,37));
+//		objectMap.addObject(ObjectType.WORLD, "placeholder2", cube2);
+//		objectMap.addEntity("placeholder2", cube2,8);
+//		cube2.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+//		cube2.setDestination(objectMap.getTile(new Point(41,19)).getEntityOnTile().getClosestNeighbour(cube2.isoPoint));
+////		gameWorld.getNeighbours(centreTile)
+//		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
-		inputControl.setConstructionOutline(constructionHover);
+		
+		
+		//Non working code
+//		inputControl.setConstructionOutline(constructionHover);
 
 
 //		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
