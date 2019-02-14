@@ -110,7 +110,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 
-		
+
 		
 		//Check all interface objects for click
 		try {
@@ -123,7 +123,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
 			if(uiObj.isClickable()) {
+//				System.out.println(uiObj.clickTag);
 				if(checkContains(uiObj.getPosition(),e.getPoint())) {
+					
 					if(clickedObject != null) {
 						if(uiObj.referenceObject != null) {
 							if(!uiObj.referenceObject.equals(clickedObject)) {
@@ -467,6 +469,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(clickTag.equals("hireworker")) {
 			Game.player.hireWorker();
 			
+		}else if(clickTag.equals("workerassign")) {
+			System.out.println("testasdasd");
 		}
 
 
