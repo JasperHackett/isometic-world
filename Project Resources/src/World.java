@@ -42,8 +42,10 @@ public class World {
 	public Point staticWorldPoint;
 	public Dimension isoDims;
 	public int tileCount = 0;
+	public ArrayList<City> cityList;
 	public ArrayList<WorldObject> tickingObjects;
-	
+	public ArrayList<WorldObject> newTickingObjects; //A queue of tickingObjects to be added each tick to avoid collision
+	public int cityCount;
 	Pair<Dimension,Point> isometricPlane;
 	public Queue<Pair<String,Point>> entityList;
 //	public Map<String,Image> imageAssetMap;
@@ -52,12 +54,14 @@ public class World {
 
 	public World()  {
 		
-		
+		cityCount = 0;
+		cityList = new ArrayList<City>();
 		worldToIsoTable = new HashMap<Point,Point>();
 		entityList = new PriorityQueue<Pair<String,Point>>();
 		this.isoDims = initialiseTileMap();
 		
 		tickingObjects = new ArrayList<WorldObject>();
+		newTickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
 		panelDims = new Dimension(Game.width-200,Game.height-64);
 		panelPoint = new Point(0,34);
@@ -66,8 +70,9 @@ public class World {
 		
 		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
-		initialiseEntitys();
 //		initialiseTileMap();
+//		initialiseEntitys();
+
 //		initialiseEntityMap();
 		
 		
@@ -78,6 +83,19 @@ public class World {
 	
 	//Called every at every increment of time in the game
 	void tick() {
+		Game.player.tick();
+		UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("moneyvalue");
+		textObj.setElementText(Double.toString(Game.player.money));
+		 textObj = (UserInterfaceObject)Game.objectMap.get("totalworkersvalue");
+		 textObj.setElementText(Integer.toString(Game.player.workers));
+		 textObj = (UserInterfaceObject)Game.objectMap.get("totalcostvalue");
+		 textObj.setElementText(Double.toString(Game.player.labourCost));
+		if(!newTickingObjects.isEmpty()) {
+			for(WorldObject newObj : newTickingObjects) {
+				tickingObjects.add(newObj);
+			}
+			newTickingObjects.clear();
+		}
 		if(!tickingObjects.isEmpty()) {
 			for(WorldObject obj : tickingObjects) {
 				obj.tickAction();
@@ -189,12 +207,14 @@ public class World {
 			String delim = ",";
 			int y = 0;
 			int numEntitys = 0;
+			int ironCount = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
 				for (int x = 0; x < tileLine.length; x++) {
 					if (tileLine[x].equals("")) {
 						continue;
 					} else if (tileLine[x].equals("C")) {
+						this.cityCount ++;
 						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
 						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
@@ -210,6 +230,7 @@ public class World {
 						City newCity = new City(entityTiles, name);
 						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
 						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
+						cityList.add(newCity);
 						numEntitys++;
 						
 					} else if (tileLine[x].equals("R")) {
@@ -220,11 +241,49 @@ public class World {
 //						Game.objectMap.addEntity("road" + Integer.toString(numEntitys), newRoad, 0);
 						Game.objectMap.getTile(new Point(x,y)).setRoad(true);
 						numEntitys++;
+					}else if (tileLine[x].equals("IR")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						Resource newResource = new Resource(entityTiles, Resource.ResourceType.IRON);
+						Game.objectMap.addEntity("iron" + Integer.toString(ironCount), newResource,  0);
+						ironCount++;
+					}else if(tileLine[x].equals("IM")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
+						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.IRON);
+						newRStructure.objID = "ironmine" + Integer.toString(numEntitys);
+						Game.objectMap.addEntity(newRStructure.objID, newRStructure,  48);
+						Game.gameWorld.addTickingObject(newRStructure);
+						numEntitys++;
+					
+					
+					}else if(tileLine[x].equals("WA")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x-1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y+1)));
+						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y+1)));
+						
+						Warehouse newWarehouse = new Warehouse(entityTiles);
+//						newWarehouse.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
+						Game.objectMap.addEntity("warehouse" + Integer.toString(numEntitys), newWarehouse, 48);
+						numEntitys++;
+						
 					}
 					
 				}
 				y++;
 			}
+			initialiseEntitys();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -233,7 +292,7 @@ public class World {
 	}
 	
 	public void addTickingObject(WorldObject tickingObj) {
-		this.tickingObjects.add(tickingObj);
+		this.newTickingObjects.add(tickingObj);
 	}
 	
 	public void setTile(Point isoPos,IsometricTile.TILESET type) {
@@ -241,6 +300,13 @@ public class World {
 	}
 	
 	public void initialiseEntitys() {
+		
+		for(Entity entity : Game.objectMap.worldEntitys.values()) {
+			if(entity instanceof ResourceStructure) {
+				ResourceStructure rStructure = (ResourceStructure) entity;
+				rStructure.detectResources();
+			}
+		}
 //		while(!entityList.isEmpty()) {
 //			Pair<String,Point> entity = entityList.poll();
 //			if(entity.getKey().equals("c1")) {
@@ -330,6 +396,7 @@ public class World {
 	}
 
 	
+	
 	//Checks for all walkable neighbours of an isometrictile
 	// returns an ArrayList in the following order: Left,Up,Right,Down
 	public ArrayList<IsometricTile> getNeighbours(IsometricTile centreTile){
@@ -393,61 +460,69 @@ public class World {
 			System.out.println("Empty tile list");
 			return returnList;
 		}
-		
+
 		//Stores each tile that has been discovered with the shortest distance to reach it and the point of the tile that path comes from
 		Map<IsometricTile,Pair<Double,Point>> distanceMap = new HashMap<IsometricTile,Pair<Double,Point>>();
 		//Queue of tiles for processing sorted by a heuristic double
 		Queue<Pair<Double,IsometricTile>> queuedTiles  = new PriorityQueue<Pair<Double,IsometricTile>>(new PathQueueComparator());
+		//Distance of each tile from the start point
+		Map<IsometricTile,Double> distanceFromStartMap = new HashMap<IsometricTile,Double>();
 		
 		
 		//Add initial tile to queue and distance map
 		queuedTiles.add(new Pair<Double,IsometricTile>(0.0,Game.objectMap.getTile(tilePosStart)));
 		distanceMap.put(Game.objectMap.getTile(tilePosStart), new Pair<Double,Point>(0.0,tilePosStart));
-		
+		distanceFromStartMap.put(Game.objectMap.getTile(tilePosStart),0.0);
 		
 		while(!queuedTiles.isEmpty()) {
 
 			Pair<Double,IsometricTile> currentEntry = queuedTiles.poll();
 			
-			//Iterate through walkable neighbours of currentEntry
+			//Iterate through walkable neighbors of currentEntry
 			for(IsometricTile tile : getNeighbours(currentEntry.getValue())) {
-				tileDistance = 10.0;
-				if(tile == null) {
-					System.out.println("NULL TILE");
-				}
-				if(currentEntry.getValue().hasRoad()) {
-					if (tile.hasRoad()) {
-						tileDistance = 1.0;
-					}
-					
-				}
 
-				
-				//Check if tile has been visited before
-				if(distanceMap.containsKey(tile)) {
-					//Check if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
-					if(distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + tileDistance) {
+					
+					//Temp code for tile distance
+					tileDistance = 10.0;
+					if(currentEntry.getValue().hasRoad()) {
+						if (tile.hasRoad()) {
+							tileDistance = 5.0;
+						}
+						
+					}
+	
+					
+					//Check if tile has been visited before and if shortest distance to tile is greater than traveling to the tile from currentEntry. If so update distanceMap
+					if(!distanceMap.containsKey(tile)  || distanceMap.containsKey(tile) && distanceMap.get(tile).getKey() > distanceMap.get(currentEntry.getValue()).getKey() + tileDistance) {
+	
+						if(distanceFromStartMap.containsKey(tile)) {
+							if(distanceFromStartMap.get(tile) < distanceFromStartMap.get(currentEntry.getValue()) + tileDistance) {
+								distanceFromStartMap.put(tile, distanceFromStartMap.get(currentEntry.getValue()) + tileDistance);
+							}
+						}else {
+							distanceFromStartMap.put(tile, distanceFromStartMap.get(currentEntry.getValue()) + tileDistance);
+						}
+						
+						
 						distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
 						queuedTiles.add(new Pair<Double,IsometricTile>(
-								(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
+								distanceFromStartMap.get(tile) +
+								(tileDistance* (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
+								
 								,tile));
+	
 					}
-				}else {
-					distanceMap.put(tile, new Pair<Double,Point>(distanceMap.get(currentEntry.getValue()).getKey() + tileDistance,currentEntry.getValue().getIsoPoint()));
-					queuedTiles.add(new Pair<Double,IsometricTile>(
-							(tileDistance * (Math.abs(tile.getIsoPoint().getX() - tilePosEnd.getX() )) + (Math.abs(tile.getIsoPoint().getY() - tilePosEnd.getY())))
-							,tile));
-				}
-				
-				if(tile.isoPos.equals(tilePosEnd)) {
-					System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
-					Point routePoint = tilePosEnd;
-					while(!routePoint.equals(tilePosStart)) {
-						routePoint = distanceMap.get(Game.objectMap.getTile(routePoint)).getValue();
-						returnList.add(routePoint);
+			
+					//Found the destination
+					if(tile.isoPos.equals(tilePosEnd)) {
+//						System.out.println("Found a path. Distance: " + distanceMap.get(tile).getKey());
+						Point routePoint = tilePosEnd;
+						while(!routePoint.equals(tilePosStart)) {
+							routePoint = distanceMap.get(Game.objectMap.getTile(routePoint)).getValue();
+							returnList.add(routePoint);
+						}
+						return returnList;
 					}
-					return returnList;
-				}
 				
 	
 			}
@@ -461,6 +536,23 @@ public class World {
 		
 		System.out.println("No path found");
 		return returnList;
+	}
+	
+	public ArrayList<Point> getPathBetweenEntitys(Entity entityStart, Entity entityEnd){
+		if(entityStart == null || entityEnd == null) {
+			System.out.println("Attempted to get path between a null entity");
+			return null;
+		}
+		
+		Point startPoint = new Point(entityStart.worldPoint);
+		Point endPoint = new Point(entityEnd.worldPoint);
+		
+		
+		
+		
+		
+		
+		return getPathBetween(startPoint,endPoint);
 	}
 	
 

@@ -17,7 +17,7 @@ import javafx.util.Pair;
  */
 public class City extends Structure {
 
-	public String name;
+
 //	public final Font cityFont = new Font("Callibri", Font.BOLD, 15);
 
 	public City(ArrayList<IsometricTile> tileList, String name) {
@@ -29,6 +29,7 @@ public class City extends Structure {
 		this.objectImage = "citytile0";
 		this.clickTag = "city";
 		this.name = name;
+		this.objID="city" + name;
 
 		// creating and adding child component for city name
 		TextObject cityName = new TextObject(ObjectType.CHILD);
@@ -47,19 +48,20 @@ public class City extends Structure {
 
 	@Override
 	public void clickAction() {
-		System.out.println("Click action on: "+this.objectImage);
+		System.out.println("Click action on: "+ this.name);
 		this.currentlyClicked = true;
-		
-		Game.userInterface.createUIContainer("cityinterface", new Point(1410,36), new Point(0,50));
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
-		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
-		Game.userInterface.enableInterfaceContainer("cityinterface");
+		Game.userInterface.passCityToInterfaceContainer(this, "citymanager");
+		Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
+//		Game.userInterface.createUIContainer("cityinterface", new Point(1410,36), new Point(0,50));
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+//		Game.userInterface.enableInterfaceContainer("cityinterface");
 	}
 	
 	@Override
 	public void disableClick() {
 		this.currentlyClicked = false;
-		Game.userInterface.disableInterfaceContainer("cityinterface");
+		Game.userInterface.disableInterfaceContainer("citymanager");
 	}
 
 }

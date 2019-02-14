@@ -109,7 +109,7 @@ public class IsometricTile extends WorldObject{
 	public void hoverAction() {
 //		System.out.println("tile hovered at:" + this.isoPos);
 
-		if(entityOnTile != null) {
+		if(entityOnTile != null ) {
 			entityOnTile.hoverAction();
 		}else {
 			this.currentlyHovered = true;

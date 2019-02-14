@@ -17,7 +17,13 @@ import javafx.util.Pair;
  */
 public class Structure extends Entity {
 
-
+	ArrayList<Unit> workers;
+	int nextWorkerOut= 0;
+	int currentWorkers = 0;
+	int activeWorkers = 0;
+	int workerTicks = 12;
+	int tickCounter = 0;
+	public String name;
 	/**
 	 * @param type
 	 * @param worldDimsIn
@@ -25,8 +31,26 @@ public class Structure extends Entity {
 	 */
 	public Structure(ArrayList<IsometricTile> tileList) {
 		super(tileList);
+		name = "undefined";
+		workers = new ArrayList<Unit>();
 	}
 
+	public void addWorker() {
+
+		if(Game.player.availableWorkers > 0) {
+			this.currentWorkers ++;
+			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1),this);
+			workers.add(worker);
+			Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
+			Game.objectMap.addEntity(worker.toString(), worker,8);
+			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+			worker.setVisible(false);
+			Game.player.employWorker();
+		}else {
+			System.out.println("no available workers");
+		}
+
+	}
 	// public Structure(ArrayList<IsometricTile> tileList, Point masterTile,
 	// StructureType type) {
 	// super();
@@ -93,10 +117,23 @@ public class Structure extends Entity {
 //		}
 //	}
 //
-//	public void hoverAction() {
+//	public void hoverAction() {G
 //		// System.out.println("structure hovered");
 //		this.currentlyHovered = true;
 //
+	
+	
+	@Override
+	public void clickAction() {
+//		System.out.println("Click action on: "+ this.name);
+		this.currentlyClicked = true;
+//		Game.userInterface.passCityToInterfaceContainer(this, "citymanager");
+//		Game.userInterface.enableInterfaceContainer("citymanager");
+//		Game.userInterface.createUIContainer("cityinterface", new Point(1410,36), new Point(0,50));
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "hellobutton", "hello", "Hello");
+//		Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityinterface", "goodbyebutton", "goodbye", "Goodbye");
+//		Game.userInterface.enableInterfaceContainer("cityinterface");
+	}
 //	}
 //	@Override
 //	public void render(Graphics g) {

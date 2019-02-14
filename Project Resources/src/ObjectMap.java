@@ -148,10 +148,23 @@ public class ObjectMap extends HashMap<String, GameObject> {
 
 	public void addEntity(String structureName, Entity structureIn, int structureOffset) {
 		structureIn.structureOffset = structureOffset;
+		structureIn.objID = structureName;
 		this.worldObjects.put(structureName, structureIn);
 		this.worldEntitys.put(structureName, structureIn);
 		this.put(structureName, structureIn);
 	}
+	
+//	public void addResource(String structureName, Entity structureIn, int structureOffset,Resource.ResourceType type) {
+//		structureIn.structureOffset = structureOffset;
+//		this.worldObjects.put(structureName, structureIn);
+//		this.worldEntitys.put(structureName, structureIn);
+//		this.put(structureName, structureIn);
+//	}
+//	
+	
+//	public  void addResource(Resource resourceIn) {
+//		this.worldEntitys.put(key, value)
+//	}
 
 	public void addWorldEntity(Entity.EntityType type, Point masterTile, ArrayList<Point> tileList) {
 
@@ -323,7 +336,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	public void updateMainDisplayObjects(/* Dimension displayDimension, Point displayPoint */) {
 
 		try {
-			Game.mainGameRenderer.semaphore.acquire();
+			Game.sem.acquire();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -345,11 +358,13 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		if (worldEntitys != null) {
 			for (Map.Entry<String, Entity> mapEntry : worldEntitys.entrySet()) {
 				WorldObject obj = mapEntry.getValue();
-				if (isWithinDisplay(obj.getWorldPosition(),
+
+				if (obj.isVisible() && isWithinDisplay(obj.getWorldPosition(),
 						new Pair<Dimension, Point>(Game.gameWorld.panelDims, Game.gameWorld.worldPoint))) {
 					mainDisplayEntitys.add(mapEntry.getValue());
 					mainDisplayObjects.add(mapEntry.getValue());
 				}
+			
 			}
 		}
 
@@ -358,8 +373,12 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		// mainDisplayEntitys.sort((Comparator)comp);
 		mainDisplayTiles.sort((Comparator) comp);
 
-		Game.mainGameRenderer.semaphore.release();
+		Game.sem.release();
 
+	}
+	public void removeEntity(Entity entityIn) {
+//		Game.sem.aq
+		this.worldEntitys.remove(entityIn);
 	}
 
 	// returns true if at least one corner of a given object is within the Display's
@@ -370,9 +389,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		// bounds
 
 		// top left corner == x,y
-		if (objectBounds == null) {
-			System.out.println("test");
-		}
+
 		int x = objectBounds.getValue().x;
 		int y = objectBounds.getValue().y;
 		if (x > displayBounds.getValue().x && x < displayBounds.getValue().x + displayBounds.getKey().getWidth()) {

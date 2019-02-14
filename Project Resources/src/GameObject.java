@@ -19,7 +19,7 @@ public class GameObject {
 	protected Point coords; //Top left corner of object
 	protected String objectImage; //test for a single image object
 	protected boolean clickable;
-	private boolean isVisible;
+	private boolean visible = true;
 	public boolean hoverable;
 	public boolean currentlyHovered;
 	public boolean currentlyClicked;
@@ -30,6 +30,8 @@ public class GameObject {
 	protected HashMap<GameObject, Dimension> children;
 	
 	public GameObject(ObjectType type) {
+		this.coords = new Point(0,0);
+		this.dim = new Dimension(64,32);
 		this.type = type;
 		this.children = new HashMap<GameObject, Dimension>();
 	}
@@ -136,10 +138,10 @@ public class GameObject {
 	}
 	
 	public boolean isVisible(){
-		return isVisible;
+		return visible;
 	}
 	public void clickAction() {
-		System.out.println("Click action on: "+this.objectImage);
+//		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
 	}
 	public void setClicked(boolean isClicked) {
@@ -162,11 +164,10 @@ public class GameObject {
 	}
 	
 	public void setVisible(boolean isVisible){
-		this.isVisible = isVisible;
+		this.visible = isVisible;
 	}
 	public void hoverAction(){
 		this.currentlyHovered = true;
-		System.out.println("Hovering on");
 	}
 	public void disableHover(){
 		this.currentlyHovered = false;
