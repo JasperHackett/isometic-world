@@ -274,6 +274,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	public void checkHover(Point mousePos) {
 
 
+		
 		/* CHECK HOVER FOR ISOMETRIC OBJECTS*/
 		//Convert mouse position to isometric
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(mousePos));
@@ -281,7 +282,58 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		iso2D.setLocation((int) iso2D.getX() / 32, (int) iso2D.getY() / 32);
 
 		GameObject tempObj = null;
+		
+		for(int i = Game.userInterface.zIndex.size()-1; i >= 0 ; i--) {
+			for (UserInterfaceObject uiObj : Game.objectMap.getUIIndex(i)) {
+				if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
 
+					tempObj = uiObj;
+					
+					if(hoveredObject == null) {
+						hoveredObject = tempObj;
+					}
+					
+					
+					if(tempObj.equals(hoveredObject)) {
+//						System.out.println(uiObj.clickTag);
+//						System.out.println(hoveredObject.objID);
+						hoveredObject.setHovered(true);
+	//					return;
+	//					System.out.println(hoveredObject.clickable);
+					}else {
+						hoveredObject.disableHover();
+						this.hoveredObject = tempObj;
+						this.hoveredObject.hoverAction();
+					}
+	
+
+//					
+//					if(tempObj != null) {
+//						if((tempObj.type == ObjectType.WORLD)){
+//
+//							if(hoveredObject == null) {
+//								hoveredObject = tempObj;
+//							}
+//
+//							if(tempObj.equals(hoveredObject)) {
+//								hoveredObject.hoverAction();
+//							}else {
+//								hoveredObject.disableHover();
+//								this.hoveredObject = tempObj;
+//								this.hoveredObject.hoverAction();
+//
+//							}
+//						}
+
+	
+					return;
+				}
+			}
+		}
+
+		
+
+//		System.out.println("TEST");
 		//Check iso coordinate is within world bounds (potentially useless)
 		if(Game.currentState == Game.STATE.Game) {
 			//This should check for inside iso world as well as inside main display
@@ -321,22 +373,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			}
 		}
 
-		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
-			if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
-				tempObj = uiObj;
 
-				if(tempObj.equals(hoveredObject)) {
-					hoveredObject.setHovered(true);
-//					System.out.println(hoveredObject.clickable);
-				}
-
-				if(hoveredObject == null) {
-					hoveredObject = tempObj;
-				}
-
-
-			}
-		}
 
 		if(tempObj == null && hoveredObject != null) {
 			hoveredObject.setHovered(false);
@@ -464,6 +501,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.populateWorkerAssignContainer(referenceObject);
 			Game.userInterface.enableInterfaceContainer("workerassign");
 //			System.out.println(Game.userInterface.containerMap.get("worke);
+		}else if(clickTag.equals("saveworkerassign")) {
+			System.out.println("save worker assign");
+		}else if(clickTag.equals("cancelworkerassign")) {
+			Game.userInterface.disableInterfaceContainer("workerassign");
 		}
 
 

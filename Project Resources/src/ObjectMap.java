@@ -326,10 +326,14 @@ public class ObjectMap extends HashMap<String, GameObject> {
 	}
 
 	public ArrayList<UserInterfaceObject> getEnabledUIObjects(){
+//		Game.userInterface
 		return enabledUIObjects;
 
 	}
-
+	public ArrayList<UserInterfaceObject> getUIIndex(int i){
+		return Game.userInterface.getZIndex(i);
+	}
+ 
 	public Map<String, WorldObject> WorldObjects() {
 		return worldObjects;
 	}
