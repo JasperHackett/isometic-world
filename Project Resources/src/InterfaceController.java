@@ -598,8 +598,9 @@ public class InterfaceController {
 		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point (0,0),"workerassign","workerassignsmalluibox","smalluibox",new Dimension(200,320),false);
 		
 		createUIContainer("workerassignmid",new Point(1180,500),new Point(0,0),2);
-		containerMap.get("workerassign").addContainer("workerassignmid", containerMap.get("workerassignmid"));
-
+//		containerMap.get("workerassignmid").parentObject = 
+//		containerMap.get("workerassign").addContainer("workerassignmid", containerMap.get("workerassignmid"));
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(60,140),"workerassignmid", "testworkerassign", "testworkerassign", "Route");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(120,270),"workerassignmid", "cancelworkerassign", "cancelworkerassign", "Cancel");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(30,270),"workerassignmid", "saveworkerassign", "saveworkerassign", "Save");
 

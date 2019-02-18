@@ -502,9 +502,12 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.enableInterfaceContainer("workerassign");
 //			System.out.println(Game.userInterface.containerMap.get("worke);
 		}else if(clickTag.equals("saveworkerassign")) {
+			Game.userInterface.disableInterfaceContainer("workerassign");
 			System.out.println("save worker assign");
 		}else if(clickTag.equals("cancelworkerassign")) {
 			Game.userInterface.disableInterfaceContainer("workerassign");
+		}else if(clickTag.equals("testworkerassign")) {
+			
 		}
 
 
