@@ -45,6 +45,14 @@ public class UserInterfaceObject extends GameObject{
 		this.clickable = true;
 		this.clickTag = clickTag;
 	}
+	
+	public void setCustomProperties(Point pos, String objectImage, Dimension dimIn, boolean clickable) {
+		this.objectImage = objectImage;
+		this.defaultObjectImage = objectImage;
+		this.dim = dimIn;
+		this.clickable = clickable;
+		this.coords = pos;
+	}
 	public void setProperties(Point pos, String clickTag, String buttonText) {
 		this.coords = pos;
 		this.clickable = true;
@@ -63,7 +71,10 @@ public class UserInterfaceObject extends GameObject{
 	public void setElementTextProperties(String text, String fontKey,Color textColor, Point pos) {
 		this.coords = pos;
 		elementText = new TextObject(ObjectType.CHILD);
-		this.clickable = false;
+		if(this.type == UIElementType.TEXT) {
+			this.clickable = false;
+		}
+
 		elementText.setTextProperties(text, Game.objectMap.getFont(fontKey),textColor, pos);
 //		this.dim = new Dimension(Game.graphics.getFontMetrics(font).stringWidth(text);)
 		Dimension offset = null;
@@ -85,6 +96,10 @@ public class UserInterfaceObject extends GameObject{
 		type = uiType;
 		fontKey = "smallbuttonfont";
 		switch(uiType) {
+
+			case CUSTOM:
+				this.dim = new Dimension(0,0);
+				break;
 		
 			case TEXT:
 				this.dim = new Dimension(0,0);
@@ -158,7 +173,6 @@ public class UserInterfaceObject extends GameObject{
 			referenceObject.disableClick();
 		}
 	}
-	
 	
 	
 	

@@ -89,6 +89,7 @@ public class Game {
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
 		objectMap.addImage("menuButton1", "assets/menuButton1.png");
 		objectMap.addImage("ironhut","assets/ironhut.png");
+		objectMap.addImage("smalluibox", "assets/uibox.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
 		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);

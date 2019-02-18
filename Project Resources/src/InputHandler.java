@@ -23,6 +23,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject hoveredObject;
 	private GameObject clickedObject;
 	private Entity clickedEntity;
+	private GameObject referenceObject;
 	private Entity constructionOutline;
 	
 	private enum InputState{
@@ -122,10 +123,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 		
 		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
+//			System.out.println(Game.objectMap.getEnabledUIObjects().size());
 			if(uiObj.isClickable()) {
 //				System.out.println(uiObj.clickTag);
 				if(checkContains(uiObj.getPosition(),e.getPoint())) {
-					
+
 					if(clickedObject != null) {
 						if(uiObj.referenceObject != null) {
 							if(!uiObj.referenceObject.equals(clickedObject)) {
@@ -147,42 +149,24 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			}
 		}
 		
-		switch(currentState) {
-		case SELECT:
-			
-			break;
-		case CONSTRUCTION:
-			System.out.println("tesT");
-
-			
-			
-			break;
-		case DEFAULT:
-			
-
-			
-			
-			
-			
-			
-			
-			break;
-		}
+//		switch(currentState) {
+//		case SELECT:
+//			
+//			break;
+//		case CONSTRUCTION:
+////			System.out.println("tesT");		
+//			break;
+//		case DEFAULT:
+//
+//			break;
+//		}
 		
 		
 
 		Game.sem.release();
 
 
-		if(Game.currentState == Game.STATE.Menu) {
-//			for(GameObject obj : Game.objectMap.getOtherObjects().values()) {
-//				if(obj.isClickable()){
-//					if(checkContains(obj.getPosition(),e.getPoint())) {
-//						callClickAction(obj.clickTag);
-//					}
-//				}
-//			}
-		}else if(Game.currentState== Game.STATE.Game) {
+		if(Game.currentState== Game.STATE.Game) {
 
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
 
@@ -329,6 +313,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 							hoveredObject.disableHover();
 							this.hoveredObject = tempObj;
 							this.hoveredObject.hoverAction();
+
 						}
 					}
 
@@ -342,6 +327,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 				if(tempObj.equals(hoveredObject)) {
 					hoveredObject.setHovered(true);
+//					System.out.println(hoveredObject.clickable);
 				}
 
 				if(hoveredObject == null) {
@@ -367,6 +353,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	public void uiObjectClicked(UserInterfaceObject uiObj) {
 		clickedObject = uiObj;
+		if(uiObj.referenceObject != null) {
+			this.referenceObject = uiObj.referenceObject;
+		}
 		if(this.clickedObject.isClicked()) {
 
 			this.clickedObject.setClicked(false);
@@ -472,7 +461,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.player.hireWorker();
 			Game.userInterface.populateWorkersListContainer();
 		}else if(clickTag.equals("workerassign")) {
-			System.out.println("testasdasd");
+			Game.userInterface.populateWorkerAssignContainer(referenceObject);
+			Game.userInterface.enableInterfaceContainer("workerassign");
+//			System.out.println(Game.userInterface.containerMap.get("worke);
 		}
 
 

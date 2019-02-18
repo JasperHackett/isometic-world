@@ -120,6 +120,41 @@ public class InterfaceController {
 		return newContainer;
 	}
 	
+	
+	
+	/**
+	 * @param elementType
+	 * @param containerName
+	 * @param objectKey
+	 * @param clickTag
+	 * 
+	 * Used for objects with custom image
+	 */
+	public void addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
+		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+
+		if(containerMap.containsKey(containerName)) {
+			UIContainer objectsContainer = containerMap.get(containerName);
+			Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
+			newUIObject.setCustomProperties(newPos,objectImage,dimIn,clickable);
+			newUIObject.hoverable = false;
+			
+
+//			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+//				
+//				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+//						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+//			}
+//			
+		
+			objectsContainer.addObject(objectKey,newUIObject);
+		}else {
+			System.out.println("UIContainer does not exist");
+			return;
+		}
+		
+	}
+	
 	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
 		if(containerMap.containsKey(containerName)) {
@@ -153,6 +188,25 @@ public class InterfaceController {
 			UIContainer objectsContainer = containerMap.get(containerName);
 			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
 				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
+				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+			}
+			
+			
+			objectsContainer.addObject(objectKey,newUIObject);
+		}else {
+			System.out.println("UIContainer does not exist");
+			return;
+		}
+	}
+	
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  String clickTag, String buttonText) {
+		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+		if(containerMap.containsKey(containerName)) {
+			UIContainer objectsContainer = containerMap.get(containerName);
+			Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
+			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+				newUIObject.setProperties(newPos, clickTag, buttonText);
 				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
 						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
 			}
@@ -301,6 +355,7 @@ public class InterfaceController {
 		disableInterfaceContainer(zoneMap.get(zoneIn));
 		if(zoneIn.equals(InterfaceZone.TopSidePanel)) {
 			disableInterfaceContainer("workerslist");
+			disableInterfaceContainer("workerassign");
 		}
 		containerMap.get(containerName).visible = true;
 		for(UserInterfaceObject uiObj : containerMap.get(containerName).getObjects().values()) {
@@ -385,6 +440,7 @@ public class InterfaceController {
 	
 	
 	public void populateWorkersListContainer() {
+
 		if(containerMap.containsKey("workerslist")) {
 			UIContainer workerslist = containerMap.get("workerslist");
 			boolean reenable = false;
@@ -398,12 +454,38 @@ public class InterfaceController {
 //			workerslist.parentObject = sourceOfWorkers;
 			int offset = 24;
 			for(Unit worker : Game.player.workers) {
-				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString() + worker.objID,worker.actionTag,"primarygamefont",Color.WHITE,new Point (-30,offset),"workerassign");
+				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString(),worker.actionTag,"primarygamefont",Color.WHITE,new Point (-30,offset),"workerassign");
 				offset += 24;
 			}
 			if(reenable) {
 				enableInterfaceContainer(workerslist);
 			}
+
+//			
+		}
+	}
+	
+	public void populateWorkerAssignContainer(GameObject objIn) {
+
+		if(containerMap.containsKey("workerassign")) {
+//			UIContainer workerslist = containerMap.get("workerslist");
+//			boolean reenable = false;
+//			if(workerslist.visible) {
+//				reenable = true;
+//			}
+//			disableInterfaceContainer(workerslist);
+////			System.out.println("disabled int");
+////			containerMap.get("workerslist")
+//			workerslist.elements.clear();
+////			workerslist.parentObject = sourceOfWorkers;
+//			int offset = 24;
+//			for(Unit worker : Game.player.workers) {
+//				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString(),worker.actionTag,"primarygamefont",Color.WHITE,new Point (-30,offset),"workerassign");
+//				offset += 24;
+//			}
+//			if(reenable) {
+//				enableInterfaceContainer(workerslist);
+//			}
 
 //			
 		}
@@ -490,6 +572,12 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (0,80),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (80,80),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (40,330),"");
+		
+		createUIContainer("workerassign",new Point(1180,500),new Point(0,0));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workerassign","structuretitle","Assign Task","primarygamefont",Color.WHITE,new Point (100,20),"");
+		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point (0,0),"workerassign","workerassignsmalluibox","smalluibox",new Dimension(200,320),false);
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(120,270),"workerassign", "cancelworkerassign", "cancelworkerassign", "Cancel");
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(30,270),"workerassign", "saveworkerassign", "saveworkerassign", "Save");
 
 
 		createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30));
