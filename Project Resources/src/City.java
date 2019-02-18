@@ -17,7 +17,7 @@ import javafx.util.Pair;
  */
 public class City extends Structure {
 
-
+	String borderColour;
 //	public final Font cityFont = new Font("Callibri", Font.BOLD, 15);
 
 	public City(ArrayList<IsometricTile> tileList, String name) {

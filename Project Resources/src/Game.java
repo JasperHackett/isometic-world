@@ -93,6 +93,7 @@ public class Game {
 		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
+		objectMap.addImageSheet("pinkowned", "assets/pinkBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
 		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
 		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
@@ -130,6 +131,7 @@ public class Game {
 		nameList = gameWorld.populateNameList();
 		gameWorld.initialiseTileMap();
 		gameWorld.initialiseEntityMap();
+		gameWorld.initialiseBorderMap();
 //		gameMenu = new Menu();
 //		gameWorld.
 
@@ -220,7 +222,7 @@ public class Game {
 //		gameWorld.setTile(new Point(0,1), IsometricTile.TILESET.grass);
 		objectMap.updateMainDisplayObjects();
 		gameWorld.updateDisplay();
-		
+
 		//Sleep to stop concurrent modification exception
 		try {
 			Thread.sleep(10);

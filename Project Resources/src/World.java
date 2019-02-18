@@ -181,6 +181,48 @@ public class World {
 		
 		return (new Dimension(tileCount/j,j));	
 	}
+public void initialiseBorderMap() {
+		
+//		System.out.println(nextTileWorldCoords.x);
+		BufferedReader br = null;
+		String line = "";
+		String delim = ",";
+
+		int j = 0;
+		
+		cityList.get(0).borderColour = "blue";
+		cityList.get(1).borderColour = "red";
+		cityList.get(2).borderColour = "pink";
+		// Iterates through a .csv file and checks each field for a string that matches a known tile type.
+		try {
+			br = new BufferedReader(new FileReader("bordermap.csv"));
+			while((line = br.readLine()) != null){
+				String[] tileLine = line.split(delim);
+				
+				for(int i = 0; i < tileLine.length; i++) {
+
+					if(tileLine[i].compareTo("1") == 0) {
+						Game.objectMap.getTile(new Point(i,j)).setOwner(cityList.get(0));
+					}else if(tileLine[i].compareTo("2") == 0) {
+						Game.objectMap.getTile(new Point(i,j)).setOwner(cityList.get(1));
+					}else if(tileLine[i].compareTo("3") == 0) {
+						Game.objectMap.getTile(new Point(i,j)).setOwner(cityList.get(2));
+					}
+					
+				}
+
+				j++;
+			}
+			
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		this.updateDisplay();
+		
+			
+	}
 	
 	public ArrayList<String> populateNameList() {
 		ArrayList<String> nameList = new ArrayList<String>();
@@ -228,6 +270,7 @@ public class World {
 						
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
 						City newCity = new City(entityTiles, name);
+						System.out.println(name);
 						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
 						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
 						cityList.add(newCity);
