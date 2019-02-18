@@ -304,7 +304,7 @@ public class World {
 		for(Entity entity : Game.objectMap.worldEntitys.values()) {
 			if(entity instanceof ResourceStructure) {
 				ResourceStructure rStructure = (ResourceStructure) entity;
-				rStructure.detectResources();
+	
 			}
 		}
 //		while(!entityList.isEmpty()) {

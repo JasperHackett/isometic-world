@@ -18,13 +18,15 @@ public class Resource extends Entity{
 		IRON,
 	};
 	
+	private ResourceStructure structure;
+	public ArrayList<Resource> resourceCluster;
 	public Double resourceCapacity;
-	ResourceType resourceType;
+	public ResourceType resourceType;
 	
 	Resource(ArrayList<IsometricTile> tileList,ResourceType resourceType){
 		super(tileList);
 		this.resourceType = resourceType;
-		
+		this.type = EntityType.resource;
 		
 //		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(new Point(4,6), new Point(41,55)));
 //		this.structureOffset = 16;
@@ -36,8 +38,75 @@ public class Resource extends Entity{
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(200,200);
 		this.objectImage = "ironore";
-
+		this.resourceCluster = new ArrayList<Resource>();
+		initialiseCluster();
 	}
+	
+	
+	
+	public void initialiseCluster() {
+		IsometricTile origin = tileList.get(0);
+		ArrayList<Resource> cluster = new ArrayList<Resource>();
+		cluster.add((Resource)origin.entityOnTile);
+		ArrayList<IsometricTile> visited = new ArrayList<IsometricTile>();
+		
+		this.resourceCluster = recurseCluster(origin, cluster, visited);
+	}
+	
+	private ArrayList<Resource> recurseCluster(IsometricTile tile, ArrayList<Resource> cluster, ArrayList<IsometricTile> visited) {
+		visited.add(tile);
+		IsometricTile up = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));
+		IsometricTile down = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y+1));
+		IsometricTile left = Game.objectMap.getTile(new Point(tile.isoPoint.x-1, tile.isoPoint.y));
+		IsometricTile right = Game.objectMap.getTile(new Point(tile.isoPoint.x+1, tile.isoPoint.y));
+		
+		if (!visited.contains(up) && up.hasEntityOnTile()) {
+			if (up.entityOnTile.type == EntityType.resource) {
+				Resource resource = (Resource)up.entityOnTile;
+				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+					cluster.add(resource);
+					cluster = recurseCluster(up, cluster, visited);
+				}
+			}
+		}
+		if (!visited.contains(down) && down.hasEntityOnTile()) {
+			if (down.entityOnTile.type == EntityType.resource) {
+				Resource resource = (Resource)down.entityOnTile;
+				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+					cluster.add(resource);
+					cluster = recurseCluster(down, cluster, visited);
+				}
+			}
+		}
+		if (!visited.contains(left) && left.hasEntityOnTile()) {
+			if (left.entityOnTile.type == EntityType.resource) {
+				Resource resource = (Resource)left.entityOnTile;
+				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+					cluster.add(resource);
+					cluster = recurseCluster(left, cluster, visited);
+				}
+			}
+		}
+		if (!visited.contains(right) && right.hasEntityOnTile()) {
+			if (right.entityOnTile.type == EntityType.resource) {
+				Resource resource = (Resource)right.entityOnTile;
+				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+					cluster.add(resource);
+					cluster = recurseCluster(right, cluster, visited);
+				}
+			}
+		}
+		
+		return cluster;
+	}
+	
+	public boolean hasStructure() {
+		if (structure == null) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 
 	/**
