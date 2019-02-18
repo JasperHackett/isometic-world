@@ -258,7 +258,7 @@ public class World {
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
 						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.IRON);
 						newRStructure.objID = "ironmine" + Integer.toString(numEntitys);
-						Game.objectMap.addEntity(newRStructure.objID, newRStructure,  48);
+						Game.objectMap.addEntity(newRStructure.objID, newRStructure, 0);
 						Game.gameWorld.addTickingObject(newRStructure);
 						numEntitys++;
 					

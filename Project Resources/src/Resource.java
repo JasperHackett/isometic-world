@@ -123,7 +123,7 @@ public class Resource extends Entity{
 			ResourceStructure newStructure = new ResourceStructure(tileList, this.resourceType);
 			this.tileList.get(0).setEntityOnTile(this);
 			this.structure = newStructure;
-			Game.objectMap.addEntity(resourceType + "structure" + Game.gameWorld.numEntitys, newStructure, 48);
+			Game.objectMap.addEntity(resourceType + "structure" + Game.gameWorld.numEntitys, newStructure, 0);
 			Game.gameWorld.numEntitys++;
 		}
 	}

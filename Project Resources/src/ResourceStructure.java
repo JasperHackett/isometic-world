@@ -71,6 +71,9 @@ public class ResourceStructure extends Structure{
 		
 		for (IsometricTile tile : this.tileList) {
 			g.drawImage(Game.objectMap.getImage("redOwnedTile"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset +32, null);
+			if(currentlyHovered) {
+				g.drawImage(Game.objectMap.getImage("hover"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
+			}
 		}
 		
 //		super.render(g);
