@@ -51,6 +51,7 @@ public class World {
 //	public Map<String,Image> imageAssetMap;
 	public HashMap<Point,Point> worldToIsoTable;
 	public ArrayList<Resource> resourceList;
+	public int numEntitys;
 
 
 	public World()  {
@@ -207,7 +208,7 @@ public class World {
 			String line = "";
 			String delim = ",";
 			int y = 0;
-			int numEntitys = 0;
+			numEntitys = 0;
 			int ironCount = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);

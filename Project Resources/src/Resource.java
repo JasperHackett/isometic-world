@@ -104,6 +104,30 @@ public class Resource extends Entity{
 		return cluster;
 	}
 	
+	public void addStructure() {
+		boolean hasExistingStructure = false;
+		ResourceStructure existingStructure = null;
+		for (Resource resource : this.resourceCluster) {
+			if (resource.hasStructure()) {
+				hasExistingStructure = true;
+				existingStructure = resource.getStructure();
+			}
+		}
+		
+		if (hasExistingStructure == true) {
+			existingStructure.addResource(this);
+			this.structure = existingStructure;
+		} else {
+			ArrayList<IsometricTile> tileList = new ArrayList<IsometricTile>();
+			tileList.add(this.tileList.get(0));
+			ResourceStructure newStructure = new ResourceStructure(tileList, this.resourceType);
+			this.tileList.get(0).setEntityOnTile(this);
+			this.structure = newStructure;
+			Game.objectMap.addEntity(resourceType + "structure" + Game.gameWorld.numEntitys, newStructure, 48);
+			Game.gameWorld.numEntitys++;
+		}
+	}
+	
 	public boolean hasStructure() {
 		if (structure == null) {
 			return false;
@@ -111,7 +135,9 @@ public class Resource extends Entity{
 		return true;
 	}
 	
-	
+	public ResourceStructure getStructure() {
+		return this.structure;
+	}
 
 	/**
 	 * @return 
@@ -139,9 +165,23 @@ public class Resource extends Entity{
 	@Override
 	public void clickAction() {
 		System.out.println("Clicked on a resource");
-		this.currentlyClicked = true;
-
+		if (this.hasStructure()) {
+			this.structure.clickAction();
+		} else {
+			this.currentlyClicked = true;
+		}
 	}
+	
+	@Override
+	public void disableClick() {
+		
+		if (this.hasStructure()) {
+			this.structure.disableClick();
+		} else {
+			this.currentlyClicked = false;
+		}
+	}
+	
 	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);

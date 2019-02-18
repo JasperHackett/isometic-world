@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @author Jasper
  *
  */
-public class ResourceStructure<R> extends Structure{
+public class ResourceStructure extends Structure{
 	
 
 
@@ -44,7 +44,9 @@ public class ResourceStructure<R> extends Structure{
 		
 	}
 
-	
+	public void addResource(Resource resource) {
+		this.tileList.add(resource.tileList.get(0));
+	}
 	
 	@Override
 	public void clickAction() {
@@ -66,10 +68,15 @@ public class ResourceStructure<R> extends Structure{
 	
 	@Override
 	public void render(Graphics g) {
-		super.render(g);
-		if(currentlyHovered || currentlyClicked) {
-			g.drawImage(Game.objectMap.getImage("2x2hover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset +32, null);
+		
+		for (IsometricTile tile : this.tileList) {
+			g.drawImage(Game.objectMap.getImage("redOwnedTile"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset +32, null);
 		}
+		
+//		super.render(g);
+//		if(currentlyHovered || currentlyClicked) {
+//			g.drawImage(Game.objectMap.getImage("2x2hover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset +32, null);
+//		}
 	}
 
 	@Override
