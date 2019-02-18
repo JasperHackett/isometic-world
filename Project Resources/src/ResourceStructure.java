@@ -70,7 +70,7 @@ public class ResourceStructure extends Structure{
 	public void render(Graphics g) {
 		
 		for (IsometricTile tile : this.tileList) {
-			g.drawImage(Game.objectMap.getImage("redOwnedTile"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset +32, null);
+			g.drawImage(Game.objectMap.getImage("redOwnedTile"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
 			if(currentlyHovered) {
 				g.drawImage(Game.objectMap.getImage("hover"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
 			}
