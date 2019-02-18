@@ -87,7 +87,7 @@ public class World {
 		UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("moneyvalue");
 		textObj.setElementText(Double.toString(Game.player.money));
 		 textObj = (UserInterfaceObject)Game.objectMap.get("totalworkersvalue");
-		 textObj.setElementText(Integer.toString(Game.player.workers));
+		 textObj.setElementText(Integer.toString(Game.player.workerCount));
 		 textObj = (UserInterfaceObject)Game.objectMap.get("totalcostvalue");
 		 textObj.setElementText(Double.toString(Game.player.labourCost));
 		if(!newTickingObjects.isEmpty()) {

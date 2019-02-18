@@ -426,8 +426,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if (clickTag.equals("addWorker")) {
 			clickedObject.currentlyClicked = false;
 //			clickedObject = null;
-			Structure clickedStructure = (Structure)clickedEntity;
-			clickedStructure.addWorker();
+//			Structure clickedStructure = (Structure)clickedEntity;
+//			clickedStructure.addWorker();
 			Game.userInterface.updateContainerValues();
 		}else if(clickTag.equals("citiesmenu")) {
 			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
@@ -435,10 +435,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			clickedObject.disableClick();
 			Game.userInterface.enableInterfaceContainer("constructionmenu",InterfaceController.InterfaceZone.TopSidePanel);
 		}else if(clickTag.equals("buildironmine")) {
-			System.out.println("test");
-			constructionOutline.isoPoint = new Point(5,5);
-			System.out.println(constructionOutline.isoPoint);
-			currentState = InputState.CONSTRUCTION;
+//			System.out.println("test");
+//			constructionOutline.isoPoint = new Point(5,5);
+//			System.out.println(constructionOutline.isoPoint);
+//			currentState = InputState.CONSTRUCTION;
 //			Game.gameWorld.const
 //			for(String str : Game.objectMap.keySet()) {
 //				System.out.println(str);
@@ -466,9 +466,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(clickTag.equals("workersmenu")) {
 			clickedObject.disableClick();
 			Game.userInterface.enableInterfaceContainer("workersmenu",InterfaceController.InterfaceZone.TopSidePanel);
+			Game.userInterface.populateWorkersListContainer();
+			Game.userInterface.enableInterfaceContainer("workerslist");
 		}else if(clickTag.equals("hireworker")) {
 			Game.player.hireWorker();
-			
+			Game.userInterface.populateWorkersListContainer();
 		}else if(clickTag.equals("workerassign")) {
 			System.out.println("testasdasd");
 		}
