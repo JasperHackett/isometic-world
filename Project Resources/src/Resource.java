@@ -39,12 +39,11 @@ public class Resource extends Entity{
 		this.coords = new Point(200,200);
 		this.objectImage = "ironore";
 		this.resourceCluster = new ArrayList<Resource>();
-		initialiseCluster();
 	}
 	
 	
 	
-	public void initialiseCluster() {
+	public void updateCluster() {
 		IsometricTile origin = tileList.get(0);
 		ArrayList<Resource> cluster = new ArrayList<Resource>();
 		cluster.add((Resource)origin.entityOnTile);
@@ -55,10 +54,21 @@ public class Resource extends Entity{
 	
 	private ArrayList<Resource> recurseCluster(IsometricTile tile, ArrayList<Resource> cluster, ArrayList<IsometricTile> visited) {
 		visited.add(tile);
-		IsometricTile up = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));
-		IsometricTile down = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y+1));
-		IsometricTile left = Game.objectMap.getTile(new Point(tile.isoPoint.x-1, tile.isoPoint.y));
-		IsometricTile right = Game.objectMap.getTile(new Point(tile.isoPoint.x+1, tile.isoPoint.y));
+		IsometricTile up = null;
+		if (Game.
+				objectMap.
+				getTile(new Point(
+						tile.
+						isoPoint.
+						x, 
+						tile.
+						isoPoint.y-1)) != null) { up = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		IsometricTile down = null;
+		if (Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y+1)) != null) { down = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		IsometricTile left = null;
+		if (Game.objectMap.getTile(new Point(tile.isoPoint.x-1, tile.isoPoint.y)) != null) { left = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		IsometricTile right = null;
+		if (Game.objectMap.getTile(new Point(tile.isoPoint.x+1, tile.isoPoint.y)) != null) { right = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
 		
 		if (!visited.contains(up) && up.hasEntityOnTile()) {
 			if (up.entityOnTile.type == EntityType.resource) {

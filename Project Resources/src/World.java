@@ -50,6 +50,7 @@ public class World {
 	public Queue<Pair<String,Point>> entityList;
 //	public Map<String,Image> imageAssetMap;
 	public HashMap<Point,Point> worldToIsoTable;
+	public ArrayList<Resource> resourceList;
 
 
 	public World()  {
@@ -66,7 +67,7 @@ public class World {
 		panelDims = new Dimension(Game.width-200,Game.height-64);
 		panelPoint = new Point(0,34);
 		worldPoint = new Point(600,600);
-		
+		resourceList = new ArrayList<Resource>();
 		
 		
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
@@ -305,6 +306,9 @@ public class World {
 			if(entity instanceof ResourceStructure) {
 				ResourceStructure rStructure = (ResourceStructure) entity;
 	
+			} else if (entity instanceof Resource) {
+				Resource resource = (Resource) entity;
+				resource.updateCluster();
 			}
 		}
 //		while(!entityList.isEmpty()) {
