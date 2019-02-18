@@ -259,7 +259,10 @@ public class Game {
 //		
 //		System.out.println(objectMap.getTile(new Point(54,20)).toString());
 		
-		
+		Resource testResource = (Resource)objectMap.getTile(new Point(28,44)).entityOnTile;
+		for (Resource r : testResource.resourceCluster) {
+			System.out.println(r.tileList.get(0).isoPos.x + ", " + r.tileList.get(0).isoPos.y);
+		}
 		
 		// temporary "tick" loop
 		while(true) {

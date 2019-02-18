@@ -44,6 +44,7 @@ public class Resource extends Entity{
 	
 	
 	public void updateCluster() {
+		resourceCluster = new ArrayList<Resource>();
 		IsometricTile origin = tileList.get(0);
 		ArrayList<Resource> cluster = new ArrayList<Resource>();
 		cluster.add((Resource)origin.entityOnTile);
@@ -55,20 +56,13 @@ public class Resource extends Entity{
 	private ArrayList<Resource> recurseCluster(IsometricTile tile, ArrayList<Resource> cluster, ArrayList<IsometricTile> visited) {
 		visited.add(tile);
 		IsometricTile up = null;
-		if (Game.
-				objectMap.
-				getTile(new Point(
-						tile.
-						isoPoint.
-						x, 
-						tile.
-						isoPoint.y-1)) != null) { up = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		if (Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1)) != null) { up = Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1));}
 		IsometricTile down = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y+1)) != null) { down = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		if (Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1)) != null) { down = Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1));}
 		IsometricTile left = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPoint.x-1, tile.isoPoint.y)) != null) { left = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		if (Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y)) != null) { left = Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y));}
 		IsometricTile right = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPoint.x+1, tile.isoPoint.y)) != null) { right = Game.objectMap.getTile(new Point(tile.isoPoint.x, tile.isoPoint.y-1));}
+		if (Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y)) != null) { right = Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y));}
 		
 		if (!visited.contains(up) && up.hasEntityOnTile()) {
 			if (up.entityOnTile.type == EntityType.resource) {
