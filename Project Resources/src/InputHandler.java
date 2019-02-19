@@ -122,33 +122,37 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}
 		
 		
-		for(UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
-//			System.out.println(Game.objectMap.getEnabledUIObjects().size());
-			if(uiObj.isClickable()) {
-//				System.out.println(uiObj.clickTag);
-				if(checkContains(uiObj.getPosition(),e.getPoint())) {
 
-					if(clickedObject != null) {
-						if(uiObj.referenceObject != null) {
-							if(!uiObj.referenceObject.equals(clickedObject)) {
-								if(clickedObject.isClicked()) {
-									clickedObject.disableClick();
+//			for (UserInterfaceObject uiObj : ) {
+//				if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
+		for(int i = Game.userInterface.zIndex.size()-1; i >= 0 ; i--) {
+			for(UserInterfaceObject uiObj : Game.objectMap.getUIIndex(i)) {
+	//			System.out.println(Game.objectMap.getEnabledUIObjects().size());
+				if(uiObj.isClickable()) {
+	//				System.out.println(uiObj.clickTag);
+					if(checkContains(uiObj.getPosition(),e.getPoint())) {
+	
+						if(clickedObject != null) {
+							if(uiObj.referenceObject != null) {
+								if(!uiObj.referenceObject.equals(clickedObject)) {
+									if(clickedObject.isClicked()) {
+										clickedObject.disableClick();
+									}
+	
 								}
-
+									
+							}else {
+								clickedObject.disableClick();
 							}
-								
-						}else {
-							clickedObject.disableClick();
+							
 						}
-						
+						uiObjectClicked(uiObj);
+						Game.sem.release();
+						return;
 					}
-					uiObjectClicked(uiObj);
-					Game.sem.release();
-					return;
 				}
 			}
 		}
-		
 //		switch(currentState) {
 //		case SELECT:
 //			
@@ -507,7 +511,24 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(clickTag.equals("cancelworkerassign")) {
 			Game.userInterface.disableInterfaceContainer("workerassign");
 		}else if(clickTag.equals("testworkerassign")) {
-			
+			Game.userInterface.disableInterfaceContainer("workerassign");
+			if(referenceObject instanceof Unit) {
+				Unit unit = (Unit) referenceObject;
+				
+//				unit.setP
+//				System.out.println(unit.worldPoint);
+//				unit.setProperties("cube", false);
+				unit.isoPoint = new Point(10,10);
+				unit.worldPoint = Game.objectMap.getTile(unit.isoPoint).worldPoint;
+				unit.setDestination(new Point(10,12));
+				unit.setVisible(true);
+				Game.gameWorld.addTickingObject(unit);
+				Game.userInterface.updateContainerValues();
+//				System.out.println(unit.actionsQueue.size());
+
+//				Game.object
+			}
+
 		}
 
 

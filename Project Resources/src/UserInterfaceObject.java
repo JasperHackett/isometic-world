@@ -95,6 +95,7 @@ public class UserInterfaceObject extends GameObject{
 		super(objectType);
 		type = uiType;
 		fontKey = "smallbuttonfont";
+		this.clickTag = "";
 		switch(uiType) {
 
 			case CUSTOM:

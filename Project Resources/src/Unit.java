@@ -198,7 +198,7 @@ public class Unit extends Entity{
 			case ENTER:
 				this.setVisible(false);
 				ResourceStructure rStruct = (ResourceStructure) parentStructure;
-				rStruct.workerReturn(this);
+//				rStruct.workerReturn(this);
 //				Game.gameWorld.tickingObjects.remove(this);
 				actionsQueue.poll();
 				
