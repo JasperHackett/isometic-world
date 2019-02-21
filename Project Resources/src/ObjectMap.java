@@ -251,6 +251,88 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		// System.out.println(this.imageMap.keySet());
 		// imageMap.put(imgID,newImage);
 	}
+	
+	public enum MultiTiledImageType {
+		border, resourceStructure;
+	}
+	
+	private void updateMultiTiledImage(IsometricTile tile, MultiTiledImageType type) {
+		
+		switch(type){ 
+			case border:
+				break;
+			case resourceStructure:
+				break;
+		}
+		
+		/*
+		Determining which image to use based on neighbours ownership status
+		*/
+		// 1side down
+		if (hasLeft && hasRight && hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned0";
+		}
+		// 1side right
+		else if (hasLeft && !hasRight && hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned1";
+		}
+		// 1side left
+		else if (!hasLeft && hasRight && hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned2";
+		}
+		// 1side up
+		else if (hasLeft && hasRight && !hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned3";
+		}
+		// 2side up and left
+		else if (!hasLeft && hasRight && !hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned4";
+		}
+		// 2side down and right
+		else if (hasLeft && !hasRight && hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned5";
+		}
+		// 2side up and right
+		else if (hasLeft && !hasRight && !hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned6";
+		}
+		// 2side down and left
+		else if (!hasLeft && hasRight && hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned7";
+		}
+		// 2side up and down
+		else if (hasLeft && hasRight && !hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned13";
+		}
+		// 2side left and right
+		else if (!hasLeft && !hasRight && hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned14";
+		}
+		// 3side up, down, left
+		else if (!hasLeft && hasRight && !hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned8";
+		}
+		// 3side up, left, right
+		else if (!hasLeft && !hasRight && !hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned9";
+		}
+		// 3side down, left, right
+		else if (!hasLeft && !hasRight && hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned10";
+		}
+		// 3side up, down, right
+		else if (hasLeft && !hasRight && !hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned11";
+		}
+		// 4side
+		else if (!hasLeft && !hasRight && !hasUp && !hasDown) {
+			this.borderImage = currentOwner.toString() + "owned12";
+		}
+		// no sides
+		else if (hasLeft && hasRight && hasUp && hasDown) {
+			this.borderImage = currentOwner.toString() + "owned15";
+		}
+	}
 
 	public Image getImage(String imgID) {
 		return this.imageMap.get(imgID);
@@ -376,6 +458,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		Game.sem.release();
 
 	}
+	
+	
+	
 	public void removeEntity(Entity entityIn) {
 //		Game.sem.aq
 		this.worldEntitys.remove(entityIn);

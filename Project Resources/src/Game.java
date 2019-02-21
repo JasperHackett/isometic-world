@@ -97,6 +97,7 @@ public class Game {
 		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
 		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
 		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),4);
+		objectMap.addImageSheet("ironMine", "assets/ironMine.png", new Dimension(64, 40), 16);
 		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
