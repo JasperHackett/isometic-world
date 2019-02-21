@@ -66,10 +66,14 @@ public class GameObject {
 	}
 	
 	public void setPosition(Dimension dimIn, Point posIn) {
-		this.coords = posIn;
 		this.dim = dimIn;
+		this.coords = posIn;
 		setChildrenPosition();
 		
+	}
+	public void setPosition(Point pos) {
+		this.coords = pos;
+		setChildrenPosition();
 	}
 	
 	public void setChildrenPosition() {

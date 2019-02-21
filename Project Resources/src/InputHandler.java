@@ -511,10 +511,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}else if(clickTag.equals("cancelworkerassign")) {
 			Game.userInterface.disableInterfaceContainer("workerassign");
 		}else if(clickTag.equals("testworkerassign")) {
-			Game.userInterface.disableInterfaceContainer("workerassign");
+//			Game.userInterface.disableInterfaceContainer("workerassign");
 			if(referenceObject instanceof Unit) {
 				Unit unit = (Unit) referenceObject;
-				
+//				Game.userInterface.disableInterfaceContainer("workerassign");
 //				unit.setP
 //				System.out.println(unit.worldPoint);
 //				unit.setProperties("cube", false);
@@ -529,6 +529,32 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //				Game.object
 			}
 
+		} else if(clickTag.equals("workerassignstart")) {
+//			System.out.println("Test");
+			if(referenceObject instanceof Unit) {
+				System.out.println(clickedObject.objID);
+				if(clickedObject != null) {
+					Game.userInterface.dropDownContainer("dropdowncity", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
+					
+				}
+				
+			}else if(referenceObject instanceof City) {
+//				City city = (City)referenceObject);
+//				Game.userInterface.queueActionStructure("workerassignstart", city);
+				System.out.println("City start");
+			}
+		}else if(clickTag.equals("workerassigndest")) {
+//			System.out.println("Test");
+			if(referenceObject instanceof Unit) {
+				System.out.println(clickedObject.objID);
+				if(clickedObject != null) {
+					Game.userInterface.dropDownContainer("dropdowncity", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
+					
+				}
+				
+			}else if(referenceObject instanceof City) {
+				System.out.println("City destination");
+			}
 		}
 
 

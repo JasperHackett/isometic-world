@@ -50,6 +50,7 @@ public class World {
 	public Queue<Pair<String,Point>> entityList;
 //	public Map<String,Image> imageAssetMap;
 	public HashMap<Point,Point> worldToIsoTable;
+	public HashMap<String,Unit> worldUnits;
 
 
 	public World()  {
@@ -68,7 +69,7 @@ public class World {
 		worldPoint = new Point(600,600);
 		
 		
-		
+		worldUnits = new HashMap<String,Unit>();
 		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
 //		initialiseTileMap();
 //		initialiseEntitys();
@@ -597,6 +598,9 @@ public void initialiseBorderMap() {
 		
 		return getPathBetween(startPoint,endPoint);
 	}
+	
+	
+	
 	
 
 }

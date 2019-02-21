@@ -22,6 +22,7 @@ public class UserInterfaceObject extends GameObject{
 		MEDIUM,
 		TEXT,
 		TEXTBOX,
+		TEXTBOXDROPDOWN,
 		TEXTBOXSTATIC,
 		TEXTBOXSTATICVALUE,
 		TOPBAR
@@ -88,7 +89,39 @@ public class UserInterfaceObject extends GameObject{
 	}
 	public void setElementText(String text) {
 		elementText.setText(text);
+		Dimension offset = null;
+		if( this.type == UIElementType.TEXTBOXSTATICVALUE || this.type == UIElementType.TEXTBOXSTATIC) {
+			 offset = new Dimension(this.dim.width/4 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		}else {
+			 offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		}
+		this.addChild(this.elementText,offset);
 	}
+	
+	@Override
+	public void setPosition(Point pos) {
+		this.coords = pos;
+		setChildrenPosition();
+		if(this.type == UIElementType.TEXTBOX) {
+//			this.elementText.setPosition(pos);
+		}
+	}
+	@Override
+	public void setChildrenPosition() {
+		if (children == null) {
+			return;
+		} 
+
+		for (GameObject child : children.keySet()) {
+			if(child instanceof TextObject) {
+				child.setPosition(this.coords);
+			}
+
+		}
+		
+	}
+//	
+	
 
 	
 	public UserInterfaceObject(ObjectType objectType, UIElementType uiType) {
@@ -110,6 +143,12 @@ public class UserInterfaceObject extends GameObject{
 				this.objectImage = "textbox2";
 				this.defaultObjectImage = objectImage;
 				this.hoverImage = "textbox1";
+				break;
+			case TEXTBOXDROPDOWN:
+				this.dim = new Dimension(160,20);
+				this.objectImage = "textbox4";
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = "textbox5";
 				break;
 			case TEXTBOXSTATIC:
 				this.dim = new Dimension(160,20);
@@ -167,6 +206,12 @@ public class UserInterfaceObject extends GameObject{
 		this.currentlyHovered = false;
 		this.objectImage = defaultObjectImage;
 	}
+	
+	@Override
+	public void clickAction(){
+		super.clickAction();
+	}
+	
 	@Override
 	public void disableClick(){
 		this.currentlyClicked = false;
