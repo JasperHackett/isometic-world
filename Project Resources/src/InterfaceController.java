@@ -609,12 +609,12 @@ public class InterfaceController {
 		}
 		Point spacingPos = new Point(0,20);
 		createUIContainer(containerName,pos,new Point(0,20),5);
-		System.out.println(pos);
+//		System.out.println(pos);
 		for(GameObject obj : objectSet) {
 			if(obj instanceof City) {
 				City city = (City) obj;
 				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
-				System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
+//				System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
 				spacingPos.y = spacingPos.y + 20;
 			}
 		}
