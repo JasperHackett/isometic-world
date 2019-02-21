@@ -510,25 +510,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			System.out.println("save worker assign");
 		}else if(clickTag.equals("cancelworkerassign")) {
 			Game.userInterface.disableInterfaceContainer("workerassign");
-		}else if(clickTag.equals("testworkerassign")) {
-//			Game.userInterface.disableInterfaceContainer("workerassign");
-			if(referenceObject instanceof Unit) {
-				Unit unit = (Unit) referenceObject;
-//				Game.userInterface.disableInterfaceContainer("workerassign");
-//				unit.setP
-//				System.out.println(unit.worldPoint);
-//				unit.setProperties("cube", false);
-				unit.isoPoint = new Point(10,10);
-				unit.worldPoint = Game.objectMap.getTile(unit.isoPoint).worldPoint;
-				unit.setDestination(new Point(10,12));
-				unit.setVisible(true);
-				Game.gameWorld.addTickingObject(unit);
-				Game.userInterface.updateContainerValues();
-//				System.out.println(unit.actionsQueue.size());
-
-//				Game.object
-			}
-
 		} else if(clickTag.equals("workerassignstart")) {
 //			System.out.println("Test");
 			if(referenceObject instanceof Unit) {
