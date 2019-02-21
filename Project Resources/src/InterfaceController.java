@@ -24,6 +24,10 @@ public class InterfaceController {
 	}
 	
 	
+	Structure startStructureHolder;
+	Structure destStructureHolder;
+	
+	
 	private class UIContainer{
 		boolean visible = false;
 		Point coords;
@@ -388,12 +392,15 @@ public class InterfaceController {
 					}
 				}
 				enableInterfaceContainer(visibleContainer);
+				
 
 			}
 		}
 
 		if(containerMap.get("workerassign").visible) {
-
+//			visibleContainer = containerMap.get("workerassign");
+//			disableInterfaceContainer(visibleContainer);
+//			enableInterfaceContainer(visibleContainer);
 		}
 	}
 	public void setParentObject(String containerName, GameObject parentObject) {
@@ -542,8 +549,8 @@ public class InterfaceController {
 			if(objIn instanceof Unit) {
 			Unit worker = (Unit) objIn;
 			disableInterfaceContainer(workerslist);
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid",objIn.toString()+"start","Start","primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid",objIn.toString()+"destin","Destination","primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
+			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassignstartdd","Start","primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
+			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassigndestdd","Destination","primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
 			enableInterfaceContainer(workerslist);
 				
 			}
@@ -568,6 +575,25 @@ public class InterfaceController {
 
 //			
 		}
+	}
+	
+	public void setDropdownParent(String clickTag, String containerName, City city){
+
+		this.startStructureHolder = city;
+		if(containerName.equals("dropdowncity")) {
+//			System.out.println("TEST");
+			if(containerMap.get("workerassignmid").containers.containsKey(containerName)) {
+				if(clickTag.equals("workerassignstart")) {
+					containerMap.get("workerassignmid").elements.get("workerassignstartdd").setElementText(city.name);
+				}else if(clickTag.equals("workerassigndest")) {
+					System.out.println("TesT");
+					containerMap.get("workerassignmid").elements.get("workerassigndestdd").setElementText(city.name);
+				}
+				
+//				updateContainerValues();
+			}
+		}
+//		containerMap.get("workerassignmid").elements.get(key)
 	}
 	/**
 	 * @param containerName

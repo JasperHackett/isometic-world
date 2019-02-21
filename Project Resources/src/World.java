@@ -51,6 +51,8 @@ public class World {
 //	public Map<String,Image> imageAssetMap;
 	public HashMap<Point,Point> worldToIsoTable;
 	public HashMap<String,Unit> worldUnits;
+	
+//	public enum ActionQueue
 
 
 	public World()  {

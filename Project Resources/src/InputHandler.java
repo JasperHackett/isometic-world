@@ -539,9 +539,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				}
 				
 			}else if(referenceObject instanceof City) {
-//				City city = (City)referenceObject);
-//				Game.userInterface.queueActionStructure("workerassignstart", city);
-				System.out.println("City start");
+				City city = (City) referenceObject;
+//				Game.userInterface.queueActionStrcture("workerassignstart", city);
+//				Game.userInterface.setStartStructureHolder(city);
+				Game.userInterface.setDropdownParent("workerassignstart","dropdowncity",city);
+				Game.userInterface.disableInterfaceContainer("dropdowncity");
 			}
 		}else if(clickTag.equals("workerassigndest")) {
 //			System.out.println("Test");
@@ -553,7 +555,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				}
 				
 			}else if(referenceObject instanceof City) {
-				System.out.println("City destination");
+				City city = (City) referenceObject;
+				Game.userInterface.setDropdownParent("workerassigndest","dropdowncity",city);
+				Game.userInterface.disableInterfaceContainer("dropdowncity");
 			}
 		}
 
