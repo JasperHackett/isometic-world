@@ -441,14 +441,19 @@ public class InterfaceController {
 
 	}
 	public void disableInterfaceContainer(String containerName) {
-		containerMap.get(containerName).visible = false;
-		for(UserInterfaceObject uiObj : containerMap.get(containerName).getObjects().values()) {
-			Game.objectMap.enabledUIObjects.remove(uiObj);
-		}
-		for(UIContainer cont: containerMap.get(containerName).containers.values()) {
-			disableInterfaceContainer(cont);
-		}
+		if(containerMap.containsKey(containerName)) {
+			containerMap.get(containerName).visible = false;
+			for(UserInterfaceObject uiObj : containerMap.get(containerName).getObjects().values()) {
+				Game.objectMap.enabledUIObjects.remove(uiObj);
+			}
+			for(UIContainer cont: containerMap.get(containerName).containers.values()) {
+				disableInterfaceContainer(cont);
+			}
 
+		}else {
+			System.out.println("Invalid container name");
+		}
+		
 	}
 	public void disableInterfaceContainer(UIContainer container) {
 		container.visible = false;
@@ -458,6 +463,7 @@ public class InterfaceController {
 		for(UIContainer cont: container.containers.values()) {
 			disableInterfaceContainer(cont);
 		}
+		
 
 	}
 	
@@ -549,8 +555,8 @@ public class InterfaceController {
 			if(objIn instanceof Unit) {
 			Unit worker = (Unit) objIn;
 			disableInterfaceContainer(workerslist);
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassignstartdd","Start","primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassigndestdd","Destination","primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
+			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassignstartdd",worker.getStartStructName(),"primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
+			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassigndestdd",worker.getDestStructName(),"primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
 			enableInterfaceContainer(workerslist);
 				
 			}
@@ -586,11 +592,11 @@ public class InterfaceController {
 				if(clickTag.equals("workerassignstart")) {
 					containerMap.get("workerassignmid").elements.get("workerassignstartdd").setElementText(city.name);
 				}else if(clickTag.equals("workerassigndest")) {
-					System.out.println("TesT");
-					containerMap.get("workerassignmid").elements.get("workerassigndestdd").setElementText(city.name);
+//					System.out.println("TesT");
+//					containerMap.get("workerassignmid"
 				}
 				
-//				updateContainerValues();
+				updateContainerValues();
 			}
 		}
 //		containerMap.get("workerassignmid").elements.get(key)

@@ -32,6 +32,10 @@ public class Unit extends Entity{
 	Integer waitTicks; //Number of ticks this unit needs to wait
 	Structure parentStructure;
 	String actionTag = "Idle";
+	Structure destinationStructure;
+	Structure startingStructure;
+	
+	
 	
 	Unit(Point isoPos){
 		actionsQueue = new LinkedList<Actions>();
@@ -65,7 +69,7 @@ public class Unit extends Entity{
 	//This function will probably need to be moved to a child Worker class or something similar
 	public void getResource(Point destinationPos) {
 		
-		actionTag= "Mining";
+		actionTag = "Mining";
 		addAction(Actions.GOTODEST, destinationPos);
 		setDestination(destinationPos);
 		addAction(Actions.WAIT, 4);
@@ -217,5 +221,20 @@ public class Unit extends Entity{
 		
 		
 		
+	}
+	
+	public String getStartStructName() {
+		String strs = "";
+		if(startingStructure != null) {
+			strs = startingStructure.name;
+		}
+		return strs;
+	}
+	public String getDestStructName() {
+		String str = "";
+		if(startingStructure != null) {
+			str = startingStructure.name;
+		}
+		return str;
 	}
 }

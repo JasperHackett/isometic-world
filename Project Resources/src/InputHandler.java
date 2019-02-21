@@ -87,24 +87,39 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
 		
-		/*
-		 * Working code for button presses
-		 */
-				String mouseButton = "not";
-				if (e.getButton() == MouseEvent.BUTTON1) {
-					mouseButton = "left";
-				} else if (e.getButton() == MouseEvent.BUTTON2) {
-					mouseButton = "middle";
-				} else if (e.getButton() == MouseEvent.BUTTON3) {
-					mouseButton = "right";
-				}
-			if(mouseButton.equals("right")) {
-				if(currentState == InputState.CONSTRUCTION) {
-					currentState = InputState.DEFAULT;
-				}
-			}
+		//Test garbage
+		if(clickedObject == null) {
+			System.out.println("Clicked object null");
+		}else {
+			System.out.println("Clicked obj: "+ clickedObject.objID);
+		}
+		
+		if(referenceObject == null) {
+			System.out.println("Clicked object null");
+
+		}else {
+			System.out.println("Reference obj: "+referenceObject.objID);
+		}
+		
+		
+//		
+//		/*
+//		 * Working code for button presses
+//		 */
+//				String mouseButton = "not";
+//				if (e.getButton() == MouseEvent.BUTTON1) {
+//					mouseButton = "left";
+//				} else if (e.getButton() == MouseEvent.BUTTON2) {
+//					mouseButton = "middle";
+//				} else if (e.getButton() == MouseEvent.BUTTON3) {
+//					mouseButton = "right";
+//				}
+//			if(mouseButton.equals("right")) {
+//				if(currentState == InputState.CONSTRUCTION) {
+//					currentState = InputState.DEFAULT;
+//				}
+//			}
 
 		//iso2D is the mouse position isometrically converted. Used for mouse detection on iso grid. Uses magic number
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
@@ -142,7 +157,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 								}
 									
 							}else {
-								clickedObject.disableClick();
+//								System.out.println("DISABLE");
+//								clickedObject.disableClick();
 							}
 							
 						}
@@ -515,7 +531,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			if(referenceObject instanceof Unit) {
 				System.out.println(clickedObject.objID);
 				if(clickedObject != null) {
-					Game.userInterface.dropDownContainer("dropdowncity", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
+					Game.userInterface.dropDownContainer("dropdowncitystart", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
 					
 				}
 				
@@ -523,22 +539,22 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				City city = (City) referenceObject;
 //				Game.userInterface.queueActionStrcture("workerassignstart", city);
 //				Game.userInterface.setStartStructureHolder(city);
-				Game.userInterface.setDropdownParent("workerassignstart","dropdowncity",city);
-				Game.userInterface.disableInterfaceContainer("dropdowncity");
+				Game.userInterface.setDropdownParent("workerassignstart","dropdowncitystart",city);
+				Game.userInterface.disableInterfaceContainer("dropdowncitystart");
 			}
 		}else if(clickTag.equals("workerassigndest")) {
 //			System.out.println("Test");
 			if(referenceObject instanceof Unit) {
 				System.out.println(clickedObject.objID);
 				if(clickedObject != null) {
-					Game.userInterface.dropDownContainer("dropdowncity", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
+					Game.userInterface.dropDownContainer("dropdowncitydest", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
 					
 				}
 				
 			}else if(referenceObject instanceof City) {
 				City city = (City) referenceObject;
-				Game.userInterface.setDropdownParent("workerassigndest","dropdowncity",city);
-				Game.userInterface.disableInterfaceContainer("dropdowncity");
+				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
+				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
 			}
 		}
 
