@@ -246,7 +246,7 @@ public class World {
 					}else if (tileLine[x].equals("IR")) {
 						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
 						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
-						Resource newResource = new Resource(entityTiles, Resource.ResourceType.IRON);
+						Resource newResource = new Resource(entityTiles, Resource.ResourceType.iron);
 						Game.objectMap.addEntity("iron" + Integer.toString(ironCount), newResource,  0);
 						ironCount++;
 					}else if(tileLine[x].equals("IM")) {
@@ -256,9 +256,9 @@ public class World {
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x,y-1)));
 						entityTiles.add(Game.objectMap.getTile(new Point(x+1,y-1)));
-						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.IRON);
+						ResourceStructure newRStructure = new ResourceStructure(entityTiles, Resource.ResourceType.iron);
 						newRStructure.objID = "ironmine" + Integer.toString(numEntitys);
-						Game.objectMap.addEntity(newRStructure.objID, newRStructure, 0);
+						Game.objectMap.addEntity(newRStructure.objID, newRStructure, 8);
 						Game.gameWorld.addTickingObject(newRStructure);
 						numEntitys++;
 					

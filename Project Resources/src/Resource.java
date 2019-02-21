@@ -15,7 +15,7 @@ import java.util.Random;
 public class Resource extends Entity{
 	
 	public enum ResourceType{
-		IRON,
+		iron,
 	};
 	
 	private ResourceStructure structure;
@@ -115,15 +115,15 @@ public class Resource extends Entity{
 		}
 		
 		if (hasExistingStructure == true) {
-			existingStructure.addResource(this);
 			this.structure = existingStructure;
+			existingStructure.addResource(this);
 		} else {
 			ArrayList<IsometricTile> tileList = new ArrayList<IsometricTile>();
 			tileList.add(this.tileList.get(0));
 			ResourceStructure newStructure = new ResourceStructure(tileList, this.resourceType);
 			this.tileList.get(0).setEntityOnTile(this);
 			this.structure = newStructure;
-			Game.objectMap.addEntity(resourceType + "structure" + Game.gameWorld.numEntitys, newStructure, 0);
+			Game.objectMap.addEntity(resourceType + "structure" + Game.gameWorld.numEntitys, newStructure, 8);
 			Game.gameWorld.numEntitys++;
 		}
 	}

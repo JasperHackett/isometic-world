@@ -2,6 +2,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * 
@@ -15,10 +16,11 @@ public class ResourceStructure extends Structure{
 	
 
 
-	int resourceStored = 0; //How many tiles away resources can be collected
-	ArrayList<Resource> developedResources;
-	ArrayList<Resource> connectedResources;
-	Resource.ResourceType structureType;
+	public int resourceStored = 0; //How many tiles away resources can be collected
+	public ArrayList<Resource> developedResources;
+	public ArrayList<Resource> connectedResources;
+	public Resource.ResourceType structureType;
+	public HashMap<IsometricTile, String> tileImageMap;
 	/**
 	 * @param tileList
 	 */
@@ -27,12 +29,14 @@ public class ResourceStructure extends Structure{
 
 		developedResources = new ArrayList<Resource>();
 		connectedResources = new ArrayList<Resource>();
-//		this.tileList = tileList;
+		tileImageMap = new HashMap<IsometricTile, String>();
+		tileImageMap.put(this.tileList.get(0), "ironResourceStructure12");
+		//		this.tileList = tileList;
 //		for (IsometricTile tile : tileList) {
 //			tile.setEntityOnTile(this);
 //		}
 		this.structureType = RType;
-		if(RType.equals(Resource.ResourceType.IRON)) {
+		if(RType.equals(Resource.ResourceType.iron)) {
 			this.objectImage = "ironhut";
 			this.clickTag = "ironmine";
 			this.worldDims = new Dimension(128,64);
@@ -45,7 +49,12 @@ public class ResourceStructure extends Structure{
 	}
 
 	public void addResource(Resource resource) {
-		this.tileList.add(resource.tileList.get(0));
+		IsometricTile newTile = resource.tileList.get(0);
+		this.tileList.add(newTile);
+		this.tileImageMap.put(newTile, "ironResourceStructure12");
+		for (IsometricTile tile : this.tileList) {
+			Game.objectMap.updateMultiTiledImage(tile, ObjectMap.MultiTiledImageType.resourceStructure);
+		}
 	}
 	
 	@Override
@@ -70,7 +79,7 @@ public class ResourceStructure extends Structure{
 	public void render(Graphics g) {
 		
 		for (IsometricTile tile : this.tileList) {
-			g.drawImage(Game.objectMap.getImage("redOwnedTile"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
+			g.drawImage(Game.objectMap.getImage(tileImageMap.get(tile)), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
 			if(currentlyHovered) {
 				g.drawImage(Game.objectMap.getImage("hover"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
 			}
