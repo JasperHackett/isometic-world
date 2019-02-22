@@ -183,6 +183,24 @@ public class Resource extends Entity{
 	}
 	
 	@Override
+	public void hoverAction() {
+		if (this.hasStructure()) {
+			structure.currentlyHovered = true;
+		} else {
+			this.currentlyHovered = true;
+		}
+	}
+	
+	@Override
+	public void disableHover() {
+		if (this.hasStructure()) {
+			structure.currentlyHovered = false;
+		} else {
+			this.currentlyHovered = false;
+		}
+	}
+	
+	@Override
 	public void render(Graphics g) {
 		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		if(currentlyHovered) {

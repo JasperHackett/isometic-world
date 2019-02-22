@@ -264,7 +264,6 @@ public class Game {
 		
 		for (Resource r : testResource.resourceCluster) {
 			r.addStructure();
-			System.out.println(r.tileList.get(0).isoPos + " entity on tile = " + r.tileList.get(0).entityOnTile);
 		}
 		
 		
