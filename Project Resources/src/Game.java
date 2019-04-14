@@ -83,7 +83,7 @@ public class Game {
 		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
 		objectMap.addImage("cube", "assets/placeholder.png");
-		objectMap.addImage("ironore", "assets/iron.png");
+		objectMap.addImage("ironore", "assets/iron2.png");
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
 		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
@@ -98,7 +98,8 @@ public class Game {
 		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
 		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
 		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
-		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),6);
+		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),4);
+		objectMap.addImageSheet("ironResourceStructure", "assets/ironMine.png", new Dimension(64, 40), 16);
 		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
@@ -106,8 +107,8 @@ public class Game {
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
 		objectMap.addFont("topbarfont","Times New Roman",Font.BOLD, 15);
 //		objectMap.getFont("topbarfont").
-		
-		
+
+
 		Dimension dim = new Dimension (width, height);
 		window = new JFrame("Draggable");
 		window.setLayout(null);
@@ -142,10 +143,10 @@ public class Game {
 
 //		objectMap.put("testbutton", testButton);
 //		objectMap.addObject(ObjectType.DEFAULT, "testbutton", testButton);
-		
-		
-		
-		
+
+
+
+
 //		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerticklabel","undefined","primarygamefont",Color.WHITE,new Point (1430,330));
 //		Game.userInterface.addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workertickvalue","undefined","primarygamefont",Color.WHITE,new Point (1510,330));
 
@@ -168,13 +169,13 @@ public class Game {
 		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT);
 		worldMousePosText.setTextProperties("World mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 85));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
-//		
+//
 		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT);
 		isoMousePosText.setTextProperties("Iso mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, 100));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
-		
+
 //		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
-		
+
 //		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
 //		worldMousePosText.setProperties("World mouse position:",Color.WHITE, new Point(xOffset+5, 85));
 //		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
@@ -182,7 +183,7 @@ public class Game {
 //		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);
 //		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 //		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
-		
+
 		player = new Player();
 
 
@@ -190,7 +191,7 @@ public class Game {
 //		constructionHover.setProperties("teststructure", false);
 //		objectMap.addEntity("conhover", constructionHover, 16);
 //		objectMap.addObject(ObjectType.WORLD, "conhover", constructionHover);
-//		
+//
 		//Test unit
 //		Unit cube;
 //		cube = new Unit(new Point(6,8));
@@ -214,8 +215,8 @@ public class Game {
 		InputHandler inputControl = new InputHandler();
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
-		
-		
+
+
 		//Non working code
 //		inputControl.setConstructionOutline(constructionHover);
 
@@ -259,11 +260,17 @@ public class Game {
 
 //
 //		System.out.println(objectMap.getTile(new Point(18,15)).getEntityOnTile().getClosestNeighbour(new Point(15,18)));
-//		
+//
 //		System.out.println(objectMap.getTile(new Point(54,20)).toString());
-		
-		
-		
+
+		Resource testResource = (Resource)objectMap.getTile(new Point(28,44)).entityOnTile;
+
+		for (Resource r : testResource.resourceCluster) {
+			r.addStructure();
+		}
+
+
+
 		// temporary "tick" loop
 		while(true) {
 			try {

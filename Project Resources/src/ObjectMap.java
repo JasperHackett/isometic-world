@@ -251,6 +251,147 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		// System.out.println(this.imageMap.keySet());
 		// imageMap.put(imgID,newImage);
 	}
+	
+	public enum MultiTiledImageType {
+		border, resourceStructure;
+	}
+	
+	public void updateMultiTiledImage(IsometricTile tile, MultiTiledImageType type) {
+		ArrayList<IsometricTile> neighbours = new ArrayList<IsometricTile>();
+		if (Game.objectMap.tileExists(new Point(tile.isoPos.x-1, tile.isoPos.y))) {neighbours.add(Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y)));} else {neighbours.add(null);}
+		if (Game.objectMap.tileExists(new Point(tile.isoPos.x, tile.isoPos.y-1))) {neighbours.add(Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1)));} else {neighbours.add(null);}
+		if (Game.objectMap.tileExists(new Point(tile.isoPos.x+1, tile.isoPos.y))) {neighbours.add(Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y)));} else {neighbours.add(null);}
+		if (Game.objectMap.tileExists(new Point(tile.isoPos.x, tile.isoPos.y+1))) {neighbours.add(Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1)));} else {neighbours.add(null);}
+		
+		boolean hasLeft = false;
+		boolean hasRight = false;
+		boolean hasUp = false;
+		boolean hasDown = false;
+		String imageID = "";
+		switch(type){ 
+			case border:
+				if (neighbours.get(0) != null){ if (neighbours.get(0).currentOwner == tile.currentOwner) {
+					hasLeft = true;
+				} }
+				if (neighbours.get(1) != null){ if (neighbours.get(1).currentOwner == tile.currentOwner) {
+					hasUp = true;
+				} }
+				if (neighbours.get(2) != null){ if (neighbours.get(2).currentOwner == tile.currentOwner) {
+					hasRight = true;
+				} }
+				if (neighbours.get(3) != null){ if (neighbours.get(3).currentOwner == tile.currentOwner) {
+					hasDown = true;
+				} }
+				imageID += tile.currentOwner.toString() + "owned";
+				break;
+			case resourceStructure:
+				if (neighbours.get(0) != null){ if (neighbours.get(0).hasEntityOnTile()) { if (neighbours.get(0).entityOnTile instanceof Resource) {
+					Resource neighbourResource = (Resource)neighbours.get(0).entityOnTile;
+					Resource tileResource = (Resource)tile.entityOnTile;
+					if (neighbourResource.resourceType == tileResource.resourceType && neighbourResource.hasStructure()) {
+						hasLeft = true;
+					} } } }
+				if (neighbours.get(1) != null){ if (neighbours.get(1).hasEntityOnTile()) { if (neighbours.get(1).entityOnTile instanceof Resource) {
+					Resource neighbourResource = (Resource)neighbours.get(1).entityOnTile;
+					Resource tileResource = (Resource)tile.entityOnTile;
+					if (neighbourResource.resourceType == tileResource.resourceType && neighbourResource.hasStructure()) {
+						hasUp = true;
+					} } } }
+				if (neighbours.get(2) != null){ if (neighbours.get(2).hasEntityOnTile()) { if (neighbours.get(2).entityOnTile instanceof Resource) {
+					Resource neighbourResource = (Resource)neighbours.get(2).entityOnTile;
+					Resource tileResource = (Resource)tile.entityOnTile;
+					if (neighbourResource.resourceType == tileResource.resourceType && neighbourResource.hasStructure()) {
+						hasRight = true;
+					} } } }
+				if (neighbours.get(3) != null){ if (neighbours.get(3).hasEntityOnTile()) { if (neighbours.get(3).entityOnTile instanceof Resource) {
+					Resource neighbourResource = (Resource)neighbours.get(3).entityOnTile;
+					Resource tileResource = (Resource)tile.entityOnTile;
+					if (neighbourResource.resourceType == tileResource.resourceType && neighbourResource.hasStructure()) {
+						hasDown = true;
+					} } } }
+				Resource r = (Resource)tile.entityOnTile;
+				
+				imageID += r.resourceType.toString() + "ResourceStructure";
+				break;
+		}
+		
+		/*
+		Determining which image to use based on neighbours ownership status
+		*/
+		// 1side down
+		if (hasLeft && hasRight && hasUp && !hasDown) {
+			imageID += "0";
+		}
+		// 1side right
+		else if (hasLeft && !hasRight && hasUp && hasDown) {
+			imageID += "1";
+		}
+		// 1side left
+		else if (!hasLeft && hasRight && hasUp && hasDown) {
+			imageID += "2";
+		}
+		// 1side up
+		else if (hasLeft && hasRight && !hasUp && hasDown) {
+			imageID += "3";
+		}
+		// 2side up and left
+		else if (!hasLeft && hasRight && !hasUp && hasDown) {
+			imageID += "4";
+		}
+		// 2side down and right
+		else if (hasLeft && !hasRight && hasUp && !hasDown) {
+			imageID += "5";
+		}
+		// 2side up and right
+		else if (hasLeft && !hasRight && !hasUp && hasDown) {
+			imageID += "6";
+		}
+		// 2side down and left
+		else if (!hasLeft && hasRight && hasUp && !hasDown) {
+			imageID += "7";
+		}
+		// 2side up and down
+		else if (hasLeft && hasRight && !hasUp && !hasDown) {
+			imageID += "13";
+		}
+		// 2side left and right
+		else if (!hasLeft && !hasRight && hasUp && hasDown) {
+			imageID += "14";
+		}
+		// 3side up, down, left
+		else if (!hasLeft && hasRight && !hasUp && !hasDown) {
+			imageID += "8";
+		}
+		// 3side up, left, right
+		else if (!hasLeft && !hasRight && !hasUp && hasDown) {
+			imageID += "9";
+		}
+		// 3side down, left, right
+		else if (!hasLeft && !hasRight && hasUp && !hasDown) {
+			imageID += "10";
+		}
+		// 3side up, down, right
+		else if (hasLeft && !hasRight && !hasUp && !hasDown) {
+			imageID += "11";
+		}
+		// 4side
+		else if (!hasLeft && !hasRight && !hasUp && !hasDown) {
+			imageID += "12";
+		}
+		// no sides
+		else if (hasLeft && hasRight && hasUp && hasDown) {
+			imageID += "15";
+		}
+		switch(type) {
+		case border:
+			tile.borderImage = imageID;
+			break;
+		case resourceStructure:
+			Resource r = (Resource)tile.entityOnTile;
+			r.getStructure().tileImageMap.put(tile, imageID);
+			break;
+		}
+	}
 
 	public Image getImage(String imgID) {
 		return this.imageMap.get(imgID);
@@ -381,6 +522,9 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		Game.sem.release();
 
 	}
+	
+	
+	
 	public void removeEntity(Entity entityIn) {
 //		Game.sem.aq
 		this.worldEntitys.remove(entityIn);

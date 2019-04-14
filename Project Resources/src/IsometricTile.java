@@ -60,6 +60,13 @@ public class IsometricTile extends WorldObject{
 
 	}
 	
+	public boolean hasEntityOnTile() {
+		if (entityOnTile == null) {
+			return false;
+		}
+		return true;
+	}
+	
 	public Entity getEntityOnTile() {
 		return entityOnTile;
 	}

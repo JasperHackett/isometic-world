@@ -17,8 +17,8 @@ import javafx.util.Pair;
 public class Entity extends WorldObject{
 
 	public enum EntityType {
-		city,
-		road;
+		city, 
+		resource;
 	}
 
 	public ArrayList<IsometricTile> tileList;
@@ -32,18 +32,18 @@ public class Entity extends WorldObject{
 	public Entity() {
 		
 	}
-	Entity(Point isoPos){
-		
-//		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(new Point(4,6), new Point(41,55)));
-//		this.structureOffset = 16;
-		this.isoPoint = isoPos;
-//		Game.objectMap.getTile(isoPos);
-		this.worldPoint = Game.objectMap.getTile(isoPos).worldPoint;
-		this.worldDims = new Dimension(64,32);
-		this.dim = new Dimension(64,32);
-		this.coords = new Point(0,0);
-		
-	}
+//	Entity(Point isoPos){
+//		
+////		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(new Point(4,6), new Point(41,55)));
+////		this.structureOffset = 16;
+//		this.isoPoint = isoPos;
+////		Game.objectMap.getTile(isoPos);
+//		this.worldPoint = Game.objectMap.getTile(isoPos).worldPoint;
+//		this.worldDims = new Dimension(64,32);
+//		this.dim = new Dimension(64,32);
+//		this.coords = new Point(0,0);
+//		
+//	}
 	
 	
 	public Entity(ArrayList<IsometricTile> tileList) {
