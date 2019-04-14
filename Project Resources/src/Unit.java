@@ -31,7 +31,7 @@ public class Unit extends Entity{
 	LinkedList<Actions> actionsQueue;
 	Integer waitTicks; //Number of ticks this unit needs to wait
 	Structure parentStructure;
-	String actionTag = "Unassigned";
+	String actionTag = "Idle";
 	
 	Unit(Point isoPos){
 		actionsQueue = new LinkedList<Actions>();
@@ -58,6 +58,7 @@ public class Unit extends Entity{
 	public void setDestination(Point destinationPos) {
 		this.currentDestination = destinationPos;
 		currentPath = new LinkedList<Point>(Game.gameWorld.getPathBetween(this.isoPoint, destinationPos));
+		actionTag = "Working";
 		actionsQueue.add(Actions.GOTODEST);
 	}
 	
@@ -198,7 +199,7 @@ public class Unit extends Entity{
 			case ENTER:
 				this.setVisible(false);
 				ResourceStructure rStruct = (ResourceStructure) parentStructure;
-				rStruct.workerReturn(this);
+//				rStruct.workerReturn(this);
 //				Game.gameWorld.tickingObjects.remove(this);
 				actionsQueue.poll();
 				

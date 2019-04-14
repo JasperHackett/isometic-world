@@ -61,18 +61,18 @@ public class ResourceStructure extends Structure{
 	public void clickAction() {
 //		System.out.println("Click action on: "+ this.name);
 		this.currentlyClicked = true;
-		Game.userInterface.passRStructureToInterfaceContainer(this, "resourcestructure");
-		Game.userInterface.enableInterfaceContainer("resourcestructure",InterfaceController.InterfaceZone.TopSidePanel);
-		Game.userInterface.setParentObject("resourcestructure",this);
+//		Game.userInterface.passRStructureToInterfaceContainer(this, "resourcestructure");
+//		Game.userInterface.enableInterfaceContainer("resourcestructure",InterfaceController.InterfaceZone.TopSidePanel);
+//		Game.userInterface.setParentObject("resourcestructure",this);
 
 	}
 	
 	@Override
 	public void disableClick() {
 		this.currentlyClicked = false;
-		Game.userInterface.disableInterfaceContainer("resourcestructure");
-		Game.userInterface.disableInterfaceContainer("workerslist");
-		Game.userInterface.setParentObject("resourcestructure",null);
+//		Game.userInterface.disableInterfaceContainer("resourcestructure");
+//		Game.userInterface.disableInterfaceContainer("workerslist");
+//		Game.userInterface.setParentObject("resourcestructure",null);
 	}
 	
 	@Override

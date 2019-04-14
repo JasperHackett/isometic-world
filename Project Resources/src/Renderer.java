@@ -17,6 +17,7 @@ public class Renderer implements Runnable {
 	private Graphics graphics;
 	private JFrame mainWindow;
 	public int frames;
+	public int interfaceZIndex = 10;
 	public static Semaphore semaphore = new Semaphore(1);
 
 
@@ -120,12 +121,22 @@ public class Renderer implements Runnable {
 //			}
 //		}
 		
-		for (UserInterfaceObject uiObj : Game.objectMap.getEnabledUIObjects()) {
-			if( uiObj != null) {
-				uiObj.render(graphics);
+		for(int i = 0; i < interfaceZIndex; i++) {
+			for (UserInterfaceObject uiObj : Game.objectMap.getUIIndex(i)) {
+				if( uiObj != null) {
+					uiObj.render(graphics);
+				}
+				
 			}
-
 		}
+		
+		
+//		for (AuiObj : Game.objectMap.getEnabledUIObjects()) {
+//			if( uiObj != null) {
+//				uiObj.render(graphics);
+//			}
+//
+//		}
 		
 
 //		Game.userInterface.renderInterfaceController(graphics);

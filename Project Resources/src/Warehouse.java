@@ -38,18 +38,18 @@ public class Warehouse extends Structure{
 	public void clickAction() {
 //		System.out.println("Click action on: "+ this.name);
 		this.currentlyClicked = true;
-		Game.userInterface.passWarehouseToInterfaceContainer(this, "warehouse");
-		Game.userInterface.enableInterfaceContainer("warehouse",InterfaceController.InterfaceZone.TopSidePanel);
-		Game.userInterface.setParentObject("warehouse",this);
+//		Game.userInterface.passWarehouseToInterfaceContainer(this, "warehouse");
+//		Game.userInterface.enableInterfaceContainer("warehouse",InterfaceController.InterfaceZone.TopSidePanel);
+//		Game.userInterface.setParentObject("warehouse",this);
 
 	}
 	
 	@Override
 	public void disableClick() {
 		this.currentlyClicked = false;
-		Game.userInterface.disableInterfaceContainer("warehouse");
-		Game.userInterface.disableInterfaceContainer("workerslist");
-		Game.userInterface.setParentObject("warehouse",null);
+//		Game.userInterface.disableInterfaceContainer("warehouse");
+//		Game.userInterface.disableInterfaceContainer("workerslist");
+//		Game.userInterface.setParentObject("warehouse",null);
 	}
 	
 	
