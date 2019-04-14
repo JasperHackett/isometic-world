@@ -37,8 +37,12 @@ public class Resource extends Entity{
 		this.worldDims = new Dimension(64,32);
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(200,200);
-		this.objectImage = "ironore";
 		this.resourceCluster = new ArrayList<Resource>();
+		
+		if (resourceType == ResourceType.iron) {
+			this.objectImage = "ironore";
+			this.name = "Iron Ore";
+		}
 	}
 	
 	
@@ -169,6 +173,9 @@ public class Resource extends Entity{
 			this.structure.clickAction();
 		} else {
 			this.currentlyClicked = true;
+			Game.userInterface.passResourceToInterfaceContainer(this, "resource");
+			Game.userInterface.enableInterfaceContainer("resource",InterfaceController.InterfaceZone.TopSidePanel);
+			Game.userInterface.setParentObject("resource",this);
 		}
 	}
 	
@@ -179,6 +186,8 @@ public class Resource extends Entity{
 			this.structure.disableClick();
 		} else {
 			this.currentlyClicked = false;
+			Game.userInterface.disableInterfaceContainer("resource");
+			Game.userInterface.setParentObject("resource",null);
 		}
 	}
 	

@@ -26,6 +26,7 @@ public class Entity extends WorldObject{
 	public EntityType type;
 	public String isoTileKey;
 	public int structureOffset;
+	public String name;
 //	protected HashMap<GameObject, Pair<Integer, Integer>> children;
 
 	

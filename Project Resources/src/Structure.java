@@ -23,7 +23,7 @@ public class Structure extends Entity {
 	int activeWorkers = 0;
 	int workerTicks = 12;
 	int tickCounter = 0;
-	public String name;
+	
 	/**
 	 * @param type
 	 * @param worldDimsIn

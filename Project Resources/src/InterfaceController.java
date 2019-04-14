@@ -485,11 +485,24 @@ public class InterfaceController {
 //			resourceStructureContainer.elements.get("workerticklabel").setElementText("Next worker:");
 //			resourceStructureContainer.elements.get("workertickvalue").setElementText(Integer.toString(rStructure.tickCounter));
 			resourceStructureContainer.containers.get("workerlist");
+			
+			
 			for(UserInterfaceObject uiObj : containerMap.get(containerName).elements.values()) {
 				uiObj.referenceObject =rStructure;
 			}
 //			enableInterfaceContainer("workerslist");
 //			populateWorkersListContainer(rStructure);
+		}
+	}
+	
+	public void passResourceToInterfaceContainer(Resource resource, String containerName) {
+		if (containerName.equals("resource")) {
+			UIContainer resourceContainer = containerMap.get(containerName);
+			resourceContainer.elements.get("resourcetitle").setElementText(resource.name);
+			
+			for(UserInterfaceObject uiObj : containerMap.get(containerName).elements.values()) {
+				uiObj.referenceObject = resource;
+			}
 		}
 	}
 	
@@ -767,6 +780,7 @@ public class InterfaceController {
 		/*
 		 * Interfaces for buildings in the world
 		 */
+		// ResourceStructure
 		createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30),1);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorker", "Assign");
@@ -779,8 +793,14 @@ public class InterfaceController {
 //		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (0,30));
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (30,260),"");
 
+		// Resource
+		createUIContainer("resource", new Point(1450,120), new Point(0,30), 1);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resource", "resourcetitle", "undefined", "primarygamefont", Color.WHITE, new Point (0, -50), "");
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resource", "buildRStructureBtn", "buildRStructure", "Build Structure");
 		
 		
+		
+		// Warehouse
 		createUIContainer("warehouse", new Point(1450,120), new Point(0,30),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "warehouse", "addworkerbtn", "addWorker", "Assign");
