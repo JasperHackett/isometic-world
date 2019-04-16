@@ -186,7 +186,7 @@ public class World {
 
 		return (new Dimension(tileCount/j,j));
 	}
-public void initialiseBorderMap() {
+	public void initialiseBorderMap() {
 
 //		System.out.println(nextTileWorldCoords.x);
 		BufferedReader br = null;

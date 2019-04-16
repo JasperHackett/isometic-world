@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -17,8 +18,9 @@ public class IsometricTile extends WorldObject{
 	public boolean slave;
 	public Point masterLocation;
 	protected Entity entityOnTile = null;
-	public String roadImage;
-	public String borderImage;
+	public Image roadImage;
+	public Image borderImage;
+	public Image hoverImage;
 	public enum TILESET{
 		grass,
 		water,
@@ -51,6 +53,8 @@ public class IsometricTile extends WorldObject{
 		}
 		this.currentOwner = null;
 		roadImage = null;
+		borderImage = null;
+		hoverImage = Game.objectMap.getImage("hover");
 	}
 	public void setEntityOnTile(Entity entityOnTile) {
 		if(entityOnTile != null) {
@@ -78,13 +82,13 @@ public class IsometricTile extends WorldObject{
 	public void changeTileset(TILESET tilesetIn) {
 		this.tileset = tilesetIn;
 		if(tilesetIn == TILESET.water) {
-			this.objectImage = "watertile0";
+			this.objectImage = Game.objectMap.getImage("watertile0");
 		}
 		if(tilesetIn == TILESET.grass) {
-			this.objectImage = "grasstile0";
+			this.objectImage = Game.objectMap.getImage("grasstile0");
 		}
 		if(tilesetIn == TILESET.trees) {
-			this.objectImage = "treestile0";
+			this.objectImage = Game.objectMap.getImage("treestile0");
 		}
 	}
 
@@ -152,7 +156,7 @@ public class IsometricTile extends WorldObject{
 		if (b == false) {
 			roadImage = null;
 		} else {
-			roadImage = "road1";
+			roadImage = Game.objectMap.getImage("road1");
 			ArrayList<IsometricTile> neighbours = new ArrayList<IsometricTile>();
 			neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x-1, this.isoPos.y)));
 			neighbours.add(Game.objectMap.getTile(new Point(this.isoPos.x, this.isoPos.y-1)));
@@ -192,47 +196,47 @@ public class IsometricTile extends WorldObject{
 		}
 		// straight vertical road (also default for roads with no neighbours)
 		if ((!roadLeft && !roadRight && !roadUp && !roadDown) || (roadUp && roadDown && !roadLeft && !roadRight) || (!roadLeft && !roadRight && roadUp && !roadDown) || (!roadLeft && !roadRight && !roadUp && roadDown)) {
-			this.roadImage = "road1";
+			this.roadImage = Game.objectMap.getImage("road1");
 		}
 		// straight horizontal road
 		else if ((roadLeft && roadRight && !roadUp && !roadDown) || (!roadLeft && roadRight && !roadUp && !roadDown) || (roadLeft && !roadRight && !roadUp && !roadDown)) {
-			this.roadImage = "road0";
+			this.roadImage = Game.objectMap.getImage("road0");
 		}
 		// corner left and up
 		else if (roadLeft && !roadRight && roadUp && !roadDown) {
-			this.roadImage = "road2";
+			this.roadImage = Game.objectMap.getImage("road2");
 		}
 		// corner right and down
 		else if (!roadLeft && roadRight && !roadUp && roadDown) {
-			this.roadImage = "road3";
+			this.roadImage = Game.objectMap.getImage("road3");
 		}
 		// corner left and down
 		else if (roadLeft && !roadRight && !roadUp && roadDown) {
-			this.roadImage = "road4";
+			this.roadImage = Game.objectMap.getImage("road4");
 		}
 		// corner right and up
 		else if (!roadLeft && roadRight && roadUp && !roadDown) {
-			this.roadImage = "road5";
+			this.roadImage = Game.objectMap.getImage("road5");
 		}
 		// 3way left, down, right
 		else if (roadLeft && roadRight && !roadUp && roadDown) {
-			this.roadImage = "road6";
+			this.roadImage = Game.objectMap.getImage("road6");
 		}
 		// 3way down, right, up
 		else if (!roadLeft && roadRight && roadUp && roadDown) {
-			this.roadImage = "road7";
+			this.roadImage = Game.objectMap.getImage("road7");
 		}
 		// 3way down, left, up
 		else if (roadLeft && !roadRight && roadUp && roadDown) {
-			this.roadImage = "road8";
+			this.roadImage = Game.objectMap.getImage("road8");
 		}
 		// 3way left, up, right
 		else if (roadLeft && roadRight && roadUp && !roadDown) {
-			this.roadImage = "road9";
+			this.roadImage = Game.objectMap.getImage("road9");
 		}
 		// 4way
 		else if (roadLeft && roadRight && roadUp && roadDown) {
-			this.roadImage = "road10";
+			this.roadImage = Game.objectMap.getImage("road10");
 		}
 	}
 
@@ -264,86 +268,86 @@ public class IsometricTile extends WorldObject{
 		*/
 		// 1side down
 		if (ownedLeft && ownedRight && ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned0";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned0");
 		}
 		// 1side right
 		else if (ownedLeft && !ownedRight && ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned1";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned1");
 		}
 		// 1side left
 		else if (!ownedLeft && ownedRight && ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned2";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned2");
 		}
 		// 1side up
 		else if (ownedLeft && ownedRight && !ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned3";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned3");
 		}
 		// 2side up and left
 		else if (!ownedLeft && ownedRight && !ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned4";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned4");
 		}
 		// 2side down and right
 		else if (ownedLeft && !ownedRight && ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned5";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned5");
 		}
 		// 2side up and right
 		else if (ownedLeft && !ownedRight && !ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned6";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned6");
 		}
 		// 2side down and left
 		else if (!ownedLeft && ownedRight && ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned7";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned7");
 		}
 		// 2side up and down
 		else if (ownedLeft && ownedRight && !ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned13";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned13");
 		}
 		// 2side left and right
 		else if (!ownedLeft && !ownedRight && ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned14";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned14");
 		}
 		// 3side up, down, left
 		else if (!ownedLeft && ownedRight && !ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned8";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned8");
 		}
 		// 3side up, left, right
 		else if (!ownedLeft && !ownedRight && !ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned9";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned9");
 		}
 		// 3side down, left, right
 		else if (!ownedLeft && !ownedRight && ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned10";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned10");
 		}
 		// 3side up, down, right
 		else if (ownedLeft && !ownedRight && !ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned11";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned11");
 		}
 		// 4side
 		else if (!ownedLeft && !ownedRight && !ownedUp && !ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned12";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned12");
 		}
 		// no sides
 		else if (ownedLeft && ownedRight && ownedUp && ownedDown) {
-			this.borderImage = currentOwner.borderColour + "owned15";
+			this.borderImage = Game.objectMap.getImage(currentOwner.borderColour + "owned15");
 		}
 	}
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+		g.drawImage(objectImage, coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		if(currentlyHovered && entityOnTile == null) {
-			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+			g.drawImage(hoverImage, coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 //		if (this.currentOwner == OWNERSET.red) {
 //			g.drawImage(Game.objectMap.getImage("redOwnedTile"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 //		}
 		if (hasRoad()) {
-			g.drawImage(Game.objectMap.getImage(roadImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+			g.drawImage(roadImage, coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 		if (this.currentOwner != null) {
-			g.drawImage(Game.objectMap.getImage(borderImage), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+			g.drawImage(borderImage, coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 		if(currentlyHovered && entityOnTile == null) {
-			g.drawImage(Game.objectMap.getImage("hover"), coords.x + Game.xOffset, coords.y + Game.yOffset, null);
+			g.drawImage(hoverImage, coords.x + Game.xOffset, coords.y + Game.yOffset, null);
 		}
 
 

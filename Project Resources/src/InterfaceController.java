@@ -364,6 +364,7 @@ public class InterfaceController {
 		UIContainer visibleContainer;
 		if(containerMap.get("resourcestructure").visible) {
 			visibleContainer = containerMap.get("resourcestructure");
+			
 //			populateWorkersListContainer((Structure) visibleContainer.parentObject);
 //			disableInterfaceContainer("resourcestructure");
 //			enableInterfaceContainer("resourcestructure")
@@ -479,7 +480,7 @@ public class InterfaceController {
 			UIContainer resourceStructureContainer = containerMap.get(containerName);
 			resourceStructureContainer.elements.get("structuretitle").setElementText(rStructure.name);
 			resourceStructureContainer.elements.get("resourcestoredlabel").setElementText("Iron ore stored:");
-			resourceStructureContainer.elements.get("resourcestoredvalue").setElementText(Integer.toString(rStructure.resourceStored));
+			resourceStructureContainer.elements.get("resourcestoredvalue").setElementText(Integer.toString(rStructure.resourcesStored) + "/" + Integer.toString(rStructure.storageCap));
 			resourceStructureContainer.elements.get("workerslabel").setElementText("Workers:");
 			resourceStructureContainer.elements.get("workersvalue").setElementText(Integer.toString(rStructure.currentWorkers));
 //			resourceStructureContainer.elements.get("workerticklabel").setElementText("Next worker:");
@@ -785,8 +786,8 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorker", "Assign");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40),"");
+		
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (130,50),"");
-	
 //		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (100,0));
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (-30,10),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (130,20),"");

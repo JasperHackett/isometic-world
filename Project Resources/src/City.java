@@ -26,7 +26,7 @@ public class City extends Structure {
 		this.worldDims = new Dimension(128,64);
 		this.dim = new Dimension(192,96);
 		this.coords = new Point(200,200);
-		this.objectImage = "citytile0";
+		this.objectImage = Game.objectMap.getImage("citytile0");
 		this.clickTag = "city";
 		this.name = name;
 		this.objID="city" + name;

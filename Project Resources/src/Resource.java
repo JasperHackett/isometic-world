@@ -40,7 +40,7 @@ public class Resource extends Entity{
 		this.resourceCluster = new ArrayList<Resource>();
 		
 		if (resourceType == ResourceType.iron) {
-			this.objectImage = "ironore";
+			this.objectImage = Game.objectMap.getImage("ironore");
 			this.name = "Iron Ore";
 		}
 	}
@@ -211,7 +211,7 @@ public class Resource extends Entity{
 	
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		g.drawImage(objectImage, coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		if(currentlyHovered) {
 			g.drawImage(Game.objectMap.getImage("resourcehover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		}

@@ -384,7 +384,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		}
 		switch(type) {
 		case border:
-			tile.borderImage = imageID;
+			tile.borderImage = Game.objectMap.getImage(imageID);
 			break;
 		case resourceStructure:
 			Resource r = (Resource)tile.entityOnTile;
