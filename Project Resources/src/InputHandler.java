@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Stack;
 
 import javafx.util.Pair;
 
@@ -21,19 +22,16 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private Point mousePressPos;
 	private boolean dragEnabled;
 	private GameObject hoveredObject;
+	private GameObject mousePressedObject;
 	private GameObject clickedObject;
-	private Entity clickedEntity;
 	private GameObject referenceObject;
-	private Entity constructionOutline;
+	private Stack<UserInterfaceObject> clickedInterfaceObjects = new Stack<UserInterfaceObject>();
+
 	
-	private enum InputState{
-		DEFAULT,
-		CONSTRUCTION,
-		SELECT
-	};
-	InputState currentState = InputState.DEFAULT;
 
 
+
+	
 	public boolean checkContains(Pair<Dimension,Point> pairIn, Point mousePosition) {
 			if(pairIn.getValue().getX() < mousePosition.getX() && pairIn.getValue().getY() < mousePosition.getY()
 					&& pairIn.getValue().getX()+pairIn.getKey().getWidth() > mousePosition.getX()
@@ -80,55 +78,156 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 
 	}
-	public void setConstructionOutline(Entity outline) {
-		this.constructionOutline = outline;
-	}
+
 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		//Test garbage
-		if(clickedObject == null) {
-			System.out.println("Clicked object null");
-		}else {
-			System.out.println("Clicked obj: "+ clickedObject.objID);
-		}
-		
-		if(referenceObject == null) {
-			System.out.println("Clicked object null");
-
-		}else {
-			System.out.println("Reference obj: "+referenceObject.objID);
-		}
-		
-		
+//		//Test garbage
+////		if(clickedObject == null) {
+////			System.out.println("Clicked object null");
+////		}else {
+////			System.out.println("Clicked obj: "+ clickedObject.objID);
+////		}
+////		
+////		if(referenceObject == null) {
+////			System.out.println("Clicked object null");
+////
+////		}else {
+////			System.out.println("Reference obj: "+referenceObject.objID);
+////		}
 //		
-//		/*
-//		 * Working code for button presses
-//		 */
-//				String mouseButton = "not";
-//				if (e.getButton() == MouseEvent.BUTTON1) {
-//					mouseButton = "left";
-//				} else if (e.getButton() == MouseEvent.BUTTON2) {
-//					mouseButton = "middle";
-//				} else if (e.getButton() == MouseEvent.BUTTON3) {
-//					mouseButton = "right";
-//				}
-//			if(mouseButton.equals("right")) {
-//				if(currentState == InputState.CONSTRUCTION) {
-//					currentState = InputState.DEFAULT;
+//		
+////		
+////		/*
+////		 * Working code for button presses
+////		 */
+////				String mouseButton = "not";
+////				if (e.getButton() == MouseEvent.BUTTON1) {
+////					mouseButton = "left";
+////				} else if (e.getButton() == MouseEvent.BUTTON2) {
+////					mouseButton = "middle";
+////				} else if (e.getButton() == MouseEvent.BUTTON3) {
+////					mouseButton = "right";
+////				}
+////			if(mouseButton.equals("right")) {
+////				if(currentState == InputState.CONSTRUCTION) {
+////					currentState = InputState.DEFAULT;
+////				}
+////			}
+//
+//		//iso2D is the mouse position isometrically converted. Used for mouse detection on iso grid. Uses magic number
+//		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
+//		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
+//		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
+//
+//
+//		
+//		//Check all interface objects for click
+//		try {
+//			Game.sem.acquire();
+//		} catch (InterruptedException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		
+//		
+//
+////			for (UserInterfaceObject uiObj : ) {
+////				if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
+//		for(int i = Game.userInterface.zIndex.size()-1; i >= 0 ; i--) {
+//			for(UserInterfaceObject uiObj : Game.objectMap.getUIIndex(i)) {
+//	//			System.out.println(Game.objectMap.getEnabledUIObjects().size());
+//				if(uiObj.isClickable()) {
+//	//				System.out.println(uiObj.clickTag);
+//					if(checkContains(uiObj.getPosition(),e.getPoint())) {
+//	
+//						if(clickedObject != null) {
+//							if(uiObj.referenceObject != null) {
+//								if(!uiObj.referenceObject.equals(clickedObject)) {
+//									if(clickedObject.isClicked()) {
+//										clickedObject.disableClick();
+//									}
+//	
+//								}
+//									
+//							}else {
+////								System.out.println("DISABLE");
+////								clickedObject.disableClick();
+//							}
+//							
+//						}
+//						uiObjectClicked(uiObj);
+//						Game.sem.release();
+//						return;
+//					}
 //				}
 //			}
+//		}
+//
+//		
+//
+//		Game.sem.release();
+//
+//
+//		if(Game.currentState== Game.STATE.Game) {
+//
+//			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
+//
+//				IsometricTile tile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
+////				Boolean entityClicked = tile.getEntityOnTile() != null;
+//				
+//				if(tile != null) {
+//					if(clickedObject != null && tile != null) {
+//						
+//						if ((tile.getEntityOnTile() != null)&& clickedObject.type != ObjectType.TILE) {
+//							if (!tile.getEntityOnTile().equals(clickedObject)) {
+//								clickedObject.setClicked(false);
+//								clickedObject = null;
+//							}
+//						} else {
+//							if(!clickedObject.equals(tile)){
+//								clickedObject.setClicked(false);
+//								clickedObject = null;
+//							}
+//						}
+//	
+//	
+//	
+//					}
+//					if (tile.getEntityOnTile() != null) {
+//						clickedObject = tile.getEntityOnTile();
+//					} else {
+//						clickedObject = tile;
+//					}
+//				
+//				}
+//
+//
+//				if(clickedObject != null) {
+//					if(this.clickedObject.isClicked()) {
+//						this.clickedObject.setClicked(false);
+//						this.clickedObject = null;
+//					}else {
+//						this.clickedObject.setClicked(true);
+//					}
+//				}
+//				
+//
+//
+//
+//			}
+//		}
 
-		//iso2D is the mouse position isometrically converted. Used for mouse detection on iso grid. Uses magic number
-		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
-		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
-		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 
+	}
 
+	@Override
+	public void mousePressed(MouseEvent e) {
+		this.mousePressPos = e.getPoint();
 		
-		//Check all interface objects for click
+		//Check all interface objects for containing mouse position
 		try {
 			Game.sem.acquire();
 		} catch (InterruptedException e1) {
@@ -136,129 +235,79 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			e1.printStackTrace();
 		}
 		
-		
-
-//			for (UserInterfaceObject uiObj : ) {
-//				if(checkContains(uiObj.getPosition().getValue(),uiObj.getPosition().getKey(),mousePos)){
 		for(int i = Game.userInterface.zIndex.size()-1; i >= 0 ; i--) {
 			for(UserInterfaceObject uiObj : Game.objectMap.getUIIndex(i)) {
-	//			System.out.println(Game.objectMap.getEnabledUIObjects().size());
 				if(uiObj.isClickable()) {
-	//				System.out.println(uiObj.clickTag);
 					if(checkContains(uiObj.getPosition(),e.getPoint())) {
-	
-						if(clickedObject != null) {
-							if(uiObj.referenceObject != null) {
-								if(!uiObj.referenceObject.equals(clickedObject)) {
-									if(clickedObject.isClicked()) {
-										clickedObject.disableClick();
-									}
-	
-								}
-									
-							}else {
-//								System.out.println("DISABLE");
-//								clickedObject.disableClick();
-							}
-							
-						}
-						uiObjectClicked(uiObj);
+						//Interface object moused down on
+						mousePressedObject = uiObj;
 						Game.sem.release();
 						return;
 					}
 				}
 			}
 		}
-//		switch(currentState) {
-//		case SELECT:
-//			
-//			break;
-//		case CONSTRUCTION:
-////			System.out.println("tesT");		
-//			break;
-//		case DEFAULT:
-//
-//			break;
-//		}
-		
-		
-
 		Game.sem.release();
-
-
+		
+		
+		//Check game objects for mouse press			
 		if(Game.currentState== Game.STATE.Game) {
+			
+			//iso2D is the mouse position isometrically converted. Used for mouse detection on iso grid. Uses magic number
+			Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
+			iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
+			iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
+			
+			//Uses absolute point
+			if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
+				dragEnabled = true;
+			}
 
 			if(checkContains(Game.gameWorld.getMainDisplayCoords(),e.getPoint())) {
-
 				IsometricTile tile = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
-//				Boolean entityClicked = tile.getEntityOnTile() != null;
-				
 				if(tile != null) {
-					if(clickedObject != null && tile != null) {
-						
-						if ((tile.getEntityOnTile() != null)&& clickedObject.type != ObjectType.TILE) {
-							if (!tile.getEntityOnTile().equals(clickedObject)) {
-								clickedObject.setClicked(false);
-								clickedObject = null;
-							}
-						} else {
-							if(!clickedObject.equals(tile)){
-								clickedObject.setClicked(false);
-								clickedObject = null;
-							}
-						}
-	
-	
-	
-					}
-					if (tile.getEntityOnTile() != null) {
-						clickedObject = tile.getEntityOnTile();
-						clickedEntity = tile.getEntityOnTile();
+					if ((tile.getEntityOnTile() != null)) {
+						mousePressedObject = tile.getEntityOnTile();
 					} else {
-						clickedObject = tile;
-					}
-				
-				}
-
-
-				if(clickedObject != null) {
-					if(this.clickedObject.isClicked()) {
-						this.clickedObject.setClicked(false);
-						this.clickedObject = null;
-					}else {
-						this.clickedObject.setClicked(true);
+						mousePressedObject = tile;
 					}
 				}
-				
-
-
-
 			}
 		}
-
-
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-//		if (!(e.getButton() == MouseEvent.BUTTON3)) {
-//			return;
-//		}
-
-		this.mousePressPos = e.getPoint();
-
-		if(checkContains((new Pair<Dimension,Point>(new Dimension(1400,700), new Point(100,100))), e.getPoint())){
-			dragEnabled = true;
-		}
-
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		
+		if(mousePressedObject != null) {
+			if(checkContains(mousePressedObject.getPosition(),e.getPoint())) {
+				if(mousePressedObject instanceof UserInterfaceObject) {
+					UserInterfaceObject uiObj = (UserInterfaceObject) mousePressedObject;
+					if(uiObj.isClickable()) {
+						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
+							clickedInterfaceObjects.push(uiObj);
+							uiObjectClicked(uiObj);
+						}
+					}
+					
+				}else if(mousePressedObject instanceof WorldObject){
+					WorldObject worldObj = (WorldObject) mousePressedObject;
+					if(worldObj.isClickable()) {
+						worldObjectClicked(worldObj);
+					}
+					
+				}else {
+					System.out.println("Object clicked that is not a WorldObject or UserInterfaceObject");
+				}
+				
+			}
+		}
+		
+		
 		dragEnabled = false;
 		mousePressPos = null;
+		mousePressedObject = null;
 		Game.gameWorld.staticWorldPoint = null;
 	}
 
@@ -327,23 +376,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					}
 	
 
-//					
-//					if(tempObj != null) {
-//						if((tempObj.type == ObjectType.WORLD)){
-//
-//							if(hoveredObject == null) {
-//								hoveredObject = tempObj;
-//							}
-//
-//							if(tempObj.equals(hoveredObject)) {
-//								hoveredObject.hoverAction();
-//							}else {
-//								hoveredObject.disableHover();
-//								this.hoveredObject = tempObj;
-//								this.hoveredObject.hoverAction();
-//
-//							}
-//						}
 
 	
 					return;
@@ -353,7 +385,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 		
 
-//		System.out.println("TEST");
 		//Check iso coordinate is within world bounds (potentially useless)
 		if(Game.currentState == Game.STATE.Game) {
 			//This should check for inside iso world as well as inside main display
@@ -361,16 +392,6 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //				iso2D.getX() >= 0 && iso2D.getY() >= 0 && iso2D.getX() < Game.gameWorld.isoDims.width && iso2D.getY() < Game.gameWorld.isoDims.height
 				tempObj = Game.objectMap.worldTiles.get((int) iso2D.getX() +":"+ (int) iso2D.getY());
 				
-				if(currentState == InputState.CONSTRUCTION) {
-					if(constructionOutline != null && tempObj != null) {
-
-						WorldObject tempWObj = (WorldObject) tempObj;
-						constructionOutline.isoPoint = tempWObj.isoPoint;
-						constructionOutline.worldPoint = tempWObj.worldPoint;
-//						constructionOutline.setP
-					}
-//					Game.objectMap.get(key)
-				}
 
 				if(tempObj != null) {
 					if((tempObj.type == ObjectType.WORLD)){
@@ -423,12 +444,37 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		}
 
 	}
+	
+	public void worldObjectClicked(WorldObject objIn) {
+		
+//		System.out.println("worldObj test");
+		if(clickedObject != null) {
+			if(objIn.isClicked()) {
+				objIn.setClicked(false);
+			}else {
+				objIn.setClicked(true);
+				callClickAction(objIn.clickTag);
+			}
+			
+		}else {
+			objIn.setClicked(true);
+			callClickAction(objIn.clickTag);
+		}
+		
 
+	}
+
+	
+	
 	/**
 	 * @param clickTag
 	 * Stores all possible actions when a button is clicked
 	 */
 	public void callClickAction(String clickTag) {
+		
+		if(clickTag == null) {
+			return;
+		}
 
 		if(clickTag.isEmpty()) {
 			System.out.println("Blank click tag");
@@ -518,6 +564,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.player.hireWorker();
 			Game.userInterface.populateWorkersListContainer();
 		}else if(clickTag.equals("workerassign")) {
+			System.out.println("TEST!!");
 			Game.userInterface.populateWorkerAssignContainer(referenceObject);
 			Game.userInterface.enableInterfaceContainer("workerassign");
 //			System.out.println(Game.userInterface.containerMap.get("worke);

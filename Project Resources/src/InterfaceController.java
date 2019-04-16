@@ -553,12 +553,21 @@ public class InterfaceController {
 		if(containerMap.containsKey("workerassign")) {
 			UIContainer workerslist = containerMap.get("workerassign");
 			if(objIn instanceof Unit) {
-			Unit worker = (Unit) objIn;
-			disableInterfaceContainer(workerslist);
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassignstartdd",worker.getStartStructName(),"primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassigndestdd",worker.getDestStructName(),"primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
-			enableInterfaceContainer(workerslist);
+				Unit worker = (Unit) objIn;
+				System.out.println("TEST");
+				disableInterfaceContainer(workerslist);
+				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassignstartdd",worker.getStartStructName(),"primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
+				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassigndestdd",worker.getDestStructName(),"primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
+				enableInterfaceContainer(workerslist);
 				
+			}
+			
+			Point spacingPos = new Point(10,50);
+			for(City city : Game.gameWorld.cityList) {
+//					City city = (City) obj;
+					addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerassign",city.toString()+city.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,"test",city);
+//					System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
+					spacingPos.y = spacingPos.y + 20;
 			}
 //			UIContainer workerslist = containerMap.get("workerslist");
 //			boolean reenable = false;
@@ -708,6 +717,7 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
 
 		createUIContainer("citymanager", new Point(1450,120), new Point(0,50),0);
+//		createUIContainer(
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (0,-100),"");
 //		enableInterfaceContainer("cityinterface");
