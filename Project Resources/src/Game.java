@@ -31,15 +31,16 @@ public class Game {
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
-	public static InterfaceController userInterface = new InterfaceController();
+	public static InterfaceController userInterface;
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static ArrayList<String> nameList;
 	public static SettingsHandler settingsControl;
-	public static final int xOffset = 3;
-	public static final int yOffset = 26;
+	public static int xOffset = 3;
+	public static int yOffset = 26;
 	public static Semaphore sem = new Semaphore(1);
 	public static Player player;
+	public static boolean windowedFullscreen;
 
 
 	public enum STATE{
@@ -66,10 +67,11 @@ public class Game {
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
 
-
+		userInterface = new InterfaceController(new Dimension(width,height));
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");
+		objectMap.addImage("border1920", "assets/border1920.png");
 //		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("2x2hover", "assets/2x2hover.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
@@ -113,6 +115,14 @@ public class Game {
 		window = new JFrame("Draggable");
 		window.setLayout(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		if(windowedFullscreen) {
+			window.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			window.setUndecorated(true);
+			xOffset = 0;
+			yOffset = 0;
+
+//			objectMap.transformImage("border", width, height);
+		}
 
 		window.setPreferredSize(dim);
 		window.setMaximumSize(dim);
@@ -152,8 +162,15 @@ public class Game {
 
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
+		
 		Game.objectMap.addObject(ObjectType.DEFAULT,  "border", border);
-		Game.objectMap.getObject("border").setProperties(new Dimension(1600,900), new Point(0,0),"border");
+		if(windowedFullscreen) {
+			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border1920");
+		}else {
+			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border");
+		}
+
+
 
 
 //		//UI Background

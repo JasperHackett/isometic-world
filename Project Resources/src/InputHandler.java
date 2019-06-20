@@ -24,7 +24,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject hoveredObject;
 	private GameObject mousePressedObject;
 	private GameObject clickedObject;
-	private GameObject referenceObject;
+//	private GameObject referenceObject;
 	private Stack<UserInterfaceObject> clickedInterfaceObjects = new Stack<UserInterfaceObject>();
 
 	
@@ -294,9 +294,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	public void uiObjectClicked(UserInterfaceObject uiObj) {
 		clickedObject = uiObj;
-		if(uiObj.referenceObject != null) {
-			this.referenceObject = uiObj.referenceObject;
-		}
+//		if(uiObj.referenceObject != null) {
+//			this.referenceObject = uiObj.referenceObject;
+//		}
 		if(this.clickedObject.isClicked()) {
 
 			this.clickedObject.setClicked(false);
@@ -428,7 +428,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.populateWorkersListContainer();
 		}else if(clickTag.equals("workerassign")) {
 			System.out.println("TEST!!");
-			Game.userInterface.populateWorkerAssignContainer(referenceObject);
+//			Game.userInterface.populateWorkerAssignContainer(referenceObject);
 			Game.userInterface.enableInterfaceContainer("workerassign");
 //			System.out.println(Game.userInterface.containerMap.get("worke);
 		}else if(clickTag.equals("saveworkerassign")) {
@@ -438,34 +438,34 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.disableInterfaceContainer("workerassign");
 		} else if(clickTag.equals("workerassignstart")) {
 //			System.out.println("Test");
-			if(referenceObject instanceof Unit) {
-				System.out.println(clickedObject.objID);
-				if(clickedObject != null) {
-					Game.userInterface.dropDownContainer("dropdowncitystart", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
-					
-				}
-				
-			}else if(referenceObject instanceof City) {
-				City city = (City) referenceObject;
-//				Game.userInterface.queueActionStrcture("workerassignstart", city);
-//				Game.userInterface.setStartStructureHolder(city);
-				Game.userInterface.setDropdownParent("workerassignstart","dropdowncitystart",city);
-				Game.userInterface.disableInterfaceContainer("dropdowncitystart");
-			}
+//			if(referenceObject instanceof Unit) {
+//				System.out.println(clickedObject.objID);
+//				if(clickedObject != null) {
+//					Game.userInterface.dropDownContainer("dropdowncitystart", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
+//					
+//				}
+//				
+//			}else if(referenceObject instanceof City) {
+//				City city = (City) referenceObject;
+////				Game.userInterface.queueActionStrcture("workerassignstart", city);
+////				Game.userInterface.setStartStructureHolder(city);
+//				Game.userInterface.setDropdownParent("workerassignstart","dropdowncitystart",city);
+//				Game.userInterface.disableInterfaceContainer("dropdowncitystart");
+//			}
 		}else if(clickTag.equals("workerassigndest")) {
-//			System.out.println("Test");
-			if(referenceObject instanceof Unit) {
-				System.out.println(clickedObject.objID);
-				if(clickedObject != null) {
-					Game.userInterface.dropDownContainer("dropdowncitydest", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
-					
-				}
-				
-			}else if(referenceObject instanceof City) {
-				City city = (City) referenceObject;
-				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
-				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
-			}
+////			System.out.println("Test");
+//			if(referenceObject instanceof Unit) {
+//				System.out.println(clickedObject.objID);
+//				if(clickedObject != null) {
+//					Game.userInterface.dropDownContainer("dropdowncitydest", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
+//					
+//				}
+//				
+//			}else if(referenceObject instanceof City) {
+//				City city = (City) referenceObject;
+//				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
+//				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
+//			}
 		}
 
 

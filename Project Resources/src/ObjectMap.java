@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -94,6 +95,23 @@ public class ObjectMap extends HashMap<String, GameObject> {
 		if (obj.type == ObjectType.WORLD) {
 			worldObjects.put(s, obj);
 		}
+	}
+	public void transformImage(String imageName,int nWidth, int nHeight) {
+		if(!imageMap.containsKey(imageName)) {
+			System.out.println("Does not contain image");
+			return;
+		}
+		Image tmp = imageMap.get(imageName).getScaledInstance(nHeight, nWidth, Image.SCALE_SMOOTH);
+		tmp = tmp.getScaledInstance(nWidth, nHeight, Image.SCALE_FAST);
+		BufferedImage img = new BufferedImage(nWidth,nHeight,BufferedImage.TYPE_INT_ARGB);
+//		System.out.println(img.getHeight(observer));
+//		img = img.getScaledInstance(1, 1, 0);
+
+		System.out.println(imageMap.get(imageName).toString());
+        Graphics2D g2d = img.createGraphics();
+        g2d.drawImage(tmp,0, 0, null);
+        g2d.dispose();
+//		imageMap.put(imageName, img);
 	}
 
 	public Point toIsometric(Point pointIn) {

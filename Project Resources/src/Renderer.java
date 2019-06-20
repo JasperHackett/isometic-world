@@ -19,6 +19,7 @@ public class Renderer implements Runnable {
 	public int frames;
 	public int interfaceZIndex = 10;
 	public static Semaphore semaphore = new Semaphore(1);
+	
 
 
 
@@ -82,7 +83,7 @@ public class Renderer implements Runnable {
 			return;
 		}
 
-		Graphics graphics = bs.getDrawGraphics();
+		graphics = bs.getDrawGraphics();
 		graphics.clearRect(0, 0, Game.width, Game.height);
 
 		try {

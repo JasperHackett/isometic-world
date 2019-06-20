@@ -1,3 +1,5 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,6 +53,7 @@ public class SettingsHandler {
 						
 					case ("windowheight"):
 							Game.height = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
+						
 						break;
 					case ("windowwidth"):
 						Game.width = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
@@ -58,9 +61,18 @@ public class SettingsHandler {
 //					case ("worldwidth"):
 //						Game.worldWidth = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
 //						break;
-//					case ("worldheight"):
-//						Game.worldHeight = Integer.parseInt(setting.substring(settingsDelimiterPos+1));
-//						break;
+					case ("windowedfullscreen"):
+						if( Integer.parseInt(setting.substring(settingsDelimiterPos+1)) == 1) {
+							Game.windowedFullscreen = true;
+							System.out.println("Windowed fullscreen");
+							Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+							Game.height = screenSize.height;
+							Game.width = screenSize.width;
+						}else{
+							Game.windowedFullscreen = false;
+						};
+						
+						break;
 					
 					
 					default:

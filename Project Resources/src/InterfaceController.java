@@ -18,14 +18,22 @@ import java.util.Map.Entry;
 public class InterfaceController {
 	
 
+	
+	Dimension window; //Window dimensions
 	public enum InterfaceZone{
 		TopSidePanel,
 		MiddleSidePanel;
+	}
+	public enum InterfaceContext{
+		TopBar,
+		VolatileDropDown;
 	}
 	
 	
 	Structure startStructureHolder;
 	Structure destStructureHolder;
+	HashMap<InterfaceZone,String> zoneMap;
+	Map<String,UIContainer> containerMap = new HashMap<String,UIContainer>();
 	
 	
 	private class UIContainer{
@@ -91,13 +99,16 @@ public class InterfaceController {
 		}
 		
 	}
-	HashMap<InterfaceZone,String> zoneMap;
-	Map<String,UIContainer> containerMap = new HashMap<String,UIContainer>();
+	
+	
+
 	ArrayList<ArrayList<UIContainer>> zIndex = new ArrayList<ArrayList<UIContainer>>();
 	
 
 	
-	public InterfaceController(){
+	public InterfaceController(Dimension dims){
+		window = dims;
+		System.out.println(dims);
 		zoneMap = new HashMap<InterfaceZone,String>();
 		zoneMap.put(InterfaceZone.TopSidePanel,"citiesmenu");
 		
@@ -142,7 +153,7 @@ public class InterfaceController {
 		containerMap.put(containerName, newContainer);
 		return newContainer;
 	}
-	
+
 	
 	
 	/**
@@ -695,7 +706,10 @@ public class InterfaceController {
 	 *  Called on program start. Creates main menu UIContainer
 	 */
 	public void initaliseMainMenuInterface() {
-		createUIContainer("mainmenu",new Point(200,600), new Point(0,50),0);
+//		Point pos = new Point((window.width/0.125),(window.height/0.67));
+		
+		System.out.println(new Point( (int)(window.width*0.125),(int)(window.height*0.67)));
+		createUIContainer("mainmenu",new Point( (int)(window.width*0.125),(int)(window.height*0.67)), new Point(0,40),0);
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","Start");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit","Quit");
 		enableInterfaceContainer("mainmenu");
@@ -708,7 +722,7 @@ public class InterfaceController {
 	 * 
 	 */
 	public void initialiseMainGameInterface() {
-		
+//		Game.objectMap.transformImage("border", Game.width, Game.height);
 		createUIContainer("topmenubar", new Point(384,4), new Point(128,0),0);
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
