@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
@@ -102,6 +103,7 @@ public class Game {
 		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
 		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),4);
 		objectMap.addImageSheet("ironResourceStructure", "assets/ironMine.png", new Dimension(64, 40), 16);
+		objectMap.addImage("scalingTestImage", "assets/scalingTestImage.png");
 		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
@@ -170,7 +172,13 @@ public class Game {
 			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border");
 		}
 
-
+		// testing scaling images
+		GameObject scalingTestObject = new GameObject(ObjectType.DEFAULT);
+		Game.objectMap.addObject(ObjectType.DEFAULT, "scalingTestObject", scalingTestObject);
+		int scalingConstant = 4;
+		Dimension scalingTestDim = new Dimension(100 * scalingConstant, 200 * scalingConstant);
+		Game.objectMap.transformImage("scalingTestImage", scalingTestDim.width, scalingTestDim.height);
+		Game.objectMap.getObject("scalingTestObject").setProperties(scalingTestDim, new Point(800, 600), "scalingTestImage");
 
 
 //		//UI Background
