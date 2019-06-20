@@ -25,10 +25,12 @@ public class InterfaceController {
 		MiddleSidePanel;
 	}
 	public enum InterfaceContext{
+		DEFAULT,
 		TopBar,
 		VolatileDropDown;
 	}
 	
+	InterfaceContext uiContext;
 	
 	Structure startStructureHolder;
 	Structure destStructureHolder;
@@ -560,7 +562,7 @@ public class InterfaceController {
 	}
 	
 	public void populateWorkerAssignContainer(GameObject objIn) {
-
+		System.out.println("TEST assign cont");
 		if(containerMap.containsKey("workerassign")) {
 			UIContainer workerslist = containerMap.get("workerassign");
 			if(objIn instanceof Unit) {
@@ -572,7 +574,7 @@ public class InterfaceController {
 				enableInterfaceContainer(workerslist);
 				
 			}
-			
+
 			Point spacingPos = new Point(10,50);
 			for(City city : Game.gameWorld.cityList) {
 //					City city = (City) obj;
@@ -621,6 +623,13 @@ public class InterfaceController {
 		}
 //		containerMap.get("workerassignmid").elements.get(key)
 	}
+	public InterfaceContext getUIContext(){
+		return this.uiContext;
+	}
+	
+	public void setUIContext(InterfaceContext uiCon) {
+		this.uiContext = uiCon;
+	}
 	/**
 	 * @param containerName
 	 * @param containerParent
@@ -636,15 +645,15 @@ public class InterfaceController {
 		Point spacingPos = new Point(0,20);
 		createUIContainer(containerName,pos,new Point(0,20),5);
 //		System.out.println(pos);
-		for(GameObject obj : objectSet) {
-			if(obj instanceof City) {
-				City city = (City) obj;
-				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
-//				System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
-				spacingPos.y = spacingPos.y + 20;
-			}
-		}
-		
+//		for(GameObject obj : objectSet) {
+//			if(obj instanceof City) {
+//				City city = (City) obj;
+//				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
+////				System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
+//				spacingPos.y = spacingPos.y + 20;
+//			}
+//		}
+//		
 		
 		containerMap.get(containerParent).addContainer(containerName, containerMap.get(containerName));
 		if(containerMap.get(containerParent).visible) {
@@ -748,7 +757,7 @@ public class InterfaceController {
 		/*
 		 * Interfaces for workers
 		 */
-		createUIContainer("workerslist", new Point(1450,560),new Point(0,20),0);
+		createUIContainer("workerslist",new Point((int)(window.width*0.92),(int)(window.height*0.55)),new Point(0,20),0);
 
 		
 		createUIContainer("workersmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
@@ -763,12 +772,12 @@ public class InterfaceController {
 		
 		
 		
-		createUIContainer("workerassign",new Point(1180,500),new Point(0,0),1);
+		createUIContainer("workerassign",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),1);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workerassign","structuretitle","Assign Task","mediumbuttonfont",Color.WHITE,new Point (100,20),"");
 //		containerMap.get("workerassign").addContainer("workerassig, containerIn);
 		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point (0,0),"workerassign","workerassignsmalluibox","smalluibox",new Dimension(200,320),true);
 		
-		createUIContainer("workerassignmid",new Point(1180,500),new Point(0,0),2);
+		createUIContainer("workerassignmid",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),2);
 //		containerMap.get("workerassignmid").parentObject = 
 		containerMap.get("workerassign").addContainer("workerassignmid", containerMap.get("workerassignmid"));
 //		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(60,140),"workerassignmid", "testworkerassign", "testworkerassign", "Route");
@@ -797,7 +806,7 @@ public class InterfaceController {
 		/*
 		 * Interfaces for buildings in the world
 		 */
-		createUIContainer("resourcestructure", new Point((int)(window.width*0.9),(int)(window.height*13)), new Point(0,30),1);
+		createUIContainer("resourcestructure", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,30),1);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorker", "Assign");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40),"");

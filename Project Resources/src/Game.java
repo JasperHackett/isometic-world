@@ -229,7 +229,7 @@ public class Game {
 //		Game.gameWorld.addTickingObject(cube2);
 
 		//Initialise input handler
-		InputHandler inputControl = new InputHandler();
+		InputHandler inputControl = new InputHandler(userInterface);
 		window.getContentPane().addMouseListener(inputControl);
 		window.getContentPane().addMouseMotionListener(inputControl);
 

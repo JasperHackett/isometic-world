@@ -24,11 +24,15 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject hoveredObject;
 	private GameObject mousePressedObject;
 	private GameObject clickedObject;
+	private InterfaceController ui;
 //	private GameObject referenceObject;
 	private Stack<UserInterfaceObject> clickedInterfaceObjects = new Stack<UserInterfaceObject>();
 
 	
-
+	InputHandler(InterfaceController uiIn){
+		super();
+		this.ui = uiIn;
+	}
 
 
 	
@@ -149,7 +153,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					UserInterfaceObject uiObj = (UserInterfaceObject) mousePressedObject;
 					if(uiObj.isClickable()) {
 						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
-							clickedInterfaceObjects.push(uiObj);
+//							clickedInterfaceObjects.push(uiObj);
 							uiObjectClicked(uiObj);
 						}
 					}
@@ -294,9 +298,14 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	public void uiObjectClicked(UserInterfaceObject uiObj) {
 		clickedObject = uiObj;
+		
 //		if(uiObj.referenceObject != null) {
 //			this.referenceObject = uiObj.referenceObject;
 //		}
+		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+//			if
+		}
+		
 		if(this.clickedObject.isClicked()) {
 
 			this.clickedObject.setClicked(false);
