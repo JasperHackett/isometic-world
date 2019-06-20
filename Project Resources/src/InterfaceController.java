@@ -723,24 +723,24 @@ public class InterfaceController {
 	 */
 	public void initialiseMainGameInterface() {
 //		Game.objectMap.transformImage("border", Game.width, Game.height);
-		createUIContainer("topmenubar", new Point(384,4), new Point(128,0),0);
+		createUIContainer("topmenubar", new Point((int)(window.width*0.24),4), new Point(128,0),0);
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", "citiesmenu", "Cities");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
 
-		createUIContainer("citymanager", new Point(1450,120), new Point(0,50),0);
+		createUIContainer("citymanager", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
 //		createUIContainer(
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (0,-100),"");
 //		enableInterfaceContainer("cityinterface");
 		
 		
-		createUIContainer("constructionmenu",new Point(1450,200), new Point(0,50),0);
+		createUIContainer("constructionmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
 		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionmenu", "buildironmine","buildironmine","Iron Mine");
 		
-		createUIContainer("citiesmenu",new Point(1450,200), new Point(0,40),0);
+		createUIContainer("citiesmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
 		for(City city : Game.gameWorld.cityList) {
 			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
 		}
@@ -751,7 +751,7 @@ public class InterfaceController {
 		createUIContainer("workerslist", new Point(1450,560),new Point(0,20),0);
 
 		
-		createUIContainer("workersmenu",new Point(1450,200), new Point(0,40),0);
+		createUIContainer("workersmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
 		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (0,20),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,20),"");
@@ -797,7 +797,7 @@ public class InterfaceController {
 		/*
 		 * Interfaces for buildings in the world
 		 */
-		createUIContainer("resourcestructure", new Point(1450,120), new Point(0,30),1);
+		createUIContainer("resourcestructure", new Point((int)(window.width*0.9),(int)(window.height*13)), new Point(0,30),1);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorker", "Assign");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40),"");
@@ -811,7 +811,7 @@ public class InterfaceController {
 
 		
 		
-		createUIContainer("warehouse", new Point(1450,120), new Point(0,30),0);
+		createUIContainer("warehouse", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,30),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "warehouse", "addworkerbtn", "addWorker", "Assign");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "warehouse","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40),"");
