@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -29,8 +30,8 @@ public class UserInterfaceObject extends GameObject{
 	}
 	UIElementType type;
 	TextObject elementText;
-	String defaultObjectImage;
-	String hoverImage;
+	Image defaultObjectImage;
+	Image hoverImage;
 	GameObject referenceObject;
 
 
@@ -48,8 +49,8 @@ public class UserInterfaceObject extends GameObject{
 	}
 	
 	public void setCustomProperties(Point pos, String objectImage, Dimension dimIn, boolean clickable) {
-		this.objectImage = objectImage;
-		this.defaultObjectImage = objectImage;
+		this.objectImage = Game.objectMap.getImage(objectImage);
+		this.defaultObjectImage = Game.objectMap.getImage(objectImage);
 		this.dim = dimIn;
 		this.clickable = clickable;
 		this.coords = pos;
@@ -140,50 +141,50 @@ public class UserInterfaceObject extends GameObject{
 				break;
 			case TEXTBOX:
 				this.dim = new Dimension(160,20);
-				this.objectImage = "textbox2";
+				this.objectImage = Game.objectMap.getImage("textbox2");
 				this.defaultObjectImage = objectImage;
-				this.hoverImage = "textbox1";
+				this.hoverImage = Game.objectMap.getImage("textbox1");
 				break;
 			case TEXTBOXDROPDOWN:
 				this.dim = new Dimension(160,20);
-				this.objectImage = "textbox4";
+				this.objectImage = Game.objectMap.getImage("textbox4");
 				this.defaultObjectImage = objectImage;
-				this.hoverImage = "textbox5";
+				this.hoverImage = Game.objectMap.getImage("textbox5");
 				break;
 			case TEXTBOXSTATIC:
 				this.dim = new Dimension(160,20);
-				this.objectImage = "textbox2";
+				this.objectImage = Game.objectMap.getImage("textbox2");
 				this.defaultObjectImage = objectImage;
 				break;
 				
 			case TEXTBOXSTATICVALUE:
 				this.dim = new Dimension(160,20);
-				this.objectImage = "textbox3";
+				this.objectImage = Game.objectMap.getImage("textbox3");
 				this.defaultObjectImage = objectImage;
 				break;
 			case SMALL :
 //				System.out.println("small obj created");
 				this.dim = (new Dimension(64,32));
 
-				this.objectImage = "uibuttonsmall0";
+				this.objectImage = Game.objectMap.getImage("uibuttonsmall0");
 				this.defaultObjectImage = objectImage;
-				this.hoverImage = "uibuttonsmall1";
+				this.hoverImage = Game.objectMap.getImage("uibuttonsmall1");
 				break;
 				
 			case TOPBAR:
 				this.dim = (new Dimension(96,24));
 				fontKey = "topbarfont";
-				this.objectImage = "topbarbtn0";
+				this.objectImage = Game.objectMap.getImage("topbarbtn0");
 				this.defaultObjectImage = objectImage;
-				this.hoverImage = "topbarbtn1";
+				this.hoverImage = Game.objectMap.getImage("topbarbtn1");
 				break;
 			case MEDIUM :
 				this.dim = (new Dimension(128,32));
 
-				this.objectImage = "uibuttonmedium0";
+				this.objectImage = Game.objectMap.getImage("uibuttonmedium0");
 				this.fontKey = "mediumbuttonfont";
 				this.defaultObjectImage = objectImage;
-				this.hoverImage = "uibuttonmedium1";
+				this.hoverImage = Game.objectMap.getImage("uibuttonmedium1");
 				break;
 				
 				

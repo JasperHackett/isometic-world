@@ -26,6 +26,7 @@ public class Entity extends WorldObject{
 	public EntityType type;
 	public String isoTileKey;
 	public int structureOffset;
+	public String name;
 //	protected HashMap<GameObject, Pair<Integer, Integer>> children;
 
 	
@@ -128,7 +129,7 @@ public class Entity extends WorldObject{
 	}
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.objectMap.getImage(objectImage), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
+		g.drawImage(objectImage, coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		if (children != null) {
 			for (GameObject child : children.keySet()) {
 				child.render(g);

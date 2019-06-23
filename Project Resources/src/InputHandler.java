@@ -427,7 +427,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //			}else {
 //				System.out.println("ui null");
 //			}
-		}else if(clickTag.equals("workersmenu")) {
+		} else if (clickTag.equals("buildRStructure")) {
+			UserInterfaceObject uiObj = (UserInterfaceObject)clickedObject;
+			Resource resource = (Resource)uiObj.referenceObject;
+			resource.addStructure();
+		} else if(clickTag.equals("workersmenu")) {
 			clickedObject.disableClick();
 			Game.userInterface.enableInterfaceContainer("workersmenu",InterfaceController.InterfaceZone.TopSidePanel);
 			Game.userInterface.populateWorkersListContainer();

@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
 /**
  * 
  */
@@ -15,8 +17,10 @@ import java.util.HashMap;
 public class ResourceStructure extends Structure{
 	
 
-
-	public int resourceStored = 0; //How many tiles away resources can be collected
+	public static final int storageCapConstant = 100;
+	public static final int resourceProductionConstant = 2;
+	public int resourcesStored;
+	public int storageCap;
 	public ArrayList<Resource> developedResources;
 	public ArrayList<Resource> connectedResources;
 	public Resource.ResourceType structureType;
@@ -26,7 +30,8 @@ public class ResourceStructure extends Structure{
 	 */
 	public ResourceStructure(ArrayList<IsometricTile> tileList, Resource.ResourceType RType) {
 		super(tileList);
-
+		storageCap = storageCapConstant * tileList.size();
+		resourcesStored = 0;
 		developedResources = new ArrayList<Resource>();
 		connectedResources = new ArrayList<Resource>();
 		tileImageMap = new HashMap<IsometricTile, String>();
@@ -37,7 +42,7 @@ public class ResourceStructure extends Structure{
 //		}
 		this.structureType = RType;
 		if(RType.equals(Resource.ResourceType.iron)) {
-			this.objectImage = "ironhut";
+			this.objectImage = Game.objectMap.getImage("ironhut");
 			this.clickTag = "ironmine";
 			this.worldDims = new Dimension(128,64);
 			this.dim = new Dimension(128,64);
@@ -55,24 +60,25 @@ public class ResourceStructure extends Structure{
 		for (IsometricTile tile : this.tileList) {
 			Game.objectMap.updateMultiTiledImage(tile, ObjectMap.MultiTiledImageType.resourceStructure);
 		}
+		this.storageCap = storageCapConstant * tileList.size();
 	}
 	
 	@Override
 	public void clickAction() {
-//		System.out.println("Click action on: "+ this.name);
+		System.out.println("Click action on: "+ this.name);
 		this.currentlyClicked = true;
-//		Game.userInterface.passRStructureToInterfaceContainer(this, "resourcestructure");
-//		Game.userInterface.enableInterfaceContainer("resourcestructure",InterfaceController.InterfaceZone.TopSidePanel);
-//		Game.userInterface.setParentObject("resourcestructure",this);
+		Game.userInterface.passRStructureToInterfaceContainer(this, "resourcestructure");
+		Game.userInterface.enableInterfaceContainer("resourcestructure",InterfaceController.InterfaceZone.TopSidePanel);
+		Game.userInterface.setParentObject("resourcestructure",this);
 
 	}
 	
 	@Override
 	public void disableClick() {
 		this.currentlyClicked = false;
-//		Game.userInterface.disableInterfaceContainer("resourcestructure");
-//		Game.userInterface.disableInterfaceContainer("workerslist");
-//		Game.userInterface.setParentObject("resourcestructure",null);
+		Game.userInterface.disableInterfaceContainer("resourcestructure");
+		Game.userInterface.disableInterfaceContainer("workerslist");
+		Game.userInterface.setParentObject("resourcestructure",null);
 	}
 	
 	@Override
@@ -96,94 +102,12 @@ public class ResourceStructure extends Structure{
 	
 	@Override
 	public void tickAction() {
-//		tickCounter++;
-		if(this.currentlyClicked) {
-//			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("workertickvalue");
-//			textObj.setElementText(Integer.toString(tickCounter));
-			
-//		}
-//		if(tickCounter > 0) {
-//			tickCounter--;
-//		}else {
-//			tickCounter = workerTicks;
-//			if(activeWorkers < currentWorkers) {
-//				
-//				sendWorker();
-//			}
-//
-//		}
+		// making sure that the tick won't cause resourcesStored to go over storageCap
+		int resourceCount = resourcesStored + (resourceProductionConstant * tileList.size());
+		if (resourceCount > storageCap) {
+			resourceCount = storageCap;
+		}
+		resourcesStored = resourceCount;
+		
 	}
-	
-//	public void detectResources() {
-//		if(this.isoPoint == null) {
-//			System.out.println("detect resources: iso point is null");
-//		}
-//		if(this.resourceRange > 0 && this.isoPoint != null) {
-//
-//			for(int i = this.isoPoint.x-resourceRange; i < this.isoPoint.x+resourceRange+2;i++) {
-//				for(int j = this.isoPoint.y-resourceRange-1; j < this.isoPoint.y+resourceRange+1;j++) {
-//					
-//					/* Shows range that is checked:
-//					 * Game.objectMap.getTile(new Point(i,j)).setHovered(true); 
-//					 */
-//					
-//					if(Game.objectMap.getTile(new Point(i,j)).entityOnTile instanceof Resource) {
-//						Resource resource = (Resource) Game.objectMap.getTile(new Point(i,j)).entityOnTile;
-//						if(resource.resourceType == this.structureType) {
-//							if(!resources.contains(resource)) {
-//								this.resources.add(resource);
-//							}
-//
-//						}
-//					}
-//				}
-//				
-//			}
-////			resourceCount = resources.size();
-//		}
-//	}
-	
-//	public void sendWorker() {
-//		if(activeWorkers < currentWorkers) {
-//			for(Unit worker : workers) {
-//				if(worker.actionsQueue.size() == 0) {
-////					worker.setPosition(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1));
-//					worker.worldPoint = new Point(this.isoPoint.x-1 ,this.isoPoint.y-1);
-////					this.worldPoint = Game.objectMap.getTile(isoPos).worldPoint;
-//					worker.setVisible(true);
-//
-//					worker.getResource(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
-//					if(nextResourceTile < resources.size()-1) {
-//						nextResourceTile ++;
-//					}else {
-//						nextResourceTile = 0;
-//					}
-//					Game.gameWorld.addTickingObject(worker);
-////					worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
-//				}
-//			}
-////			Unit worker = new Unit(new Point(this.isoPoint.x-1 ,this.isoPoint.y-1),this);
-////			Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
-////			Game.objectMap.addEntity(worker.toString(), worker,8);
-////
-////			worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-////			worker.getResource(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
-////			worker.setDestination(resources.get(nextResourceTile).getClosestNeighbour(this.isoPoint));
-//
-//		}
-//	}
-//	public void workerReturn(Unit worker) {
-//		Game.objectMap.removeEntity(worker);
-//		this.resourceStored++;
-//		if(this.currentlyClicked) {
-//			UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("resourcestoredvalue");
-//			if(textObj != null) {
-//				textObj.setElementText(Integer.toString(resourceStored));
-//			}
-//
-//		}
-////		System.out.println("tesT");
-////		Game.objectMap
-	}
-
 }

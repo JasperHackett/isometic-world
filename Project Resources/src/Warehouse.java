@@ -22,7 +22,7 @@ public class Warehouse extends Structure{
 	public Warehouse(ArrayList<IsometricTile> tileList) {
 		super(tileList);
 		
-		this.objectImage = "warehouse";
+		this.objectImage = Game.objectMap.getImage("warehouse");
 		this.name = "Warehouse";
 		this.worldDims = new Dimension(128,64);
 		this.dim = new Dimension(192,96);
