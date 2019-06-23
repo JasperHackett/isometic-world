@@ -68,7 +68,7 @@ public class World {
 		tickingObjects = new ArrayList<WorldObject>();
 		newTickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
-		panelDims = new Dimension(Game.width-200,Game.height-64);
+		panelDims = new Dimension(Game.width,Game.height-32);
 		panelPoint = new Point(0,34);
 		worldPoint = new Point(600,600);
 		resourceList = new ArrayList<Resource>();

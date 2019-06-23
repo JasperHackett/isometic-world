@@ -24,10 +24,12 @@ import javax.swing.JFrame;
  */
 public class Game {
 
+	
 	public static int width;
 	public static int height;
 	public static int worldWidth;
 	public static int worldHeight;
+	public static int topBarHeight = 32;
 //	public static Menu gameMenu;
 	public static Graphics graphics;
 	public static JFrame window;
@@ -72,7 +74,9 @@ public class Game {
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");
+		objectMap.addImage("topmenubar", "assets/topmenubar.png");
 		objectMap.addImage("border1920", "assets/border1920.png");
+		objectMap.addImage("sidemenubar", "assets/sidemenubar.png");
 //		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("2x2hover", "assets/2x2hover.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
@@ -165,20 +169,27 @@ public class Game {
 		//Border
 		GameObject border = new GameObject(ObjectType.DEFAULT);
 		
+		GameObject sidebar = new GameObject(ObjectType.DEFAULT);
+		
 		Game.objectMap.addObject(ObjectType.DEFAULT,  "border", border);
-		if(windowedFullscreen) {
-			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border1920");
-		}else {
-			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border");
-		}
+		Game.objectMap.addObject(ObjectType.DEFAULT,  "sidebar", sidebar);
+		Game.objectMap.transformImage("topmenubar", width, 32);
+		Game.objectMap.transformImage("sidemenubar",230,(int)(height*0.8));
+		Game.objectMap.getObject("border").setProperties(new Dimension(width,32), new Point(0,0),"topmenubar");
+		Game.objectMap.getObject("sidebar").setProperties(new Dimension((int)(height*0.8),30), new Point(width-200,32),"sidemenubar");
+//		if(windowedFullscreen) {
+//			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border1920");
+//		}else {
+//			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border");
+//		}
 
 		// testing scaling images
-		GameObject scalingTestObject = new GameObject(ObjectType.DEFAULT);
-		Game.objectMap.addObject(ObjectType.DEFAULT, "scalingTestObject", scalingTestObject);
-		int scalingConstant = 4;
-		Dimension scalingTestDim = new Dimension(100 * scalingConstant, 200 * scalingConstant);
-		Game.objectMap.transformImage("scalingTestImage", scalingTestDim.width, scalingTestDim.height);
-		Game.objectMap.getObject("scalingTestObject").setProperties(scalingTestDim, new Point(800, 600), "scalingTestImage");
+//		GameObject scalingTestObject = new GameObject(ObjectType.DEFAULT);
+//		Game.objectMap.addObject(ObjectType.DEFAULT, "scalingTestObject", scalingTestObject);
+//		int scalingConstant = 4;
+//		Dimension scalingTestDim = new Dimension(100 *2, 200);
+//		Game.objectMap.transformImage("scalingTestImage", scalingTestDim.width, scalingTestDim.height);
+//		Game.objectMap.getObject("scalingTestObject").setProperties(scalingTestDim, new Point(800, 600), "scalingTestImage");
 
 
 //		//UI Background
