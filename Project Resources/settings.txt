@@ -1,3 +1,3 @@
 windowheight:900
 windowwidth:1600
-windowedfullscreen:0
+windowedfullscreen:1

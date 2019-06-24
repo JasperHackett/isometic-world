@@ -19,6 +19,7 @@ public class GameObject {
 	protected Dimension dim; //Dimensions of object
 	protected Point coords; //Top left corner of object
 	protected Image objectImage; //test for a single image object
+	protected Runnable clickAction;
 	protected boolean clickable;
 	private boolean visible = true;
 	public boolean hoverable;
@@ -27,6 +28,7 @@ public class GameObject {
 	public ObjectType type;
 	public String clickTag;
 	public String objID;
+
 
 	protected HashMap<GameObject, Dimension> children;
 	
@@ -42,11 +44,30 @@ public class GameObject {
 		this.coords = posIn;
 		this.objectImage = Game.objectMap.getImage(imageIn);
 	}
+
 	public void setProperties(Dimension dimIn, Point posIn, String imageIn, boolean clickable, String clickTag) {
 		this.dim = dimIn;
 		this.coords = posIn;
 		this.objectImage = Game.objectMap.getImage(imageIn);
 		this.clickTag = clickTag;
+		this.clickable = clickable;
+	}
+	
+	
+	/**
+	 * @param dimIn
+	 * @param posIn
+	 * @param imageIn
+	 * @param clickable
+	 * @param clickAction ClickAction interface object to be called when this GameObject is clicked
+	 * 
+	 *  This function is a work in progress to test changing click functionality to not use 'clickTag' Strings
+	 */
+	public void setProperties(Dimension dimIn, Point posIn, String imageIn, boolean clickable, Runnable clickAction) {
+		this.dim = dimIn;
+		this.coords = posIn;
+		this.objectImage = Game.objectMap.getImage(imageIn);
+		this.clickAction = clickAction;
 		this.clickable = clickable;
 	}
 	
@@ -91,6 +112,10 @@ public class GameObject {
 								+ children.get(child).height);
 			}
 		}
+	}
+	
+	public void setClickAction(Runnable actionIn) {
+		this.clickAction = actionIn;
 	}
 	
 	public void addChild(GameObject child, Dimension positionOffset) {
@@ -148,6 +173,13 @@ public class GameObject {
 	public void clickAction() {
 //		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
+		if(this.clickAction != null) {
+			ClickAction.callClickAction(clickAction);
+		}
+	}
+	
+	Runnable getClickAction() {
+		return this.clickAction;
 	}
 	public void setClicked(boolean isClicked) {
 		if(isClicked) {

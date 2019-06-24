@@ -68,9 +68,9 @@ public class World {
 		tickingObjects = new ArrayList<WorldObject>();
 		newTickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
-		panelDims = new Dimension(Game.width,Game.height-32);
-		panelPoint = new Point(0,34);
-		worldPoint = new Point(600,600);
+		panelDims = new Dimension(Game.width,Game.height);
+		panelPoint = new Point(0,0);
+		worldPoint = new Point(500,500);
 		resourceList = new ArrayList<Resource>();
 
 		worldUnits = new HashMap<String,Unit>();
@@ -136,7 +136,7 @@ public class World {
 		try { 
 			br = new BufferedReader(new FileReader("tilemap.csv"));
 			
-			int lineCount = 0;
+			int lineCount = 1;
 			line = br.readLine();
 			String[] tileLine = line.split(delim);
 			System.out.println(tileLine);
@@ -145,9 +145,9 @@ public class World {
 			}
 			br.close();
 			br = new BufferedReader(new FileReader("tilemap.csv"));
-			isoDims = new Dimension(tileLine.length,lineCount+1);
+			isoDims = new Dimension(tileLine.length,lineCount);
 			System.out.println("Old isoDims: "+isoDims);
-			this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
+			this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight );
 			System.out.println("World dims: "+worldDims);
 			
 			int renderConstant = (worldDims.height/2) + tileHeight;

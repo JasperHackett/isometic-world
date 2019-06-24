@@ -70,6 +70,21 @@ public class UserInterfaceObject extends GameObject{
 			
 
 	}
+	public void setProperties(Point pos, Runnable clickAction, String buttonText) {
+		this.coords = pos;
+		this.clickable = true;
+		this.clickAction = clickAction;
+		TextObject elementText = new TextObject(ObjectType.CHILD);
+//		System.out.println(pos);
+		if(fontKey == null) {
+			fontKey = "smallbuttonfont";
+		}
+		elementText.setTextProperties(buttonText,Game.objectMap.getFont(fontKey),Color.LIGHT_GRAY,pos);
+		Dimension offset = new Dimension(this.dim.width/2 - elementText.width/2,this.dim.height /2 + elementText.height/3);
+		this.addChild(elementText, offset);
+			
+
+	}
 	public void setElementTextProperties(String text, String fontKey,Color textColor, Point pos) {
 		this.coords = pos;
 		elementText = new TextObject(ObjectType.CHILD);

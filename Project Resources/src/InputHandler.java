@@ -25,6 +25,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject mousePressedObject;
 	private GameObject clickedObject;
 	private InterfaceController ui;
+	Integer planeOffsetX;
+	Integer planeOffsetY;
 //	private GameObject referenceObject;
 	private Stack<UserInterfaceObject> clickedInterfaceObjects = new Stack<UserInterfaceObject>();
 
@@ -32,6 +34,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	InputHandler(InterfaceController uiIn){
 		super();
 		this.ui = uiIn;
+		planeOffsetX = Game.xOffset;
+		planeOffsetY = Game.yOffset;
 	}
 
 
@@ -72,7 +76,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
-		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
+		iso2D.setLocation(iso2D.getX() -975, iso2D.getY());
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 		Game.objectMap.getTextObject("globalMousePosText").setText("Global mouse position: ["+ e.getX() + "," + e.getY()+ "]");
 		Game.objectMap.getTextObject("worldMousePosText").setText("World mouse position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "]");
@@ -361,10 +365,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.enableInterfaceContainer("topmenubar");
 			Game.currentState = Game.STATE.Game;
 //			Game.gameWorld.updateDisplay();
-		}else if (clickTag.equals("exit")) {
-			System.out.println("Exiting");
-			System.exit(0);
-			
+//		}else if (clickTag.equals("exit")) {
+//			System.out.println("Exiting");
+//			System.exit(0);
+//			
 		}else if (clickTag.equals("citybtn")){
 			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
 			if(clickedObject == null) {

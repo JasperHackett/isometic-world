@@ -18,7 +18,7 @@ import java.util.Map.Entry;
 public class InterfaceController {
 
 
-
+	ClickAction clickActionControl = new ClickAction();
 	Dimension window; //Window dimensions
 	public enum InterfaceZone{
 		TopSidePanel,
@@ -72,6 +72,13 @@ public class InterfaceController {
 		public HashMap<String,UserInterfaceObject> getObjects(){
 			return elements;
 		}
+		
+		/**
+		 * @param containerName name of container
+		 * @param containerIn
+		 * 
+		 * 	Adds a child container
+		 */
 		public void addContainer(String containerName,UIContainer containerIn) {
 			this.containers.put(containerName, containerIn);
 		}
@@ -224,6 +231,34 @@ public class InterfaceController {
 			UIContainer objectsContainer = containerMap.get(containerName);
 			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
 				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
+				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+			}
+
+
+			objectsContainer.addObject(objectKey,newUIObject);
+		}else {
+			System.out.println("UIContainer does not exist");
+			return;
+		}
+	}
+	
+	
+	/**
+	 * @param elementType
+	 * @param containerName
+	 * @param objectKey
+	 * @param clickTag
+	 * @param buttonText
+	 * 
+	 * Testing the implementation of ClickAction interfaces
+	 */
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  Runnable clickAction, String buttonText) {
+		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+		if(containerMap.containsKey(containerName)) {
+			UIContainer objectsContainer = containerMap.get(containerName);
+			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickAction, buttonText);
 				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
 						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
 			}
@@ -651,28 +686,34 @@ public class InterfaceController {
 	 * @param pos
 	 * @param clickTag
 	 */
-	public void dropDownContainer(String containerName,String containerParent,ArrayList<GameObject> objectSet, Point pos, String clickTag) {
-		if(!containerMap.containsKey(containerParent) || objectSet == null || pos == null) {
+	public void dropDownContainer(String containerName,String containerParent,ArrayList<GameObject> objectSet, Point pos,Point spacingPos, String clickTag) {
+		if(!(containerMap.containsKey(containerParent))|| objectSet == null || pos == null) {
 			System.out.println("Invalid dropDownContainer");
 			return;
 		}
-		Point spacingPos = new Point(0,20);
-		createUIContainer(containerName,pos,new Point(0,20),5);
-//		System.out.println(pos);
-//		for(GameObject obj : objectSet) {
-//			if(obj instanceof City) {
-//				City city = (City) obj;
-//				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
-////				System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
-//				spacingPos.y = spacingPos.y + 20;
-//			}
-//		}
-//
-
-		containerMap.get(containerParent).addContainer(containerName, containerMap.get(containerName));
-		if(containerMap.get(containerParent).visible) {
-			enableInterfaceContainer(containerName);
-		}
+		if(!containerMap.containsKey(containerName)) {
+			
+		
+//			Point spacingPos = new Point(0,20);
+			UIContainer uiCont = createUIContainer(containerName,pos, spacingPos,5);
+	//		System.out.println(pos);
+	//		for(GameObject obj : objectSet) {
+	//			if(obj instanceof City) {
+	//				City city = (City) obj;
+	//				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
+	////				System.out.println(Game.objectMap.get(obj.toString()+pos.toString()).coords);
+	//				spacingPos.y = spacingPos.y + 20;
+	//			}
+	//		}
+			for(GameObject obj : objectSet) {
+				
+			}
+	//
+	
+			containerMap.get(containerParent).addContainer(containerName, uiCont);
+			if(containerMap.get(containerParent).visible) {
+				enableInterfaceContainer(containerName);
+			}
 
 
 //		containerMap.get(containerName).elementSpacing = clickedObjec
@@ -696,6 +737,11 @@ public class InterfaceController {
 //			System.out.println("dropDownContainer on non interface object");
 //		}
 //		enableInterfaceContainer(containerName);
+	}else {
+		
+		if(containerMap.get(containerParent).visible) {
+			enableInterfaceContainer(containerName);
+		}
 	}
 
 
@@ -724,6 +770,7 @@ public class InterfaceController {
 ////
 //		}
 //	}
+	}
 
 	/**
 	 *  Called on program start. Creates main menu UIContainer
@@ -733,8 +780,13 @@ public class InterfaceController {
 
 		System.out.println(new Point( (int)(window.width*0.125),(int)(window.height*0.67)));
 		createUIContainer("mainmenu",new Point( (int)(window.width*0.125),(int)(window.height*0.67)), new Point(0,40),0);
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton","newgame","Start");
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton","exit","Quit");
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton",ClickAction::StartGame,"Start");
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton", ClickAction::ExitGame,"Quit");
+		
+//		public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  ClickAction clickAction, String buttonText) {
+		
+//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu","exitbutton2",ClickAction::ExitGame,"Quit");
+		
 		enableInterfaceContainer("mainmenu");
 	}
 
@@ -853,3 +905,5 @@ public class InterfaceController {
 
 
 }
+
+
