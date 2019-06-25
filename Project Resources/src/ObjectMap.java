@@ -101,17 +101,7 @@ public class ObjectMap extends HashMap<String, GameObject> {
 			System.out.println("Does not contain image");
 			return;
 		}
-//		Image tmp = imageMap.get(imageName).getScaledInstance(nHeight, nWidth, Image.SCALE_SMOOTH);
-//		tmp = tmp.getScaledInstance(nWidth, nHeight, Image.SCALE_FAST);
-//		BufferedImage img = new BufferedImage(nWidth,nHeight,BufferedImage.TYPE_INT_ARGB);
-////		System.out.println(img.getHeight(observer));
-////		img = img.getScaledInstance(1, 1, 0);
-//
-//		System.out.println(imageMap.get(imageName).toString());
-//        Graphics2D g2d = img.createGraphics();
-//        g2d.drawImage(tmp,0, 0, null);
-//        g2d.dispose();
-////		imageMap.put(imageName, img);
+
 		Image input = imageMap.get(imageName);
 		BufferedImage buffered = new BufferedImage(input.getWidth(null), input.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D bufferedG2D = buffered.createGraphics();
