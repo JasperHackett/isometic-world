@@ -63,7 +63,7 @@ public class World {
 		cityList = new ArrayList<City>();
 		worldToIsoTable = new HashMap<Point,Point>();
 		entityList = new PriorityQueue<Pair<String,Point>>();
-		this.isoDims = initialiseTileMap();
+		initialiseTileMap();
 		System.out.println("Iso Dims: " +isoDims);
 		tickingObjects = new ArrayList<WorldObject>();
 		newTickingObjects = new ArrayList<WorldObject>();
