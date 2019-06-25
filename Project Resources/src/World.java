@@ -147,10 +147,10 @@ public class World {
 			br = new BufferedReader(new FileReader("tilemap.csv"));
 			isoDims = new Dimension(tileLine.length,lineCount);
 			System.out.println("Old isoDims: "+isoDims);
-			this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight );
+			this.worldDims = new Dimension(isoDims.width*tileWidth,isoDims.height*tileHeight );
 			System.out.println("World dims: "+worldDims);
 			
-			int renderConstant = (worldDims.height/2) + tileHeight;
+			int renderConstant = (worldDims.height/2);
 			int tileX = renderConstant;
 			tileX = renderConstant;
 			int tileY = (-1)*(worldDims.height/2);
@@ -181,11 +181,11 @@ public class World {
 						tileCount ++;
 
 					}
-					tileX += 32;
+					tileX += tileHeight;
 
 					tileType = null;
 				}
-				tileY +=32;
+				tileY +=tileHeight;
 				tileX = renderConstant;
 
 				j++;
