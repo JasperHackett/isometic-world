@@ -76,7 +76,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
-		iso2D.setLocation(iso2D.getX() -975, iso2D.getY());
+		iso2D.setLocation(iso2D.getX() -975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 		Game.objectMap.getTextObject("globalMousePosText").setText("Global mouse position: ["+ e.getX() + "," + e.getY()+ "]");
 		Game.objectMap.getTextObject("worldMousePosText").setText("World mouse position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "]");
