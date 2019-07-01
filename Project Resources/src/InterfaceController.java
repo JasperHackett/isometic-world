@@ -757,18 +757,18 @@ public class InterfaceController {
 //		contElementSpacing = new Point(0,)
 		UIContainer dDown = createUIContainer("dropdown",pos,elementSpacing,6);
 		System.out.println("Drop down called");
-		dDown.elementSpacing = new Point(0,(int)itemSize.getHeight());
-		dDown.nextElementPos = pos;
+//		dDown.elementSpacing = elementSpacing;
+//		dDown.nextElementPos = pos;
 //		dDown.
 //		UIContainer uiCont = createUIContainer("dropDown",pos, new Point(0,pos.y),5);
 		for(Pair<String,Action> itemPair : itemList) {
-			int x = 0;
+//			int x = 0;
 		System.out.println(itemPair.getKey());
 			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", "dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,pos,"click",itemPair.getValue());
 //addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
 //			pos.setLocation(pos.getX(),pos.getY()+itemSize.getHeight());
-			pos.y = pos.y + 20;
-			x++;
+			pos.setLocation(pos.getX()+elementSpacing.getX(), pos.getY()+elementSpacing.getY());
+//			x++;
 		}
 		enableInterfaceContainer(dDown);
 	}
@@ -912,7 +912,7 @@ public class InterfaceController {
 		createUIContainer("dropdown",new Point(0,0),new Point(0,0),6);
 //		Game.objectMap.transformImage("border", Game.width, Game.height);
 		createUIContainer("topmenubar", new Point((int)(window.width*0.20),4), new Point(128,0),0);
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarmenu", "controlmenu", "Menu");
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarmenu", ActionHandler::displayControlMenu, "Menu");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
 
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "Construction");
