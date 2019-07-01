@@ -173,7 +173,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 								ui.disableVolatile();
 							}
 						}
-						worldObjectClicked(worldObj);
+//						worldObjectClicked(worldObj);
 					}
 					
 				}else {
@@ -319,6 +319,15 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 	}
 	
+	
+	public void objectClicked(GameObject obj, Point mousePos) {
+		if(obj instanceof UserInterfaceObject) {
+			
+		}else if(obj instanceof WorldObject) {
+			
+		}
+	}
+	
 	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
 		clickedObject = uiObj;
 		
@@ -362,25 +371,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		return true;
 	}
 	
-	public void worldObjectClicked(WorldObject objIn) {
-		
 
-//		System.out.println("worldObj test");
-		if(clickedObject != null) {
-			if(objIn.isClicked()) {
-				objIn.setClicked(false);
-			}else {
-				objIn.setClicked(true);
-				callClickAction(objIn.clickTag);
-			}
-			
-		}else {
-			objIn.setClicked(true);
-			callClickAction(objIn.clickTag);
-		}
-		
-
-	}
 
 	
 	
