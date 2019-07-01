@@ -63,18 +63,19 @@ public class World {
 		cityList = new ArrayList<City>();
 		worldToIsoTable = new HashMap<Point,Point>();
 		entityList = new PriorityQueue<Pair<String,Point>>();
-		this.isoDims = initialiseTileMap();
-
+		initialiseTileMap();
+		System.out.println("Iso Dims: " +isoDims);
 		tickingObjects = new ArrayList<WorldObject>();
 		newTickingObjects = new ArrayList<WorldObject>();
 		//This needs to be changed to accommodate different borders and resolutions
-		panelDims = new Dimension(Game.width-200,Game.height-64);
+		panelDims = new Dimension(Game.width,Game.height-32);
 		panelPoint = new Point(0,34);
-		worldPoint = new Point(600,600);
+		worldPoint = new Point(500,500);
 		resourceList = new ArrayList<Resource>();
 
 		worldUnits = new HashMap<String,Unit>();
-		this.worldDims = new Dimension(isoDims.width*tileWidth+ 5*tileWidth,isoDims.height*tileHeight -2* tileHeight);
+
+		System.out.println("worldDims" + this.worldDims);
 //		initialiseTileMap();
 //		initialiseEntitys();
 
@@ -127,17 +128,35 @@ public class World {
 		String delim = ",";
 
 		// renderConstant and tileY (960) use the magic value to position the isometric plane
-		int renderConstant = 960;
-		int tileX = renderConstant;
-		int tileY = -960;
+
 
 		int j = 0; //Used for calculating isoDims
 
 		// Iterates through a .csv file and checks each field for a string that matches a known tile type.
-		try {
+		try { 
 			br = new BufferedReader(new FileReader("tilemap.csv"));
+			
+			int lineCount = 1;
+			line = br.readLine();
+			String[] tileLine = line.split(delim);
+			System.out.println(tileLine);
+			while((line = br.readLine()) != null) {
+				lineCount++;
+			}
+			br.close();
+			br = new BufferedReader(new FileReader("tilemap.csv"));
+			isoDims = new Dimension(tileLine.length,lineCount);
+			System.out.println("Old isoDims: "+isoDims);
+			this.worldDims = new Dimension(isoDims.width*tileWidth,isoDims.height*tileHeight );
+			System.out.println("World dims: "+worldDims);
+			
+			int renderConstant = (worldDims.height/2);
+			int tileX = renderConstant;
+			tileX = renderConstant;
+			int tileY = (-1)*(worldDims.height/2);
+			
 			while((line = br.readLine()) != null){
-				String[] tileLine = line.split(delim);
+				tileLine = line.split(delim);
 
 				IsometricTile.TILESET tileType = null;
 				for(int i = 0; i < tileLine.length; i++) {
@@ -162,11 +181,11 @@ public class World {
 						tileCount ++;
 
 					}
-					tileX += 32;
+					tileX += tileHeight;
 
 					tileType = null;
 				}
-				tileY +=32;
+				tileY +=tileHeight;
 				tileX = renderConstant;
 
 				j++;
@@ -179,12 +198,12 @@ public class World {
 		}
 //		this.updateDisplay();
 
+//		renderConstant = 0;
 
 
 
 
-
-		return (new Dimension(tileCount/j,j));
+		return(new Dimension(tileCount/j,j));
 	}
 	public void initialiseBorderMap() {
 

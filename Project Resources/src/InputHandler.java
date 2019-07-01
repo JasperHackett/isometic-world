@@ -24,11 +24,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	private GameObject hoveredObject;
 	private GameObject mousePressedObject;
 	private GameObject clickedObject;
+	private InterfaceController ui;
+	Integer planeOffsetX;
+	Integer planeOffsetY;
 //	private GameObject referenceObject;
 	private Stack<UserInterfaceObject> clickedInterfaceObjects = new Stack<UserInterfaceObject>();
 
 	
-
+	InputHandler(InterfaceController uiIn){
+		super();
+		this.ui = uiIn;
+		planeOffsetX = Game.xOffset;
+		planeOffsetY = Game.yOffset;
+	}
 
 
 	
@@ -68,7 +76,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		Point iso2D = toGrid(Game.gameWorld.getWorldPosition(e.getPoint()));
-		iso2D.setLocation(iso2D.getX() - 975, iso2D.getY() + 975);
+		iso2D.setLocation(iso2D.getX() -975, iso2D.getY() + 975);
 		iso2D.setLocation((int) iso2D.getX()/32, (int) iso2D.getY()/32);
 		Game.objectMap.getTextObject("globalMousePosText").setText("Global mouse position: ["+ e.getX() + "," + e.getY()+ "]");
 		Game.objectMap.getTextObject("worldMousePosText").setText("World mouse position: [" + (int) Game.gameWorld.getWorldPosition(e.getPoint()).getX() + "," +  (int) Game.gameWorld.getWorldPosition(e.getPoint()).getY() + "]");
@@ -144,19 +152,27 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		
 		if(mousePressedObject != null) {
+
 			if(checkContains(mousePressedObject.getPosition(),e.getPoint())) {
 				if(mousePressedObject instanceof UserInterfaceObject) {
 					UserInterfaceObject uiObj = (UserInterfaceObject) mousePressedObject;
 					if(uiObj.isClickable()) {
 						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
-							clickedInterfaceObjects.push(uiObj);
-							uiObjectClicked(uiObj);
+//							clickedInterfaceObjects.push(uiObj);
+							uiObjectClicked(uiObj, e.getPoint());
+
 						}
 					}
 					
 				}else if(mousePressedObject instanceof WorldObject){
+					
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
+						if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+							if(checkVolatileClick(ui.volatileObjects,e.getPoint())){
+								ui.disableVolatile();
+							}
+						}
 						worldObjectClicked(worldObj);
 					}
 					
@@ -165,8 +181,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				}
 				
 			}
+		}else {
+			if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+				ui.disableVolatile();
+			}
+
 		}
 		
+//		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+//			if(checkVolatileClick(ui.volatileObjects,e.getPoint())){
+//				
+//			}
+//		}
+
 		
 		dragEnabled = false;
 		mousePressPos = null;
@@ -292,24 +319,52 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 	}
 	
-	public void uiObjectClicked(UserInterfaceObject uiObj) {
+	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
 		clickedObject = uiObj;
+		
+
+//	if(ui)	
+		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+			if(checkVolatileClick(ui.volatileObjects,mousePos)){
+				ui.disableVolatile();
+			}else {
+				ui.interfaceObjectClicked(uiObj);
+			}
+		}else {
+			ui.interfaceObjectClicked(uiObj);
+		}
 //		if(uiObj.referenceObject != null) {
 //			this.referenceObject = uiObj.referenceObject;
 //		}
-		if(this.clickedObject.isClicked()) {
 
-			this.clickedObject.setClicked(false);
-			this.clickedObject = null;
-		}else {
-			this.clickedObject.setClicked(true);
-			callClickAction(uiObj.clickTag);
+		
+		
+//		if(this.clickedObject.isClicked()) {
+//
+//			this.clickedObject.setClicked(false);
+//			this.clickedObject = null;
+//		}else {
+//			this.clickedObject.setClicked(true);
+//			callClickAction(uiObj.clickTag);
+//		}
+
+
+	}
+	
+	public boolean checkVolatileClick(ArrayList<UserInterfaceObject> volatileObjects, Point mousePos) {
+		
+		for(UserInterfaceObject uiObj : volatileObjects) {
+			if(checkContains(uiObj.getPosition(),mousePos)){
+				return false;
+			}
 		}
-
+		
+		return true;
 	}
 	
 	public void worldObjectClicked(WorldObject objIn) {
 		
+
 //		System.out.println("worldObj test");
 		if(clickedObject != null) {
 			if(objIn.isClicked()) {
@@ -352,10 +407,10 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			Game.userInterface.enableInterfaceContainer("topmenubar");
 			Game.currentState = Game.STATE.Game;
 //			Game.gameWorld.updateDisplay();
-		}else if (clickTag.equals("exit")) {
-			System.out.println("Exiting");
-			System.exit(0);
-			
+//		}else if (clickTag.equals("exit")) {
+//			System.out.println("Exiting");
+//			System.exit(0);
+//			
 		}else if (clickTag.equals("citybtn")){
 			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
 			if(clickedObject == null) {
@@ -470,6 +525,14 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
 //				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
 //			}
+		}else if(clickTag.equals("controlmenu")) {
+//			Game.userInterface.dropDownContainer(containerName, containerParent, objectSet, pos, spacingPos, clickTag);
+			
+//			ArrayList<Pair<String,Runnable>> controlMenu = new ArrayList<Pair<String,Runnable>>();
+//			controlMenu.add(new Pair<String,Runnable>("Options",Action::OptionsMenu));
+//			controlMenu.add(new Pair<String,Runnable>("Exit",Action::ExitGame));
+////			new Point((int)(window.width*0.20),4)
+//			Game.userInterface.dropDown(controlMenu,new Dimension(120,50),new Point((int)(Game.width*0.20),25),(UserInterfaceObject)clickedObject);
 		}
 
 
