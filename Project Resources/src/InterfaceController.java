@@ -761,13 +761,16 @@ public class InterfaceController {
 //		dDown.nextElementPos = pos;
 //		dDown.
 //		UIContainer uiCont = createUIContainer("dropDown",pos, new Point(0,pos.y),5);
+		System.out.println("POINT IN DROP::"+ pos);
+		Point spacingPos = new Point(0,0);
 		for(Pair<String,Action> itemPair : itemList) {
 //			int x = 0;
 		System.out.println(itemPair.getKey());
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", "dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,pos,"click",itemPair.getValue());
+			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", "dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,spacingPos,"click",itemPair.getValue());
 //addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
 //			pos.setLocation(pos.getX(),pos.getY()+itemSize.getHeight());
-			pos.setLocation(pos.getX()+elementSpacing.getX(), pos.getY()+elementSpacing.getY());
+			spacingPos.x = spacingPos.x + elementSpacing.x;
+			spacingPos.y = spacingPos.y + elementSpacing.y;
 //			x++;
 		}
 		enableInterfaceContainer(dDown);
