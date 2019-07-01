@@ -23,7 +23,7 @@ public class Resource extends Entity{
 	public Double resourceCapacity;
 	public ResourceType resourceType;
 	
-	Resource(ArrayList<IsometricTile> tileList,ResourceType resourceType){
+	Resource(ArrayList<IsometricTile> tileList,ResourceType resourceType) {
 		super(tileList);
 		this.resourceType = resourceType;
 		this.type = EntityType.resource;
@@ -211,6 +211,11 @@ public class Resource extends Entity{
 	
 	@Override
 	public void render(Graphics g) {
+		
+		if (!this.hasStructure()) {
+			return;
+		}
+		
 		g.drawImage(objectImage, coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);
 		if(currentlyHovered) {
 			g.drawImage(Game.objectMap.getImage("resourcehover"), coords.x + Game.xOffset, coords.y + Game.yOffset - this.structureOffset, null);

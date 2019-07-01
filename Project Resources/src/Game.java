@@ -176,7 +176,6 @@ public class Game {
 		GameObject scalingTestObject = new GameObject(ObjectType.DEFAULT);
 		Game.objectMap.addObject(ObjectType.DEFAULT, "scalingTestObject", scalingTestObject);
 		int scalingConstant = 4;
-		Dimension scalingTestDim = new Dimension(100 * scalingConstant, 200 * scalingConstant);
 		Game.objectMap.transformImage("scalingTestImage", scalingTestDim.width, scalingTestDim.height);
 		Game.objectMap.getObject("scalingTestObject").setProperties(scalingTestDim, new Point(800, 600), "scalingTestImage");
 

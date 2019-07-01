@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ public class ResourceStructure extends Structure{
 	public ArrayList<Resource> connectedResources;
 	public Resource.ResourceType structureType;
 	public HashMap<IsometricTile, String> tileImageMap;
+	public Image resourceImage;
 	/**
 	 * @param tileList
 	 */
@@ -42,13 +44,13 @@ public class ResourceStructure extends Structure{
 //		}
 		this.structureType = RType;
 		if(RType.equals(Resource.ResourceType.iron)) {
-			this.objectImage = Game.objectMap.getImage("ironhut");
+			this.objectImage = Game.objectMap.getImage(tileImageMap.get(this.tileList.get(0)));
 			this.clickTag = "ironmine";
 			this.worldDims = new Dimension(128,64);
 			this.dim = new Dimension(128,64);
 			this.name = "Iron Mine";
 			this.coords = new Point(0,0);
-			
+			this.resourceImage = Game.objectMap.getImage("ironore");
 		}
 		
 	}
@@ -85,6 +87,7 @@ public class ResourceStructure extends Structure{
 	public void render(Graphics g) {
 		
 		for (IsometricTile tile : this.tileList) {
+			g.drawImage(resourceImage, tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset, null);
 			g.drawImage(Game.objectMap.getImage(tileImageMap.get(tile)), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
 			if(currentlyHovered) {
 				g.drawImage(Game.objectMap.getImage("hover"), tile.coords.x + Game.xOffset, tile.coords.y + Game.yOffset - this.structureOffset, null);
