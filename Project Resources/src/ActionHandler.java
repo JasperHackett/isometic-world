@@ -24,7 +24,7 @@ public class ActionHandler {
 		if(obj instanceof UserInterfaceObject) {
 			UserInterfaceObject uiObj = (UserInterfaceObject) obj;
 ///			Game.userInterface.dropDownContainer(containerName, containerParent, objectSet, pos, spacingPos, clickTag);
-			
+			Game.userInterface.volatileObjects.add(uiObj);
 			ArrayList<Pair<String,Action>> controlMenu = new ArrayList<Pair<String,Action>>();
 			controlMenu.add(new Pair<String,Action>("Options",ActionHandler::optionsMenu));
 			controlMenu.add(new Pair<String,Action>("Exit",ActionHandler::exitGame));
@@ -40,6 +40,10 @@ public class ActionHandler {
 //		Game.userInterface.dropDown(itemList, itemSize, pos, elementSpacing, parent);
 	}
 
+	static void displayConstructionMenu(GameObject obj) {
+		
+		
+	}
 
 	
 	static void exitGame(GameObject obj){
