@@ -119,6 +119,7 @@ public class InterfaceController {
 	ArrayList<ArrayList<UIContainer>> zIndex = new ArrayList<ArrayList<UIContainer>>();
 	ActionHandler actionHandler;
 
+	ArrayList<UserInterfaceObject> volatileObjects = new ArrayList<UserInterfaceObject>(); //Stores the set of objects that are open in a volatile state (1 click will remove them)
 
 	public InterfaceController(Dimension dims,ActionHandler actionHandler){
 		window = dims;
@@ -428,7 +429,7 @@ public class InterfaceController {
 	 * 	Used in drop down menus to create buttons with assocated action
 	 * 
 	 */
-	public void addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point pos, String clickTag,Action action) {
+	public UserInterfaceObject addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point 												pos, String clickTag,Action action) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey, elementType);
 //		newUIObject.referenceObject = referenceObj;
 		newUIObject.setClickAction(action);
@@ -461,9 +462,10 @@ public class InterfaceController {
 
 			}
 			objectsContainer.addObject(objectKey,newUIObject);
+			return newUIObject;
 		}else {
 			System.out.println("UIContainer does not exist");
-			return;
+			return null;
 		}
 
 	}
@@ -741,9 +743,20 @@ public class InterfaceController {
 	}
 	
 	
-	public void interfaceObjectClicked(UserInterfaceObject uiObj) {
-		if(uiObj.isClicked()) {
 
+	
+	public void interfaceObjectClicked(UserInterfaceObject uiObj) {
+//		if(uiContext == InterfaceContext.VolatileDropDown) {
+//			disableInterfaceContainer("dropdown");
+//			InterfaceContext.DEFAULT
+//		}
+		System.out.println("interfaceObjectclicked");
+		if(uiObj.isClicked()) {
+//			if(uiContext == InterfaceContext.VolatileDropDown) {
+//				disableInterfaceContainer("dropdown");
+//				System.out.println("ivolatile");
+//				uiContext = InterfaceContext.DEFAULT;
+//			}
 			uiObj.setClicked(false);
 			uiObj = null;
 		}else {
@@ -751,27 +764,30 @@ public class InterfaceController {
 //			callClickAction(uiObj.clickTag);
 		}
 	}
-	
+	public void disableVolatile() {
+//		System.out.println("DISABLE VOLATILE");
+		this.disableInterfaceContainer("dropdown");
+		for(UserInterfaceObject uiObj : containerMap.get("dropdown").elements.values()) {
+			if(uiObj.isClicked()) {
+				uiObj.setClicked(false);
+			}
+		}
+		uiContext = InterfaceContext.DEFAULT;
+		
+	}
 	
 	public void dropDown(ArrayList<Pair<String,Action>> itemList,Dimension itemSize, Point pos,Point elementSpacing, UserInterfaceObject parent) {
-//		contElementSpacing = new Point(0,)
+
 		UIContainer dDown = createUIContainer("dropdown",pos,elementSpacing,6);
-		System.out.println("Drop down called");
-//		dDown.elementSpacing = elementSpacing;
-//		dDown.nextElementPos = pos;
-//		dDown.
-//		UIContainer uiCont = createUIContainer("dropDown",pos, new Point(0,pos.y),5);
-		System.out.println("POINT IN DROP::"+ pos);
+		UserInterfaceObject uiObj;
 		Point spacingPos = new Point(0,0);
+		uiContext = InterfaceContext.VolatileDropDown;
 		for(Pair<String,Action> itemPair : itemList) {
-//			int x = 0;
-		System.out.println(itemPair.getKey());
-			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", "dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,spacingPos,"click",itemPair.getValue());
-//addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
-//			pos.setLocation(pos.getX(),pos.getY()+itemSize.getHeight());
+
+			uiObj = addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", 									"dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,spacingPos,"click",itemPair.getValue());
 			spacingPos.x = spacingPos.x + elementSpacing.x;
 			spacingPos.y = spacingPos.y + elementSpacing.y;
-//			x++;
+			volatileObjects.add(uiObj);
 		}
 		enableInterfaceContainer(dDown);
 	}

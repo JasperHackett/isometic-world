@@ -152,14 +152,15 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		
 		if(mousePressedObject != null) {
+
 			if(checkContains(mousePressedObject.getPosition(),e.getPoint())) {
 				if(mousePressedObject instanceof UserInterfaceObject) {
 					UserInterfaceObject uiObj = (UserInterfaceObject) mousePressedObject;
 					if(uiObj.isClickable()) {
 						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
 //							clickedInterfaceObjects.push(uiObj);
-							uiObjectClicked(uiObj);
-							ui.interfaceObjectClicked(uiObj);
+							uiObjectClicked(uiObj, e.getPoint());
+
 						}
 					}
 					
@@ -167,6 +168,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
+						if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+							if(checkVolatileClick(ui.volatileObjects,e.getPoint())){
+								ui.disableVolatile();
+							}
+						}
 						worldObjectClicked(worldObj);
 					}
 					
@@ -175,8 +181,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				}
 				
 			}
+		}else {
+			if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+				ui.disableVolatile();
+			}
+
 		}
 		
+//		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+//			if(checkVolatileClick(ui.volatileObjects,e.getPoint())){
+//				
+//			}
+//		}
+
 		
 		dragEnabled = false;
 		mousePressPos = null;
@@ -302,29 +319,52 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 	}
 	
-	public void uiObjectClicked(UserInterfaceObject uiObj) {
+	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
 		clickedObject = uiObj;
 		
+
+//	if(ui)	
+		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+			if(checkVolatileClick(ui.volatileObjects,mousePos)){
+				ui.disableVolatile();
+			}else {
+				ui.interfaceObjectClicked(uiObj);
+			}
+		}else {
+			ui.interfaceObjectClicked(uiObj);
+		}
 //		if(uiObj.referenceObject != null) {
 //			this.referenceObject = uiObj.referenceObject;
 //		}
-		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-//			if(checkContains(( new Point(100,100))), e.getPoint())
+
+		
+		
+//		if(this.clickedObject.isClicked()) {
+//
+//			this.clickedObject.setClicked(false);
+//			this.clickedObject = null;
+//		}else {
+//			this.clickedObject.setClicked(true);
+//			callClickAction(uiObj.clickTag);
+//		}
+
+
+	}
+	
+	public boolean checkVolatileClick(ArrayList<UserInterfaceObject> volatileObjects, Point mousePos) {
+		
+		for(UserInterfaceObject uiObj : volatileObjects) {
+			if(checkContains(uiObj.getPosition(),mousePos)){
+				return false;
+			}
 		}
 		
-		if(this.clickedObject.isClicked()) {
-
-			this.clickedObject.setClicked(false);
-			this.clickedObject = null;
-		}else {
-			this.clickedObject.setClicked(true);
-			callClickAction(uiObj.clickTag);
-		}
-
+		return true;
 	}
 	
 	public void worldObjectClicked(WorldObject objIn) {
 		
+
 //		System.out.println("worldObj test");
 		if(clickedObject != null) {
 			if(objIn.isClicked()) {

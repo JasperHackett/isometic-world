@@ -30,12 +30,12 @@ public class ActionHandler {
 			controlMenu.add(new Pair<String,Action>("Exit",ActionHandler::exitGame));
 ////			new Point((int)(window.width*0.20),4)
 //			Game.userInterface.dropDown(controlMenu,new Dime
-			
-			System.out.println("POINT:::00" + uiObj.coords);
-			System.out.println("POINT:::" + new Point(uiObj.coords.x,(uiObj.coords.y + uiObj.dim.height)));
+//			
+//			System.out.println("POINT:::00" + uiObj.coords);
+//			System.out.println("POINT:::" + new Point(uiObj.coords.x,(uiObj.coords.y + uiObj.dim.height)));
 			
 			Game.userInterface.dropDown(controlMenu,new Dimension(160,20),new Point(uiObj.coords.x, uiObj.coords.y + uiObj.dim.height), new Point(0,20),uiObj);
-			System.out.println("POINT:::ss0" + uiObj.coords);
+//			System.out.println("POINT:::ss0" + uiObj.coords);
 		}
 //		Game.userInterface.dropDown(itemList, itemSize, pos, elementSpacing, parent);
 	}
