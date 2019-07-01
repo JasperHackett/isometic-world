@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javafx.util.Pair;
+
 /**
  *
  */
@@ -18,8 +20,11 @@ import java.util.Map.Entry;
 public class InterfaceController {
 
 
-	ClickAction clickActionControl = new ClickAction();
+	ActionHandler clickActionControl = new ActionHandler();
 	Dimension window; //Window dimensions
+//	HashMap<GameObject,>
+	
+
 	public enum InterfaceZone{
 		TopSidePanel,
 		MiddleSidePanel;
@@ -112,11 +117,12 @@ public class InterfaceController {
 
 
 	ArrayList<ArrayList<UIContainer>> zIndex = new ArrayList<ArrayList<UIContainer>>();
+	ActionHandler actionHandler;
 
 
-
-	public InterfaceController(Dimension dims){
+	public InterfaceController(Dimension dims,ActionHandler actionHandler){
 		window = dims;
+		this.actionHandler = actionHandler;
 		System.out.println(dims);
 		zoneMap = new HashMap<InterfaceZone,String>();
 		zoneMap.put(InterfaceZone.TopSidePanel,"citiesmenu");
@@ -253,7 +259,7 @@ public class InterfaceController {
 	 * 
 	 * Testing the implementation of ClickAction interfaces
 	 */
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  Runnable clickAction, String buttonText) {
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  Action clickAction, String buttonText) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
 		if(containerMap.containsKey(containerName)) {
 			UIContainer objectsContainer = containerMap.get(containerName);
@@ -372,6 +378,60 @@ public class InterfaceController {
 	public void addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point pos, String clickTag,GameObject referenceObj) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey, elementType);
 		newUIObject.referenceObject = referenceObj;
+		newUIObject.clickTag = clickTag;
+		newUIObject.clickable = true;
+
+		if(containerMap.containsKey(containerName)) {
+			UIContainer objectsContainer = containerMap.get(containerName);
+			if(elementType == UserInterfaceObject.UIElementType.TEXTBOX || elementType == UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE || elementType == UserInterfaceObject.UIElementType.TEXTBOXSTATIC
+					|| elementType == UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN) {
+				Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
+
+				newUIObject.coords = newPos;
+//				newPos.setLocation(x, y);
+				newUIObject.setElementTextProperties(text,fontKey,textColor,newPos);
+
+			}else if(elementType == UserInterfaceObject.UIElementType.TEXT) {
+
+
+					Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
+					newUIObject.coords = newPos;
+					newUIObject.setElementTextProperties(text,fontKey,textColor,newPos);
+	//				if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+	//
+	//					objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+	//							objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+	//				}
+
+
+
+			}
+			objectsContainer.addObject(objectKey,newUIObject);
+		}else {
+			System.out.println("UIContainer does not exist");
+			return;
+		}
+
+	}
+	
+	/**
+	 * @param elementType
+	 * @param containerName
+	 * @param objectKey
+	 * @param text
+	 * @param fontKey
+	 * @param textColor
+	 * @param pos
+	 * @param clickTag
+	 * @param action
+	 * 
+	 * 	Used in drop down menus to create buttons with assocated action
+	 * 
+	 */
+	public void addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point pos, String clickTag,Action action) {
+		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey, elementType);
+//		newUIObject.referenceObject = referenceObj;
+		newUIObject.setClickAction(action);
 		newUIObject.clickTag = clickTag;
 		newUIObject.clickable = true;
 
@@ -679,6 +739,41 @@ public class InterfaceController {
 	public void setUIContext(InterfaceContext uiCon) {
 		this.uiContext = uiCon;
 	}
+	
+	
+	public void interfaceObjectClicked(UserInterfaceObject uiObj) {
+		if(uiObj.isClicked()) {
+
+			uiObj.setClicked(false);
+			uiObj = null;
+		}else {
+			uiObj.setClicked(true);
+//			callClickAction(uiObj.clickTag);
+		}
+	}
+	
+	
+	public void dropDown(ArrayList<Pair<String,Action>> itemList,Dimension itemSize, Point pos,Point elementSpacing, UserInterfaceObject parent) {
+//		contElementSpacing = new Point(0,)
+		UIContainer dDown = createUIContainer("dropdown",pos,elementSpacing,6);
+		System.out.println("Drop down called");
+		dDown.elementSpacing = new Point(0,(int)itemSize.getHeight());
+		dDown.nextElementPos = pos;
+//		dDown.
+//		UIContainer uiCont = createUIContainer("dropDown",pos, new Point(0,pos.y),5);
+		for(Pair<String,Action> itemPair : itemList) {
+			int x = 0;
+		System.out.println(itemPair.getKey());
+			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", "dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,pos,"click",itemPair.getValue());
+//addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, containerName,obj.toString()+pos.toString() ,city.name,"primarygamefont",Color.WHITE,spacingPos,clickTag,city);
+//			pos.setLocation(pos.getX(),pos.getY()+itemSize.getHeight());
+			pos.y = pos.y + 20;
+			x++;
+		}
+		enableInterfaceContainer(dDown);
+	}
+	
+	
 	/**
 	 * @param containerName
 	 * @param containerParent
@@ -771,24 +866,38 @@ public class InterfaceController {
 //		}
 //	}
 	}
+	
+
+	
+	
 
 	/**
 	 *  Called on program start. Creates main menu UIContainer
 	 */
 	public void initaliseMainMenuInterface() {
 //		Point pos = new Point((window.width/0.125),(window.height/0.67));
-
-		System.out.println(new Point( (int)(window.width*0.125),(int)(window.height*0.67)));
-		createUIContainer("mainmenu",new Point( (int)(window.width*0.125),(int)(window.height*0.67)), new Point(0,40),0);
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton",ClickAction::StartGame,"Start");
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton", ClickAction::ExitGame,"Quit");
 		
+//		Action a = ActionHandler::displayControlMenu;
+//		Action start = ActionHandler::startGame;
+//		GameObject testObj = new GameObject(ObjectType.DEFAULT);
+//		p.execute(this,testObj);
+
+//		System.out.println(new Point( (int)(window.width*0.125),(int)(window.height*0.67)));
+		createUIContainer("mainmenu",new Point( (int)(window.width*0.125),(int)(window.height*0.67)), new Point(0,40),0);
+		
+		Action a = ActionHandler::startGame;
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton",a,"Start");
+		a = ActionHandler::exitGame;
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton", a,"Quit");
+//		
 //		public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  ClickAction clickAction, String buttonText) {
 		
 //		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu","exitbutton2",ClickAction::ExitGame,"Quit");
 		
 		enableInterfaceContainer("mainmenu");
 	}
+	
+	
 
 	/**
 	 *  Called when the game starts, creates all the UIContainers for the main game
@@ -797,10 +906,16 @@ public class InterfaceController {
 	 *
 	 */
 	public void initialiseMainGameInterface() {
+//		Game.gameWorld.g
+//		Action act;
+		
+		createUIContainer("dropdown",new Point(0,0),new Point(0,0),6);
 //		Game.objectMap.transformImage("border", Game.width, Game.height);
-		createUIContainer("topmenubar", new Point((int)(window.width*0.24),4), new Point(128,0),0);
+		createUIContainer("topmenubar", new Point((int)(window.width*0.20),4), new Point(128,0),0);
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarmenu", "controlmenu", "Menu");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "constructionmenu", "Construction");
+
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstruction", "Construction");
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", "citiesmenu", "Cities");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");

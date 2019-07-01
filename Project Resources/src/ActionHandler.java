@@ -6,22 +6,26 @@
  * @author Jasper
  *
  */
-public class ClickAction {
+
+public class ActionHandler {
 	
-	public interface Action {
-		public void execute(Object uiObj);
-	}
-	public static void callClickAction(Runnable action) {
-		action.run();
+	ActionHandler(){
+		
 	}
 	
-	static void ExitGame(){
+	static void displayControlMenu(GameObject obj){
+		System.out.println("displayControlMenu");
+	}
+
+
+	
+	static void exitGame(GameObject obj){
 		System.out.println("Exiting");
 		System.exit(0);
 		
 	}
 	
-	static void StartGame() {
+	static void startGame(GameObject obj) {
 		System.out.println("New game button clicked");
 //		Game.gameWorld = new World();
 		Game.userInterface.initialiseMainGameInterface();
@@ -29,9 +33,17 @@ public class ClickAction {
 		Game.userInterface.enableInterfaceContainer("topmenubar");
 		Game.currentState = Game.STATE.Game;
 	}
-//		public void execute(Object uiObj) {
-//
-//		}
-//	}
 	
+
+	
+	static void optionsMenu(GameObject obj) {
+		System.out.println("Options stub");
+	}
+	
+//	public void DropDown
+////		public void execute(Object uiObj) {
+////
+////		}
+////	}
+//	
 }

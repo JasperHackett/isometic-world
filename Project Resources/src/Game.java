@@ -35,6 +35,7 @@ public class Game {
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
 	public static InterfaceController userInterface;
+	public static ActionHandler actionHandler;
 	public static ObjectMap objectMap;
 	public static World gameWorld;
 	public static ArrayList<String> nameList;
@@ -69,8 +70,9 @@ public class Game {
 		objectMap = new ObjectMap();
 //		Image icon = new ImageIcon("assets/testImage.png").getImage();
 //		Image clickableImage = new ImageIcon("assets/click.png").getImage();
+		actionHandler = new ActionHandler();
+		userInterface = new InterfaceController(new Dimension(width,height),actionHandler);
 
-		userInterface = new InterfaceController(new Dimension(width,height));
 		//Loading all image assets
 //		objectMap.addImage("border", "assets/border.png");
 		objectMap.addImage("border", "assets/border_draft.png");

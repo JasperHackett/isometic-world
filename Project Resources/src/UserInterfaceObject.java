@@ -70,7 +70,7 @@ public class UserInterfaceObject extends GameObject{
 			
 
 	}
-	public void setProperties(Point pos, Runnable clickAction, String buttonText) {
+	public void setProperties(Point pos, Action clickAction, String buttonText) {
 		this.coords = pos;
 		this.clickable = true;
 		this.clickAction = clickAction;

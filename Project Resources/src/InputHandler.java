@@ -159,10 +159,12 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
 //							clickedInterfaceObjects.push(uiObj);
 							uiObjectClicked(uiObj);
+							ui.interfaceObjectClicked(uiObj);
 						}
 					}
 					
 				}else if(mousePressedObject instanceof WorldObject){
+					
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
 						worldObjectClicked(worldObj);
@@ -307,7 +309,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //			this.referenceObject = uiObj.referenceObject;
 //		}
 		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-//			if
+//			if(checkContains(( new Point(100,100))), e.getPoint())
 		}
 		
 		if(this.clickedObject.isClicked()) {
@@ -483,6 +485,14 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 //				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
 //				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
 //			}
+		}else if(clickTag.equals("controlmenu")) {
+//			Game.userInterface.dropDownContainer(containerName, containerParent, objectSet, pos, spacingPos, clickTag);
+			
+//			ArrayList<Pair<String,Runnable>> controlMenu = new ArrayList<Pair<String,Runnable>>();
+//			controlMenu.add(new Pair<String,Runnable>("Options",Action::OptionsMenu));
+//			controlMenu.add(new Pair<String,Runnable>("Exit",Action::ExitGame));
+////			new Point((int)(window.width*0.20),4)
+//			Game.userInterface.dropDown(controlMenu,new Dimension(120,50),new Point((int)(Game.width*0.20),25),(UserInterfaceObject)clickedObject);
 		}
 
 

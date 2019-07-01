@@ -19,7 +19,7 @@ public class GameObject {
 	protected Dimension dim; //Dimensions of object
 	protected Point coords; //Top left corner of object
 	protected Image objectImage; //test for a single image object
-	protected Runnable clickAction;
+	protected Action clickAction;
 	protected boolean clickable;
 	private boolean visible = true;
 	public boolean hoverable;
@@ -63,7 +63,7 @@ public class GameObject {
 	 * 
 	 *  This function is a work in progress to test changing click functionality to not use 'clickTag' Strings
 	 */
-	public void setProperties(Dimension dimIn, Point posIn, String imageIn, boolean clickable, Runnable clickAction) {
+	public void setProperties(Dimension dimIn, Point posIn, String imageIn, boolean clickable, Action clickAction) {
 		this.dim = dimIn;
 		this.coords = posIn;
 		this.objectImage = Game.objectMap.getImage(imageIn);
@@ -114,7 +114,7 @@ public class GameObject {
 		}
 	}
 	
-	public void setClickAction(Runnable actionIn) {
+	public void setClickAction(Action actionIn) {
 		this.clickAction = actionIn;
 	}
 	
@@ -174,11 +174,11 @@ public class GameObject {
 //		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
 		if(this.clickAction != null) {
-			ClickAction.callClickAction(clickAction);
+			clickAction.execute(this);
 		}
 	}
 	
-	Runnable getClickAction() {
+	Action getClickAction() {
 		return this.clickAction;
 	}
 	public void setClicked(boolean isClicked) {
