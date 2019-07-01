@@ -742,7 +742,9 @@ public class InterfaceController {
 		this.uiContext = uiCon;
 	}
 	
-	
+	public void displayCitiesMenu(){
+		
+	}
 
 	
 	public void interfaceObjectClicked(UserInterfaceObject uiObj) {
@@ -935,10 +937,12 @@ public class InterfaceController {
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
 
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstructions",ActionHandler::displayConstructionMenu, "Construction");
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", "citiesmenu", "Cities");
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", ActionHandler::displayCitiesMenu, "Cities");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
-
+		
+		createUIContainer("citiesmenu", new Point((int)(window.width*0.9375), (int)(window.height*0.1)), new Point(0,50), 0);
+		
 		createUIContainer("citymanager", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
 //		createUIContainer(
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");

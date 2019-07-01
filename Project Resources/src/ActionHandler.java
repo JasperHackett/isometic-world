@@ -2,6 +2,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import UserInterfaceObject.UIElementType;
 import javafx.util.Pair;
 
 /**
@@ -43,6 +44,18 @@ public class ActionHandler {
 	static void displayConstructionMenu(GameObject obj) {
 		
 		
+	}
+	
+	static void displayCitiesMenu(GameObject obj) {
+		System.out.println("displayCitiesMenu");
+		if (obj instanceof UserInterfaceObject) {
+			UserInterfaceObject uiObj = (UserInterfaceObject) obj;
+			
+			for (City city : Game.gameWorld.cityList){
+				Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citiesmenu", city.objID, city.clickAction, city.name);
+			}
+		}
+		Game.userInterface.enableInterfaceContainer("citiesmenu");
 	}
 
 	
