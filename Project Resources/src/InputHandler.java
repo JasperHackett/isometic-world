@@ -177,12 +177,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
 						objectClicked(worldObj, e.getPoint());
-//						if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-//							if(checkVolatileClick(ui.volatileObjects,e.getPoint())){
-//								ui.disableVolatile();
-//							}
-//						}
-//						worldObjectClicked(worldObj);
+						return;
 					}
 					
 				}else {
@@ -334,10 +329,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	public void objectClicked(GameObject obj, Point mousePos) {
 		
-
+		System.out.println("ObjClicked");
 		
 		if(obj.isClicked()) {
 			disableClick(obj);
+			System.out.println("Disabl?");
 //			System.out.println("Disable");
 
 		}else {
@@ -350,6 +346,11 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				System.out.println("Unknown object clicked");
 			}
 		}
+		
+		dragEnabled = false;
+		mousePressPos = null;
+		mousePressedObject = null;
+		Game.gameWorld.staticWorldPoint = null;
 
 		
 		
@@ -371,6 +372,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 			objIn.setClicked(true);
 			callClickAction(objIn.clickTag);
 		}
+		dragEnabled = false;
+		mousePressPos = null;
+		mousePressedObject = null;
 		
 
 	}
@@ -389,7 +393,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
 		clickedObject = uiObj;
-		System.out.println("CLicked a ui object");
+
 
 //	if(ui)	
 		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {

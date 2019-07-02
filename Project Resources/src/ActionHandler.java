@@ -20,7 +20,7 @@ public class ActionHandler {
 	}
 	
 	static void displayControlMenu(GameObject obj){
-		System.out.println("displayControlMenu");
+		System.out.println("Action called: displayControlMenu");
 		if(obj instanceof UserInterfaceObject) {
 			UserInterfaceObject uiObj = (UserInterfaceObject) obj;
 ///			Game.userInterface.dropDownContainer(containerName, containerParent, objectSet, pos, spacingPos, clickTag);
@@ -41,8 +41,21 @@ public class ActionHandler {
 	}
 
 	static void displayConstructionMenu(GameObject obj) {
+		System.out.println("Action called: displayConstructionMenu");
+		Game.userInterface.setRightPanel("constructionrightpanel");
+		obj.setClicked(false);
+	}
+	
+	static void displayWorkersMenu(GameObject obj) {
+		System.out.println("Action called: displayWorkersMenu");
+		Game.userInterface.setRightPanel("workersrightpanel");
+		obj.setClicked(false);
 		
-		
+	}
+	static void displayCitiesMenu(GameObject obj) {
+		System.out.println("Action called: displayCitiesMenu");
+		Game.userInterface.setRightPanel("citiesrightpanel");
+		obj.setClicked(false);
 	}
 
 	
@@ -54,7 +67,7 @@ public class ActionHandler {
 	}
 	
 	static void startGame(GameObject obj) {
-		System.out.println("New game button clicked");
+		System.out.println("Action called: startGame");
 //		Game.gameWorld = new World();
 		Game.userInterface.initialiseMainGameInterface();
 		Game.userInterface.disableInterfaceContainer("mainmenu");
@@ -67,6 +80,7 @@ public class ActionHandler {
 	static void optionsMenu(GameObject obj) {
 		System.out.println("Options stub");
 	}
+
 	
 //	public void DropDown
 ////		public void execute(Object uiObj) {
