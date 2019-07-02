@@ -57,7 +57,24 @@ public class ActionHandler {
 		}
 		Game.userInterface.enableInterfaceContainer("citiesmenu");
 	}
-
+	
+	// displays city information
+	// called when a city is clicked in the world
+	// or when it is clicked from the cities menu
+	static void city(GameObject obj) {
+		System.out.println("called city action");
+		if (obj instanceof UserInterfaceObject) {
+			UserInterfaceObject uiObj = (UserInterfaceObject) obj;
+		
+			City city = null;
+			if(uiObj.referenceObject != null) {
+				 city = (City) uiObj.referenceObject;
+			}
+			Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
+			Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
+			uiObj.disableClick();
+		}
+	}
 	
 	static void exitGame(GameObject obj){
 		System.out.println("Exiting");

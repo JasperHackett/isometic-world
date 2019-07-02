@@ -30,6 +30,7 @@ public class City extends Structure {
 		this.clickTag = "city";
 		this.name = name;
 		this.objID="city" + name;
+		this.clickAction = ActionHandler::city;
 
 		// creating and adding child component for city name
 		TextObject cityName = new TextObject(ObjectType.CHILD);
