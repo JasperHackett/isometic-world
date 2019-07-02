@@ -279,13 +279,14 @@ public class InterfaceController {
 		}
 	}
 
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  String clickTag, String buttonText) {
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+		newUIObject.clickAction = action;
 		if(containerMap.containsKey(containerName)) {
 			UIContainer objectsContainer = containerMap.get(containerName);
 			Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
 			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
-				newUIObject.setProperties(newPos, clickTag, buttonText);
+				newUIObject.setProperties(newPos, action, buttonText);
 				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
 						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
 			}
@@ -310,24 +311,24 @@ public class InterfaceController {
 	 *
 	 * Adds interface object assigning a parentCity
 	 */
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag, String buttonText, City parentObject) {
-		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
-		newUIObject.referenceObject = parentObject;
-		if(containerMap.containsKey(containerName)) {
-			UIContainer objectsContainer = containerMap.get(containerName);
-			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
-				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
-				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
-						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
-			}
-
-
-			objectsContainer.addObject(objectKey,newUIObject);
-		}else {
-			System.out.println("UIContainer does not exist");
-			return;
-		}
-	}
+//	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag, String buttonText, City parentObject) {
+//		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+//		newUIObject.referenceObject = parentObject;
+//		if(containerMap.containsKey(containerName)) {
+//			UIContainer objectsContainer = containerMap.get(containerName);
+//			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+//				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
+//				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+//						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+//			}
+//
+//
+//			objectsContainer.addObject(objectKey,newUIObject);
+//		}else {
+//			System.out.println("UIContainer does not exist");
+//			return;
+//		}
+//	}
 
 
 	/**
@@ -967,10 +968,10 @@ public class InterfaceController {
 
 
 
-		createUIContainer("citiesmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
-		for(City city : Game.gameWorld.cityList) {
-			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
-		}
+//		createUIContainer("citiesmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
+//		for(City city : Game.gameWorld.cityList) {
+//			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
+//		}
 
 		/*
 		 * Interfaces for workers right panel
@@ -990,8 +991,17 @@ public class InterfaceController {
 		/*
 		 * Interfaces for city right panel
 		 */
-		createUIContainer("citiesrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2), new Point(0,20),0);
+		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2), new Point(0,20),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citiesrightpanel","citiesmenutitle","Cities","rightpanelheader",Color.WHITE,new Point (100,00),"");
+		citiesPanel.nextElementPos.x = Game.width - 160;
+		citiesPanel.nextElementPos.y = Game.topBarHeight + 150;
+		citiesPanel.elementSpacing.y = 50;
+				
+		for(City city : Game.gameWorld.cityList) {
+			
+//			addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
+			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
+		}
 		
 		
 //		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersrightpanel", "hireworker", "hireworker", "Hire Worker");

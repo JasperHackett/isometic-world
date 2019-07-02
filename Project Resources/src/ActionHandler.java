@@ -57,6 +57,14 @@ public class ActionHandler {
 		Game.userInterface.setRightPanel("citiesrightpanel");
 		obj.setClicked(false);
 	}
+	
+	static void selectCity(GameObject obj) {
+		if(obj instanceof City) {
+			City city = (City) obj;
+			System.out.println("Clicked a reference to: "+city.name);
+		}
+
+	}
 
 	
 	
