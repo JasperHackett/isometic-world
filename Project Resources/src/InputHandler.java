@@ -172,7 +172,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 						}
 					}
 					
-				}else if(mousePressedObject instanceof WorldObject){
+				}else if(mousePressedObject instanceof WorldObject) {
 					
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
@@ -321,15 +321,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	}
 	
 	
-	
-	public void entityClicked(Entity entity) {
-		
-	}
-	
+
 	
 	public void objectClicked(GameObject obj, Point mousePos) {
-		
-		System.out.println("ObjClicked");
 		
 		if(obj.isClicked()) {
 			disableClick(obj);
@@ -356,26 +350,40 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 	}
 	
-	public void worldObjectClicked(WorldObject objIn) {
+	public void worldObjectClicked(WorldObject obj) {
 		
+		clickedObject = obj;
 
-//		System.out.println("worldObj test");
-		if(clickedObject != null) {
-			if(objIn.isClicked()) {
-				objIn.setClicked(false);
-			}else {
-				objIn.setClicked(true);
-				callClickAction(objIn.clickTag);
-			}
-			
+		
+		
+		if(obj.isClicked()) {
+
+			obj.setClicked(false);
+			obj = null;
 		}else {
-			objIn.setClicked(true);
-			callClickAction(objIn.clickTag);
+			obj.setClicked(true);
 		}
+		clickedObject.setClicked(true);
 		dragEnabled = false;
 		mousePressPos = null;
 		mousePressedObject = null;
 		
+
+	}
+	
+	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
+		clickedObject = uiObj;
+
+	
+		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+			if(!checkVolatileClick(ui.volatileObjects,mousePos)){
+				ui.disableVolatile();
+			}else {
+				ui.interfaceObjectClicked(uiObj);
+			}
+		}else {
+			ui.interfaceObjectClicked(uiObj);
+		}
 
 	}
 	
@@ -391,37 +399,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		Game.gameWorld.staticWorldPoint = null;
 	}
 	
-	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
-		clickedObject = uiObj;
 
-
-//	if(ui)	
-		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-			if(!checkVolatileClick(ui.volatileObjects,mousePos)){
-				ui.disableVolatile();
-			}else {
-				ui.interfaceObjectClicked(uiObj);
-			}
-		}else {
-			ui.interfaceObjectClicked(uiObj);
-		}
-//		if(uiObj.referenceObject != null) {
-//			this.referenceObject = uiObj.referenceObject;
-//		}
-
-		
-		
-//		if(this.clickedObject.isClicked()) {
-//
-//			this.clickedObject.setClicked(false);
-//			this.clickedObject = null;
-//		}else {
-//			this.clickedObject.setClicked(true);
-//			callClickAction(uiObj.clickTag);
-//		}
-
-
-	}
 	
 	//Returns true if the mouse is inside a volatile object
 	public boolean checkVolatileClick(ArrayList<UserInterfaceObject> volatileObjects, Point mousePos) {
