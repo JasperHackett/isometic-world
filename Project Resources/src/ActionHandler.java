@@ -67,17 +67,6 @@ public class ActionHandler {
 
 	}
 	
-	static void displayCitiesMenu(GameObject obj) {
-		System.out.println("displayCitiesMenu");
-		if (obj instanceof UserInterfaceObject) {
-			UserInterfaceObject uiObj = (UserInterfaceObject) obj;
-			
-			for (City city : Game.gameWorld.cityList){
-				Game.userInterface.addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citiesmenu", city.objID, city.clickAction, city.name);
-			}
-		}
-		Game.userInterface.enableInterfaceContainer("citiesmenu");
-	}
 	
 	// displays city information
 	// called when a city is clicked in the world
