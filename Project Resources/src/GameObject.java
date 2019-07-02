@@ -171,7 +171,6 @@ public class GameObject {
 		return visible;
 	}
 	public void clickAction() {
-//		System.out.println("Click action on: "+this.objectImage);
 		this.currentlyClicked = true;
 		if(this.clickAction != null) {
 			clickAction.execute(this);

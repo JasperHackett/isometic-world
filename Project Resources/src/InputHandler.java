@@ -172,7 +172,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 						}
 					}
 					
-				}else if(mousePressedObject instanceof WorldObject){
+				}else if(mousePressedObject instanceof WorldObject) {
 					
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
@@ -321,15 +321,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	}
 	
 	
-	
-	public void entityClicked(Entity entity) {
-		
-	}
-	
+
 	
 	public void objectClicked(GameObject obj, Point mousePos) {
-		
-		System.out.println("ObjClicked");
 		
 		if(obj.isClicked()) {
 			disableClick(obj);
@@ -356,26 +350,48 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 	}
 	
-	public void worldObjectClicked(WorldObject objIn) {
+	public void worldObjectClicked(WorldObject obj) {
 		
-
-//		System.out.println("worldObj test");
+		
 		if(clickedObject != null) {
-			if(objIn.isClicked()) {
-				objIn.setClicked(false);
-			}else {
-				objIn.setClicked(true);
-				callClickAction(objIn.clickTag);
+			if(clickedObject instanceof WorldObject) {
+				clickedObject.setClicked(false);
 			}
-			
-		}else {
-			objIn.setClicked(true);
-			callClickAction(objIn.clickTag);
+
 		}
+		clickedObject = obj;
+
+
+		
+		if(obj.isClicked()) {
+
+			obj.setClicked(false);
+			obj = null;
+			clickedObject = null;
+		}else {
+			obj.setClicked(true);
+		}
+		clickedObject.setClicked(true);
 		dragEnabled = false;
 		mousePressPos = null;
 		mousePressedObject = null;
 		
+
+	}
+	
+	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
+		clickedObject = uiObj;
+
+	
+		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+			if(!checkVolatileClick(ui.volatileObjects,mousePos)){
+				ui.disableVolatile();
+			}else {
+				ui.interfaceObjectClicked(uiObj);
+			}
+		}else {
+			ui.interfaceObjectClicked(uiObj);
+		}
 
 	}
 	
@@ -391,37 +407,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		Game.gameWorld.staticWorldPoint = null;
 	}
 	
-	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
-		clickedObject = uiObj;
 
-
-//	if(ui)	
-		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-			if(!checkVolatileClick(ui.volatileObjects,mousePos)){
-				ui.disableVolatile();
-			}else {
-				ui.interfaceObjectClicked(uiObj);
-			}
-		}else {
-			ui.interfaceObjectClicked(uiObj);
-		}
-//		if(uiObj.referenceObject != null) {
-//			this.referenceObject = uiObj.referenceObject;
-//		}
-
-		
-		
-//		if(this.clickedObject.isClicked()) {
-//
-//			this.clickedObject.setClicked(false);
-//			this.clickedObject = null;
-//		}else {
-//			this.clickedObject.setClicked(true);
-//			callClickAction(uiObj.clickTag);
-//		}
-
-
-	}
 	
 	//Returns true if the mouse is inside a volatile object
 	public boolean checkVolatileClick(ArrayList<UserInterfaceObject> volatileObjects, Point mousePos) {
@@ -444,151 +430,151 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	 * Stores all possible actions when a button is clicked
 	 */
 	public void callClickAction(String clickTag) {
-		
-		if(clickTag == null) {
-			return;
-		}
-
-		if(clickTag.isEmpty()) {
-			System.out.println("Blank click tag");
-			return;
-		}
-
-		if(clickTag.equals("newgame")) {
-			System.out.println("New game button clicked");
-//			Game.gameWorld = new World();
-			Game.userInterface.initialiseMainGameInterface();
-			Game.userInterface.disableInterfaceContainer("mainmenu");
-			Game.userInterface.enableInterfaceContainer("topmenubar");
-			Game.currentState = Game.STATE.Game;
-//			Game.gameWorld.updateDisplay();
-//		}else if (clickTag.equals("exit")) {
-//			System.out.println("Exiting");
-//			System.exit(0);
-//			
-		}else if (clickTag.equals("citybtn")){
-			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
-			if(clickedObject == null) {
-				System.out.println("clickedobj null");
-			}
-			if(uiObject != null) {
-				System.out.println("ui not null");
-				City city = null;
-				if(uiObject.referenceObject != null) {
-					 city = (City) uiObject.referenceObject;
-				}
-				Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
-				Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
-				uiObject.disableClick();
-				clickedObject = city;
-			}else {
-				System.out.println("ui null");
-			}
-
-			
-			
-//			Game.userInterface.enableInterfaceContainer("citymanager");
-		}else if (clickTag.equals("addWorker")) {
-			clickedObject.currentlyClicked = false;
-//			clickedObject = null;
-//			Structure clickedStructure = (Structure)clickedEntity;
-//			clickedStructure.addWorker();
-			Game.userInterface.updateContainerValues();
-		}else if(clickTag.equals("citiesmenu")) {
-			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
-		}else if(clickTag.equals("constructionmenu")) {
-			clickedObject.disableClick();
-			Game.userInterface.enableInterfaceContainer("constructionmenu",InterfaceController.InterfaceZone.TopSidePanel);
-		}else if(clickTag.equals("buildironmine")) {
-//			System.out.println("test");
-//			constructionOutline.isoPoint = new Point(5,5);
-//			System.out.println(constructionOutline.isoPoint);
-//			currentState = InputState.CONSTRUCTION;
-//			Game.gameWorld.const
-//			for(String str : Game.objectMap.keySet()) {
-//				System.out.println(str);
-//			}
-//			WorldObject ironMine = new WorldObject();
-//			ironMine.setProperties(new Dimension(128,64), new Point(600,600),"ironhut");
-//			Game.objectMap.addWorldObject("ironhuthover", ironMine);
+		System.out.println("Click tags function called");
+//		if(clickTag == null) {
+//			return;
+//		}
+//
+//		if(clickTag.isEmpty()) {
+//			System.out.println("Blank click tag");
+//			return;
+//		}
+//
+//		if(clickTag.equals("newgame")) {
+//			System.out.println("New game button clicked");
+////			Game.gameWorld = new World();
+//			Game.userInterface.initialiseMainGameInterface();
+//			Game.userInterface.disableInterfaceContainer("mainmenu");
+//			Game.userInterface.enableInterfaceContainer("topmenubar");
+//			Game.currentState = Game.STATE.Game;
+////			Game.gameWorld.updateDisplay();
+////		}else if (clickTag.equals("exit")) {
+////			System.out.println("Exiting");
+////			System.exit(0);
+////			
+//		}else if (clickTag.equals("citybtn")){
 //			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
 //			if(clickedObject == null) {
 //				System.out.println("clickedobj null");
 //			}
 //			if(uiObject != null) {
 //				System.out.println("ui not null");
-//				Structure structure = null;
+//				City city = null;
 //				if(uiObject.referenceObject != null) {
-//					 structure = (Structure) uiObject.referenceObject;
+//					 city = (City) uiObject.referenceObject;
 //				}
-////				Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
-////				Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
-////				uiObject.disableClick();
-////				clickedObject = city;
+//				Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
+//				Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
+//				uiObject.disableClick();
+//				clickedObject = city;
 //			}else {
 //				System.out.println("ui null");
 //			}
-		} else if (clickTag.equals("buildRStructure")) {
-			UserInterfaceObject uiObj = (UserInterfaceObject)clickedObject;
-			Resource resource = (Resource)uiObj.referenceObject;
-			resource.addStructure();
-		} else if(clickTag.equals("workersmenu")) {
-			clickedObject.disableClick();
-			Game.userInterface.enableInterfaceContainer("workersmenu",InterfaceController.InterfaceZone.TopSidePanel);
-			Game.userInterface.populateWorkersListContainer();
-			Game.userInterface.enableInterfaceContainer("workerslist");
-		}else if(clickTag.equals("hireworker")) {
-			Game.player.hireWorker();
-			Game.userInterface.populateWorkersListContainer();
-		}else if(clickTag.equals("workerassign")) {
-			System.out.println("TEST!!");
-//			Game.userInterface.populateWorkerAssignContainer(referenceObject);
-			Game.userInterface.enableInterfaceContainer("workerassign");
-//			System.out.println(Game.userInterface.containerMap.get("worke);
-		}else if(clickTag.equals("saveworkerassign")) {
-			Game.userInterface.disableInterfaceContainer("workerassign");
-			System.out.println("save worker assign");
-		}else if(clickTag.equals("cancelworkerassign")) {
-			Game.userInterface.disableInterfaceContainer("workerassign");
-		} else if(clickTag.equals("workerassignstart")) {
-//			System.out.println("Test");
-//			if(referenceObject instanceof Unit) {
-//				System.out.println(clickedObject.objID);
-//				if(clickedObject != null) {
-//					Game.userInterface.dropDownContainer("dropdowncitystart", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
-//					
-//				}
-//				
-//			}else if(referenceObject instanceof City) {
-//				City city = (City) referenceObject;
-////				Game.userInterface.queueActionStrcture("workerassignstart", city);
-////				Game.userInterface.setStartStructureHolder(city);
-//				Game.userInterface.setDropdownParent("workerassignstart","dropdowncitystart",city);
-//				Game.userInterface.disableInterfaceContainer("dropdowncitystart");
-//			}
-		}else if(clickTag.equals("workerassigndest")) {
+//
+//			
+//			
+////			Game.userInterface.enableInterfaceContainer("citymanager");
+//		}else if (clickTag.equals("addWorker")) {
+//			clickedObject.currentlyClicked = false;
+////			clickedObject = null;
+////			Structure clickedStructure = (Structure)clickedEntity;
+////			clickedStructure.addWorker();
+//			Game.userInterface.updateContainerValues();
+//		}else if(clickTag.equals("citiesmenu")) {
+//			Game.userInterface.enableInterfaceContainer("citiesmenu",InterfaceController.InterfaceZone.TopSidePanel);
+//		}else if(clickTag.equals("constructionmenu")) {
+//			clickedObject.disableClick();
+//			Game.userInterface.enableInterfaceContainer("constructionmenu",InterfaceController.InterfaceZone.TopSidePanel);
+//		}else if(clickTag.equals("buildironmine")) {
+////			System.out.println("test");
+////			constructionOutline.isoPoint = new Point(5,5);
+////			System.out.println(constructionOutline.isoPoint);
+////			currentState = InputState.CONSTRUCTION;
+////			Game.gameWorld.const
+////			for(String str : Game.objectMap.keySet()) {
+////				System.out.println(str);
+////			}
+////			WorldObject ironMine = new WorldObject();
+////			ironMine.setProperties(new Dimension(128,64), new Point(600,600),"ironhut");
+////			Game.objectMap.addWorldObject("ironhuthover", ironMine);
+////			UserInterfaceObject uiObject = (UserInterfaceObject) clickedObject;
+////			if(clickedObject == null) {
+////				System.out.println("clickedobj null");
+////			}
+////			if(uiObject != null) {
+////				System.out.println("ui not null");
+////				Structure structure = null;
+////				if(uiObject.referenceObject != null) {
+////					 structure = (Structure) uiObject.referenceObject;
+////				}
+//////				Game.userInterface.passCityToInterfaceContainer(city, "citymanager");
+//////				Game.userInterface.enableInterfaceContainer("citymanager",InterfaceController.InterfaceZone.TopSidePanel);
+//////				uiObject.disableClick();
+//////				clickedObject = city;
+////			}else {
+////				System.out.println("ui null");
+////			}
+//		} else if (clickTag.equals("buildRStructure")) {
+//			UserInterfaceObject uiObj = (UserInterfaceObject)clickedObject;
+//			Resource resource = (Resource)uiObj.referenceObject;
+//			resource.addStructure();
+//		} else if(clickTag.equals("workersmenu")) {
+//			clickedObject.disableClick();
+//			Game.userInterface.enableInterfaceContainer("workersmenu",InterfaceController.InterfaceZone.TopSidePanel);
+//			Game.userInterface.populateWorkersListContainer();
+//			Game.userInterface.enableInterfaceContainer("workerslist");
+//		}else if(clickTag.equals("hireworker")) {
+//			Game.player.hireWorker();
+//			Game.userInterface.populateWorkersListContainer();
+//		}else if(clickTag.equals("workerassign")) {
+//			System.out.println("TEST!!");
+////			Game.userInterface.populateWorkerAssignContainer(referenceObject);
+//			Game.userInterface.enableInterfaceContainer("workerassign");
+////			System.out.println(Game.userInterface.containerMap.get("worke);
+//		}else if(clickTag.equals("saveworkerassign")) {
+//			Game.userInterface.disableInterfaceContainer("workerassign");
+//			System.out.println("save worker assign");
+//		}else if(clickTag.equals("cancelworkerassign")) {
+//			Game.userInterface.disableInterfaceContainer("workerassign");
+//		} else if(clickTag.equals("workerassignstart")) {
 ////			System.out.println("Test");
-//			if(referenceObject instanceof Unit) {
-//				System.out.println(clickedObject.objID);
-//				if(clickedObject != null) {
-//					Game.userInterface.dropDownContainer("dropdowncitydest", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
-//					
-//				}
-//				
-//			}else if(referenceObject instanceof City) {
-//				City city = (City) referenceObject;
-//				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
-//				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
-//			}
-		}else if(clickTag.equals("controlmenu")) {
-//			Game.userInterface.dropDownContainer(containerName, containerParent, objectSet, pos, spacingPos, clickTag);
-			
-//			ArrayList<Pair<String,Runnable>> controlMenu = new ArrayList<Pair<String,Runnable>>();
-//			controlMenu.add(new Pair<String,Runnable>("Options",Action::OptionsMenu));
-//			controlMenu.add(new Pair<String,Runnable>("Exit",Action::ExitGame));
-////			new Point((int)(window.width*0.20),4)
-//			Game.userInterface.dropDown(controlMenu,new Dimension(120,50),new Point((int)(Game.width*0.20),25),(UserInterfaceObject)clickedObject);
-		}
+////			if(referenceObject instanceof Unit) {
+////				System.out.println(clickedObject.objID);
+////				if(clickedObject != null) {
+////					Game.userInterface.dropDownContainer("dropdowncitystart", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassignstart");
+////					
+////				}
+////				
+////			}else if(referenceObject instanceof City) {
+////				City city = (City) referenceObject;
+//////				Game.userInterface.queueActionStrcture("workerassignstart", city);
+//////				Game.userInterface.setStartStructureHolder(city);
+////				Game.userInterface.setDropdownParent("workerassignstart","dropdowncitystart",city);
+////				Game.userInterface.disableInterfaceContainer("dropdowncitystart");
+////			}
+//		}else if(clickTag.equals("workerassigndest")) {
+//////			System.out.println("Test");
+////			if(referenceObject instanceof Unit) {
+////				System.out.println(clickedObject.objID);
+////				if(clickedObject != null) {
+////					Game.userInterface.dropDownContainer("dropdowncitydest", "workerassignmid",new ArrayList<GameObject>(Game.gameWorld.cityList), clickedObject.coords, "workerassigndest");
+////					
+////				}
+////				
+////			}else if(referenceObject instanceof City) {
+////				City city = (City) referenceObject;
+////				Game.userInterface.setDropdownParent("workerassigndest","dropdowncitydest",city);
+////				Game.userInterface.disableInterfaceContainer("dropdowncitydest");
+////			}
+//		}else if(clickTag.equals("controlmenu")) {
+////			Game.userInterface.dropDownContainer(containerName, containerParent, objectSet, pos, spacingPos, clickTag);
+//			
+////			ArrayList<Pair<String,Runnable>> controlMenu = new ArrayList<Pair<String,Runnable>>();
+////			controlMenu.add(new Pair<String,Runnable>("Options",Action::OptionsMenu));
+////			controlMenu.add(new Pair<String,Runnable>("Exit",Action::ExitGame));
+//////			new Point((int)(window.width*0.20),4)
+////			Game.userInterface.dropDown(controlMenu,new Dimension(120,50),new Point((int)(Game.width*0.20),25),(UserInterfaceObject)clickedObject);
+//		}
 
 
 	}

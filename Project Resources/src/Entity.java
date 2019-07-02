@@ -106,21 +106,6 @@ public class Entity extends WorldObject{
 		
 	}
 
-	@Override
-	public void clickAction() {
-		// if(structureOnTile != null) {
-		// System.out.println("Clicked a structure containing tile");
-		// }else {
-		// System.out.println("Clicked a tile of type: " + this.tileset + ".
-		// Walkable:"+this.walkable);
-		// }
-
-		if (this.currentlyClicked == false) {
-			this.currentlyClicked = true;
-		} else {
-			this.currentlyClicked = false;
-		}
-	}
 
 	public void hoverAction() {
 		// System.out.println("structure hovered");

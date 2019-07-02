@@ -225,6 +225,12 @@ public class UserInterfaceObject extends GameObject{
 	
 	@Override
 	public void clickAction(){
+		if(referenceObject != null) {
+			if(referenceObject instanceof City) {
+				referenceObject.setClicked(true);
+				return;
+			}
+		}
 		super.clickAction();
 	}
 	

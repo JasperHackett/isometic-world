@@ -60,8 +60,11 @@ public class ActionHandler {
 	}
 	
 	static void selectCity(GameObject obj) {
+		
 		if(obj instanceof City) {
 			City city = (City) obj;
+			Game.userInterface.populateCityData(city,"cityrightpanel");
+			Game.userInterface.setRightPanel("cityrightpanel");
 			System.out.println("Clicked a reference to: "+city.name);
 		}
 
