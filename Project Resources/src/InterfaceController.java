@@ -767,11 +767,13 @@ public class InterfaceController {
 	public void disableVolatile() {
 //		System.out.println("DISABLE VOLATILE");
 		this.disableInterfaceContainer("dropdown");
-		for(UserInterfaceObject uiObj : containerMap.get("dropdown").elements.values()) {
+//		System.out.println(containerMap.get("dropdown").getObjects().size());
+		for(UserInterfaceObject uiObj : volatileObjects) {
 			if(uiObj.isClicked()) {
 				uiObj.setClicked(false);
 			}
 		}
+		volatileObjects.clear();
 		uiContext = InterfaceContext.DEFAULT;
 		
 	}
