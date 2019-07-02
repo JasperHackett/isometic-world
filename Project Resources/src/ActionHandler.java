@@ -102,7 +102,33 @@ public class ActionHandler {
 		Game.currentState = Game.STATE.Game;
 	}
 	
-
+	static void selectResource(GameObject obj) {
+		
+		if (obj instanceof Resource) {
+			Resource resource = (Resource) obj;
+			if (resource.hasStructure()) {
+				resource.getStructure().clickAction();
+			} else {
+				System.out.println("Clicked on a resource");
+				resource.currentlyClicked = true;
+				Game.userInterface.passResourceToInterfaceContainer(resource, "resource");
+				Game.userInterface.enableInterfaceContainer("resource",InterfaceController.InterfaceZone.TopSidePanel);
+				Game.userInterface.setParentObject("resource",resource);
+			}
+		}
+	}
+	
+	static void selectResourceStructure(GameObject obj) {
+		
+		if (obj instanceof ResourceStructure) {
+			System.out.println("Clicked on a resource Structure");
+			ResourceStructure rStructure = (ResourceStructure) obj;
+			rStructure.currentlyClicked = true;
+			Game.userInterface.passRStructureToInterfaceContainer(rStructure, "resourcestructure");
+			Game.userInterface.enableInterfaceContainer("resourcestructure",InterfaceController.InterfaceZone.TopSidePanel);
+			Game.userInterface.setParentObject("resourcestructure",rStructure);
+		}
+	}
 	
 	static void optionsMenu(GameObject obj) {
 		System.out.println("Options stub");

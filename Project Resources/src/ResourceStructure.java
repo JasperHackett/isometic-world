@@ -43,6 +43,7 @@ public class ResourceStructure extends Structure{
 //			tile.setEntityOnTile(this);
 //		}
 		this.structureType = RType;
+		this.clickAction = ActionHandler::selectResourceStructure;
 		if(RType.equals(Resource.ResourceType.iron)) {
 			this.objectImage = Game.objectMap.getImage(tileImageMap.get(this.tileList.get(0)));
 			this.clickTag = "ironmine";
@@ -65,15 +66,6 @@ public class ResourceStructure extends Structure{
 		this.storageCap = storageCapConstant * tileList.size();
 	}
 	
-	@Override
-	public void clickAction() {
-		System.out.println("Click action on: "+ this.name);
-		this.currentlyClicked = true;
-		Game.userInterface.passRStructureToInterfaceContainer(this, "resourcestructure");
-		Game.userInterface.enableInterfaceContainer("resourcestructure",InterfaceController.InterfaceZone.TopSidePanel);
-		Game.userInterface.setParentObject("resourcestructure",this);
-
-	}
 	
 	@Override
 	public void disableClick() {

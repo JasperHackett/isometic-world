@@ -38,6 +38,7 @@ public class Resource extends Entity{
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(200,200);
 		this.resourceCluster = new ArrayList<Resource>();
+		this.clickAction = ActionHandler::selectResource;
 		
 		if (resourceType == ResourceType.iron) {
 			this.objectImage = Game.objectMap.getImage("ironore");
@@ -166,18 +167,6 @@ public class Resource extends Entity{
 	public void setResourceType(ResourceType type) {
 		this.resourceType = type;
 	}
-	@Override
-	public void clickAction() {
-		System.out.println("Clicked on a resource");
-		if (this.hasStructure()) {
-			this.structure.clickAction();
-		} else {
-			this.currentlyClicked = true;
-			Game.userInterface.passResourceToInterfaceContainer(this, "resource");
-			Game.userInterface.enableInterfaceContainer("resource",InterfaceController.InterfaceZone.TopSidePanel);
-			Game.userInterface.setParentObject("resource",this);
-		}
-	}
 	
 	@Override
 	public void disableClick() {
@@ -212,7 +201,7 @@ public class Resource extends Entity{
 	@Override
 	public void render(Graphics g) {
 		
-		if (!this.hasStructure()) {
+		if (this.hasStructure()) {
 			return;
 		}
 		
