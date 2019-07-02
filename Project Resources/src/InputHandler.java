@@ -152,6 +152,12 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		
 		if(mousePressedObject != null) {
+			
+			if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
+				if(!checkVolatileClick(ui.volatileObjects,e.getPoint())) {
+					ui.disableVolatile();
+				}
+			}
 
 			if(checkContains(mousePressedObject.getPosition(),e.getPoint())) {
 				if(mousePressedObject instanceof UserInterfaceObject) {
@@ -159,7 +165,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					if(uiObj.isClickable()) {
 						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
 //							clickedInterfaceObjects.push(uiObj);
-							uiObjectClicked(uiObj, e.getPoint());
+//							uiObjectClicked(uiObj, e.getPoint());
+							objectClicked(uiObj, e.getPoint());
+							return;
 
 						}
 					}
@@ -168,12 +176,8 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 					
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
-						if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-							if(checkVolatileClick(ui.volatileObjects,e.getPoint())){
-								ui.disableVolatile();
-							}
-						}
-						worldObjectClicked(worldObj);
+						objectClicked(worldObj, e.getPoint());
+						return;
 					}
 					
 				}else {
@@ -182,6 +186,9 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				
 			}
 		}else {
+			if(clickedObject != null) {
+				clickedObject.setClicked(false);
+			}
 			if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
 				ui.disableVolatile();
 			}
@@ -319,13 +326,78 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 	}
 	
+	
+	public void objectClicked(GameObject obj, Point mousePos) {
+		
+		System.out.println("ObjClicked");
+		
+		if(obj.isClicked()) {
+			disableClick(obj);
+			System.out.println("Disabl?");
+//			System.out.println("Disable");
+
+		}else {
+			if(obj instanceof UserInterfaceObject) {
+				uiObjectClicked((UserInterfaceObject)obj,mousePos);
+			}else if(obj instanceof WorldObject) {
+				worldObjectClicked((WorldObject)obj);
+			}else {
+				
+				System.out.println("Unknown object clicked");
+			}
+		}
+		
+		dragEnabled = false;
+		mousePressPos = null;
+		mousePressedObject = null;
+		Game.gameWorld.staticWorldPoint = null;
+
+		
+		
+	}
+	
+	public void worldObjectClicked(WorldObject objIn) {
+		
+
+//		System.out.println("worldObj test");
+		if(clickedObject != null) {
+			if(objIn.isClicked()) {
+				objIn.setClicked(false);
+			}else {
+				objIn.setClicked(true);
+				callClickAction(objIn.clickTag);
+			}
+			
+		}else {
+			objIn.setClicked(true);
+			callClickAction(objIn.clickTag);
+		}
+		dragEnabled = false;
+		mousePressPos = null;
+		mousePressedObject = null;
+		
+
+	}
+	
+	public void disableClick(GameObject obj) {
+
+		obj.setClicked(false);
+		dragEnabled = false;
+		mousePressPos = null;
+		mousePressedObject = null;
+		if(obj == clickedObject) {
+			clickedObject = null;
+		}
+		Game.gameWorld.staticWorldPoint = null;
+	}
+	
 	public void uiObjectClicked(UserInterfaceObject uiObj,Point mousePos) {
 		clickedObject = uiObj;
-		
+
 
 //	if(ui)	
 		if(ui.uiContext == InterfaceController.InterfaceContext.VolatileDropDown) {
-			if(checkVolatileClick(ui.volatileObjects,mousePos)){
+			if(!checkVolatileClick(ui.volatileObjects,mousePos)){
 				ui.disableVolatile();
 			}else {
 				ui.interfaceObjectClicked(uiObj);
@@ -351,36 +423,19 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 
 	}
 	
+	//Returns true if the mouse is inside a volatile object
 	public boolean checkVolatileClick(ArrayList<UserInterfaceObject> volatileObjects, Point mousePos) {
 		
 		for(UserInterfaceObject uiObj : volatileObjects) {
 			if(checkContains(uiObj.getPosition(),mousePos)){
-				return false;
+				return true;
 			}
 		}
 		
-		return true;
+		return false;
 	}
 	
-	public void worldObjectClicked(WorldObject objIn) {
-		
 
-//		System.out.println("worldObj test");
-		if(clickedObject != null) {
-			if(objIn.isClicked()) {
-				objIn.setClicked(false);
-			}else {
-				objIn.setClicked(true);
-				callClickAction(objIn.clickTag);
-			}
-			
-		}else {
-			objIn.setClicked(true);
-			callClickAction(objIn.clickTag);
-		}
-		
-
-	}
 
 	
 	

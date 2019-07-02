@@ -23,11 +23,12 @@ public class InterfaceController {
 	ActionHandler clickActionControl = new ActionHandler();
 	Dimension window; //Window dimensions
 //	HashMap<GameObject,>
-	
+
 
 	public enum InterfaceZone{
 		TopSidePanel,
-		MiddleSidePanel;
+		MiddleSidePanel,
+		RightSidePanel;
 	}
 	public enum InterfaceContext{
 		DEFAULT,
@@ -77,11 +78,11 @@ public class InterfaceController {
 		public HashMap<String,UserInterfaceObject> getObjects(){
 			return elements;
 		}
-		
+
 		/**
 		 * @param containerName name of container
 		 * @param containerIn
-		 * 
+		 *
 		 * 	Adds a child container
 		 */
 		public void addContainer(String containerName,UIContainer containerIn) {
@@ -151,9 +152,9 @@ public class InterfaceController {
 	 * @param containerName
 	 * Creates a container which will store a set of UI objects that will always render together
 	 */
-	public UIContainer createUIContainer(String containerName, Point firstElementPos, Point elementSpacing,int zIndex) {
-		UIContainer newContainer = new UIContainer(firstElementPos);
-		newContainer.nextElementPos = firstElementPos;
+	public UIContainer createUIContainer(String containerName, Point pos, Point elementSpacing,int zIndex) {
+		UIContainer newContainer = new UIContainer(pos);
+		newContainer.nextElementPos = pos;
 		newContainer.elementSpacing = elementSpacing;
 //		newContainer.visible = true;
 		containerMap.put(containerName, newContainer);
@@ -161,9 +162,9 @@ public class InterfaceController {
 		return newContainer;
 	}
 
-	public UIContainer createUIContainer(String containerName, Point firstElementPos, Point elementSpacing,GameObject parentObject) {
-		UIContainer newContainer = new UIContainer(firstElementPos);
-		newContainer.nextElementPos = firstElementPos;
+	public UIContainer createUIContainer(String containerName, Point pos, Point elementSpacing,GameObject parentObject) {
+		UIContainer newContainer = new UIContainer(pos);
+		newContainer.nextElementPos = pos;
 		newContainer.elementSpacing = elementSpacing;
 		newContainer.parentObject = parentObject;
 		containerMap.put(containerName, newContainer);
@@ -249,15 +250,15 @@ public class InterfaceController {
 			return;
 		}
 	}
-	
-	
+
+
 	/**
 	 * @param elementType
 	 * @param containerName
 	 * @param objectKey
 	 * @param clickTag
 	 * @param buttonText
-	 * 
+	 *
 	 * Testing the implementation of ClickAction interfaces
 	 */
 	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  Action clickAction, String buttonText) {
@@ -278,13 +279,14 @@ public class InterfaceController {
 		}
 	}
 
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  String clickTag, String buttonText) {
+	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+		newUIObject.clickAction = action;
 		if(containerMap.containsKey(containerName)) {
 			UIContainer objectsContainer = containerMap.get(containerName);
 			Point newPos = new Point(objectsContainer.coords.x + pos.x, objectsContainer.coords.y + pos.y);
 			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
-				newUIObject.setProperties(newPos, clickTag, buttonText);
+				newUIObject.setProperties(newPos, action, buttonText);
 				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
 						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
 			}
@@ -309,24 +311,24 @@ public class InterfaceController {
 	 *
 	 * Adds interface object assigning a parentCity
 	 */
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag, String buttonText, City parentObject) {
-		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
-		newUIObject.referenceObject = parentObject;
-		if(containerMap.containsKey(containerName)) {
-			UIContainer objectsContainer = containerMap.get(containerName);
-			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
-				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
-				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
-						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
-			}
-
-
-			objectsContainer.addObject(objectKey,newUIObject);
-		}else {
-			System.out.println("UIContainer does not exist");
-			return;
-		}
-	}
+//	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  String clickTag, String buttonText, City parentObject) {
+//		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
+//		newUIObject.referenceObject = parentObject;
+//		if(containerMap.containsKey(containerName)) {
+//			UIContainer objectsContainer = containerMap.get(containerName);
+//			if(objectsContainer.elementSpacing != null && objectsContainer.nextElementPos != null) {
+//				newUIObject.setProperties(new Point(objectsContainer.nextElementPos), clickTag, buttonText);
+//				objectsContainer.nextElementPos.setLocation(objectsContainer.nextElementPos.x + objectsContainer.elementSpacing.x,
+//						objectsContainer.nextElementPos.y + objectsContainer.elementSpacing.y);
+//			}
+//
+//
+//			objectsContainer.addObject(objectKey,newUIObject);
+//		}else {
+//			System.out.println("UIContainer does not exist");
+//			return;
+//		}
+//	}
 
 
 	/**
@@ -414,7 +416,7 @@ public class InterfaceController {
 		}
 
 	}
-	
+
 	/**
 	 * @param elementType
 	 * @param containerName
@@ -425,9 +427,9 @@ public class InterfaceController {
 	 * @param pos
 	 * @param clickTag
 	 * @param action
-	 * 
+	 *
 	 * 	Used in drop down menus to create buttons with assocated action
-	 * 
+	 *
 	 */
 	public UserInterfaceObject addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point 												pos, String clickTag,Action action) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey, elementType);
@@ -516,6 +518,22 @@ public class InterfaceController {
 	}
 	public void setParentObject(String containerName, GameObject parentObject) {
 		containerMap.get(containerName).parentObject = parentObject;
+	}
+
+
+	public void setRightPanel(String containerName) {
+		String currentContainer = this.zoneMap.get(InterfaceController.InterfaceZone.RightSidePanel);
+		if(currentContainer != containerName) {
+			System.out.println("Setting right panel");
+			disableInterfaceContainer(currentContainer);
+			currentContainer = containerName;
+			enableInterfaceContainer(currentContainer);
+			zoneMap.put(InterfaceController.InterfaceZone.RightSidePanel, containerName);
+
+		}else {
+			System.out.println("Attempted to setRightPanel with same active panel");
+		}
+
 	}
 
 	public void enableInterfaceContainer(String containerName) {
@@ -741,12 +759,12 @@ public class InterfaceController {
 	public void setUIContext(InterfaceContext uiCon) {
 		this.uiContext = uiCon;
 	}
-	
+
 	public void displayCitiesMenu(){
-		
+
 	}
 
-	
+
 	public void interfaceObjectClicked(UserInterfaceObject uiObj) {
 //		if(uiContext == InterfaceContext.VolatileDropDown) {
 //			disableInterfaceContainer("dropdown");
@@ -769,15 +787,17 @@ public class InterfaceController {
 	public void disableVolatile() {
 //		System.out.println("DISABLE VOLATILE");
 		this.disableInterfaceContainer("dropdown");
-		for(UserInterfaceObject uiObj : containerMap.get("dropdown").elements.values()) {
+//		System.out.println(containerMap.get("dropdown").getObjects().size());
+		for(UserInterfaceObject uiObj : volatileObjects) {
 			if(uiObj.isClicked()) {
 				uiObj.setClicked(false);
 			}
 		}
+		volatileObjects.clear();
 		uiContext = InterfaceContext.DEFAULT;
-		
+
 	}
-	
+
 	public void dropDown(ArrayList<Pair<String,Action>> itemList,Dimension itemSize, Point pos,Point elementSpacing, UserInterfaceObject parent) {
 
 		UIContainer dDown = createUIContainer("dropdown",pos,elementSpacing,6);
@@ -793,8 +813,8 @@ public class InterfaceController {
 		}
 		enableInterfaceContainer(dDown);
 	}
-	
-	
+
+
 	/**
 	 * @param containerName
 	 * @param containerParent
@@ -808,8 +828,8 @@ public class InterfaceController {
 			return;
 		}
 		if(!containerMap.containsKey(containerName)) {
-			
-		
+
+
 //			Point spacingPos = new Point(0,20);
 			UIContainer uiCont = createUIContainer(containerName,pos, spacingPos,5);
 	//		System.out.println(pos);
@@ -822,10 +842,10 @@ public class InterfaceController {
 	//			}
 	//		}
 			for(GameObject obj : objectSet) {
-				
+
 			}
 	//
-	
+
 			containerMap.get(containerParent).addContainer(containerName, uiCont);
 			if(containerMap.get(containerParent).visible) {
 				enableInterfaceContainer(containerName);
@@ -854,7 +874,7 @@ public class InterfaceController {
 //		}
 //		enableInterfaceContainer(containerName);
 	}else {
-		
+
 		if(containerMap.get(containerParent).visible) {
 			enableInterfaceContainer(containerName);
 		}
@@ -887,17 +907,17 @@ public class InterfaceController {
 //		}
 //	}
 	}
-	
 
-	
-	
+
+
+
 
 	/**
 	 *  Called on program start. Creates main menu UIContainer
 	 */
 	public void initaliseMainMenuInterface() {
 //		Point pos = new Point((window.width/0.125),(window.height/0.67));
-		
+
 //		Action a = ActionHandler::displayControlMenu;
 //		Action start = ActionHandler::startGame;
 //		GameObject testObj = new GameObject(ObjectType.DEFAULT);
@@ -905,20 +925,20 @@ public class InterfaceController {
 
 //		System.out.println(new Point( (int)(window.width*0.125),(int)(window.height*0.67)));
 		createUIContainer("mainmenu",new Point( (int)(window.width*0.125),(int)(window.height*0.67)), new Point(0,40),0);
-		
+
 		Action a = ActionHandler::startGame;
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton",a,"Start");
 		a = ActionHandler::exitGame;
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton", a,"Quit");
-//		
+//
 //		public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  ClickAction clickAction, String buttonText) {
-		
+
 //		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu","exitbutton2",ClickAction::ExitGame,"Quit");
-		
+
 		enableInterfaceContainer("mainmenu");
 	}
-	
-	
+
+
 
 	/**
 	 *  Called when the game starts, creates all the UIContainers for the main game
@@ -929,64 +949,89 @@ public class InterfaceController {
 	public void initialiseMainGameInterface() {
 //		Game.gameWorld.g
 //		Action act;
-		
+
 		createUIContainer("dropdown",new Point(0,0),new Point(0,0),6);
 //		Game.objectMap.transformImage("border", Game.width, Game.height);
-		createUIContainer("topmenubar", new Point((int)(window.width*0.20),4), new Point(128,0),0);
+		UIContainer topMenuBar = createUIContainer("topmenubar", new Point((int)(window.width*0.10),4), new Point(128,0),0);
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarmenu", ActionHandler::displayControlMenu, "Menu");
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", "workersmenu", "Workers");
+		topMenuBar.nextElementPos = new Point(topMenuBar.nextElementPos.x + 2*topMenuBar.elementSpacing.x,topMenuBar.nextElementPos.y + 2*topMenuBar.elementSpacing.y);
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", ActionHandler::displayWorkersMenu, "Workers");
 
 		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstructions",ActionHandler::displayConstructionMenu, "Construction");
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities", ActionHandler::displayCitiesMenu, "Cities");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
-		
-		createUIContainer("citiesmenu", new Point((int)(window.width*0.9375), (int)(window.height*0.1)), new Point(0,50), 0);
-		
-		createUIContainer("citymanager", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
-//		createUIContainer(
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (0,-100),"");
-//		enableInterfaceContainer("cityinterface");
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
+//
+//		createUIContainer("citymanager", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
+////		createUIContainer(
+//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (0,-100),"");
+////		enableInterfaceContainer("cityinterface");
 
 
-		createUIContainer("constructionmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
-		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionmenu", "buildironmine","buildironmine","Iron Mine");
 
-		createUIContainer("citiesmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
-		for(City city : Game.gameWorld.cityList) {
-			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
-		}
+//		createUIContainer("citiesmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
+//		for(City city : Game.gameWorld.cityList) {
+//			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
+//		}
 
 		/*
-		 * Interfaces for workers
+		 * Interfaces for workers right panel
 		 */
-		createUIContainer("workerslist",new Point((int)(window.width*0.92),(int)(window.height*0.55)),new Point(0,20),0);
-
-
-		createUIContainer("workersmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
-		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (0,20),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,20),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Idle workers:","primarygamefont",Color.WHITE,new Point (00,50),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,50),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (0,80),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (80,80),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (40,330),"");
+		UIContainer workerspanel = createUIContainer("workersrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2),new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","workersmenutitle","Workers","rightpanelheader",Color.WHITE,new Point (100,00),"");
 
 
 
-		createUIContainer("workerassign",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),1);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workerassign","structuretitle","Assign Task","mediumbuttonfont",Color.WHITE,new Point (100,20),"");
-//		containerMap.get("workerassign").addContainer("workerassig, containerIn);
-		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point (0,0),"workerassign","workerassignsmalluibox","smalluibox",new Dimension(200,320),true);
+		/*
+		 * Interfaces for construction right panel
+		 */
+		createUIContainer("constructionrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "constructionrightpanel","constructionmenutitle","Construction","rightpanelheader",Color.WHITE,new Point (100,00),"");
+//		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionrightpanel", "buildironmine","buildironmine","Iron Mine");
 
-		createUIContainer("workerassignmid",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),2);
-//		containerMap.get("workerassignmid").parentObject =
-		containerMap.get("workerassign").addContainer("workerassignmid", containerMap.get("workerassignmid"));
-//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(60,140),"workerassignmid", "testworkerassign", "testworkerassign", "Route");
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(120,270),"workerassignmid", "cancelworkerassign", "cancelworkerassign", "Cancel");
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(30,270),"workerassignmid", "saveworkerassign", "saveworkerassign", "Save");
+		/*
+		 * Interfaces for city right panel
+		 */
+		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citiesrightpanel","citiesmenutitle","Cities","rightpanelheader",Color.WHITE,new Point (100,00),"");
+		citiesPanel.nextElementPos.x = Game.width - 160;
+		citiesPanel.nextElementPos.y = Game.topBarHeight + 150;
+		citiesPanel.elementSpacing.y = 50;
+
+		for(City city : Game.gameWorld.cityList) {
+
+//			addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
+			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
+		}
+
+
+//		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersrightpanel", "hireworker", "hireworker", "Hire Worker");
+
+
+//		createUIContainer("workersmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
+//		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (0,20),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,20),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Idle workers:","primarygamefont",Color.WHITE,new Point (00,50),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,50),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (0,80),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (80,80),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (40,330),"");
+
+
+
+//		createUIContainer("workerassign",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),1);
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workerassign","structuretitle","Assign Task","mediumbuttonfont",Color.WHITE,new Point (100,20),"");
+////		containerMap.get("workerassign").addContainer("workerassig, containerIn);
+//		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point (0,0),"workerassign","workerassignsmalluibox","smalluibox",new Dimension(200,320),true);
+//
+//		createUIContainer("workerassignmid",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),2);
+////		containerMap.get("workerassignmid").parentObject =
+//		containerMap.get("workerassign").addContainer("workerassignmid", containerMap.get("workerassignmid"));
+////		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(60,140),"workerassignmid", "testworkerassign", "testworkerassign", "Route");
+//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(120,270),"workerassignmid", "cancelworkerassign", "cancelworkerassign", "Cancel");
+//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(30,270),"workerassignmid", "saveworkerassign", "saveworkerassign", "Save");
 
 
 //		createUIContainer("workerassigntop",new Point(1180,500),new Point(0,0),3);
@@ -1043,5 +1088,3 @@ public class InterfaceController {
 
 
 }
-
-

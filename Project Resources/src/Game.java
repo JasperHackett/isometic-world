@@ -30,6 +30,7 @@ public class Game {
 	public static int worldWidth;
 	public static int worldHeight;
 	public static int topBarHeight = 32;
+	public static int sideBarWidth = 200;
 //	public static Menu gameMenu;
 	public static Graphics graphics;
 	public static JFrame window;
@@ -116,6 +117,7 @@ public class Game {
 		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
 		objectMap.addFont("topbarfont","Times New Roman",Font.BOLD, 15);
+		objectMap.addFont("rightpanelheader","Times New Roman",Font.BOLD, 22);
 //		objectMap.getFont("topbarfont").
 
 
@@ -178,6 +180,7 @@ public class Game {
 		Game.objectMap.transformImage("topmenubar", width, 32);
 		Game.objectMap.transformImage("sidemenubar",230,(int)(height*0.8));
 		Game.objectMap.getObject("border").setProperties(new Dimension(width,32), new Point(0,0),"topmenubar");
+		
 		Game.objectMap.getObject("sidebar").setProperties(new Dimension((int)(height*0.8),30), new Point(width-200,32),"sidemenubar");
 //		if(windowedFullscreen) {
 //			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border1920");
