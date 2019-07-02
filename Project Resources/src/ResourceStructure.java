@@ -43,7 +43,6 @@ public class ResourceStructure extends Structure{
 //			tile.setEntityOnTile(this);
 //		}
 		this.structureType = RType;
-		this.clickAction = ActionHandler::selectResourceStructure;
 		if(RType.equals(Resource.ResourceType.iron)) {
 			this.objectImage = Game.objectMap.getImage(tileImageMap.get(this.tileList.get(0)));
 			this.clickTag = "ironmine";

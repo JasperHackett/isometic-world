@@ -1025,6 +1025,22 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "cityrightpanel","citymenutitle","Undefined","rightpanelheader",Color.WHITE,new Point (100,0),"");
 //		cityPanel.nextElementPos.y
 
+		UIContainer resourcePanel = createUIContainer("resourcerightpanel", new Point(sidePanelPoint), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcerightpanel", "resourcetitle", "undefined", "primarygamefont", Color.WHITE, new Point (0, -50), "");
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcerightpanel", "buildRStructureBtn", "buildRStructure", "Build Structure");
+		
+		UIContainer resourceStructurePanel = createUIContainer("resourcestructurerightpanel", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,30),1);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructurerightpanel","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructurerightpanel", "addworkerbtn", "addWorker", "Assign");
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructurerightpanel","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40),"");
+
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructurerightpanel","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (130,50),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (100,0));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructurerightpanel","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (-30,10),"");
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructurerightpanel","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (130,20),"");
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (0,30));
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructurerightpanel","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (30,260),"");
+
 
 //		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersrightpanel", "hireworker", "hireworker", "Hire Worker");
 
@@ -1072,26 +1088,9 @@ public class InterfaceController {
 
 
 
-		/*
-		 * Interfaces for buildings in the world
-		 */
-		createUIContainer("resourcestructure", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,30),1);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","structuretitle","undefined","primarygamefont",Color.WHITE,new Point (0,-50),"");
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resourcestructure", "addworkerbtn", "addWorker", "Assign");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (-30,40),"");
+		
 
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workersvalue","undefined","primarygamefont",Color.WHITE,new Point (130,50),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (100,0));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXSTATICVALUE, "resourcestructure","resourcestoredlabel","undefined","primarygamefont",Color.WHITE,new Point (-30,10),"");
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","resourcestoredvalue","undefined","primarygamefont",Color.WHITE,new Point (130,20),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslabel","undefined","primarygamefont",Color.WHITE,new Point (0,30));
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resourcestructure","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (30,260),"");
-
-		// Resource
-		createUIContainer("resource", new Point(1450,120), new Point(0,30), 1);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "resource", "resourcetitle", "undefined", "primarygamefont", Color.WHITE, new Point (0, -50), "");
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "resource", "buildRStructureBtn", "buildRStructure", "Build Structure");
-
+		
 
 
 		createUIContainer("warehouse", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,30),0);

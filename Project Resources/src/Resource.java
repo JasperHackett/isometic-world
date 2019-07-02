@@ -38,7 +38,6 @@ public class Resource extends Entity{
 		this.dim = new Dimension(64,32);
 		this.coords = new Point(200,200);
 		this.resourceCluster = new ArrayList<Resource>();
-		this.clickAction = ActionHandler::selectResource;
 		
 		if (resourceType == ResourceType.iron) {
 			this.objectImage = Game.objectMap.getImage("ironore");
