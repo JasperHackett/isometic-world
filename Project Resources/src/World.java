@@ -295,7 +295,7 @@ public class World {
 						String name = Game.nameList.get(rn.nextInt(Game.nameList.size()));
 						City newCity = new City(entityTiles, name);
 						System.out.println(name);
-						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, "city" + Integer.toString(numEntitys));
+						newCity.setProperties(new Dimension(192,96), new Point(500,500), "citytile" + Integer.toString(rn.nextInt(3)), true, ActionHandler::selectCity);
 						Game.objectMap.addEntity("city" + Integer.toString(numEntitys), newCity, 48);
 						cityList.add(newCity);
 						numEntitys++;

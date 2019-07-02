@@ -602,12 +602,12 @@ public class InterfaceController {
 	 *
 	 *  Passes appropriate fields to city manager interfacew
 	 */
-	public void passCityToInterfaceContainer(City city, String containerName) {
-		if(containerName.equals("citymanager")) {
-			UIContainer cityContainer = containerMap.get(containerName);
-			cityContainer.elements.get("citytitle").setElementText(city.name);
-		}
-	}
+//	public void passCityToInterfaceContainer(City city, String containerName) {
+//		if(containerName.equals("citymanager")) {
+//			UIContainer cityContainer = containerMap.get(containerName);
+//			cityContainer.elements.get("citytitle").setElementText(city.name);
+//		}
+//	}
 
 	public void passRStructureToInterfaceContainer(ResourceStructure rStructure, String containerName) {
 		if(containerName.equals("resourcestructure")) {
