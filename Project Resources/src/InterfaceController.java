@@ -245,6 +245,7 @@ public class InterfaceController {
 
 
 			objectsContainer.addObject(objectKey,newUIObject);
+			
 		}else {
 			System.out.println("UIContainer does not exist");
 			return;
@@ -261,7 +262,7 @@ public class InterfaceController {
 	 * 
 	 * Testing the implementation of ClickAction interfaces
 	 */
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  Action clickAction, String buttonText) {
+	public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  Action clickAction, String buttonText) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
 		if(containerMap.containsKey(containerName)) {
 			UIContainer objectsContainer = containerMap.get(containerName);
@@ -273,13 +274,14 @@ public class InterfaceController {
 
 
 			objectsContainer.addObject(objectKey,newUIObject);
+			return newUIObject;
 		}else {
 			System.out.println("UIContainer does not exist");
-			return;
+			return null;
 		}
 	}
 
-	public void addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
+	public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
 		newUIObject.clickAction = action;
 		if(containerMap.containsKey(containerName)) {
@@ -293,9 +295,10 @@ public class InterfaceController {
 
 
 			objectsContainer.addObject(objectKey,newUIObject);
+			return newUIObject;
 		}else {
 			System.out.println("UIContainer does not exist");
-			return;
+			return null;
 		}
 	}
 
@@ -662,6 +665,14 @@ public class InterfaceController {
 
 		}
 	}
+	
+	public void populateCityData(City city, String containerName) {
+		if(containerName.compareTo("cityrightpanel") == 0) {
+			UIContainer cityRightPanel = containerMap.get(containerName);
+			cityRightPanel.elements.get("citymenutitle").setElementText(city.name);
+			
+		}
+	}
 
 
 	public void populateWorkersListContainer() {
@@ -980,28 +991,37 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","workersmenutitle","Workers","rightpanelheader",Color.WHITE,new Point (100,00),"");
 		
 		
+		Point sidePanelPoint = new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2);
+		
+		
 		
 		/*
 		 * Interfaces for construction right panel
 		 */
-		createUIContainer("constructionrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2), new Point(0,20),0);
+		createUIContainer("constructionrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "constructionrightpanel","constructionmenutitle","Construction","rightpanelheader",Color.WHITE,new Point (100,00),"");
 //		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionrightpanel", "buildironmine","buildironmine","Iron Mine");
 
 		/*
 		 * Interfaces for city right panel
 		 */
-		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2), new Point(0,20),0);
+		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citiesrightpanel","citiesmenutitle","Cities","rightpanelheader",Color.WHITE,new Point (100,00),"");
 		citiesPanel.nextElementPos.x = Game.width - 160;
 		citiesPanel.nextElementPos.y = Game.topBarHeight + 150;
 		citiesPanel.elementSpacing.y = 50;
 				
+		UserInterfaceObject uiObj;
 		for(City city : Game.gameWorld.cityList) {
 			
 //			addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
-			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
+			uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
+			uiObj.referenceObject = city;
 		}
+		
+		UIContainer cityPanel =  createUIContainer("cityrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "cityrightpanel","citymenutitle","Undefined","rightpanelheader",Color.WHITE,new Point (100,0),"");
+//		cityPanel.nextElementPos.y 
 		
 		
 //		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersrightpanel", "hireworker", "hireworker", "Hire Worker");

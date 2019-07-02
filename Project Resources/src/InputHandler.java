@@ -352,14 +352,22 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 	
 	public void worldObjectClicked(WorldObject obj) {
 		
+		
+		if(clickedObject != null) {
+			if(clickedObject instanceof WorldObject) {
+				clickedObject.setClicked(false);
+			}
+
+		}
 		clickedObject = obj;
 
-		
+
 		
 		if(obj.isClicked()) {
 
 			obj.setClicked(false);
 			obj = null;
+			clickedObject = null;
 		}else {
 			obj.setClicked(true);
 		}
