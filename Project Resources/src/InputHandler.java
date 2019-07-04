@@ -163,17 +163,18 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 				if(mousePressedObject instanceof UserInterfaceObject) {
 					UserInterfaceObject uiObj = (UserInterfaceObject) mousePressedObject;
 					if(uiObj.isClickable()) {
-						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
+//						if(!clickedInterfaceObjects.contains(mousePressedObject)) {
 //							clickedInterfaceObjects.push(uiObj);
 //							uiObjectClicked(uiObj, e.getPoint());
 							objectClicked(uiObj, e.getPoint());
 							return;
 
-						}
+//						}
 					}
 					
-				}else if(mousePressedObject instanceof WorldObject) {
+				}else if(mousePressedObject instanceof WorldObject && (!checkContains(Game.objectMap.get("sidebar").getPosition(),e.getPoint()))){
 					
+
 					WorldObject worldObj = (WorldObject) mousePressedObject;
 					if(worldObj.isClickable()) {
 						objectClicked(worldObj, e.getPoint());

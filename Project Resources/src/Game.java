@@ -181,7 +181,7 @@ public class Game {
 		Game.objectMap.transformImage("sidemenubar",230,(int)(height*0.8));
 		Game.objectMap.getObject("border").setProperties(new Dimension(width,32), new Point(0,0),"topmenubar");
 		
-		Game.objectMap.getObject("sidebar").setProperties(new Dimension((int)(height*0.8),30), new Point(width-200,32),"sidemenubar");
+		Game.objectMap.getObject("sidebar").setProperties(new Dimension(230,(int)(height*0.8)), new Point(width-200,32),"sidemenubar");
 //		if(windowedFullscreen) {
 //			Game.objectMap.getObject("border").setProperties(new Dimension(width,height), new Point(0,0),"border1920");
 //		}else {

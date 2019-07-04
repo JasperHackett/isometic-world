@@ -280,6 +280,8 @@ public class InterfaceController {
 			return null;
 		}
 	}
+	
+	
 
 	public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
@@ -477,47 +479,15 @@ public class InterfaceController {
 
 	public void updateContainerValues() {
 		UIContainer visibleContainer;
-		if(containerMap.get("resourcestructure").visible) {
-			visibleContainer = containerMap.get("resourcestructure");
 
-//			populateWorkersListContainer((Structure) visibleContainer.parentObject);
-//			disableInterfaceContainer("resourcestructure");
-//			enableInterfaceContainer("resourcestructure")
-//			containerMap.get(containerName)
-//			resourceStructureContainer.elements.get("workersvalue").setElementText(Integer.toString(p))
-		}else if(containerMap.get("warehouse").visible) {
-			visibleContainer = containerMap.get("warehouse");
-//			populateWorkersListContainer((Structure) visibleContainer.parentObject);
-//			populateWorkersListContainer((Warehouse) visibleContainer.parentObject);
 
-//			enableInterfaceContainer("workerslist");
+		if(containerMap.get("workersrightpanel").visible) {
+				visibleContainer = containerMap.get("workersrightpanel");
+				populatePlayerData(Game.player,"workersrightpanel");
+
+
 		}
 
-		if(containerMap.get("workerslist").visible) {
-				visibleContainer = containerMap.get("workerslist");
-			if(containerMap.containsKey("workerslist")) {
-				disableInterfaceContainer(visibleContainer);
-
-				for(UserInterfaceObject obj : visibleContainer.elements.values()) {
-					if(obj.referenceObject instanceof Unit) {
-						if(obj.referenceObject != null) {
-							Unit unit = (Unit) obj.referenceObject;
-							obj.setElementText(unit.actionTag);
-
-						}
-					}
-				}
-				enableInterfaceContainer(visibleContainer);
-
-
-			}
-		}
-
-		if(containerMap.get("workerassign").visible) {
-//			visibleContainer = containerMap.get("workerassign");
-//			disableInterfaceContainer(visibleContainer);
-//			enableInterfaceContainer(visibleContainer);
-		}
 	}
 	public void setParentObject(String containerName, GameObject parentObject) {
 		containerMap.get(containerName).parentObject = parentObject;
@@ -667,38 +637,48 @@ public class InterfaceController {
 	}
 	
 	public void populateCityData(City city, String containerName) {
-		if(containerName.compareTo("cityrightpanel") == 0) {
-			UIContainer cityRightPanel = containerMap.get(containerName);
-			cityRightPanel.elements.get("citymenutitle").setElementText(city.name);
-			
+		if(containerMap.containsKey(containerName)) {
+			if(containerName.compareTo("cityrightpanel") == 0) {
+				UIContainer cityRightPanel = containerMap.get(containerName);
+				cityRightPanel.elements.get("citymenutitle").setElementText(city.name);
+				
+			}	
 		}
 	}
 
 
-	public void populateWorkersListContainer() {
-
-		if(containerMap.containsKey("workerslist")) {
-			UIContainer workerslist = containerMap.get("workerslist");
-			boolean reenable = false;
-			if(workerslist.visible) {
-				reenable = true;
+	public void populatePlayerData(Player player, String containerName) {
+		if(containerMap.containsKey(containerName)) {
+			if(containerName.compareTo("workersrightpanel") == 0) {
+				UIContainer workersRightPanel = containerMap.get(containerName);
+				workersRightPanel.elements.get("availableworkers").setElementText("Available workers: "+player.availableWorkers+" / "+player.workerCount);
 			}
-			disableInterfaceContainer(workerslist);
-//			System.out.println("disabled int");
-//			containerMap.get("workerslist")
-			workerslist.elements.clear();
-//			workerslist.parentObject = sourceOfWorkers;
-			int offset = 24;
-			for(Unit worker : Game.player.workers) {
-				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString(),worker.actionTag,"primarygamefont",Color.WHITE,new Point (-30,offset),"workerassign",worker);
-				offset += 24;
-			}
-			if(reenable) {
-				enableInterfaceContainer(workerslist);
-			}
-
-//
 		}
+//		if(containerMap.containsKey("workerslist")) {
+//			UIContainer workerslist = containerMap.get("workerslist");
+//			boolean reenable = false;
+//			if(workerslist.visible) {
+//				reenable = true;
+//			}
+//			disableInterfaceContainer(workerslist);
+////			System.out.println("disabled int");
+////			containerMap.get("workerslist")
+//			workerslist.elements.clear();
+////			workerslist.parentObject = sourceOfWorkers;
+//			int offset = 24;
+//			for(Unit worker : Game.player.workers) {
+//				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString(),worker.actionTag,"primarygamefont",Color.WHITE,new Point (-30,offset),"workerassign",worker);
+//				offset += 24;
+//			}
+//			if(reenable) {
+//				enableInterfaceContainer(workerslist);
+//			}
+//
+////
+//		}
+		
+		
+		
 	}
 
 	public void populateWorkerAssignContainer(GameObject objIn) {
@@ -959,6 +939,7 @@ public class InterfaceController {
 //		Game.gameWorld.g
 //		Action act;
 		
+		
 		createUIContainer("dropdown",new Point(0,0),new Point(0,0),6);
 //		Game.objectMap.transformImage("border", Game.width, Game.height);
 		UIContainer topMenuBar = createUIContainer("topmenubar", new Point((int)(window.width*0.10),4), new Point(128,0),0);
@@ -983,17 +964,33 @@ public class InterfaceController {
 //		for(City city : Game.gameWorld.cityList) {
 //			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
 //		}
-
+		Point sidePanelPoint = new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2);
 		/*
 		 * Interfaces for workers right panel
 		 */
-		UIContainer workerspanel = createUIContainer("workersrightpanel",new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2),new Point(0,20),0);
+
+		UIContainer workersPanel = createUIContainer("workersrightpanel",new Point(sidePanelPoint),new Point(0,20),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","workersmenutitle","Workers","rightpanelheader",Color.WHITE,new Point (100,00),"");
 		
+		workersPanel.nextElementPos.x = Game.width - 120;
+		workersPanel.nextElementPos.y = Game.topBarHeight + 32;
 		
-		Point sidePanelPoint = new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","availableworkers","Available workers: ","primarygamefont",Color.WHITE,new Point (00,50),"");
 		
+		workersPanel.nextElementPos.x = Game.width - 80;
+		workersPanel.nextElementPos.y = Game.topBarHeight + 100;
 		
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"workersrightpanel","hireworkerbutton",ActionHandler::hireWorker,"Hire");
+//		
+//		public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
+//			
+//			cityPanel.nextElementPos.x = Game.width - 140;
+//			cityPanel.nextElementPos.y = Game.topBarHeight + 60;
+//			
+//			addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt");
+			
+		
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","totalworkerslabel","Available workers: ","primarygamefont",Color.WHITE,new Point (00,50),"");
 		
 		/*
 		 * Interfaces for construction right panel
@@ -1022,6 +1019,11 @@ public class InterfaceController {
 		UIContainer cityPanel =  createUIContainer("cityrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "cityrightpanel","citymenutitle","Undefined","rightpanelheader",Color.WHITE,new Point (100,0),"");
 //		cityPanel.nextElementPos.y 
+		cityPanel.nextElementPos.x = Game.width - 140;
+		cityPanel.nextElementPos.y = Game.topBarHeight + 60;
+		
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt");
+		
 		
 		
 //		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersrightpanel", "hireworker", "hireworker", "Hire Worker");

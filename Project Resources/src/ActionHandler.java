@@ -48,6 +48,7 @@ public class ActionHandler {
 	
 	static void displayWorkersMenu(GameObject obj) {
 		System.out.println("Action called: displayWorkersMenu");
+		Game.userInterface.populatePlayerData(Game.player, "workersrightpanel");
 		Game.userInterface.setRightPanel("workersrightpanel");
 		obj.setClicked(false);
 		
@@ -67,6 +68,16 @@ public class ActionHandler {
 			System.out.println("Clicked a reference to: "+city.name);
 		}
 
+	}
+	
+	static void adoptCity(GameObject obj) {
+		System.out.println("Adopt city");
+	}
+	
+	static void hireWorker(GameObject obj) {
+		Game.player.hireWorker();
+		Game.userInterface.updateContainerValues();
+		obj.setClicked(false);
 	}
 
 	

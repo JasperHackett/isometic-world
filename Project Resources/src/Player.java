@@ -36,15 +36,12 @@ public class Player {
 		
 		Unit worker = new Unit(new Point(1,1));
 		workers.add(worker);
-		Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
-		Game.objectMap.addEntity(worker.toString(), worker,8);
-//		worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-		worker.setProperties("cube", false);
-		worker.setVisible(false);
-		 UserInterfaceObject textObj = (UserInterfaceObject)Game.objectMap.get("totalworkersvalue");
-		 textObj.setElementText(Integer.toString(workerCount));
-		 textObj = (UserInterfaceObject)Game.objectMap.get("availableworkersvalue");
-		 textObj.setElementText(Integer.toString(availableWorkers));
+//		Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
+//		Game.objectMap.addEntity(worker.toString(), worker,8);
+////		worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
+//		worker.setProperties("cube", false);
+//		worker.setVisible(false);
+
 	
 	}
 	public void employWorker() {
