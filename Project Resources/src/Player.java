@@ -17,6 +17,7 @@ public class Player {
 	public Integer availableWorkers;
 	public Double labourCost;
 	public ArrayList<Unit> workers;
+	public Integer maximumWorkers = 15;
 	
 	public Player() {
 		
@@ -31,18 +32,14 @@ public class Player {
 		this.money = this.money + amount;
 	}
 	public void hireWorker() {
-		this.availableWorkers++;
-		this.workerCount++;
+		if(availableWorkers < maximumWorkers) {
+			this.availableWorkers++;
+			this.workerCount++;
+			
+			Unit worker = new Unit(new Point(1,1));
+			workers.add(worker);
+		}
 		
-		Unit worker = new Unit(new Point(1,1));
-		workers.add(worker);
-//		Game.objectMap.addObject(ObjectType.WORLD, worker.toString(), worker);
-//		Game.objectMap.addEntity(worker.toString(), worker,8);
-////		worker.setProperties(new Dimension(64,32), new Point(600,200),"cube");
-//		worker.setProperties("cube", false);
-//		worker.setVisible(false);
-
-	
 	}
 	public void employWorker() {
 		availableWorkers--;

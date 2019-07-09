@@ -181,7 +181,7 @@ public class InterfaceController {
 	 *
 	 * Used for objects with custom image
 	 */
-	public void addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
+	public UserInterfaceObject addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey,elementType);
 
 		if(containerMap.containsKey(containerName)) {
@@ -201,8 +201,9 @@ public class InterfaceController {
 			objectsContainer.addObject(objectKey,newUIObject);
 		}else {
 			System.out.println("UIContainer does not exist");
-			return;
+			return null;
 		}
+		return newUIObject;
 
 	}
 
@@ -436,11 +437,10 @@ public class InterfaceController {
 	 * 	Used in drop down menus to create buttons with assocated action
 	 * 
 	 */
-	public UserInterfaceObject addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point 												pos, String clickTag,Action action) {
+	public UserInterfaceObject addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point pos, Action action) {
 		UserInterfaceObject newUIObject = Game.objectMap.addUIObject(objectKey, elementType);
 //		newUIObject.referenceObject = referenceObj;
 		newUIObject.setClickAction(action);
-		newUIObject.clickTag = clickTag;
 		newUIObject.clickable = true;
 
 		if(containerMap.containsKey(containerName)) {
@@ -484,7 +484,7 @@ public class InterfaceController {
 		if(containerMap.get("workersrightpanel").visible) {
 				visibleContainer = containerMap.get("workersrightpanel");
 				populatePlayerData(Game.player,"workersrightpanel");
-
+				
 
 		}
 
@@ -497,6 +497,9 @@ public class InterfaceController {
 	public void setRightPanel(String containerName) {
 		String currentContainer = this.zoneMap.get(InterfaceController.InterfaceZone.RightSidePanel);
 		if(currentContainer != containerName) {
+			if(currentContainer == "workersrightpanel") {
+				disableInterfaceContainer("workerassigntask");
+			}
 			System.out.println("Setting right panel");
 			disableInterfaceContainer(currentContainer);
 			currentContainer = containerName;
@@ -553,7 +556,7 @@ public class InterfaceController {
 			}
 
 		}else {
-			System.out.println("Invalid container name");
+			System.out.println("Invalid container name: "+containerName);
 		}
 
 	}
@@ -651,7 +654,18 @@ public class InterfaceController {
 		if(containerMap.containsKey(containerName)) {
 			if(containerName.compareTo("workersrightpanel") == 0) {
 				UIContainer workersRightPanel = containerMap.get(containerName);
+				if(workersRightPanel.containers.containsKey("workerslist")) {
+//					UIContainer availableWorkers = workersRightPanel.containers.get("workerslist");
+					int offset = 0;
+					UserInterfaceObject uiObj;
+					for(Unit worker : Game.player.workers) {
+						uiObj = addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerslist",worker.toString(),worker.actionTag,"primarygamefont",Color.WHITE,new Point (20,offset),ActionHandler::assignWorker);
+						offset += 24;
+						uiObj.referenceObject = worker;
+					}
+				}
 				workersRightPanel.elements.get("availableworkers").setElementText("Available workers: "+player.availableWorkers+" / "+player.workerCount);
+				
 			}
 		}
 //		if(containerMap.containsKey("workerslist")) {
@@ -681,6 +695,20 @@ public class InterfaceController {
 		
 	}
 
+	public void showAssignWorkerDialogue(GameObject obj) {
+		if((obj instanceof UserInterfaceObject)) {
+			UserInterfaceObject uiObj = (UserInterfaceObject)obj;
+			if(uiObj.referenceObject != null) {
+				if(uiObj.referenceObject instanceof Unit) {
+					enableInterfaceContainer("workerassigntask");
+					System.out.println("Correct settings for showing dialogue");
+					return;
+				}
+			}
+		}
+		System.out.println("Unable to show Assign Worker dialogue");
+	}
+	
 	public void populateWorkerAssignContainer(GameObject objIn) {
 		System.out.println("TEST assign cont");
 		if(containerMap.containsKey("workerassign")) {
@@ -755,11 +783,7 @@ public class InterfaceController {
 
 	
 	public void interfaceObjectClicked(UserInterfaceObject uiObj) {
-//		if(uiContext == InterfaceContext.VolatileDropDown) {
-//			disableInterfaceContainer("dropdown");
-//			InterfaceContext.DEFAULT
-//		}
-		System.out.println("interfaceObjectclicked");
+
 		if(uiObj.isClicked()) {
 //			if(uiContext == InterfaceContext.VolatileDropDown) {
 //				disableInterfaceContainer("dropdown");
@@ -795,7 +819,7 @@ public class InterfaceController {
 		uiContext = InterfaceContext.VolatileDropDown;
 		for(Pair<String,Action> itemPair : itemList) {
 
-			uiObj = addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", 									"dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,spacingPos,"click",itemPair.getValue());
+			uiObj = addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX,"dropdown", "dropDown"+itemPair.getKey(),itemPair.getKey(),"primarygamefont",Color.WHITE,spacingPos,itemPair.getValue());
 			spacingPos.x = spacingPos.x + elementSpacing.x;
 			spacingPos.y = spacingPos.y + elementSpacing.y;
 			volatileObjects.add(uiObj);
@@ -968,20 +992,32 @@ public class InterfaceController {
 		/*
 		 * Interfaces for workers right panel
 		 */
-
 		UIContainer workersPanel = createUIContainer("workersrightpanel",new Point(sidePanelPoint),new Point(0,20),0);
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","workersmenutitle","Workers","rightpanelheader",Color.WHITE,new Point (100,00),"");
+		UIContainer workersAssignSubpanel = createUIContainer("workerslist",new Point(sidePanelPoint),new Point(0,20),0);
+		workersAssignSubpanel.nextElementPos.y = workersPanel.nextElementPos.y + 300;
 		
+		workersPanel.addContainer("workerslist", workersAssignSubpanel);
 		workersPanel.nextElementPos.x = Game.width - 120;
 		workersPanel.nextElementPos.y = Game.topBarHeight + 32;
 		
+//		addInterfaceObject(UserInterfaceObject.UIElementType.TEXTBOXT,"workerslist","hireworkerbutton",ActionHandler::assignWorker,"Idle");
+
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","availableworkers","Available workers: ","primarygamefont",Color.WHITE,new Point (00,50),"");
 		
 		workersPanel.nextElementPos.x = Game.width - 80;
 		workersPanel.nextElementPos.y = Game.topBarHeight + 100;
 		
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"workersrightpanel","hireworkerbutton",ActionHandler::hireWorker,"Hire");
-//		
+		
+		workersAssignSubpanel = createUIContainer("workerassigntask",new Point(sidePanelPoint),new Point(0,20),0);
+//		public void addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
+
+		UserInterfaceObject assignTaskXBtn = addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point(-480,((int)(sidePanelPoint.y + Game.height*0.4))),"workerassigntask","workerassigntaskclose","xbutton",new Dimension(24,24),true);
+		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point(-380,((int)(sidePanelPoint.y + Game.height*0.4))),"workerassigntask","workerassigntaskbackground","assigntaskbox",new Dimension(300,250),true);
+//		assignTaskXBtn.set
+		assignTaskXBtn.setClickAction(ActionHandler::disableAssignTaskBox);
+		//		workersPanel.addContainer("workerassigntask", workersAssignSubpanel);
 //		public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
 //			
 //			cityPanel.nextElementPos.x = Game.width - 140;
@@ -999,6 +1035,9 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "constructionrightpanel","constructionmenutitle","Construction","rightpanelheader",Color.WHITE,new Point (100,00),"");
 //		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionrightpanel", "buildironmine","buildironmine","Iron Mine");
 
+		
+		
+		
 		/*
 		 * Interfaces for city right panel
 		 */
@@ -1023,6 +1062,8 @@ public class InterfaceController {
 		cityPanel.nextElementPos.y = Game.topBarHeight + 60;
 		
 		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt");
+		
+		
 		
 		
 		

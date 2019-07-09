@@ -328,7 +328,7 @@ public class InputHandler implements MouseListener, MouseMotionListener {
 		
 		if(obj.isClicked()) {
 			disableClick(obj);
-			System.out.println("Disabl?");
+			System.out.println("Disabled click");
 //			System.out.println("Disable");
 
 		}else {

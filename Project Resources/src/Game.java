@@ -80,6 +80,7 @@ public class Game {
 		objectMap.addImage("topmenubar", "assets/topmenubar.png");
 		objectMap.addImage("border1920", "assets/border1920.png");
 		objectMap.addImage("sidemenubar", "assets/sidemenubar.png");
+		objectMap.addImage("assigntaskbox", "assets/sidemenubar.png");
 //		objectMap.addImage("uibuttonsmall", "assets/uibutton1.png");
 		objectMap.addImage("2x2hover", "assets/2x2hover.png");
 		objectMap.addImage("hover", "assets/hovertile.png");
@@ -101,6 +102,7 @@ public class Game {
 		objectMap.addImage("ironhut","assets/ironhut.png");
 		objectMap.addImage("smalluibox", "assets/uibox.png");
 		objectMap.addImage("menuBackground", "assets/menuBackground.png");
+		objectMap.addImage("xbutton", "assets/xbtn.png");
 		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
@@ -110,8 +112,8 @@ public class Game {
 		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
 		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),4);
 		objectMap.addImageSheet("ironResourceStructure", "assets/ironMine.png", new Dimension(64, 40), 16);
-		objectMap.addImage("scalingTestImage", "assets/scalingTestImage.png");
 		//Adding fonts
+
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
 		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
@@ -179,6 +181,7 @@ public class Game {
 		Game.objectMap.addObject(ObjectType.DEFAULT,  "sidebar", sidebar);
 		Game.objectMap.transformImage("topmenubar", width, 32);
 		Game.objectMap.transformImage("sidemenubar",230,(int)(height*0.8));
+		Game.objectMap.transformImage("assigntaskbox", 350, 250);
 		Game.objectMap.getObject("border").setProperties(new Dimension(width,32), new Point(0,0),"topmenubar");
 		
 		Game.objectMap.getObject("sidebar").setProperties(new Dimension(230,(int)(height*0.8)), new Point(width-200,32),"sidemenubar");
@@ -204,15 +207,15 @@ public class Game {
 
 		//Mouse data text objects
 		TextObject globalMousePosText = new TextObject(ObjectType.DEFAULT);
-		globalMousePosText.setTextProperties("Global mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5,(int)(Game.width*0.03)));
+		globalMousePosText.setTextProperties("Global mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5,(int)(Game.topBarHeight+40)));
 		objectMap.addObject(ObjectType.DEFAULT, "globalMousePosText", globalMousePosText);
 
 		TextObject worldMousePosText = new TextObject(ObjectType.DEFAULT);
-		worldMousePosText.setTextProperties("World mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, (int)(Game.width*0.04)));
+		worldMousePosText.setTextProperties("World mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, (int)(Game.topBarHeight+55)));
 		objectMap.addObject(ObjectType.DEFAULT, "worldMousePosText", worldMousePosText);
 //
 		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT);
-		isoMousePosText.setTextProperties("Iso mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, (int)(Game.width*0.05)));
+		isoMousePosText.setTextProperties("Iso mouse position:",Game.objectMap.getFont("primarygamefont"),Color.WHITE,new Point(xOffset+5, (int)(Game.topBarHeight+70)));
 		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
 //		TextObject isoMousePosText = new TextObject(ObjectType.DEFAULT,objectMap.getFont("primarygamefont"), Color.WHITE);

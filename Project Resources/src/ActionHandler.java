@@ -76,8 +76,17 @@ public class ActionHandler {
 	
 	static void hireWorker(GameObject obj) {
 		Game.player.hireWorker();
+//		Game.userInterface.add
 		Game.userInterface.updateContainerValues();
 		obj.setClicked(false);
+	}
+	
+	static void assignWorker(GameObject obj) {
+		Game.userInterface.showAssignWorkerDialogue(obj);
+//		obj.setClicked(false);
+	}
+	static void disableAssignTaskBox(GameObject obj) {
+		Game.userInterface.disableInterfaceContainer("workerassigntask");
 	}
 
 	
