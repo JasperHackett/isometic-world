@@ -18,6 +18,7 @@ public class Player {
 	public Double labourCost;
 	public ArrayList<Unit> workers;
 	public Integer maximumWorkers = 15;
+	public City playerCity;
 	
 	public Player() {
 		
@@ -26,6 +27,10 @@ public class Player {
 		money = 2000.0;
 		labourCost = 0.0;
 		workers = new ArrayList<Unit>();
+	}
+	
+	public void setCity(City city) {
+		this.playerCity = city;
 	}
 	
 	public void changeMoney(Double amount) {

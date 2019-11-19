@@ -36,6 +36,7 @@ public class World {
 	// worldDims = dimensions of the entire world, including parts not currently being rendered
 	// worldPoint = the point within the world which is currently corresponding to panelPoint
 	public Dimension panelDims;
+	public Player player;
 	public Point panelPoint;
 	public Dimension worldDims;
 	public Point worldPoint;
@@ -57,9 +58,10 @@ public class World {
 //	public enum ActionQueue
 
 
-	public World()  {
+	public World(Player playerIn)  {
 
 		cityCount = 0;
+		player = playerIn;
 		cityList = new ArrayList<City>();
 		worldToIsoTable = new HashMap<Point,Point>();
 		entityList = new PriorityQueue<Pair<String,Point>>();
@@ -70,7 +72,7 @@ public class World {
 		//This needs to be changed to accommodate different borders and resolutions
 		panelDims = new Dimension(Game.width,Game.height-32);
 		panelPoint = new Point(0,34);
-		worldPoint = new Point(500,500);
+		worldPoint = new Point(0,0);
 		resourceList = new ArrayList<Resource>();
 
 		worldUnits = new HashMap<String,Unit>();
@@ -121,7 +123,7 @@ public class World {
 
 	public Dimension initialiseTileMap() {
 
-		Point nextTileWorldCoords = new Point(400,400);
+
 //		System.out.println(nextTileWorldCoords.x);
 		BufferedReader br = null;
 		String line = "";
@@ -147,9 +149,9 @@ public class World {
 			br = new BufferedReader(new FileReader("tilemap.csv"));
 			isoDims = new Dimension(tileLine.length,lineCount);
 			System.out.println("Old isoDims: "+isoDims);
-			this.worldDims = new Dimension(isoDims.width*tileWidth,isoDims.height*tileHeight );
+			this.worldDims = new Dimension(isoDims.width*tileWidth,(isoDims.height*tileHeight));
 			System.out.println("World dims: "+worldDims);
-			
+			Point nextTileWorldCoords = new Point(worldDims.width,worldDims.height);
 			int renderConstant = (worldDims.height/2);
 			int tileX = renderConstant;
 			tileX = renderConstant;
@@ -190,6 +192,8 @@ public class World {
 
 				j++;
 			}
+			
+			this.worldPoint = new Point((int)(this.worldDims.width*0.3),(int)(this.worldDims.height*0.3));
 
 
 		} catch (Exception e) {
@@ -273,6 +277,9 @@ public class World {
 			String delim = ",";
 			int y = 0;
 			numEntitys = 0;
+			int grainCount = 0;
+			int clayCount = 0;
+			int stoneCount = 0;
 			int ironCount = 0;
 			while((line = br.readLine()) != null){
 				String[] tileLine = line.split(delim);
@@ -308,6 +315,24 @@ public class World {
 //						Game.objectMap.addEntity("road" + Integer.toString(numEntitys), newRoad, 0);
 						Game.objectMap.getTile(new Point(x,y)).setRoad(true);
 						numEntitys++;
+					}else if (tileLine[x].equals("GR")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						Resource newResource = new Resource(entityTiles, Resource.ResourceType.grain);
+						Game.objectMap.addEntity("grain" + Integer.toString(grainCount), newResource,  0);
+						grainCount++;
+					}else if (tileLine[x].equals("ST")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						Resource newResource = new Resource(entityTiles, Resource.ResourceType.stone);
+						Game.objectMap.addEntity("stone" + Integer.toString(stoneCount), newResource,  0);
+						stoneCount++;
+					}else if (tileLine[x].equals("CL")) {
+						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
+						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
+						Resource newResource = new Resource(entityTiles, Resource.ResourceType.clay);
+						Game.objectMap.addEntity("clay" + Integer.toString(clayCount), newResource,  0);
+						clayCount++;
 					}else if (tileLine[x].equals("IR")) {
 						ArrayList<IsometricTile> entityTiles = new ArrayList<IsometricTile>();
 						entityTiles.add(Game.objectMap.getTile(new Point(x,y)));
@@ -374,7 +399,7 @@ public class World {
 
 			} else if (entity instanceof Resource) {
 				Resource resource = (Resource) entity;
-				resource.updateCluster();
+//				resource.updateCluster();
 			}
 		}
 //		while(!entityList.isEmpty()) {
@@ -623,6 +648,12 @@ public class World {
 
 
 		return getPathBetween(startPoint,endPoint);
+	}
+	
+	
+	public void adoptCity(City city) {
+		this.player.setCity(city);
+		Game.userInterface.cityAdopted();
 	}
 
 

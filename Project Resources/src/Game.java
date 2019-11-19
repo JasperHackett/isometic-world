@@ -32,6 +32,7 @@ public class Game {
 	public static int topBarHeight = 32;
 	public static int sideBarWidth = 200;
 //	public static Menu gameMenu;
+	public static int offsetConstant = 0;
 	public static Graphics graphics;
 	public static JFrame window;
 	public static Renderer mainGameRenderer;
@@ -46,11 +47,12 @@ public class Game {
 	public static Semaphore sem = new Semaphore(1);
 	public static Player player;
 	public static boolean windowedFullscreen;
-
+	
 
 	public enum STATE{
 		Menu,
 		Exiting,
+		AdoptCity,
 		Game
 	}
 	public static STATE currentState;
@@ -94,32 +96,47 @@ public class Game {
 		objectMap.addImageSheet("treetile", "assets/foresttiles.png", new Dimension(64,40), 3);
 		objectMap.addImageSheet("citytile", "assets/City1.png", new Dimension(192,112), 3);
 		objectMap.addImage("cube", "assets/placeholder.png");
+		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
+		//Resources
 		objectMap.addImage("ironore", "assets/iron2.png");
+		objectMap.addImage("stone", "assets/iron.png");
+		objectMap.addImage("clay","assets/clay.png");
+		objectMap.addImage("grain", "assets/grain.png");
+		
+		
+		
 		objectMap.addImage("teststructure", "assets/structuretest.png");
 		objectMap.addImage("redOwnedTile", "assets/redOwnedTile.png");
-		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
-		objectMap.addImage("menuButton1", "assets/menuButton1.png");
+		objectMap.addImageSheet("ironResourceStructure", "assets/ironMine.png", new Dimension(64, 40), 16);
 		objectMap.addImage("ironhut","assets/ironhut.png");
-		objectMap.addImage("smalluibox", "assets/uibox.png");
-		objectMap.addImage("menuBackground", "assets/menuBackground.png");
-		objectMap.addImage("xbutton", "assets/xbtn.png");
-		objectMap.addImageSheet("road", "assets/roadTiles.png", new Dimension(64,32), 11);
 		objectMap.addImageSheet("redowned", "assets/redBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("blueowned", "assets/blueBorder.png", new Dimension(64,32), 16);
 		objectMap.addImageSheet("pinkowned", "assets/pinkBorder.png", new Dimension(64,32), 16);
+		
+		//User interface textures
+		objectMap.addImage("menuButton1", "assets/menuButton1.png");
+		objectMap.addImage("hudbutton01", "assets/hudbutton01.png");
+		objectMap.addImage("smalluibox", "assets/uibox.png");
+		objectMap.addImage("menuBackground", "assets/menuBackground.png");
+		objectMap.addImage("xbutton", "assets/xbtn.png");
 		objectMap.addImageSheet("uibuttonsmall","assets/uibutton1.png",new Dimension(64,32),2);
 		objectMap.addImageSheet("uibuttonmedium","assets/uibutton2.png",new Dimension(128,32),2);
+		objectMap.addImageSheet("startbtn","assets/startbtn.png",new Dimension(320,100),2);
 		objectMap.addImageSheet("topbarbtn","assets/topbarbutton.png",new Dimension(96,24),2);
 		objectMap.addImageSheet("textbox", "assets/textinterfacebackground.png",new Dimension(160,20),4);
-		objectMap.addImageSheet("ironResourceStructure", "assets/ironMine.png", new Dimension(64, 40), 16);
-		//Adding fonts
+		objectMap.addImageSheet("citybutton","assets/citybutton.png",new Dimension(160,36),4);
 
+		
+		
+		//Adding fonts
 		objectMap.addFont("smallbuttonfont", "Calibri",Font.BOLD,10);
 		objectMap.addFont("mediumbuttonfont", "Calibri", Font.BOLD, 13);
+		objectMap.addFont("citybuttonfont", "Calibri", Font.BOLD, 19);
 		objectMap.addFont("citytitlefont", "Calibri",Font.BOLD,15);
 		objectMap.addFont("primarygamefont", "Arial",Font.PLAIN, 11);
 		objectMap.addFont("topbarfont","Times New Roman",Font.BOLD, 15);
 		objectMap.addFont("rightpanelheader","Times New Roman",Font.BOLD, 22);
+		objectMap.addFont("largeheading", "Calibri", Font.BOLD, 52);
 //		objectMap.getFont("topbarfont").
 
 
@@ -150,8 +167,8 @@ public class Game {
 
 		graphics.setFont(objectMap.getFont("primarygamefont"));
 
-
-		gameWorld = new World();
+		player = new Player();
+		gameWorld = new World(player);
 		nameList = gameWorld.populateNameList();
 		gameWorld.initialiseTileMap();
 		gameWorld.initialiseEntityMap();
@@ -228,7 +245,7 @@ public class Game {
 //		isoMousePosText.setProperties("Iso mouse position:",Color.WHITE, new Point(xOffset+5, 100));
 //		objectMap.addObject(ObjectType.DEFAULT, "isoMousePosText", isoMousePosText);
 
-		player = new Player();
+
 
 
 //		Entity constructionHover = new Entity(new Point(0,0));
@@ -269,6 +286,8 @@ public class Game {
 		objectMap.updateMainDisplayObjects();
 		gameWorld.updateDisplay();
 
+		offsetConstant = (Game.gameWorld.worldDims.height+ Game.gameWorld.tileHeight)/2;
+		System.out.println("Offset constant: " + offsetConstant);
 		//Sleep to stop concurrent modification exception
 		try {
 			Thread.sleep(10);
@@ -307,11 +326,11 @@ public class Game {
 //
 //		System.out.println(objectMap.getTile(new Point(54,20)).toString());
 
-		Resource testResource = (Resource)objectMap.getTile(new Point(28,44)).entityOnTile;
+//		Resource testResource = (Resource)objectMap.getTile(new Point(28,44)).entityOnTile;
 
-		for (Resource r : testResource.resourceCluster) {
-			r.addStructure();
-		}
+//		for (Resource r : testResource.resourceCluster) {
+//			r.addStructure();
+//		}
 
 
 

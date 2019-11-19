@@ -16,6 +16,9 @@ public class Resource extends Entity{
 	
 	public enum ResourceType{
 		iron,
+		grain,
+		clay,
+		stone
 	};
 	
 	private ResourceStructure structure;
@@ -39,74 +42,98 @@ public class Resource extends Entity{
 		this.coords = new Point(200,200);
 		this.resourceCluster = new ArrayList<Resource>();
 		
-		if (resourceType == ResourceType.iron) {
+		
+		switch(resourceType) {
+		case clay:
+			this.objectImage = Game.objectMap.getImage("clay");
+			this.name = "Clay";
+			break;
+		case grain:
+			this.objectImage = Game.objectMap.getImage("grain");
+			this.name = "Grain";
+			break;
+		case iron:
 			this.objectImage = Game.objectMap.getImage("ironore");
 			this.name = "Iron Ore";
+			break;
+		case stone:
+			this.objectImage = Game.objectMap.getImage("stone");
+			this.name = "Stone";
+			break;
+		default:
+			break;
+		
 		}
+		
+//		switch(resourceType){
+//		
+//			
+//			
+//		}
 	}
 	
 	
 	
-	public void updateCluster() {
-		resourceCluster = new ArrayList<Resource>();
-		IsometricTile origin = tileList.get(0);
-		ArrayList<Resource> cluster = new ArrayList<Resource>();
-		cluster.add((Resource)origin.entityOnTile);
-		ArrayList<IsometricTile> visited = new ArrayList<IsometricTile>();
-		
-		this.resourceCluster = recurseCluster(origin, cluster, visited);
-	}
+//	public void updateCluster() {
+//		resourceCluster = new ArrayList<Resource>();
+//		IsometricTile origin = tileList.get(0);
+//		ArrayList<Resource> cluster = new ArrayList<Resource>();
+//		cluster.add((Resource)origin.entityOnTile);
+//		ArrayList<IsometricTile> visited = new ArrayList<IsometricTile>();
+//		
+//		this.resourceCluster = recurseCluster(origin, cluster, visited);
+//	}
 	
-	private ArrayList<Resource> recurseCluster(IsometricTile tile, ArrayList<Resource> cluster, ArrayList<IsometricTile> visited) {
-		visited.add(tile);
-		IsometricTile up = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1)) != null) { up = Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1));}
-		IsometricTile down = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1)) != null) { down = Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1));}
-		IsometricTile left = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y)) != null) { left = Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y));}
-		IsometricTile right = null;
-		if (Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y)) != null) { right = Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y));}
-		
-		if (!visited.contains(up) && up.hasEntityOnTile()) {
-			if (up.entityOnTile.type == EntityType.resource) {
-				Resource resource = (Resource)up.entityOnTile;
-				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
-					cluster.add(resource);
-					cluster = recurseCluster(up, cluster, visited);
-				}
-			}
-		}
-		if (!visited.contains(down) && down.hasEntityOnTile()) {
-			if (down.entityOnTile.type == EntityType.resource) {
-				Resource resource = (Resource)down.entityOnTile;
-				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
-					cluster.add(resource);
-					cluster = recurseCluster(down, cluster, visited);
-				}
-			}
-		}
-		if (!visited.contains(left) && left.hasEntityOnTile()) {
-			if (left.entityOnTile.type == EntityType.resource) {
-				Resource resource = (Resource)left.entityOnTile;
-				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
-					cluster.add(resource);
-					cluster = recurseCluster(left, cluster, visited);
-				}
-			}
-		}
-		if (!visited.contains(right) && right.hasEntityOnTile()) {
-			if (right.entityOnTile.type == EntityType.resource) {
-				Resource resource = (Resource)right.entityOnTile;
-				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
-					cluster.add(resource);
-					cluster = recurseCluster(right, cluster, visited);
-				}
-			}
-		}
-		
-		return cluster;
-	}
+//	private ArrayList<Resource> recurseCluster(IsometricTile tile, ArrayList<Resource> cluster, ArrayList<IsometricTile> visited) {
+//		visited.add(tile);
+//		IsometricTile up = null;
+//		if (Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1)) != null) { up = Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y-1));}
+//		IsometricTile down = null;
+//		if (Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1)) != null) { down = Game.objectMap.getTile(new Point(tile.isoPos.x, tile.isoPos.y+1));}
+//		IsometricTile left = null;
+//		if (Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y)) != null) { left = Game.objectMap.getTile(new Point(tile.isoPos.x-1, tile.isoPos.y));}
+//		IsometricTile right = null;
+//		if (Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y)) != null) { right = Game.objectMap.getTile(new Point(tile.isoPos.x+1, tile.isoPos.y));}
+//		
+//		if (!visited.contains(up) && up.hasEntityOnTile()) {
+//			if (up.entityOnTile.type == EntityType.resource) {
+//				Resource resource = (Resource)up.entityOnTile;
+//				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+//					cluster.add(resource);
+//					cluster = recurseCluster(up, cluster, visited);
+//				}
+//			}
+//		}
+//		if (!visited.contains(down) && down.hasEntityOnTile()) {
+//			if (down.entityOnTile.type == EntityType.resource) {
+//				Resource resource = (Resource)down.entityOnTile;
+//				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+//					cluster.add(resource);
+//					cluster = recurseCluster(down, cluster, visited);
+//				}
+//			}
+//		}
+//		if (!visited.contains(left) && left.hasEntityOnTile()) {
+//			if (left.entityOnTile.type == EntityType.resource) {
+//				Resource resource = (Resource)left.entityOnTile;
+//				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+//					cluster.add(resource);
+//					cluster = recurseCluster(left, cluster, visited);
+//				}
+//			}
+//		}
+//		if (!visited.contains(right) && right.hasEntityOnTile()) {
+//			if (right.entityOnTile.type == EntityType.resource) {
+//				Resource resource = (Resource)right.entityOnTile;
+//				if (resource.resourceType == this.resourceType && !cluster.contains(resource)) {
+//					cluster.add(resource);
+//					cluster = recurseCluster(right, cluster, visited);
+//				}
+//			}
+//		}
+//		
+//		return cluster;
+//	}
 	
 	public void addStructure() {
 		boolean hasExistingStructure = false;
@@ -166,30 +193,30 @@ public class Resource extends Entity{
 	public void setResourceType(ResourceType type) {
 		this.resourceType = type;
 	}
-	@Override
-	public void clickAction() {
-		System.out.println("Clicked on a resource");
-		if (this.hasStructure()) {
-			this.structure.clickAction();
-		} else {
-			this.currentlyClicked = true;
-			Game.userInterface.passResourceToInterfaceContainer(this, "resource");
-			Game.userInterface.enableInterfaceContainer("resource",InterfaceController.InterfaceZone.TopSidePanel);
-			Game.userInterface.setParentObject("resource",this);
-		}
-	}
+//	@Override
+//	public void clickAction() {
+//		System.out.println("Clicked on a resource");
+//		if (this.hasStructure()) {
+//			this.structure.clickAction();
+//		} else {
+//			this.currentlyClicked = true;
+//			Game.userInterface.passResourceToInterfaceContainer(this, "resource");
+//			Game.userInterface.enableInterfaceContainer("resource",InterfaceController.InterfaceZone.TopSidePanel);
+//			Game.userInterface.setParentObject("resource",this);
+//		}
+//	}
 	
-	@Override
-	public void disableClick() {
-		
-		if (this.hasStructure()) {
-			this.structure.disableClick();
-		} else {
-			this.currentlyClicked = false;
-			Game.userInterface.disableInterfaceContainer("resource");
-			Game.userInterface.setParentObject("resource",null);
-		}
-	}
+//	@Override
+//	public void disableClick() {
+//		
+//		if (this.hasStructure()) {
+//			this.structure.disableClick();
+//		} else {
+//			this.currentlyClicked = false;
+//			Game.userInterface.disableInterfaceContainer("resource");
+//			Game.userInterface.setParentObject("resource",null);
+//		}
+//	}
 	
 	@Override
 	public void hoverAction() {

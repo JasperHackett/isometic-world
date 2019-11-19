@@ -88,6 +88,14 @@ public class InterfaceController {
 		public void addContainer(String containerName,UIContainer containerIn) {
 			this.containers.put(containerName, containerIn);
 		}
+		public void clearAllContainers() {
+			this.containers.clear();
+			this.elements.clear();
+		}
+		public void clearContainer(String containerName) {
+			this.containers.get(containerName).containers.clear();
+			this.containers.get(containerName).elements.clear();
+		}
 		public HashMap<String,TextObject> getTextObjects(){
 			return textObjects;
 		}
@@ -434,7 +442,7 @@ public class InterfaceController {
 	 * @param clickTag
 	 * @param action
 	 * 
-	 * 	Used in drop down menus to create buttons with assocated action
+	 * 	Used in drop down menus to create buttons with associated action
 	 * 
 	 */
 	public UserInterfaceObject addInterfaceTextObject(UserInterfaceObject.UIElementType elementType, String containerName, String objectKey, String text, String fontKey,Color textColor, Point pos, Action action) {
@@ -616,6 +624,52 @@ public class InterfaceController {
 			}
 		}
 	}
+	
+	//Called when player adopts a city to update UI elements
+	public void cityAdopted() {
+		System.out.println("cityAdopted");
+		UIContainer cityPanel = containerMap.get("cityrightpanel");
+		cityPanel.elements.remove("cityadoptbutton");
+//		cityPanel.r
+		
+		
+		
+		
+		
+		
+		/*
+		 * Interfaces for city right panel in adopt stage
+		 */
+//		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citiesrightpanel","citiesmenutitle","Cities","rightpanelheader",Color.WHITE,new Point (100,00),"");
+//		citiesPanel.nextElementPos.x = Game.width - 160;
+//		citiesPanel.nextElementPos.y = Game.topBarHeight + 150;
+//		citiesPanel.elementSpacing.y = 50;
+//				
+//		UserInterfaceObject uiObj;
+//		for(City city : Game.gameWorld.cityList) {
+//			
+////			addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
+//			uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
+//			uiObj.referenceObject = city;
+//		}
+//		
+//		UIContainer cityPanel =  createUIContainer("cityrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
+//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "cityrightpanel","citymenutitle","Undefined","rightpanelheader",Color.WHITE,new Point (100,0),"");
+////		cityPanel.nextElementPos.y 
+//		cityPanel.nextElementPos.x = Game.width - 140;
+//		cityPanel.nextElementPos.y = Game.topBarHeight + 60;
+//		
+//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt");		
+//		
+		
+		
+		
+		
+		
+		
+		
+	}
 
 	public void passWarehouseToInterfaceContainer(Warehouse warehouse, String containerName) {
 
@@ -644,6 +698,10 @@ public class InterfaceController {
 			if(containerName.compareTo("cityrightpanel") == 0) {
 				UIContainer cityRightPanel = containerMap.get(containerName);
 				cityRightPanel.elements.get("citymenutitle").setElementText(city.name);
+				if(Game.player.playerCity == null) {
+					cityRightPanel.elements.get("cityadoptbutton").setWorldReference(city);
+				}
+					
 				
 			}	
 		}
@@ -715,7 +773,6 @@ public class InterfaceController {
 			UIContainer workerslist = containerMap.get("workerassign");
 			if(objIn instanceof Unit) {
 				Unit worker = (Unit) objIn;
-				System.out.println("TEST");
 				disableInterfaceContainer(workerslist);
 				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassignstartdd",worker.getStartStructName(),"primarygamefont",Color.WHITE,new Point (20,40),"workerassignstart");
 				addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOXDROPDOWN, "workerassignmid","workerassigndestdd",worker.getDestStructName(),"primarygamefont",Color.WHITE,new Point (20,70),"workerassigndest");
@@ -937,13 +994,18 @@ public class InterfaceController {
 //		p.execute(this,testObj);
 
 //		System.out.println(new Point( (int)(window.width*0.125),(int)(window.height*0.67)));
-		createUIContainer("mainmenu",new Point( (int)(window.width*0.125),(int)(window.height*0.67)), new Point(0,40),0);
+		UIContainer mainMenu = createUIContainer("mainmenu",new Point( (int)(window.width*0.4),(int)(window.height*0.4)), new Point(0,40),0);
 		
-		Action a = ActionHandler::startGame;
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "newgamebutton",a,"Start");
-		a = ActionHandler::exitGame;
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton", a,"Quit");
-//		
+//		Action a = ActionHandler::exitGame;
+//		public UserInterfaceObject addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
+		UserInterfaceObject startBtn = addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,/*new Point((int)(Game.width *0.5),(int)(Game.height * 0.5))*/ new Point(0,0),"mainmenu", "newgamebutton","startbtn0",new Dimension(320,100),true);
+		startBtn.setPosition(new Point( (int)(window.width*0.4),(int)(window.height*0.4+120)));
+		startBtn.hoverImage = Game.objectMap.getImage("startbtn1");
+		//		startBtn.setHoverImage("startbtn0")
+		startBtn.setClickAction(ActionHandler::startGame);
+		mainMenu.nextElementPos.setLocation(new Point((int)(Game.width*0.9),(int)(Game.height*0.9)));
+		UserInterfaceObject quitBtn = addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu", "exitbutton", ActionHandler::exitGame,"Quit");
+//		quitBtn.setPosition(new Point( (int)(window.width*0.4+300),(int)(window.height*0.4+300)));
 //		public void addInterfaceObject(UserInterfaceObject.UIElementType elementType,String containerName, String objectKey,  ClickAction clickAction, String buttonText) {
 		
 //		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"mainmenu","exitbutton2",ClickAction::ExitGame,"Quit");
@@ -960,155 +1022,39 @@ public class InterfaceController {
 	 *
 	 */
 	public void initialiseMainGameInterface() {
-//		Game.gameWorld.g
-//		Action act;
-		
-		
+
+		//Creating text overlay instructing player
+		createUIContainer("textoverlay",new Point(0,0),new Point(0,0),7);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT,"textoverlay","maininstruction","Choose a city","largeheading",Color.WHITE,new Point((Game.width/2)-100,80),"");
+		enableInterfaceContainer("textoverlay");
+	
 		createUIContainer("dropdown",new Point(0,0),new Point(0,0),6);
-//		Game.objectMap.transformImage("border", Game.width, Game.height);
-		UIContainer topMenuBar = createUIContainer("topmenubar", new Point((int)(window.width*0.10),4), new Point(128,0),0);
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarmenu", ActionHandler::displayControlMenu, "Menu");
-		topMenuBar.nextElementPos = new Point(topMenuBar.nextElementPos.x + 2*topMenuBar.elementSpacing.x,topMenuBar.nextElementPos.y + 2*topMenuBar.elementSpacing.y);
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", ActionHandler::displayWorkersMenu, "Workers");
-
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstructions",ActionHandler::displayConstructionMenu, "Construction");
-		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
-//
-//		createUIContainer("citymanager", new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,50),0);
-////		createUIContainer(
-//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "citymanager", "hellobtn", "hello", "Hello");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citymanager","citytitle","undefined","primarygamefont",Color.WHITE,new Point (0,-100),"");
-////		enableInterfaceContainer("cityinterface");
-
-
-
-//		createUIContainer("citiesmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
-//		for(City city : Game.gameWorld.cityList) {
-//			addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesmenu", city.name+"citiesmenu","citybtn",city.name,city);
-//		}
-		Point sidePanelPoint = new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2);
-		/*
-		 * Interfaces for workers right panel
-		 */
-		UIContainer workersPanel = createUIContainer("workersrightpanel",new Point(sidePanelPoint),new Point(0,20),0);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","workersmenutitle","Workers","rightpanelheader",Color.WHITE,new Point (100,00),"");
-		UIContainer workersAssignSubpanel = createUIContainer("workerslist",new Point(sidePanelPoint),new Point(0,20),0);
-		workersAssignSubpanel.nextElementPos.y = workersPanel.nextElementPos.y + 300;
 		
-		workersPanel.addContainer("workerslist", workersAssignSubpanel);
-		workersPanel.nextElementPos.x = Game.width - 120;
-		workersPanel.nextElementPos.y = Game.topBarHeight + 32;
 		
-//		addInterfaceObject(UserInterfaceObject.UIElementType.TEXTBOXT,"workerslist","hireworkerbutton",ActionHandler::assignWorker,"Idle");
-
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","availableworkers","Available workers: ","primarygamefont",Color.WHITE,new Point (00,50),"");
+		initialiseTopMenuBar();
 		
-		workersPanel.nextElementPos.x = Game.width - 80;
-		workersPanel.nextElementPos.y = Game.topBarHeight + 100;
 		
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"workersrightpanel","hireworkerbutton",ActionHandler::hireWorker,"Hire");
 		
-		workersAssignSubpanel = createUIContainer("workerassigntask",new Point(sidePanelPoint),new Point(0,20),0);
-//		public void addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
-
-		UserInterfaceObject assignTaskXBtn = addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point(-480,((int)(sidePanelPoint.y + Game.height*0.4))),"workerassigntask","workerassigntaskclose","xbutton",new Dimension(24,24),true);
-		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point(-380,((int)(sidePanelPoint.y + Game.height*0.4))),"workerassigntask","workerassigntaskbackground","assigntaskbox",new Dimension(300,250),true);
-//		assignTaskXBtn.set
-		assignTaskXBtn.setClickAction(ActionHandler::disableAssignTaskBox);
-		//		workersPanel.addContainer("workerassigntask", workersAssignSubpanel);
-//		public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
-//			
-//			cityPanel.nextElementPos.x = Game.width - 140;
-//			cityPanel.nextElementPos.y = Game.topBarHeight + 60;
-//			
-//			addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt");
-			
 		
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","totalworkerslabel","Available workers: ","primarygamefont",Color.WHITE,new Point (00,50),"");
+		//Initialise interfaces accessed from top menu bar buttons
+		Point sidePanelPoint = new Point((int)(window.width-Game.sideBarWidth),Game.topBarHeight*2); // Point used to position objects relative to right side menu
 		
-		/*
-		 * Interfaces for construction right panel
-		 */
-		createUIContainer("constructionrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "constructionrightpanel","constructionmenutitle","Construction","rightpanelheader",Color.WHITE,new Point (100,00),"");
-//		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"constructionrightpanel", "buildironmine","buildironmine","Iron Mine");
-
+		initialiseWorkersSideMenu(sidePanelPoint); 
+		initialiseConstructionSideMenu(sidePanelPoint); 
+		initialiseCitiesSideMenu(sidePanelPoint);
+		initialiseCitySideMenu(sidePanelPoint);
+		
 		
 		
 		
 		/*
-		 * Interfaces for city right panel
+		 * MONEY DISPLAY CODE
+
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneylabel","$ ","primarygamefont",Color.WHITE,new Point(70,12),"");
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "topmenubar","moneyvalue","undefined","primarygamefont",Color.YELLOW,new Point (100,12),"");
 		 */
-		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citiesrightpanel","citiesmenutitle","Cities","rightpanelheader",Color.WHITE,new Point (100,00),"");
-		citiesPanel.nextElementPos.x = Game.width - 160;
-		citiesPanel.nextElementPos.y = Game.topBarHeight + 150;
-		citiesPanel.elementSpacing.y = 50;
-				
-		UserInterfaceObject uiObj;
-		for(City city : Game.gameWorld.cityList) {
-			
-//			addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
-			uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
-			uiObj.referenceObject = city;
-		}
-		
-		UIContainer cityPanel =  createUIContainer("cityrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
-		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "cityrightpanel","citymenutitle","Undefined","rightpanelheader",Color.WHITE,new Point (100,0),"");
-//		cityPanel.nextElementPos.y 
-		cityPanel.nextElementPos.x = Game.width - 140;
-		cityPanel.nextElementPos.y = Game.topBarHeight + 60;
-		
-		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt");
-		
-		
-		
-		
-		
-//		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersrightpanel", "hireworker", "hireworker", "Hire Worker");
-		
-
-//		createUIContainer("workersmenu",new Point((int)(window.width*0.9),(int)(window.height*0.13)), new Point(0,40),0);
-//		addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM, "workersmenu", "hireworker", "hireworker", "Hire Worker");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkerslabel","Total workers:","primarygamefont",Color.WHITE,new Point (0,20),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,20),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkerslabel","Idle workers:","primarygamefont",Color.WHITE,new Point (00,50),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","availableworkersvalue","undefined","primarygamefont",Color.WHITE,new Point (80,50),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostlabel","Cost:","primarygamefont",Color.WHITE,new Point (0,80),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","totalcostvalue","undefined","primarygamefont",Color.YELLOW,new Point (80,80),"");
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersmenu","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (40,330),"");
 
 
-
-//		createUIContainer("workerassign",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),1);
-//		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workerassign","structuretitle","Assign Task","mediumbuttonfont",Color.WHITE,new Point (100,20),"");
-////		containerMap.get("workerassign").addContainer("workerassig, containerIn);
-//		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point (0,0),"workerassign","workerassignsmalluibox","smalluibox",new Dimension(200,320),true);
-//
-//		createUIContainer("workerassignmid",new Point((int)(window.width*0.74),(int)(window.height*0.55)),new Point(0,0),2);
-////		containerMap.get("workerassignmid").parentObject =
-//		containerMap.get("workerassign").addContainer("workerassignmid", containerMap.get("workerassignmid"));
-////		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(60,140),"workerassignmid", "testworkerassign", "testworkerassign", "Route");
-//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(120,270),"workerassignmid", "cancelworkerassign", "cancelworkerassign", "Cancel");
-//		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, new Point(30,270),"workerassignmid", "saveworkerassign", "saveworkerassign", "Save");
-
-
-//		createUIContainer("workerassigntop",new Point(1180,500),new Point(0,0),3);
-//		containerMap.get("workerassigntop").e
-//		containerMap.get("workerassign").addContainer("workerassigntop", containerMap.get("workerassigntop"));
-//		Point spacing = new Point(1180,500);
-//		for(City city : Game.gameWorld.cityList) {
-////			Poi
-//
-////			addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXTBOX, "workerassignmid",objIn.toString()+"destin","Destination","primarygamefont",Color.WHITE,new Point (20,70),"workerassign");
-//
-//			spacing.x = spacing.x + 20;
-//			spacing.y = spacing.y + 20;
-//			addInterfaceTextObject(UserInterfaceObject.UIElementType.MEDIUM, "workerassigntop",city.toString() +"workerstart",city.name,"primarygamefont",Color.WHITE,spacing,"workerassignstart",city);
-//
-//		}
 
 
 
@@ -1143,9 +1089,98 @@ public class InterfaceController {
 		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "warehouse","workerslistlabel","Workers","topbarfont",Color.WHITE,new Point (30,260),"");
 
 	}
+	
+	
+	//Initialises top menu bar of interface
+	public void initialiseTopMenuBar() {
+		UIContainer topMenuBar = createUIContainer("topmenubar", new Point((int)(window.width*0.10),4), new Point(128,0),0);
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarmenu", ActionHandler::displayControlMenu, "Menu");
+		topMenuBar.nextElementPos = new Point(topMenuBar.nextElementPos.x + 2*topMenuBar.elementSpacing.x,topMenuBar.nextElementPos.y + 2*topMenuBar.elementSpacing.y);
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarlabour", ActionHandler::displayWorkersMenu, "Workers");
 
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarconstructions",ActionHandler::displayConstructionMenu, "Construction");
+		addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
+	}
 
+	public void initialiseWorkersSideMenu(Point sidePanelPoint) {
+		/*
+		 * Interfaces for workers right panel
+		 */
+		UIContainer workersPanel = createUIContainer("workersrightpanel",new Point(sidePanelPoint),new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","workersmenutitle","Workers","rightpanelheader",Color.WHITE,new Point (100,00),"");
+		UIContainer workersAssignSubpanel = createUIContainer("workerslist",new Point(sidePanelPoint),new Point(0,20),0);
+		workersAssignSubpanel.nextElementPos.y = workersPanel.nextElementPos.y + 300;
+		
+		workersPanel.addContainer("workerslist", workersAssignSubpanel);
+		workersPanel.nextElementPos.x = Game.width - 120;
+		workersPanel.nextElementPos.y = Game.topBarHeight + 32;
+		
+//		addInterfaceObject(UserInterfaceObject.UIElementType.TEXTBOXT,"workerslist","hireworkerbutton",ActionHandler::assignWorker,"Idle");
 
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "workersrightpanel","availableworkers","Available workers: ","primarygamefont",Color.WHITE,new Point (00,50),"");
+		
+		workersPanel.nextElementPos.x = Game.width - 80;
+		workersPanel.nextElementPos.y = Game.topBarHeight + 100;
+		
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL,"workersrightpanel","hireworkerbutton",ActionHandler::hireWorker,"Hire");
+		
+		UIContainer workersAssignSubpanelBackground = createUIContainer("workerassigntaskbackground",new Point(sidePanelPoint),new Point(0,20),0);
+		addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point(-380,((int)(sidePanelPoint.y + Game.height*0.4))),"workerassigntaskbackground","workerassigntaskbackground","assigntaskbox",new Dimension(300,250),true);
+		workersAssignSubpanel = createUIContainer("workerassigntask",new Point(sidePanelPoint),new Point(0,20),1);
+		workersAssignSubpanel.addContainer("workersassigntaskbackground", workersAssignSubpanelBackground);
+//		public void addCustomInterfaceObject(UserInterfaceObject.UIElementType elementType,Point pos,String containerName, String objectKey,  String objectImage, Dimension dimIn, boolean clickable) {
+
+		UserInterfaceObject assignTaskXBtn = addCustomInterfaceObject(UserInterfaceObject.UIElementType.CUSTOM,new Point(-70,((int)(sidePanelPoint.y + Game.height*0.4 + 10))),"workerassigntask","workerassigntaskclose","xbutton",new Dimension(24,24),true);
+//		UserInterfaceObject assignTaskStart = addCustomInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,new Point(-70,((int)(sidePanelPoint.y + Game.height*0.4 + 10))),"workerassigntask","workerassigntaskstart","xbutton",new Dimension(24,24),true);
+
+		UserInterfaceObject assignTaskStart = addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,new Point((int)(Game.width*0.5),(int)(Game.height*0.5)),"workerassigntask", "workerassigntaskstart",ActionHandler::assignWorkerStart,"Start");
+//		workersAssignSubpanel.
+//		assignTaskStart.setPosition(new Point((int)(Game.width*0.5),(int)(Game.height*0.5)));
+//		public UserInterfaceObject addInterfaceObject(UserInterfaceObject.UIElementType elementType, Point pos,String containerName, String objectKey,  Action action, String buttonText) {
+		
+		//		assignTaskXBtn.set
+		assignTaskXBtn.setClickAction(ActionHandler::disableAssignTaskBox);
+	}
+
+	public void initialiseConstructionSideMenu(Point sidePanelPoint) {
+		createUIContainer("constructionrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "constructionrightpanel","constructionmenutitle","Construction","rightpanelheader",Color.WHITE,new Point (100,00),"");
+
+	}
+	public void initialiseCitiesSideMenu(Point sidePanelPoint) {
+		UIContainer citiesPanel = createUIContainer("citiesrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "citiesrightpanel","citiesmenutitle","Cities","rightpanelheader",Color.WHITE,new Point (100,00),"");
+		citiesPanel.nextElementPos.x = Game.width - 160;
+		citiesPanel.nextElementPos.y = Game.topBarHeight + 150;
+		citiesPanel.elementSpacing.y = 50;
+				
+		UserInterfaceObject uiObj;
+		for(City city : Game.gameWorld.cityList) {
+			
+//			addInterfaceObject(UserInterfaceObject.UIElementType.TOPBAR, "topmenubar", "topbarcities",ActionHandler::displayCitiesMenu,"Cities");
+			uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.MEDIUM,"citiesrightpanel", city.name+"citiesrightpanel",ActionHandler::selectCity,city.name);
+			uiObj.referenceObject = city;
+		}
+	}	
+	public void initialiseCitySideMenu(Point sidePanelPoint) {
+		
+		
+		UIContainer cityPanel =  createUIContainer("cityrightpanel",new Point(sidePanelPoint), new Point(0,20),0);
+		addInterfaceTextObject(UserInterfaceObject.UIElementType.TEXT, "cityrightpanel","citymenutitle","Undefined","rightpanelheader",Color.WHITE,new Point (100,0),"");
+//		cityPanel.nextElementPos.y 
+		cityPanel.nextElementPos.x = Game.width - 140;
+		cityPanel.nextElementPos.y = Game.topBarHeight + 60;
+
+		addInterfaceObject(UserInterfaceObject.UIElementType.SMALL, "cityrightpanel", "cityadoptbutton",ActionHandler::adoptCity,"Adopt"); 
+		
+		cityPanel.nextElementPos.x = Game.width - 180;
+		cityPanel.nextElementPos.y = Game.topBarHeight + 400;
+		cityPanel.elementSpacing.y = 36;
+		UserInterfaceObject uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.CITYBUTTON,"cityrightpanel", "marketbutton",ActionHandler::selectCity,"Market");
+		 uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.CITYBUTTON,"cityrightpanel", "companiesbutton",ActionHandler::selectCity,"Companies");
+		 uiObj = addInterfaceObject(UserInterfaceObject.UIElementType.CITYBUTTON,"cityrightpanel", "forumbutton",ActionHandler::selectCity,"Forum");
+//		uiO.setWorldReference(obj);
+	}
 
 
 }

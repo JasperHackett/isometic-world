@@ -26,15 +26,18 @@ public class UserInterfaceObject extends GameObject{
 		TEXTBOXDROPDOWN,
 		TEXTBOXSTATIC,
 		TEXTBOXSTATICVALUE,
-		TOPBAR
+		TOPBAR,
+		CITYBUTTON
 	}
 	UIElementType type;
 	TextObject elementText;
 	Image defaultObjectImage;
 	Image hoverImage;
 	GameObject referenceObject;
-
-
+	WorldObject worldReference;
+	//If this is true, when this object is clicked other 
+	//clicked interface objects on a stack in InputHandler will be set to not clicked
+	boolean clearsStack = false;
 	
 	public UserInterfaceObject(ObjectType objectType) {
 		super(objectType);
@@ -42,10 +45,95 @@ public class UserInterfaceObject extends GameObject{
 		this.fontKey = "smallbuttonfont";
 	}
 	
+	//Initialise object with objectType specific properties
+	public UserInterfaceObject(ObjectType objectType, UIElementType uiType) {
+		super(objectType);
+		type = uiType;
+		fontKey = "smallbuttonfont";
+		this.clickTag = "";
+		switch(uiType) {
+
+			case CUSTOM:
+				this.dim = new Dimension(0,0);
+				break;
+		
+			case TEXT:
+				this.dim = new Dimension(0,0);
+				break;
+			case TEXTBOX:
+				this.dim = new Dimension(160,20);
+				this.objectImage = Game.objectMap.getImage("textbox2");
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = Game.objectMap.getImage("textbox1");
+				break;
+			case TEXTBOXDROPDOWN:
+				this.dim = new Dimension(160,20);
+				this.objectImage = Game.objectMap.getImage("textbox4");
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = Game.objectMap.getImage("textbox5");
+				break;
+			case TEXTBOXSTATIC:
+				this.dim = new Dimension(160,20);
+				this.objectImage = Game.objectMap.getImage("textbox2");
+				this.defaultObjectImage = objectImage;
+				break;
+				
+			case TEXTBOXSTATICVALUE:
+				this.dim = new Dimension(160,20);
+				this.objectImage = Game.objectMap.getImage("textbox3");
+				this.defaultObjectImage = objectImage;
+				break;
+			case SMALL :
+//				System.out.println("small obj created");
+				this.dim = (new Dimension(64,32));
+
+				this.objectImage = Game.objectMap.getImage("uibuttonsmall0");
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = Game.objectMap.getImage("uibuttonsmall1");
+				break;
+				
+			case TOPBAR:
+				this.dim = (new Dimension(96,24));
+				fontKey = "topbarfont";
+				this.objectImage = Game.objectMap.getImage("topbarbtn0");
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = Game.objectMap.getImage("topbarbtn1");
+				break;
+			case MEDIUM :
+				this.dim = (new Dimension(128,32));
+
+				this.objectImage = Game.objectMap.getImage("uibuttonmedium0");
+				this.fontKey = "mediumbuttonfont";
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = Game.objectMap.getImage("uibuttonmedium1");
+				break;
+				
+			case CITYBUTTON:
+				this.dim = new Dimension(160,36);
+				this.fontKey = "citybuttonfont";
+				this.objectImage = Game.objectMap.getImage("citybutton0");
+				this.defaultObjectImage = objectImage;
+				this.hoverImage = Game.objectMap.getImage("citybutton1");
+						
+				break;
+			default :
+				break;
+		}
+
+		
+		
+	}
+	
 	public void setProperties(Point pos, String clickTag) {
 		this.coords = pos;
 		this.clickable = true;
 		this.clickTag = clickTag;
+	}
+	public void setClearsStack(boolean clearsStack) {
+		this.clearsStack = clearsStack;
+	}
+	public void setWorldReference(WorldObject obj) {
+		this.worldReference = obj;
 	}
 	
 	public void setCustomProperties(Point pos, String objectImage, Dimension dimIn, boolean clickable) {
@@ -136,80 +224,12 @@ public class UserInterfaceObject extends GameObject{
 		}
 		
 	}
+
 //	
 	
 
 	
-	public UserInterfaceObject(ObjectType objectType, UIElementType uiType) {
-		super(objectType);
-		type = uiType;
-		fontKey = "smallbuttonfont";
-		this.clickTag = "";
-		switch(uiType) {
-
-			case CUSTOM:
-				this.dim = new Dimension(0,0);
-				break;
-		
-			case TEXT:
-				this.dim = new Dimension(0,0);
-				break;
-			case TEXTBOX:
-				this.dim = new Dimension(160,20);
-				this.objectImage = Game.objectMap.getImage("textbox2");
-				this.defaultObjectImage = objectImage;
-				this.hoverImage = Game.objectMap.getImage("textbox1");
-				break;
-			case TEXTBOXDROPDOWN:
-				this.dim = new Dimension(160,20);
-				this.objectImage = Game.objectMap.getImage("textbox4");
-				this.defaultObjectImage = objectImage;
-				this.hoverImage = Game.objectMap.getImage("textbox5");
-				break;
-			case TEXTBOXSTATIC:
-				this.dim = new Dimension(160,20);
-				this.objectImage = Game.objectMap.getImage("textbox2");
-				this.defaultObjectImage = objectImage;
-				break;
-				
-			case TEXTBOXSTATICVALUE:
-				this.dim = new Dimension(160,20);
-				this.objectImage = Game.objectMap.getImage("textbox3");
-				this.defaultObjectImage = objectImage;
-				break;
-			case SMALL :
-//				System.out.println("small obj created");
-				this.dim = (new Dimension(64,32));
-
-				this.objectImage = Game.objectMap.getImage("uibuttonsmall0");
-				this.defaultObjectImage = objectImage;
-				this.hoverImage = Game.objectMap.getImage("uibuttonsmall1");
-				break;
-				
-			case TOPBAR:
-				this.dim = (new Dimension(96,24));
-				fontKey = "topbarfont";
-				this.objectImage = Game.objectMap.getImage("topbarbtn0");
-				this.defaultObjectImage = objectImage;
-				this.hoverImage = Game.objectMap.getImage("topbarbtn1");
-				break;
-			case MEDIUM :
-				this.dim = (new Dimension(128,32));
-
-				this.objectImage = Game.objectMap.getImage("uibuttonmedium0");
-				this.fontKey = "mediumbuttonfont";
-				this.defaultObjectImage = objectImage;
-				this.hoverImage = Game.objectMap.getImage("uibuttonmedium1");
-				break;
-				
-				
-			default :
-				break;
-		}
-
-		
-		
-	}
+	
 	
 	public void hoverAction(){
 		this.currentlyHovered = true;
@@ -238,6 +258,7 @@ public class UserInterfaceObject extends GameObject{
 	public void disableClick(){
 		this.currentlyClicked = false;
 		if(this.referenceObject != null) {
+			System.out.println("Disabling click on City");
 			referenceObject.disableClick();
 		}
 	}

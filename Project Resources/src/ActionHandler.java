@@ -28,11 +28,6 @@ public class ActionHandler {
 			ArrayList<Pair<String,Action>> controlMenu = new ArrayList<Pair<String,Action>>();
 			controlMenu.add(new Pair<String,Action>("Options",ActionHandler::optionsMenu));
 			controlMenu.add(new Pair<String,Action>("Exit",ActionHandler::exitGame));
-////			new Point((int)(window.width*0.20),4)
-//			Game.userInterface.dropDown(controlMenu,new Dime
-//			
-//			System.out.println("POINT:::00" + uiObj.coords);
-//			System.out.println("POINT:::" + new Point(uiObj.coords.x,(uiObj.coords.y + uiObj.dim.height)));
 			
 			Game.userInterface.dropDown(controlMenu,new Dimension(160,20),new Point(uiObj.coords.x, uiObj.coords.y + uiObj.dim.height), new Point(0,20),uiObj);
 //			System.out.println("POINT:::ss0" + uiObj.coords);
@@ -70,8 +65,20 @@ public class ActionHandler {
 
 	}
 	
+	//obj is the city being adopted
 	static void adoptCity(GameObject obj) {
-		System.out.println("Adopt city");
+		
+
+		System.out.println("TEST");
+		if(!(obj instanceof UserInterfaceObject)) {
+			System.out.println("Invalid ActionHandler obj parameter, expected City");
+		}else {
+			UserInterfaceObject uiObj = (UserInterfaceObject) obj;
+			System.out.println(uiObj.worldReference);
+			City city = (City)uiObj.worldReference;
+			Game.gameWorld.adoptCity(city);
+		}
+
 	}
 	
 	static void hireWorker(GameObject obj) {
@@ -83,10 +90,15 @@ public class ActionHandler {
 	
 	static void assignWorker(GameObject obj) {
 		Game.userInterface.showAssignWorkerDialogue(obj);
+		obj.setClicked(false);
+	}
+	static void assignWorkerStart(GameObject obj) {
+//		Game.userInterface.showAssignWorkerDialogue(obj);
 //		obj.setClicked(false);
 	}
 	static void disableAssignTaskBox(GameObject obj) {
 		Game.userInterface.disableInterfaceContainer("workerassigntask");
+		obj.setClicked(false);
 	}
 
 	
@@ -104,6 +116,7 @@ public class ActionHandler {
 		Game.userInterface.disableInterfaceContainer("mainmenu");
 		Game.userInterface.enableInterfaceContainer("topmenubar");
 		Game.currentState = Game.STATE.Game;
+		Game.gameWorld.updateDisplay();
 	}
 	
 
