@@ -14,14 +14,7 @@ import javax.swing.JFrame;
 //import javafx.scene.paint.Color;
 
 
-/**
- *
- */
 
-/**
- * @author Orly
- *
- */
 public class Game {
 
 	
